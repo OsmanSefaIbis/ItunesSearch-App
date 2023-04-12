@@ -8,22 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		9694A91229E31C93000B010E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9694A91129E31C93000B010E /* AppDelegate.swift */; };
-		9694A91429E31C93000B010E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9694A91329E31C93000B010E /* SceneDelegate.swift */; };
-		9694A91629E31C93000B010E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9694A91529E31C93000B010E /* ViewController.swift */; };
+		9694A91629E31C93000B010E /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9694A91529E31C93000B010E /* SearchViewController.swift */; };
 		9694A91929E31C93000B010E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9694A91729E31C93000B010E /* Main.storyboard */; };
 		9694A91B29E31C94000B010E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9694A91A29E31C94000B010E /* Assets.xcassets */; };
 		9694A91E29E31C94000B010E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9694A91C29E31C94000B010E /* LaunchScreen.storyboard */; };
+		96E83D1529E65A4E001B517E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E83D1429E65A4E001B517E /* DetailViewController.swift */; };
+		96E83D1B29E65BA7001B517E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 96E83D1A29E65BA7001B517E /* Alamofire */; };
+		96E83D1E29E65BBD001B517E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 96E83D1D29E65BBD001B517E /* Kingfisher */; };
+		96E83D2129E6BBA3001B517E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 96E83D2029E6BBA3001B517E /* Lottie */; };
+		96E83D2429E6BC33001B517E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 96E83D2329E6BC33001B517E /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9694A90E29E31C93000B010E /* ItunesSearch-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ItunesSearch-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9694A91129E31C93000B010E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9694A91329E31C93000B010E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9694A91529E31C93000B010E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9694A91529E31C93000B010E /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		9694A91829E31C93000B010E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9694A91A29E31C94000B010E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9694A91D29E31C94000B010E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9694A91F29E31C94000B010E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		96E83D0829E5D7BC001B517E /* Itunes Search App.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Itunes Search App.jpg"; sourceTree = "<group>"; };
+		96E83D1429E65A4E001B517E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +36,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96E83D1E29E65BBD001B517E /* Kingfisher in Frameworks */,
+				96E83D2429E6BC33001B517E /* SnapKit in Frameworks */,
+				96E83D1B29E65BA7001B517E /* Alamofire in Frameworks */,
+				96E83D2129E6BBA3001B517E /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,14 +66,95 @@
 			isa = PBXGroup;
 			children = (
 				9694A91129E31C93000B010E /* AppDelegate.swift */,
-				9694A91329E31C93000B010E /* SceneDelegate.swift */,
-				9694A91529E31C93000B010E /* ViewController.swift */,
-				9694A91729E31C93000B010E /* Main.storyboard */,
-				9694A91A29E31C94000B010E /* Assets.xcassets */,
 				9694A91C29E31C94000B010E /* LaunchScreen.storyboard */,
+				9694A91A29E31C94000B010E /* Assets.xcassets */,
 				9694A91F29E31C94000B010E /* Info.plist */,
+				96E83D0C29E5DA2A001B517E /* Model */,
+				96E83D0D29E5DA32001B517E /* View */,
+				96E83D0E29E5DA40001B517E /* ViewModel */,
+				96E83D1329E5DC73001B517E /* Managers */,
+				96E83D1129E5DAC6001B517E /* Extension */,
+				96E83D1629E65B26001B517E /* Data Model */,
+				96E83D1029E5DAA9001B517E /* Services */,
+				96E83D0729E5D7BC001B517E /* Figma */,
 			);
 			path = "ItunesSearch-App";
+			sourceTree = "<group>";
+		};
+		96E83D0729E5D7BC001B517E /* Figma */ = {
+			isa = PBXGroup;
+			children = (
+				96E83D0829E5D7BC001B517E /* Itunes Search App.jpg */,
+			);
+			path = Figma;
+			sourceTree = "<group>";
+		};
+		96E83D0C29E5DA2A001B517E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		96E83D0D29E5DA32001B517E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9694A91729E31C93000B010E /* Main.storyboard */,
+				96E83D1729E65B57001B517E /* Search */,
+				96E83D1829E65B6E001B517E /* Detail */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		96E83D0E29E5DA40001B517E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		96E83D1029E5DAA9001B517E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		96E83D1129E5DAC6001B517E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		96E83D1329E5DC73001B517E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		96E83D1629E65B26001B517E /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Data Model";
+			sourceTree = "<group>";
+		};
+		96E83D1729E65B57001B517E /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				9694A91529E31C93000B010E /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		96E83D1829E65B6E001B517E /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				96E83D1429E65A4E001B517E /* DetailViewController.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +173,12 @@
 			dependencies = (
 			);
 			name = "ItunesSearch-App";
+			packageProductDependencies = (
+				96E83D1A29E65BA7001B517E /* Alamofire */,
+				96E83D1D29E65BBD001B517E /* Kingfisher */,
+				96E83D2029E6BBA3001B517E /* Lottie */,
+				96E83D2329E6BC33001B517E /* SnapKit */,
+			);
 			productName = "ItunesSearch-App";
 			productReference = 9694A90E29E31C93000B010E /* ItunesSearch-App.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +207,12 @@
 				Base,
 			);
 			mainGroup = 9694A90529E31C93000B010E;
+			packageReferences = (
+				96E83D1929E65BA7001B517E /* XCRemoteSwiftPackageReference "Alamofire" */,
+				96E83D1C29E65BBD001B517E /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				96E83D1F29E6BBA3001B517E /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				96E83D2229E6BC33001B517E /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 9694A90F29E31C93000B010E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,9 +240,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9694A91629E31C93000B010E /* ViewController.swift in Sources */,
+				96E83D1529E65A4E001B517E /* DetailViewController.swift in Sources */,
+				9694A91629E31C93000B010E /* SearchViewController.swift in Sources */,
 				9694A91229E31C93000B010E /* AppDelegate.swift in Sources */,
-				9694A91429E31C93000B010E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +462,64 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		96E83D1929E65BA7001B517E /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		96E83D1C29E65BBD001B517E /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+		96E83D1F29E6BBA3001B517E /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		96E83D2229E6BC33001B517E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		96E83D1A29E65BA7001B517E /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96E83D1929E65BA7001B517E /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		96E83D1D29E65BBD001B517E /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96E83D1C29E65BBD001B517E /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		96E83D2029E6BBA3001B517E /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96E83D1F29E6BBA3001B517E /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		96E83D2329E6BC33001B517E /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96E83D2229E6BC33001B517E /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9694A90629E31C93000B010E /* Project object */;
 }
