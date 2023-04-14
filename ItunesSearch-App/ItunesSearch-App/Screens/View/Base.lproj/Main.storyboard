@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5AV-HD-dt8">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Search View-->
+        <scene sceneID="5Ui-dN-C3n">
+            <objects>
+                <viewController storyboardIdentifier="SearchView" id="5AV-HD-dt8" customClass="SearchView" customModule="ItunesSearch_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aMK-qX-RKs">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vnY-w9-dR3" userLabel="Search Container">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="HTP-tO-Hd0" userLabel="Search Stack Vertical">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
+                                        <subviews>
+                                            <searchBar contentMode="redraw" text="" translatesAutoresizingMaskIntoConstraints="NO" id="pkW-Uw-gZ4">
+                                                <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="AmV-HU-kvF"/>
+                                                </constraints>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </searchBar>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pey-2H-dsT">
+                                                <rect key="frame" x="0.0" y="55" width="393" height="51"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="Egt-6f-Uyv"/>
+                                                </constraints>
+                                                <segments>
+                                                    <segment title="Movie"/>
+                                                    <segment title="Music"/>
+                                                    <segment title="Ebook"/>
+                                                    <segment title="Podcast"/>
+                                                </segments>
+                                            </segmentedControl>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="4o5-nS-IJZ" userLabel="Vertical Stack">
+                                                <rect key="frame" x="0.0" y="110" width="393" height="649"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CollectionName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVs-0Z-wlU" userLabel="CollectionName">
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="216.33333333333334"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CollectionPrice" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcc-pP-hmc" userLabel="CollectionPrice">
+                                                        <rect key="frame" x="0.0" y="216.33333333333331" width="393" height="216.33333333333331"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ReleaseData" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xef-SQ-LNU" userLabel="ReleaseData">
+                                                        <rect key="frame" x="0.0" y="432.66666666666657" width="393" height="216.33333333333331"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="HTP-tO-Hd0" secondAttribute="bottom" id="DPl-eC-GcJ"/>
+                                    <constraint firstItem="HTP-tO-Hd0" firstAttribute="top" secondItem="vnY-w9-dR3" secondAttribute="top" id="Gux-mY-Vg1"/>
+                                    <constraint firstAttribute="trailing" secondItem="HTP-tO-Hd0" secondAttribute="trailing" id="HNF-31-SmA"/>
+                                    <constraint firstItem="HTP-tO-Hd0" firstAttribute="leading" secondItem="vnY-w9-dR3" secondAttribute="leading" id="y2k-EN-9BT"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="lx4-pL-Vg6"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vnY-w9-dR3" firstAttribute="top" secondItem="lx4-pL-Vg6" secondAttribute="top" id="IoV-TP-uDs"/>
+                            <constraint firstItem="lx4-pL-Vg6" firstAttribute="bottom" secondItem="vnY-w9-dR3" secondAttribute="bottom" id="Zzv-wP-oTM"/>
+                            <constraint firstItem="vnY-w9-dR3" firstAttribute="leading" secondItem="lx4-pL-Vg6" secondAttribute="leading" id="fnI-Xd-AMb"/>
+                            <constraint firstItem="lx4-pL-Vg6" firstAttribute="trailing" secondItem="vnY-w9-dR3" secondAttribute="trailing" id="ttw-Ia-gMx"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="shh-sI-rZw"/>
+                    <connections>
+                        <outlet property="dateLabel" destination="xef-SQ-LNU" id="omQ-hf-B3j"/>
+                        <outlet property="nameLabel" destination="sVs-0Z-wlU" id="gEB-tR-7AW"/>
+                        <outlet property="priceLabel" destination="hcc-pP-hmc" id="KXX-wJ-BPb"/>
+                        <outlet property="searchBar" destination="pkW-Uw-gZ4" id="dAT-79-lTr"/>
+                        <outlet property="segmentedControl" destination="pey-2H-dsT" id="UoN-yy-VC9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h1z-qA-2nO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="773.28244274809163" y="-114.08450704225352"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
