@@ -106,9 +106,9 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
             
-            let availableWidth = collectionView.bounds.width
-            let itemWidth = (availableWidth / 2).rounded(.down) - 15
-            let itemHeight = 50.0
+            let availableWidth = collectionView.bounds.width - 20
+            let itemWidth = (availableWidth / 2).rounded(.down)
+            let itemHeight = 30.0
             return CGSize(width: itemWidth, height: itemHeight)
         }
         

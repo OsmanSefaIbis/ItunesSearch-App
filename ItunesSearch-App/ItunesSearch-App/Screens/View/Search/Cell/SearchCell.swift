@@ -17,35 +17,20 @@ class SearchCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureCellLooks()
     }
+    
     func configureCell(with model: SearchCellModel) {
         
         artworkImage.kf.setImage(with: URL.init(string: model.artworkUrl))
-        // TODO: Date Conversion
         releaseDateLabel.text = convertData(for: model.releaseDate)
         collectionNameLabel.text = model.collectionName
         collectionPriceLabel.text = "$ ".appending(String(model.collectionPrice))
     }
-}
-
-struct SearchCellModel {
     
-    let artworkUrl: String
-    let releaseDate: String
-    let collectionName: String
-    let collectionPrice: Double
-}
-
-// TODO: Migrate this helper
-func convertData(for dateValue: String) -> String{
-    let inputDF = DateFormatter()
-    inputDF.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-    
-    guard let inputDate = inputDF.date(from: dateValue) else {
-        fatalError("Invalid date string")
+    func configureCellLooks(){
+        artworkImage.layer.cornerRadius = 10.0
+        artworkImage.layer.masksToBounds = true
     }
-    let outputDF = DateFormatter()
-    outputDF.dateFormat = "MMMM d, yyyy"
-    let output = outputDF.string(from: inputDate)
-    return output
 }
+

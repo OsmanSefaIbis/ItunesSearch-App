@@ -12,58 +12,54 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SearchCell" customModule="ItunesSearch_App" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="150" height="66"/>
+            <rect key="frame" x="0.0" y="0.0" width="238" height="76"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="150" height="66"/>
+                <rect key="frame" x="0.0" y="0.0" width="238" height="76"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wT-0z-8Fj" userLabel="Container View">
-                        <rect key="frame" x="0.0" y="0.0" width="150" height="66"/>
+                        <rect key="frame" x="0.0" y="0.0" width="238" height="76"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="8zi-QQ-n1K" userLabel="Horizantal Stack">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="66"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8zi-QQ-n1K" userLabel="Horizantal Stack">
+                                <rect key="frame" x="0.0" y="0.0" width="238" height="76"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cX2-zM-jIF" userLabel="Image Container">
-                                        <rect key="frame" x="0.0" y="0.0" width="70" height="66"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="75.666666666666671" height="76"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="mKK-YY-9Om">
-                                                <rect key="frame" x="0.0" y="0.0" width="70" height="66"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="75.666666666666671" height="76"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="70" id="Ent-0A-3SM"/>
                                             <constraint firstAttribute="bottom" secondItem="mKK-YY-9Om" secondAttribute="bottom" id="Ogs-Qv-N8t"/>
                                             <constraint firstItem="mKK-YY-9Om" firstAttribute="top" secondItem="cX2-zM-jIF" secondAttribute="top" id="Om9-bz-u5p"/>
                                             <constraint firstItem="mKK-YY-9Om" firstAttribute="leading" secondItem="cX2-zM-jIF" secondAttribute="leading" id="any-jm-9nQ"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="fqU-QX-Ncp"/>
                                             <constraint firstAttribute="trailing" secondItem="mKK-YY-9Om" secondAttribute="trailing" id="luH-Jf-C3n"/>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="70" id="nlo-t3-KYd"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="pdx-Np-j2q"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kNd-z6-ps9" userLabel="Information Container">
-                                        <rect key="frame" x="70" y="0.0" width="80" height="66"/>
+                                        <rect key="frame" x="85.666666666666671" y="0.0" width="152.33333333333331" height="76"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ymJ-xO-zhQ" userLabel="Vertical Stack">
-                                                <rect key="frame" x="0.0" y="0.0" width="80" height="66"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="152.33333333333334" height="76"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Release Date" textAlignment="natural" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDp-aC-RaI">
-                                                        <rect key="frame" x="16.666666666666675" y="0.0" width="63.333333333333343" height="15.333333333333334"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Release Date" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDp-aC-RaI">
+                                                        <rect key="frame" x="100.33333333333333" y="0.0" width="51.999999999999986" height="18.666666666666668"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGk-Jq-U1k">
+                                                        <rect key="frame" x="73" y="28.666666666666664" width="79.333333333333314" height="18.666666666666664"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Name" textAlignment="natural" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGk-Jq-U1k">
-                                                        <rect key="frame" x="0.6666666666666714" y="25.333333333333332" width="79.333333333333329" height="15.333333333333332"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Price" textAlignment="natural" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XeL-La-8EH">
-                                                        <rect key="frame" x="3.6666666666666714" y="50.666666666666664" width="76.333333333333329" height="15.333333333333336"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Price" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XeL-La-8EH">
+                                                        <rect key="frame" x="82.666666666666657" y="57.333333333333336" width="69.666666666666657" height="18.666666666666664"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -98,14 +94,14 @@
                 <constraint firstAttribute="bottom" secondItem="4wT-0z-8Fj" secondAttribute="bottom" id="rgF-bZ-doJ"/>
                 <constraint firstAttribute="trailing" secondItem="4wT-0z-8Fj" secondAttribute="trailing" id="tOI-rG-bwQ"/>
             </constraints>
-            <size key="customSize" width="150" height="66"/>
+            <size key="customSize" width="238" height="76"/>
             <connections>
                 <outlet property="artworkImage" destination="mKK-YY-9Om" id="H29-Nb-WjC"/>
                 <outlet property="collectionNameLabel" destination="UGk-Jq-U1k" id="SQD-1h-gaC"/>
                 <outlet property="collectionPriceLabel" destination="XeL-La-8EH" id="0L2-bX-IGA"/>
                 <outlet property="releaseDateLabel" destination="dDp-aC-RaI" id="ZUT-xp-h8z"/>
             </connections>
-            <point key="canvasLocation" x="264.12213740458014" y="-6.3380281690140849"/>
+            <point key="canvasLocation" x="334.35114503816794" y="9.8591549295774659"/>
         </collectionViewCell>
     </objects>
     <resources>
