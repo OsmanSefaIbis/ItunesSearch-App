@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SearchCell: UICollectionViewCell {
     
@@ -17,6 +18,14 @@ class SearchCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    func configureCell(with model: SearchCellModel) {
+        
+        artworkImage.kf.setImage(with: URL.init(string: model.artworkUrl))
+        // TODO: Date Conversion
+        releaseDateLabel.text = convertData(for: model.releaseDate)
+        collectionNameLabel.text = model.collectionName
+        collectionPriceLabel.text = "$ ".appending(String(model.collectionPrice))
+    }
 }
 
 struct SearchCellModel {
@@ -25,4 +34,18 @@ struct SearchCellModel {
     let releaseDate: String
     let collectionName: String
     let collectionPrice: Double
+}
+
+// TODO: Migrate this helper
+func convertData(for dateValue: String) -> String{
+    let inputDF = DateFormatter()
+    inputDF.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+    
+    guard let inputDate = inputDF.date(from: dateValue) else {
+        fatalError("Invalid date string")
+    }
+    let outputDF = DateFormatter()
+    outputDF.dateFormat = "MMMM d, yyyy"
+    let output = outputDF.string(from: inputDate)
+    return output
 }

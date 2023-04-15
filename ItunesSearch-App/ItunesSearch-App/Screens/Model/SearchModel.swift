@@ -35,7 +35,7 @@ class SearchModel {
                         }
                         self.delegate?.dataDidFetch()
                     } catch {
-                        print("Decoding Error")
+                        fatalError("Error occured with fetchDataWith() - Cause: Decoding Error")
                     }
                 }
             }

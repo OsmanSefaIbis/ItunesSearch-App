@@ -34,6 +34,5 @@ extension SearchViewModel: SearchModelDelegate{
             )
         }
         self.delegate?.refreshItems(retrievedData)
-        
     }
 }
