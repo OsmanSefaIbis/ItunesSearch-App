@@ -7,6 +7,7 @@
 
 import Foundation
 
+let paginationLimit = 20
 func convertData(for dateValue: String) -> String{
     let inputDF = DateFormatter()
     inputDF.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"

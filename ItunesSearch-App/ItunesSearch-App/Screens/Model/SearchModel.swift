@@ -47,7 +47,7 @@ class SearchModel {
     func composeUrl(_ term: String, _ media: String) -> String{
         let termParam = "term=".appending(term)
         let mediaParam = "&media=".appending(media)
-        let urlCompose = Api.url.scheme + Api.url.domain + Api.url.path + termParam + mediaParam
+        let urlCompose = Api.url.scheme + Api.url.domain + Api.url.path + termParam + mediaParam + Api.url.limit
         return urlCompose
     }
 }

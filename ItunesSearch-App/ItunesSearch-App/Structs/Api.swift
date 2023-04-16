@@ -8,7 +8,6 @@
 import Foundation
 
 struct Api{
-    
-    static let url = (scheme: "https://", domain: "itunes.apple.com/", path: "search?")
+    static let url = (scheme: "https://", domain: "itunes.apple.com/", path: "search?", limit: "&limit=\(paginationLimit)")
     static let media = (movie: "&media=movie", music: "&media=music", ebook: "&media=ebook", podcast: "&media=podcast")
 }

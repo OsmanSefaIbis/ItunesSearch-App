@@ -21,7 +21,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vnY-w9-dR3" userLabel="Search Container">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HTP-tO-Hd0" userLabel="Search Stack Vertical">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="HTP-tO-Hd0" userLabel="Search Stack Vertical">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yo5-sU-nLg" userLabel="SearchBar+Container">
@@ -42,7 +42,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5tg-52-CuY" userLabel="SegmentedContriol+Container">
-                                                <rect key="frame" x="0.0" y="50" width="393" height="30"/>
+                                                <rect key="frame" x="0.0" y="55" width="393" height="30"/>
                                                 <subviews>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="6c7-Rr-t4k">
                                                         <rect key="frame" x="16" y="0.0" width="361" height="31"/>
@@ -64,10 +64,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XSX-3Y-Qg7" userLabel="CollectionView+Container">
-                                                <rect key="frame" x="0.0" y="80" width="393" height="679"/>
+                                                <rect key="frame" x="0.0" y="90" width="393" height="669"/>
                                                 <subviews>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MaV-jM-Uqw">
-                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="679"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="669"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="xna-kz-awp">
                                                             <size key="itemSize" width="128" height="128"/>
@@ -75,8 +75,12 @@
                                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         </collectionViewFlowLayout>
+                                                        <activityIndicatorView key="backgroundView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" id="YUk-fA-Ql5">
+                                                            <rect key="frame" x="0.0" y="0.0" width="393" height="669"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </activityIndicatorView>
                                                         <cells>
-                                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="7Om-kp-bhy" customClass="SearchCell" customModule="ItunesSearch_App" customModuleProvider="target">
+                                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchCell" id="7Om-kp-bhy" customClass="SearchCell" customModule="ItunesSearch_App" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="vQb-wU-Hcu">
@@ -97,7 +101,6 @@
                                             </view>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="XSX-3Y-Qg7" firstAttribute="top" secondItem="5tg-52-CuY" secondAttribute="bottom" id="COa-Fl-ZS8"/>
                                             <constraint firstAttribute="bottom" secondItem="XSX-3Y-Qg7" secondAttribute="bottom" id="nF5-NO-MZP"/>
                                             <constraint firstAttribute="trailing" secondItem="XSX-3Y-Qg7" secondAttribute="trailing" id="t1g-BS-DaA"/>
                                             <constraint firstItem="XSX-3Y-Qg7" firstAttribute="leading" secondItem="HTP-tO-Hd0" secondAttribute="leading" id="yZ1-Tw-WtC"/>
@@ -124,6 +127,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="shh-sI-rZw"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="YUk-fA-Ql5" id="db9-Yb-jzt"/>
                         <outlet property="collectionView" destination="MaV-jM-Uqw" id="K5A-db-nWC"/>
                         <outlet property="searchBar" destination="6eP-Xg-isB" id="OuV-5M-mbP"/>
                         <outlet property="segmentedControl" destination="6c7-Rr-t4k" id="uVH-2e-FeJ"/>

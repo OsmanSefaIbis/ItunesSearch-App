@@ -11,6 +11,7 @@ class SearchView: UIViewController{
     typealias RowItems = SearchCellModel
     private let cellIdentifier = "SearchCell"
     // UIComponents
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -18,6 +19,7 @@ class SearchView: UIViewController{
     private let viewModel = SearchViewModel()
     private var items: [RowItems] = []
     private var categorySelection = Category.movie
+    var timeControl: Timer?
     
     // VLC
     override func viewDidLoad() {
@@ -54,6 +56,7 @@ class SearchView: UIViewController{
         
         self.items = items
         DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
             self.collectionView?.reloadData()
         }
     }
@@ -72,15 +75,7 @@ class SearchView: UIViewController{
         }
     }
 
-} /// EOC
-
-/*
-//
-//
-//  Readability Seperator For ME
-//
-//
-*/
+}
 
 // MARK: Extensions
 
@@ -116,11 +111,6 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
             let itemHeight = 100.0
             return CGSize(width: itemWidth, height: itemHeight)
     }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
-//
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
@@ -136,6 +126,30 @@ extension SearchView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        timeControl?.invalidate()
+        activityIndicator.startAnimating()
+        timeControl = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false, block: { (timer) in
+            if searchText!.count == 0 {
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.items.removeAll()
+                    self.collectionView.reloadData()
+                }
+            }else if (0...2).contains(searchText!.count){
+                self.activityIndicator.stopAnimating()
+            }else if searchText!.count > 2 {
+                self.viewModel.searchInvoked(searchText!, self.categorySelection.rawValue)
+            }
+        })
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.items.removeAll()
+        searchBar.text = ""
+        self.collectionView.reloadData()
     }
 }
 
