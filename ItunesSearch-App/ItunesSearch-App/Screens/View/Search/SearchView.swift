@@ -15,8 +15,8 @@ class SearchView: UIViewController{
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var collectionView: UICollectionView!
     
-    private let viewModel = SearchViewModel()   // VM Instance
-    private var items: [RowItems] = []          // Cell Info
+    private let viewModel = SearchViewModel()
+    private var items: [RowItems] = []
     private var categorySelection = Category.movie
     
     // VLC
@@ -25,23 +25,28 @@ class SearchView: UIViewController{
         super.viewDidLoad()
         initiating()
     }
-    func initiating(){
+    
+    func initiating() {
+        
         configureCollectionView()
         assignDelegates()
         configureSegmentedControl()
     }
     
-    func assignDelegates(){
+    func assignDelegates() {
+        
         viewModel.delegate = self
         searchBar.delegate = self
     }
-    func configureCollectionView(){
+    func configureCollectionView() {
+        
         collectionView?.register( .init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
         collectionView?.delegate = self
         collectionView?.dataSource = self
     }
     
-    func configureSegmentedControl(){
+    func configureSegmentedControl() {
+        
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
     }
     
@@ -129,7 +134,8 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
 extension SearchView: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.searchInvoked(searchBar.text!, categorySelection.rawValue)
+        let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue)
     }
 }
 

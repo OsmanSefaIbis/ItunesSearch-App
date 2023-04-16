@@ -56,7 +56,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Name" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGk-Jq-U1k">
                                                         <rect key="frame" x="34.666666666666679" y="36.666666666666664" width="65.333333333333314" height="26.666666666666664"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="MbX-Lk-wKa"/>
+                                                            <constraint firstAttribute="width" constant="100" id="MbX-Lk-wKa"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                         <nil key="textColor"/>
@@ -78,7 +78,6 @@
                                             <constraint firstItem="ymJ-xO-zhQ" firstAttribute="top" secondItem="kNd-z6-ps9" secondAttribute="top" id="EXz-qA-Kzo"/>
                                             <constraint firstAttribute="trailing" secondItem="ymJ-xO-zhQ" secondAttribute="trailing" id="FsR-fr-jnK"/>
                                             <constraint firstAttribute="bottom" secondItem="ymJ-xO-zhQ" secondAttribute="bottom" id="gg4-QU-A6q"/>
-                                            <constraint firstAttribute="width" constant="100" id="mLe-lN-Z0o"/>
                                         </constraints>
                                     </view>
                                 </subviews>
