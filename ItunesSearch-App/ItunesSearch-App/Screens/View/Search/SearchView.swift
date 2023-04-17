@@ -22,6 +22,7 @@ class SearchView: UIViewController{
     private var timeControl: Timer?
     private var paginationOffSet = 0
     private var endOfRecordsFlag = false
+    private var idsOfAllFetchedRecords = Set<Int>()
     
     // VLC
     override func viewDidLoad() {
@@ -55,14 +56,41 @@ class SearchView: UIViewController{
     }
     
     func setItems( _ items: [RowItems]) {
-        if items.count != requestLimit {
+        
+        if items.count != requestLimit{
+            // normally it should be 20 but if not then you somehow reached the end off the records
             endOfRecordsFlag = true
         }
-        if paginationOffSet > 0 {
-            self.items.append(contentsOf: items)
+        
+        if endOfRecordsFlag{
+            // TODO: compare the ids with the fetched ones
+            // only add if the id does not exist in the last fecthed one
+            // append those items only
+            var lastRecords: [RowItems] = []
+            for each in items{
+                if idsOfAllFetchedRecords.contains(where: { $0 == each.id }){
+                    continue
+                }else{
+                    lastRecords.append(each)
+                }
+            }
+            self.items.append(contentsOf: lastRecords)
+            idsOfAllFetchedRecords.removeAll()
         }else{
-            self.items = items
+            if paginationOffSet != 0 {
+                // remove the ids from the last and add the new ones
+                for each in items {
+                    idsOfAllFetchedRecords.insert(each.id)
+                }
+                self.items.append(contentsOf: items)
+            }else{
+                for each in items {
+                    idsOfAllFetchedRecords.insert(each.id)
+                }
+                self.items = items
+            }
         }
+    
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             self.collectionView?.reloadData()
@@ -120,7 +148,7 @@ extension SearchView: UICollectionViewDelegate {
         
         if indexPath.item == latestItemNumeric { // user wants more content
             let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-            paginationOffSet += requestLimit + 1
+            paginationOffSet += requestLimit
             self.viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue, paginationOffSet)
         }
     }
@@ -148,16 +176,18 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
 extension SearchView: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
         let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         paginationOffSet = 0
         endOfRecordsFlag = false
         viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue, paginationOffSet)
+        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         timeControl?.invalidate()
-        timeControl = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false, block: { (timer) in
+        timeControl = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
             if (0...2).contains(searchText!.count){
                 self.activityIndicator.stopAnimating()
             }

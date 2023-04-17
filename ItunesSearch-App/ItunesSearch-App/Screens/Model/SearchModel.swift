@@ -45,10 +45,12 @@ class SearchModel {
     
     // TODO: Migrate this helper
     func composeUrl(_ term: String, _ media: String, _ offset: Int) -> String{
+        
         let termParam = "term=".appending(term)
         let mediaParam = "&media=".appending(media)
         let baseUrl = Api.url.scheme + Api.url.domain + Api.url.path
         let urlCompose = baseUrl + termParam + mediaParam + Api.url.limit + Api.url.offsetLimit + String(offset)
+        
         return urlCompose
     }
 }
