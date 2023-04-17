@@ -161,7 +161,7 @@ extension SearchView: UISearchBarDelegate {
             if (0...2).contains(searchText!.count){
                 self.activityIndicator.stopAnimating()
             }
-            else if searchText!.count == 0 {
+            if searchText!.count == 0 {
                 DispatchQueue.main.async {
                     self.items.removeAll()
                     self.collectionView.reloadData()
