@@ -16,9 +16,9 @@ class SearchModel {
     private(set) var dataFetched: [SearchData] = []
     weak var delegate: SearchModelDelegate?
     
-    func fetchDataWith(input termValue: String, media mediaType: String) {
+    func fetchDataWith(input termValue: String, media mediaType: String, startFrom offset: Int) {
 
-        let urlCompose = composeUrl(termValue, mediaType)
+        let urlCompose = composeUrl(termValue, mediaType, offset)
         
         if let url = URL(string: urlCompose){
             var request: URLRequest = .init(url: url)
@@ -44,10 +44,11 @@ class SearchModel {
     }
     
     // TODO: Migrate this helper
-    func composeUrl(_ term: String, _ media: String) -> String{
+    func composeUrl(_ term: String, _ media: String, _ offset: Int) -> String{
         let termParam = "term=".appending(term)
         let mediaParam = "&media=".appending(media)
-        let urlCompose = Api.url.scheme + Api.url.domain + Api.url.path + termParam + mediaParam + Api.url.limit
+        let baseUrl = Api.url.scheme + Api.url.domain + Api.url.path
+        let urlCompose = baseUrl + termParam + mediaParam + Api.url.limit + Api.url.offsetLimit + String(offset)
         return urlCompose
     }
 }

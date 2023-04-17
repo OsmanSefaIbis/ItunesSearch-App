@@ -19,7 +19,10 @@ class SearchView: UIViewController{
     private let viewModel = SearchViewModel()
     private var items: [RowItems] = []
     private var categorySelection = Category.movie
-    var timeControl: Timer?
+    private var timeControl: Timer?
+    private var endOfRecordsFlag = false
+    private var paginationOffSet = 0
+    private var latestRecordId = 999
     
     // VLC
     override func viewDidLoad() {
@@ -53,14 +56,28 @@ class SearchView: UIViewController{
     }
     
     func setItems( _ items: [RowItems]) {
-        
-        self.items = items
+        endOfRecordsFlag = items.contains(where: { $0.id == latestRecordId } )
+        if paginationOffSet > 0 {
+            if endOfRecordsFlag {
+                print("Reached the end of records")
+                let stopIndex = items.firstIndex(where: { $0.id == latestRecordId })!
+                for safeIndex in 0..<stopIndex{
+                    self.items.append(items[safeIndex])
+                }
+                return
+            }else{
+                self.items.append(contentsOf: items)
+            }
+        }else{
+            self.items = items
+        }
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             self.collectionView?.reloadData()
         }
     }
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        
         switch sender.selectedSegmentIndex{
             case 0:
                 categorySelection = Category.movie
@@ -100,6 +117,20 @@ extension SearchView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // TODO: Go to detail
     }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if endOfRecordsFlag{
+            return
+        }
+        let latestItemNumeric = items.count - 1
+        
+        if indexPath.item == latestItemNumeric { // user wants more content
+            let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            paginationOffSet += requestLimit
+            latestRecordId = items.last?.id ?? 0
+            self.viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue, paginationOffSet+1)
+        }
+    }
 }
 /// FlowLayout
 extension SearchView: UICollectionViewDelegateFlowLayout{
@@ -125,24 +156,26 @@ extension SearchView: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue)
+        viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue, paginationOffSet)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         timeControl?.invalidate()
-        activityIndicator.startAnimating()
         timeControl = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false, block: { (timer) in
-            if searchText!.count == 0 {
+            if (0...2).contains(searchText!.count){
+                self.activityIndicator.stopAnimating()
+            }
+            else if searchText!.count == 0 {
                 DispatchQueue.main.async {
-                    self.activityIndicator.stopAnimating()
                     self.items.removeAll()
                     self.collectionView.reloadData()
                 }
-            }else if (0...2).contains(searchText!.count){
-                self.activityIndicator.stopAnimating()
             }else if searchText!.count > 2 {
-                self.viewModel.searchInvoked(searchText!, self.categorySelection.rawValue)
+                self.paginationOffSet = 0
+                self.endOfRecordsFlag = false
+                self.activityIndicator.startAnimating()
+                self.viewModel.searchInvoked(searchText!, self.categorySelection.rawValue, self.paginationOffSet)
             }
         })
     }

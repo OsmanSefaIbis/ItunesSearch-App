@@ -12,7 +12,7 @@ struct ApiData: Decodable {
     let results: [SearchData]?
 }
 struct SearchData: Decodable {
-    
+    let trackId: Int?
     let artworkUrl100: String?
     let collectionName: String?
     let collectionPrice: Double?

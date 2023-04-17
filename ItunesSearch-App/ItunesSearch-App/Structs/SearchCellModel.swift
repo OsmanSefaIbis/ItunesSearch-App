@@ -7,6 +7,7 @@
 
 struct SearchCellModel {
     
+    let id: Int
     let artworkUrl: String
     let releaseDate: String
     let collectionName: String

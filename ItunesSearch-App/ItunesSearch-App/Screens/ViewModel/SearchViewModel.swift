@@ -18,8 +18,8 @@ class SearchViewModel{
     init(){
         model.delegate = self
     }
-    func searchInvoked(_ searchTerm: String, _ mediaType: String) {
-        model.fetchDataWith(input: searchTerm, media: mediaType)
+    func searchInvoked(_ searchTerm: String, _ mediaType: String, _ offSetValue: Int) {
+        model.fetchDataWith(input: searchTerm, media: mediaType, startFrom: offSetValue)
     }
 }
 
@@ -27,6 +27,7 @@ extension SearchViewModel: SearchModelDelegate{
     func dataDidFetch(){
         let retrievedData: [SearchCellModel] = model.dataFetched.map{
             .init(
+                id: $0.trackId ?? 0,
                 artworkUrl: $0.artworkUrl100 ?? "",
                 releaseDate: $0.releaseDate ?? "",
                 collectionName: $0.collectionName ?? "",
