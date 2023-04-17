@@ -6,12 +6,14 @@
 //
 import Foundation
 
-struct ApiData: Decodable {
+struct SearchResultData: Decodable {
     
     let resultCount: Int?
     let results: [SearchData]?
 }
+
 struct SearchData: Decodable {
+    
     let trackId: Int?
     let artworkUrl100: String?
     let collectionName: String?

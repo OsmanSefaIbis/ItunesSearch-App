@@ -136,7 +136,14 @@ extension SearchView: UICollectionViewDataSource {
 extension SearchView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: Go to detail
+        collectionView.deselectItem(at: indexPath, animated: true)
+        if let detailPage =  storyboard?.instantiateViewController(withIdentifier: "DetailView") as? DetailView{
+            let searchEntity = items[indexPath.item]
+            let searchId = searchEntity.id
+            detailPage.id = String(searchId)
+            detailPage.modalPresentationStyle = .fullScreen
+            self.present(detailPage, animated: false)
+        }
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         

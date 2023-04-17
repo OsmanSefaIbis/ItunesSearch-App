@@ -29,8 +29,8 @@ class SearchModel {
                 }
                 if let data = data{
                     do{
-                        let apiData = try JSONDecoder().decode(ApiData.self, from: data)
-                        if let searchData = apiData.results{
+                        let SearchResultData = try JSONDecoder().decode(SearchResultData.self, from: data)
+                        if let searchData = SearchResultData.results{
                             self.dataFetched = searchData
                         }
                         self.delegate?.dataDidFetch()
@@ -48,7 +48,7 @@ class SearchModel {
         
         let termParam = "term=".appending(term)
         let mediaParam = "&media=".appending(media)
-        let baseUrl = Api.url.scheme + Api.url.domain + Api.url.path
+        let baseUrl = Api.url.scheme + Api.url.domain + Api.url.searchPath
         let urlCompose = baseUrl + termParam + mediaParam + Api.url.limit + Api.url.offsetLimit + String(offset)
         
         return urlCompose
