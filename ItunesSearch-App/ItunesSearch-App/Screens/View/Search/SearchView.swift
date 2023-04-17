@@ -20,9 +20,8 @@ class SearchView: UIViewController{
     private var items: [RowItems] = []
     private var categorySelection = Category.movie
     private var timeControl: Timer?
-    private var endOfRecordsFlag = false
     private var paginationOffSet = 0
-    private var latestRecordId = 999
+    private var endOfRecordsFlag = false
     
     // VLC
     override func viewDidLoad() {
@@ -56,18 +55,11 @@ class SearchView: UIViewController{
     }
     
     func setItems( _ items: [RowItems]) {
-        endOfRecordsFlag = items.contains(where: { $0.id == latestRecordId } )
+        if items.count != requestLimit {
+            endOfRecordsFlag = true
+        }
         if paginationOffSet > 0 {
-            if endOfRecordsFlag {
-                print("Reached the end of records")
-                let stopIndex = items.firstIndex(where: { $0.id == latestRecordId })!
-                for safeIndex in 0..<stopIndex{
-                    self.items.append(items[safeIndex])
-                }
-                return
-            }else{
-                self.items.append(contentsOf: items)
-            }
+            self.items.append(contentsOf: items)
         }else{
             self.items = items
         }
@@ -76,6 +68,7 @@ class SearchView: UIViewController{
             self.collectionView?.reloadData()
         }
     }
+    
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex{
@@ -122,13 +115,13 @@ extension SearchView: UICollectionViewDelegate {
         if endOfRecordsFlag{
             return
         }
+        
         let latestItemNumeric = items.count - 1
         
         if indexPath.item == latestItemNumeric { // user wants more content
             let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-            paginationOffSet += requestLimit
-            latestRecordId = items.last?.id ?? 0
-            self.viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue, paginationOffSet+1)
+            paginationOffSet += requestLimit + 1
+            self.viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue, paginationOffSet)
         }
     }
 }
@@ -156,6 +149,8 @@ extension SearchView: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        paginationOffSet = 0
+        endOfRecordsFlag = false
         viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue, paginationOffSet)
     }
     
