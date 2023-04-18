@@ -24,16 +24,15 @@ struct SearchData: Decodable {
     let artworkUrl30, artworkUrl60, artworkUrl100: String?
     let collectionPrice, trackPrice, trackRentalPrice, collectionHDPrice: Double?
     let trackHDPrice, trackHDRentalPrice: Double?
-    let releaseDate: Date?
+    let releaseDate: String?
     let collectionExplicitness, trackExplicitness: Explicitness?
     let trackCount, trackNumber, trackTimeMillis: Int?
     let country: Country?
     let currency: Currency?
     let primaryGenreName, contentAdvisoryRating, longDescription: String?
     let hasITunesExtras: Bool?
-    let artistID: Int?
+    let discCount, discNumber, artistID: Int?
     let artistViewURL: String?
-    let discCount, discNumber: Int?
     let isStreamable: Bool?
     let shortDescription, collectionArtistName, copyright, description: String?
     let feedURL: String?
@@ -55,10 +54,10 @@ struct SearchData: Decodable {
         case collectionHDPrice = "collectionHdPrice"
         case trackHDPrice = "trackHdPrice"
         case trackHDRentalPrice = "trackHdRentalPrice"
-        case releaseDate, collectionExplicitness, trackExplicitness, trackCount, trackNumber, trackTimeMillis, country, currency, primaryGenreName, contentAdvisoryRating, longDescription, hasITunesExtras
+        case releaseDate, collectionExplicitness, trackExplicitness, trackCount, trackNumber, trackTimeMillis, country, currency, primaryGenreName, contentAdvisoryRating, longDescription, hasITunesExtras, discCount, discNumber
         case artistID = "artistId"
         case artistViewURL = "artistViewUrl"
-        case discCount, discNumber, isStreamable, shortDescription, collectionArtistName, copyright, description
+        case isStreamable, shortDescription, collectionArtistName, copyright, description
         case feedURL = "feedUrl"
         case artworkUrl600
         case genreIDS = "genreIds"
