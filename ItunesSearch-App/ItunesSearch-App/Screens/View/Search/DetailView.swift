@@ -23,8 +23,6 @@ class DetailView: UIViewController{
     @IBOutlet weak var detailRatingCount: UILabel!
     @IBOutlet weak var detailRating: UILabel!
     @IBOutlet weak var detailGenres: UILabel!
-    @IBOutlet weak var detailPreviewButton: UIButton!
-    @IBOutlet weak var detailViewButton: UIButton!
     
     private var item: Detail?
     var id = 0
@@ -41,25 +39,54 @@ class DetailView: UIViewController{
         viewModel.delegate = self
     }
     func configureItem(with item: Detail){
-        
-        self.detailImage.kf.setImage(with: URL.init(string: item.artworkUrl))
-//        let category = item.kind
-//        switch category{
-//            // Mutuals
-//            self.detailImage.kf.setImage(with: URL.init(string: item.artworkUrl))
-//        // Diffs
-//        case "feature-movie":
-//
-//        case "song":
-//
-//        case "ebook":
-//
-//        case "podcast":
-//
-//        }
-        
+        let modifiedArtworkUrl = changeImageURL(item.artworkUrl)
+        configureMutuals(item)
+        let category = item.kind
+        switch category{
+            case "feature-movie":
+                detailDescription.text = item.description
+                detailCollectionName.text = item.collectionName
+            case "song":
+                detailLength.text = String(item.length)
+            case "ebook":
+                detailDescription.text = item.description
+                detailSize.text = String(item.size)
+                detailRatingCount.text = String(item.ratingCount)
+                detailRating.text = String(item.rating)
+            case "podcast":
+                detailLength.text = String(item.length)
+                detailCollectionName.text = item.collectionName
+                detailGenres.text = item.genreList.joined(separator: ", ")
+        default:
+            return
+        }
+        func configureMutuals(_ item: Detail){
+            detailImage.kf.setImage(with: URL.init(string: modifiedArtworkUrl ?? item.artworkUrl))
+            detailName.text = item.name
+            detailCreator.text = item.creator
+            detailReleaseDate.text = item.releaseDate
+            detailPrice.text = "$ ".appending(String(item.price))
+            detailPrimaryGenre.text = item.genre
+        }
+        func changeImageURL(_ urlString: String) -> String? {
+            guard var urlComponents = URLComponents(string: urlString) else {
+                return nil
+            }
+            if urlComponents.path.hasSuffix("/100x100bb.jpg") {
+                urlComponents.path = urlComponents.path.replacingOccurrences(of: "/100x100bb.jpg", with: "/600x600bb.jpg")
+                return urlComponents.string
+            } else {
+                return urlComponents.string
+            }
+        }
     }
-    
+    // TODO: onPress
+    @IBAction func viewButtonClicked(_ sender: Any) {
+    }
+    @IBAction func moviePreviewButtonClicked(_ sender: Any) {
+    }
+    @IBAction func musicPreviewButtonClicked(_ sender: Any) {
+    }
 }
 
 // MARK: Extensions
@@ -67,6 +94,9 @@ class DetailView: UIViewController{
 /************************   ViewModel  ************************/
 extension DetailView: DetailViewModelDelegate{
     func refreshItem(_ retrieved: [Detail]) {
-        configureItem(with: retrieved.first!)
+        
+        DispatchQueue.main.async {
+            self.configureItem(with: retrieved.first!)
+        }
     }
 }

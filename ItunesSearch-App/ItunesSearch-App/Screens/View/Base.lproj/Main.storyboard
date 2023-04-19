@@ -318,12 +318,18 @@
                                                                 <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="Preview" cornerStyle="capsule"/>
+                                                                <connections>
+                                                                    <action selector="moviePreviewButtonClicked:" destination="hyU-kR-gp3" eventType="touchUpInside" id="GgK-C9-Ape"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCc-LX-Wss" userLabel="View">
                                                                 <rect key="frame" x="196.66666666666666" y="33" width="96.333333333333343" height="34.333333333333343"/>
                                                                 <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
+                                                                <connections>
+                                                                    <action selector="viewButtonClicked:" destination="hyU-kR-gp3" eventType="touchUpInside" id="jwd-Xk-lBV"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -364,11 +370,9 @@
                         <outlet property="detailDescription" destination="i3Z-uc-F2r" id="JmU-6q-QrF"/>
                         <outlet property="detailImage" destination="pne-yR-C0g" id="4oe-Nj-P1l"/>
                         <outlet property="detailName" destination="5J1-Nq-c8f" id="6gs-rx-LUZ"/>
-                        <outlet property="detailPreviewButton" destination="tnn-b8-9G5" id="YrN-ZI-IvC"/>
                         <outlet property="detailPrice" destination="j1R-a9-Jeb" id="Ymp-l0-ZPd"/>
                         <outlet property="detailPrimaryGenre" destination="UsX-Nt-dah" id="wJU-EY-EL7"/>
                         <outlet property="detailReleaseDate" destination="3aT-mf-pGM" id="Kp5-dY-fAE"/>
-                        <outlet property="detailViewButton" destination="tCc-LX-Wss" id="ifI-Dy-MC3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bT5-dM-got" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -536,12 +540,18 @@
                                                                 <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="Preview" cornerStyle="capsule"/>
+                                                                <connections>
+                                                                    <action selector="musicPreviewButtonClicked:" destination="ZIj-fG-fhU" eventType="touchUpInside" id="WVG-hv-xp5"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RdK-DS-moB" userLabel="View">
                                                                 <rect key="frame" x="196.66666666666666" y="33" width="96.333333333333343" height="34.333333333333343"/>
                                                                 <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
+                                                                <connections>
+                                                                    <action selector="viewButtonClicked:" destination="ZIj-fG-fhU" eventType="touchUpInside" id="Ygq-tx-AIv"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -581,11 +591,9 @@
                         <outlet property="detailImage" destination="8Tq-rs-aUP" id="PRa-bP-YX7"/>
                         <outlet property="detailLength" destination="Io9-OX-Ar5" id="fiP-hO-aTi"/>
                         <outlet property="detailName" destination="6FF-Yp-9r4" id="pTJ-LJ-Ix7"/>
-                        <outlet property="detailPreviewButton" destination="dLa-OP-LLp" id="cmQ-1E-bob"/>
                         <outlet property="detailPrice" destination="ugo-C5-JxI" id="hC7-Aq-Nwb"/>
                         <outlet property="detailPrimaryGenre" destination="Nzt-tI-FpI" id="5vi-Vh-WSz"/>
                         <outlet property="detailReleaseDate" destination="NO4-Al-QIA" id="8Yx-Px-yFO"/>
-                        <outlet property="detailViewButton" destination="RdK-DS-moB" id="DEH-rC-ixT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="86p-ms-zbd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -797,6 +805,9 @@
                                                                 <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
+                                                                <connections>
+                                                                    <action selector="viewButtonClicked:" destination="vvo-p8-Bbg" eventType="touchUpInside" id="t6C-y4-otH"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -842,7 +853,6 @@
                         <outlet property="detailRatingCount" destination="iFV-jP-1fp" id="9BF-HJ-j9P"/>
                         <outlet property="detailReleaseDate" destination="EnW-PP-dVH" id="Dce-iG-EZe"/>
                         <outlet property="detailSize" destination="zXC-R6-DS6" id="efi-AK-GjY"/>
-                        <outlet property="detailViewButton" destination="l8T-z3-aJz" id="DsL-qz-X0V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TzQ-dL-hx6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1034,6 +1044,9 @@
                                                                 <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
+                                                                <connections>
+                                                                    <action selector="viewButtonClicked:" destination="yvt-6q-5ng" eventType="touchUpInside" id="pck-J1-t9H"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -1078,7 +1091,6 @@
                         <outlet property="detailPrice" destination="IpK-U3-N5c" id="IQK-u4-eTm"/>
                         <outlet property="detailPrimaryGenre" destination="Dmj-a5-Bit" id="lyd-Un-7Ss"/>
                         <outlet property="detailReleaseDate" destination="GvH-CQ-1PX" id="kRl-Fg-z4d"/>
-                        <outlet property="detailViewButton" destination="GKK-Kw-EKL" id="fvX-1R-08a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9g-LQ-yi8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

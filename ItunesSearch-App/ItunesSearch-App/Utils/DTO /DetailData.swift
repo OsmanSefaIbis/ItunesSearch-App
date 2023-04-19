@@ -14,7 +14,6 @@ struct DetailResultData: Decodable {
 }
 
 struct DetailData: Decodable {
-    
         let wrapperType, kind: String?
         let trackID: Int?
         let artistName, collectionName, trackName: String?
@@ -26,7 +25,6 @@ struct DetailData: Decodable {
         let trackTimeMillis: Int?
         let primaryGenreName: String?
         let longDescription: String?
-        let artworkUrl600: String?
         let genres: [String]?
         let description: String?
         let fileSizeBytes: Int?
@@ -35,14 +33,13 @@ struct DetailData: Decodable {
         
         enum CodingKeys: String, CodingKey {
             case wrapperType, kind
+            case trackID = "trackId"
             case artistName, collectionName, trackName
+            case trackViewURL = "trackViewUrl"
+            case previewURL = "previewUrl"
             case artworkUrl100,trackPrice
             case releaseDate, trackTimeMillis, primaryGenreName, longDescription
-            case artworkUrl600
             case genres, description
             case fileSizeBytes,averageUserRating, userRatingCount
-            case trackID = "trackId"
-            case previewURL = "previewUrl"
-            case trackViewURL = "trackViewUrl"
         }
 }
