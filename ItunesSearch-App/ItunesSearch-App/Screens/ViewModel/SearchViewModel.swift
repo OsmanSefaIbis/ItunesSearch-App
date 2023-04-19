@@ -18,7 +18,7 @@ class SearchViewModel{
     init(){
         model.delegate = self
     }
-    func searchInvoked(_ searchTerm: String, _ mediaType: String, _ offSetValue: Int) {
+    func searchInvoked(_ searchTerm: String, _ mediaType: Category, _ offSetValue: Int) {
         model.fetchDataWith(input: searchTerm, media: mediaType, startFrom: offSetValue)
     }
 }

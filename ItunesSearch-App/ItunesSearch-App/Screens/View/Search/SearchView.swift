@@ -176,7 +176,7 @@ extension SearchView: UICollectionViewDelegate {
         if indexPath.item == latestItemNumeric { // user wants more content
             let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
             paginationOffSet += requestLimit
-            self.viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue, paginationOffSet)
+            self.viewModel.searchInvoked(searchText ?? "", categorySelection, paginationOffSet)
         }
     }
 }
@@ -207,7 +207,7 @@ extension SearchView: UISearchBarDelegate {
         let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         paginationOffSet = 0
         endOfRecordsFlag = false
-        viewModel.searchInvoked(searchText ?? "", categorySelection.rawValue, paginationOffSet)
+        viewModel.searchInvoked(searchText ?? "", categorySelection, paginationOffSet)
         
     }
     
@@ -227,7 +227,7 @@ extension SearchView: UISearchBarDelegate {
                 self.paginationOffSet = 0
                 self.endOfRecordsFlag = false
                 self.activityIndicator.startAnimating()
-                self.viewModel.searchInvoked(searchText!, self.categorySelection.rawValue, self.paginationOffSet)
+                self.viewModel.searchInvoked(searchText!, self.categorySelection, self.paginationOffSet)
             }
         })
     }
