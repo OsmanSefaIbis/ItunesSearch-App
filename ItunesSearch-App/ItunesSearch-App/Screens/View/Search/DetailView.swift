@@ -29,16 +29,35 @@ class DetailView: UIViewController{
     private var item: Detail?
     var id = 0
     
-    
     private let viewModel = DetailViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         assignDelegates()
+        viewModel.didViewLoad(withId: id)
     }
     
     func assignDelegates() {
         viewModel.delegate = self
+    }
+    func configureItem(with item: Detail){
+        
+        self.detailImage.kf.setImage(with: URL.init(string: item.artworkUrl))
+//        let category = item.kind
+//        switch category{
+//            // Mutuals
+//            self.detailImage.kf.setImage(with: URL.init(string: item.artworkUrl))
+//        // Diffs
+//        case "feature-movie":
+//
+//        case "song":
+//
+//        case "ebook":
+//
+//        case "podcast":
+//
+//        }
+        
     }
     
 }
@@ -47,5 +66,7 @@ class DetailView: UIViewController{
 
 /************************   ViewModel  ************************/
 extension DetailView: DetailViewModelDelegate{
-    //
+    func refreshItem(_ retrieved: [Detail]) {
+        configureItem(with: retrieved.first!)
+    }
 }

@@ -34,7 +34,7 @@ class DetailModel{
                         }
                         self.delegate?.dataDidFetch()
                     } catch {
-                        fatalError("Error occured with fetchSingularData() - Cause: Decoding Error")
+                        fatalError("Error occured with fetchSingularData() - Cause: Decoding Error --> \(error)")
                     }
                 }
             }

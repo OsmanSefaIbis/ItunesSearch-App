@@ -139,33 +139,30 @@ extension SearchView: UICollectionViewDelegate {
         collectionView.deselectItem(at: indexPath, animated: true)
         switch categorySelection{
             case .movie:
-                if let detailPage =  storyboard?.instantiateViewController(withIdentifier: "MovieDetailView") as? DetailView{
-                    let searchEntity = items[indexPath.item]
-                    let searchId = searchEntity.id
-                    detailPage.id = String(searchId)
+                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: "MovieDetailView") as? DetailView{
+                    embedViewControllerWithId(&detailPage)
                     self.navigationController?.pushViewController(detailPage, animated: true)
             }
             case .music:
-                if let detailPage =  storyboard?.instantiateViewController(withIdentifier: "MusicDetailView") as? DetailView{
-                    let searchEntity = items[indexPath.item]
-                    let searchId = searchEntity.id
-                    detailPage.id = String(searchId)
+                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: "MusicDetailView") as? DetailView{
+                    embedViewControllerWithId(&detailPage)
                     self.navigationController?.pushViewController(detailPage, animated: true)
             }
             case .ebook:
-                if let detailPage =  storyboard?.instantiateViewController(withIdentifier: "EbookDetailView") as? DetailView{
-                    let searchEntity = items[indexPath.item]
-                    let searchId = searchEntity.id
-                    detailPage.id = String(searchId)
+                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: "EbookDetailView") as? DetailView{
+                    embedViewControllerWithId(&detailPage)
                     self.navigationController?.pushViewController(detailPage, animated: true)
             }
             case .podcast:
-                if let detailPage =  storyboard?.instantiateViewController(withIdentifier: "PodcastDetailView") as? DetailView{
-                    let searchEntity = items[indexPath.item]
-                    let searchId = searchEntity.id
-                    detailPage.id = String(searchId)
+                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: "PodcastDetailView") as? DetailView{
+                    embedViewControllerWithId(&detailPage)
                     self.navigationController?.pushViewController(detailPage, animated: true)
             }
+        }
+        func embedViewControllerWithId(_ vc: inout DetailView){
+            let searchEntity = items[indexPath.item]
+            let searchId = searchEntity.id
+            vc.id = searchId
         }
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DetailViewModelDelegate: AnyObject{
-    //
+    func refreshItem(_ retrieved: [Detail])
 }
 
 class DetailViewModel{
@@ -18,10 +18,34 @@ class DetailViewModel{
     init(){
         model.delegate = self
     }
+    func didViewLoad(withId idValue: Int){
+        model.fetchSingularData(for: idValue)
+    }
 }
 
 extension DetailViewModel: DetailModelDelegate{
     func dataDidFetch(){
-
+        let retrievedData: [Detail] = model.dataFetched.map{
+            .init(
+                id: $0.trackID!,
+                kind: $0.kind!,
+                artworkUrl: $0.artworkUrl100!,
+                description: $0.longDescription!,
+                name: $0.trackName!,
+                creator: $0.artistName!,
+                collectionName: $0.collectionName!,
+                releaseDate: $0.releaseDate!,
+                genre: $0.primaryGenreName!,
+                price: $0.trackPrice ?? 0,
+                length: $0.trackTimeMillis ?? 0,
+                size: $0.fileSizeBytes ?? 0,
+                ratingCount: $0.userRatingCount ?? 0,
+                rating: $0.averageUserRating ?? 0,
+                genreList: $0.genres ?? [""],
+                previewUrl: $0.previewURL!,
+                viewUrl: $0.trackViewURL!
+            )
+        }
+        self.delegate?.refreshItem(retrievedData)
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 struct Detail{
     
     let id: Int
+    let kind: String
     let artworkUrl: String
     let description: String
     let name: String
@@ -18,8 +19,8 @@ struct Detail{
     let releaseDate: String
     let genre: String
     let price: Double
-    let length: String
-    let size: String
+    let length: Int
+    let size: Int
     let ratingCount: Int
     let rating: Double
     let genreList: [String]
