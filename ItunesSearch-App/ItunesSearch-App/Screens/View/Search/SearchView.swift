@@ -7,14 +7,14 @@ import UIKit
 
 class SearchView: UIViewController{
     
-    // Soft Coded Stuff
-    typealias RowItems = SearchCellModel
-    private let cellIdentifier = "SearchCell"
     // UIComponents
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var collectionView: UICollectionView!
+    
+    typealias RowItems = SearchCellModel
+    private let cellIdentifier = "SearchCell"
     
     private let viewModel = SearchViewModel()
     private var items: [RowItems] = []

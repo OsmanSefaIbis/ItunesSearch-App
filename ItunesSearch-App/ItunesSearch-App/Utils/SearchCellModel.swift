@@ -13,3 +13,4 @@ struct SearchCellModel {
     let collectionName: String
     let collectionPrice: Double
 }
+

@@ -135,7 +135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1z-qA-2nO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="886.25954198473278" y="-114.08450704225352"/>
+            <point key="canvasLocation" x="-40" y="-114"/>
         </scene>
         <!--Detail View-->
         <scene sceneID="7uo-yg-hSK">
@@ -359,8 +359,16 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="detailCollectionName" destination="UNR-N7-n8v" id="ski-vg-aeq"/>
+                        <outlet property="detailCreator" destination="GN5-DA-MbQ" id="z0R-9E-o7Z"/>
                         <outlet property="detailDescription" destination="i3Z-uc-F2r" id="JmU-6q-QrF"/>
                         <outlet property="detailImage" destination="pne-yR-C0g" id="4oe-Nj-P1l"/>
+                        <outlet property="detailName" destination="5J1-Nq-c8f" id="6gs-rx-LUZ"/>
+                        <outlet property="detailPreviewButton" destination="tnn-b8-9G5" id="YrN-ZI-IvC"/>
+                        <outlet property="detailPrice" destination="j1R-a9-Jeb" id="Ymp-l0-ZPd"/>
+                        <outlet property="detailPrimaryGenre" destination="UsX-Nt-dah" id="wJU-EY-EL7"/>
+                        <outlet property="detailReleaseDate" destination="3aT-mf-pGM" id="Kp5-dY-fAE"/>
+                        <outlet property="detailViewButton" destination="tCc-LX-Wss" id="ifI-Dy-MC3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bT5-dM-got" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -569,7 +577,15 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="detailCreator" destination="GX3-Rt-IV4" id="D0n-OO-UYg"/>
                         <outlet property="detailImage" destination="8Tq-rs-aUP" id="PRa-bP-YX7"/>
+                        <outlet property="detailLength" destination="Io9-OX-Ar5" id="fiP-hO-aTi"/>
+                        <outlet property="detailName" destination="6FF-Yp-9r4" id="pTJ-LJ-Ix7"/>
+                        <outlet property="detailPreviewButton" destination="dLa-OP-LLp" id="cmQ-1E-bob"/>
+                        <outlet property="detailPrice" destination="ugo-C5-JxI" id="hC7-Aq-Nwb"/>
+                        <outlet property="detailPrimaryGenre" destination="Nzt-tI-FpI" id="5vi-Vh-WSz"/>
+                        <outlet property="detailReleaseDate" destination="NO4-Al-QIA" id="8Yx-Px-yFO"/>
+                        <outlet property="detailViewButton" destination="RdK-DS-moB" id="DEH-rC-ixT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="86p-ms-zbd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -816,8 +832,17 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="detailCreator" destination="tfX-XN-I9d" id="bt4-IV-6jd"/>
                         <outlet property="detailDescription" destination="jdu-GZ-h3X" id="6r3-bd-QQy"/>
                         <outlet property="detailImage" destination="Sbe-j8-5nt" id="Rjr-hh-2vJ"/>
+                        <outlet property="detailName" destination="PGv-zF-vzA" id="wq3-8a-ZSx"/>
+                        <outlet property="detailPrice" destination="jhd-ec-xOK" id="dMz-Ea-xJw"/>
+                        <outlet property="detailPrimaryGenre" destination="WHP-hg-8JJ" id="qG0-gm-nMw"/>
+                        <outlet property="detailRating" destination="dOr-h9-yun" id="bhx-yr-j43"/>
+                        <outlet property="detailRatingCount" destination="iFV-jP-1fp" id="9BF-HJ-j9P"/>
+                        <outlet property="detailReleaseDate" destination="EnW-PP-dVH" id="Dce-iG-EZe"/>
+                        <outlet property="detailSize" destination="zXC-R6-DS6" id="efi-AK-GjY"/>
+                        <outlet property="detailViewButton" destination="l8T-z3-aJz" id="DsL-qz-X0V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TzQ-dL-hx6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1044,7 +1069,16 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="detailCollectionName" destination="cxo-Ia-Tht" id="BPZ-g4-5UF"/>
+                        <outlet property="detailCreator" destination="eVI-rz-aYc" id="fhZ-uU-1XT"/>
+                        <outlet property="detailGenres" destination="VOI-9K-DSO" id="Tes-G8-t2P"/>
                         <outlet property="detailImage" destination="5gj-Db-ZUc" id="u8E-RT-rra"/>
+                        <outlet property="detailLength" destination="PcG-of-TAB" id="v5x-GY-4E2"/>
+                        <outlet property="detailName" destination="Oro-sf-sSc" id="k3L-Ej-F0j"/>
+                        <outlet property="detailPrice" destination="IpK-U3-N5c" id="IQK-u4-eTm"/>
+                        <outlet property="detailPrimaryGenre" destination="Dmj-a5-Bit" id="lyd-Un-7Ss"/>
+                        <outlet property="detailReleaseDate" destination="GvH-CQ-1PX" id="kRl-Fg-z4d"/>
+                        <outlet property="detailViewButton" destination="GKK-Kw-EKL" id="fvX-1R-08a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9g-LQ-yi8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1067,7 +1101,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m7t-pT-YLB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-40.458015267175568" y="-114.08450704225352"/>
+            <point key="canvasLocation" x="-973" y="-114"/>
         </scene>
     </scenes>
     <resources>
