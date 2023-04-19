@@ -11,7 +11,7 @@ class DetailView: UIViewController{
     
     //UIComponents
     @IBOutlet weak var detailImage: UIImageView!
-    @IBOutlet weak var detailDescription: UILabel!
+    @IBOutlet weak var detailDescription: UITextView!
     @IBOutlet weak var detailName: UILabel!
     @IBOutlet weak var detailCreator: UILabel!
     @IBOutlet weak var detailCollectionName: UILabel!
@@ -44,12 +44,12 @@ class DetailView: UIViewController{
         let category = item.kind
         switch category{
             case "feature-movie":
-                detailDescription.text = item.description
+                detailDescription.text = item.longDescription
                 detailCollectionName.text = item.collectionName
             case "song":
                 detailLength.text = String(item.length)
             case "ebook":
-                detailDescription.text = item.description
+                detailDescription.text = stripHTMLTags(from: item.description)
                 detailSize.text = String(item.size)
                 detailRatingCount.text = String(item.ratingCount)
                 detailRating.text = String(item.rating)
@@ -78,6 +78,10 @@ class DetailView: UIViewController{
             } else {
                 return urlComponents.string
             }
+        }
+        func stripHTMLTags(from text: String) -> String {
+            let cleanedText = text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+            return cleanedText.trimmingCharacters(in: .whitespacesAndNewlines)
         }
     }
     // TODO: onPress

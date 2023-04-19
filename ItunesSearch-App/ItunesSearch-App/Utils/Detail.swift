@@ -13,6 +13,7 @@ struct Detail{
     let kind: String
     let artworkUrl: String
     let description: String
+    let longDescription: String
     let name: String
     let creator: String
     let collectionName: String
