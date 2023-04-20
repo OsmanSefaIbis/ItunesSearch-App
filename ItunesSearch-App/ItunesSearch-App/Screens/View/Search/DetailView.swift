@@ -10,24 +10,22 @@ import UIKit
 class DetailView: UIViewController{
     
     //UIComponents
-    @IBOutlet weak var detailImage: UIImageView!
-    @IBOutlet weak var detailDescription: UITextView!
-    @IBOutlet weak var detailName: UILabel!
-    @IBOutlet weak var detailCreator: UILabel!
-    @IBOutlet weak var detailCollectionName: UILabel!
-    @IBOutlet weak var detailReleaseDate: UILabel!
-    @IBOutlet weak var detailPrimaryGenre: UILabel!
-    @IBOutlet weak var detailPrice: UILabel!
-    @IBOutlet weak var detailLength: UILabel!
-    @IBOutlet weak var detailSize: UILabel!
-    @IBOutlet weak var detailRatingCount: UILabel!
-    @IBOutlet weak var detailRating: UILabel!
-    @IBOutlet weak var detailGenres: UILabel!
-    @IBOutlet weak var detailContent: UILabel!
-    @IBOutlet weak var detailEpisodes: UILabel!
-    
-    
-    
+    @IBOutlet private weak var detailImage: UIImageView!
+    @IBOutlet private weak var detailDescription: UITextView!
+    @IBOutlet private weak var detailName: UILabel!
+    @IBOutlet private weak var detailCreator: UILabel!
+    @IBOutlet private weak var detailCollectionName: UILabel!
+    @IBOutlet private weak var detailReleaseDate: UILabel!
+    @IBOutlet private weak var detailPrimaryGenre: UILabel!
+    @IBOutlet private weak var detailPrice: UILabel!
+    @IBOutlet private weak var detailLength: UILabel!
+    @IBOutlet private weak var detailSize: UILabel!
+    @IBOutlet private weak var detailRatingCount: UILabel!
+    @IBOutlet private weak var detailRating: UILabel!
+    @IBOutlet private weak var detailGenres: UILabel!
+    @IBOutlet private weak var detailContent: UILabel!
+    @IBOutlet private weak var detailEpisodes: UILabel!
+    @IBOutlet private weak var detailTrackInfo: UILabel!
     
     private var item: Detail?
     var id = 0
@@ -44,7 +42,7 @@ class DetailView: UIViewController{
         viewModel.delegate = self
     }
     func configureItem(with item: Detail){
-        let modifiedArtworkUrl = changeImageURL(item.artworkUrl)
+        let modifiedArtworkUrl = changeImageURL(item.artworkUrl, withDimension: 600)
         configureMutuals(item)
         let category = item.kind
         switch category{
@@ -55,13 +53,14 @@ class DetailView: UIViewController{
             case "song":
                 detailLength.text = formatTimeFromMillis(millis: item.length)
                 detailPrimaryGenre.text = item.genre
+                detailCollectionName.text = item.collectionName
+            detailTrackInfo.text = String(item.trackNumber).appending(" /").appending(String(item.albumNumber))
             case "ebook":
             detailDescription.text = item.description.withoutHtmlEntities
                 detailSize.text = convertBytesToGBorMB(item.size)
-                detailRatingCount.text = item.ratingCount == 0 ?
-                    "No Rating" : "# ".appending( String(item.ratingCount))
-                detailRating.text = item.rating == 0.0 ? "No Rating" : String(item.rating).appending(" /5")
                 detailGenres.text = item.genreList.joined(separator: ", ")
+                detailRatingCount.text = item.ratingCount == 0 ? "No Rating" : "# ".appending( String(item.ratingCount))
+                detailRating.text = item.rating == 0.0 ? "No Rating" : String(item.rating).appending(" /5")
             case "podcast":
                 detailLength.text = formatTimeFromMinutes(minutes: item.length)
                 detailContent.text = item.advisory
@@ -78,17 +77,6 @@ class DetailView: UIViewController{
             detailCreator.text = item.creator
             detailReleaseDate.text = convertDate(for: item.releaseDate)
             detailPrice.text = item.price == 0 ? "Free" : "$ ".appending(String(item.price))
-        }
-        func changeImageURL(_ urlString: String) -> String? {
-            guard var urlComponents = URLComponents(string: urlString) else {
-                return nil
-            }
-            if urlComponents.path.hasSuffix("/100x100bb.jpg") {
-                urlComponents.path = urlComponents.path.replacingOccurrences(of: "/100x100bb.jpg", with: "/600x600bb.jpg")
-                return urlComponents.string
-            } else {
-                return urlComponents.string
-            }
         }
     }
     // TODO: onPress

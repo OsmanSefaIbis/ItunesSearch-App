@@ -22,6 +22,8 @@ struct Detail{
     let genre: String
     let advisory: String
     let price: Double
+    let trackNumber: Int
+    let albumNumber: Int
     let length: Int
     let size: Int
     let ratingCount: Int

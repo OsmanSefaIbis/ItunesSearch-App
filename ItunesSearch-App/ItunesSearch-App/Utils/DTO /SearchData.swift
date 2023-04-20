@@ -35,9 +35,24 @@ enum Kind: String, Codable {
     case podcast = "podcast"
     case song = "song"
     case ebook = "ebook"
+    case musicVideo = "music-video"
+    case tvShow = "tv-show"
+    case shortFilm = "short-film"
+    case software = "software"
+    case audiobook = "audiobook"
+    case trailer = "trailer"
+    case interactiveBooklet = "interactive-booklet"
+    case pdf = "pdf"
+    case podcastEpisode = "podcast-episode"
 }
 
 enum WrapperType: String, Codable {
     case track = "track"
+    case collection = "collection"
+    case artist = "artist"
+    case tvSeason = "tv-season"
+    case movie = "movie"
+    case audiobook = "audiobook"
+    case ebook = "ebook"
 }
 

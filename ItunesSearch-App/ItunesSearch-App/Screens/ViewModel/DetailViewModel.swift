@@ -40,6 +40,8 @@ extension DetailViewModel: DetailModelDelegate{
                 genre: $0.primaryGenreName ?? "",
                 advisory: $0.contentAdvisoryRating ?? "",
                 price: $0.trackPrice ?? 0,
+                trackNumber: $0.trackNumber ?? 0,
+                albumNumber: $0.trackCount ?? 0,
                 length: $0.trackTimeMillis ?? 0,
                 size: $0.fileSizeBytes ?? 0,
                 ratingCount: $0.userRatingCount ?? 0,

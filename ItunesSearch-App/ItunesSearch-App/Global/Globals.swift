@@ -82,3 +82,15 @@ func convertBytesToGBorMB(_ bytes: Int) -> String {
         return String(format: "%.2f MB", megabytes)
     }
 }
+
+func changeImageURL(_ urlString: String, withDimension dimension: Int) -> String? {
+    guard var urlComponents = URLComponents(string: urlString) else {
+        return nil
+    }
+    if urlComponents.path.hasSuffix("/100x100bb.jpg") {
+        urlComponents.path = urlComponents.path.replacingOccurrences(of: "/100x100bb.jpg", with: "/\(dimension)x\(dimension)bb.jpg")
+        return urlComponents.string
+    } else {
+        return urlComponents.string
+    }
+}
