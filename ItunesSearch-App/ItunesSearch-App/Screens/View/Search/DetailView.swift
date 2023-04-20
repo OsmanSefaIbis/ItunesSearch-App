@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import WebKit
+import AVFoundation
+import AVKit
 
 class DetailView: UIViewController{
     
@@ -27,7 +30,12 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailEpisodes: UILabel!
     @IBOutlet private weak var detailTrackInfo: UILabel!
     
+    private let webView = WKWebView()
     private var item: Detail?
+    private var viewUrl: URL?
+    private var previewUrl: URL?
+    private var player: AVPlayer?
+    private var playerViewController: AVPlayerViewController?
     var id = 0
     
     private let viewModel = DetailViewModel()
@@ -50,11 +58,13 @@ class DetailView: UIViewController{
                 detailDescription.text = item.longDescription
                 detailCollectionName.text = item.collectionName
                 detailPrimaryGenre.text = item.genre
+                previewUrl = URL(string: item.previewUrl)
             case "song":
                 detailLength.text = formatTimeFromMillis(millis: item.length)
                 detailPrimaryGenre.text = item.genre
                 detailCollectionName.text = item.collectionName
-            detailTrackInfo.text = String(item.trackNumber).appending(" /").appending(String(item.albumNumber))
+                detailTrackInfo.text = String(item.trackNumber).appending(" /").appending(String(item.albumNumber))
+                previewUrl = URL(string: item.previewUrl)
             case "ebook":
             detailDescription.text = item.description.withoutHtmlEntities
                 detailSize.text = convertBytesToGBorMB(item.size)
@@ -77,14 +87,32 @@ class DetailView: UIViewController{
             detailCreator.text = item.creator
             detailReleaseDate.text = convertDate(for: item.releaseDate)
             detailPrice.text = item.price == 0 ? "Free" : "$ ".appending(String(item.price))
+            viewUrl = URL(string: item.viewUrl)
         }
     }
     // TODO: onPress
     @IBAction func viewButtonClicked(_ sender: Any) {
+        let webViewVC = UIViewController()
+        webViewVC.view = webView
+        let request = URLRequest(url: viewUrl!)
+        webView.load(request)
+        let scrollView = webView.scrollView
+        let topInset = navigationController?.navigationBar.frame.minY ?? 0
+        scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+        navigationController?.pushViewController(webViewVC, animated: true)
     }
     @IBAction func moviePreviewButtonClicked(_ sender: Any) {
+        let player = AVPlayer(url: previewUrl!)
+        playerViewController = AVPlayerViewController()
+        playerViewController?.player = player
+        present(playerViewController!, animated: true) {
+            player.play()
+        }
     }
     @IBAction func musicPreviewButtonClicked(_ sender: Any) {
+        let playerItem = AVPlayerItem(url: previewUrl!)
+        player = AVPlayer(playerItem: playerItem)
+        player?.play()
     }
 }
 
@@ -93,7 +121,6 @@ class DetailView: UIViewController{
 /************************   ViewModel  ************************/
 extension DetailView: DetailViewModelDelegate{
     func refreshItem(_ retrieved: [Detail]) {
-        
         DispatchQueue.main.async {
             self.configureItem(with: retrieved.first!)
         }
