@@ -23,7 +23,7 @@ class SearchCell: UICollectionViewCell {
     func configureCell(with model: SearchCellModel) {
         
         artworkImage.kf.setImage(with: URL.init(string: model.artworkUrl))
-        releaseDateLabel.text = convertData(for: model.releaseDate)
+        releaseDateLabel.text = convertDate(for: model.releaseDate)
         collectionNameLabel.text = model.collectionName
         collectionPriceLabel.text = "$ ".appending(String(model.collectionPrice))
     }

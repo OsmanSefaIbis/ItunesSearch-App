@@ -22,8 +22,10 @@ struct DetailData: Decodable {
         let artworkUrl100: String?
         let trackPrice: Double?
         let releaseDate: String?
+        let trackCount: Int?
         let trackTimeMillis: Int?
         let primaryGenreName: String?
+        let contentAdvisoryRating: String?
         let genres: [String]?
         let description: String?
         let longDescription: String?
@@ -38,7 +40,7 @@ struct DetailData: Decodable {
             case trackViewURL = "trackViewUrl"
             case previewURL = "previewUrl"
             case artworkUrl100,trackPrice
-            case releaseDate, trackTimeMillis, primaryGenreName
+            case releaseDate, trackCount, trackTimeMillis, primaryGenreName, contentAdvisoryRating
             case genres, description, longDescription
             case fileSizeBytes,averageUserRating, userRatingCount
         }

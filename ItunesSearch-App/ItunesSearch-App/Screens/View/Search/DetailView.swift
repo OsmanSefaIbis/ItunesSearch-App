@@ -23,6 +23,11 @@ class DetailView: UIViewController{
     @IBOutlet weak var detailRatingCount: UILabel!
     @IBOutlet weak var detailRating: UILabel!
     @IBOutlet weak var detailGenres: UILabel!
+    @IBOutlet weak var detailContent: UILabel!
+    @IBOutlet weak var detailEpisodes: UILabel!
+    
+    
+    
     
     private var item: Detail?
     var id = 0
@@ -46,17 +51,24 @@ class DetailView: UIViewController{
             case "feature-movie":
                 detailDescription.text = item.longDescription
                 detailCollectionName.text = item.collectionName
+                detailPrimaryGenre.text = item.genre
             case "song":
-                detailLength.text = String(item.length)
+                detailLength.text = formatTimeFromMillis(millis: item.length)
+                detailPrimaryGenre.text = item.genre
             case "ebook":
-                detailDescription.text = stripHTMLTags(from: item.description)
-                detailSize.text = String(item.size)
-                detailRatingCount.text = String(item.ratingCount)
-                detailRating.text = String(item.rating)
+            detailDescription.text = item.description.withoutHtmlEntities
+                detailSize.text = convertBytesToGBorMB(item.size)
+                detailRatingCount.text = item.ratingCount == 0 ?
+                    "No Rating" : "# ".appending( String(item.ratingCount))
+                detailRating.text = item.rating == 0.0 ? "No Rating" : String(item.rating).appending(" /5")
+                detailGenres.text = item.genreList.joined(separator: ", ")
             case "podcast":
-                detailLength.text = String(item.length)
+                detailLength.text = formatTimeFromMinutes(minutes: item.length)
+                detailContent.text = item.advisory
+                detailEpisodes.text = "# ".appending(String(item.episodeCount))
                 detailCollectionName.text = item.collectionName
                 detailGenres.text = item.genreList.joined(separator: ", ")
+                detailPrimaryGenre.text = item.genre
         default:
             return
         }
@@ -64,9 +76,8 @@ class DetailView: UIViewController{
             detailImage.kf.setImage(with: URL.init(string: modifiedArtworkUrl ?? item.artworkUrl))
             detailName.text = item.name
             detailCreator.text = item.creator
-            detailReleaseDate.text = item.releaseDate
-            detailPrice.text = "$ ".appending(String(item.price))
-            detailPrimaryGenre.text = item.genre
+            detailReleaseDate.text = convertDate(for: item.releaseDate)
+            detailPrice.text = item.price == 0 ? "Free" : "$ ".appending(String(item.price))
         }
         func changeImageURL(_ urlString: String) -> String? {
             guard var urlComponents = URLComponents(string: urlString) else {
@@ -78,10 +89,6 @@ class DetailView: UIViewController{
             } else {
                 return urlComponents.string
             }
-        }
-        func stripHTMLTags(from text: String) -> String {
-            let cleanedText = text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
-            return cleanedText.trimmingCharacters(in: .whitespacesAndNewlines)
         }
     }
     // TODO: onPress

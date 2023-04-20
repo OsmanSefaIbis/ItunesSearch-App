@@ -18,7 +18,9 @@ struct Detail{
     let creator: String
     let collectionName: String
     let releaseDate: String
+    let episodeCount: Int
     let genre: String
+    let advisory: String
     let price: Double
     let length: Int
     let size: Int
