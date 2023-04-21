@@ -21,7 +21,7 @@ class DetailModel{
         
         if let url = URL(string: urlCompose){
             var request: URLRequest = .init(url: url)
-            request.httpMethod = "GET"
+            request.httpMethod = HardCoded.getRequest.rawValue
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
                 if error != nil{
                     return
@@ -42,13 +42,6 @@ class DetailModel{
         }
         
         
-    }
-    func composeUrl(_ id: Int) -> String{
-        
-        let baseUrl = Api.url.scheme + Api.url.domain + Api.url.lookupPath
-        let idParam = "id=".appending(String(id))
-        let urlCompose = baseUrl + idParam
-        return urlCompose
     }
 }
 

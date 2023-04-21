@@ -7,118 +7,97 @@ import UIKit
 
 class SearchView: UIViewController{
     
-    // UIComponents
+    typealias RowItems = SearchCellModel
+    
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var collectionView: UICollectionView!
     
-    typealias RowItems = SearchCellModel
-    private let cellIdentifier = "SearchCell"
-    
-    private let viewModel = SearchViewModel()
     private var items: [RowItems] = []
-    private var categorySelection = Category.movie
-    private var timeControl: Timer?
+    private let viewModel = SearchViewModel()
     private var paginationOffSet = 0
     private var endOfRecordsFlag = false
     private var idsOfAllFetchedRecords = Set<Int>()
+    private var categorySelection: Category?
+    private var timeControl: Timer?
+    private let cellIdentifier = HardCoded.cellIdentifier.rawValue
     
-    // VLC
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         initiating()
     }
     
     func initiating() {
-        
         configureCollectionView()
         assignDelegates()
         configureSegmentedControl()
     }
     
     func assignDelegates() {
-        
         viewModel.delegate = self
         searchBar.delegate = self
     }
+    
     func configureCollectionView() {
-        
-        collectionView?.register( .init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
         collectionView?.delegate = self
         collectionView?.dataSource = self
-    }
-    
-    func configureSegmentedControl() {
-        
-        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
+        collectionView?.register(
+            .init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
     }
     
     func setItems( _ items: [RowItems]) {
-        
-        if items.count != requestLimit{
-            // normally it should be 20 but if not then you somehow reached the end off the records
-            endOfRecordsFlag = true
-        }
-        
-        if endOfRecordsFlag{
-            // TODO: compare the ids with the fetched ones
-            // only add if the id does not exist in the last fecthed one
-            // append those items only
+        if items.count != requestLimit { endOfRecordsFlag = true }
+        if endOfRecordsFlag {
             var lastRecords: [RowItems] = []
-            for each in items{
-                if idsOfAllFetchedRecords.contains(where: { $0 == each.id }){
-                    continue
-                }else{
-                    lastRecords.append(each)
-                }
+            for each in items {
+                if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue }
+                else { lastRecords.append(each) }
             }
             self.items.append(contentsOf: lastRecords)
             idsOfAllFetchedRecords.removeAll()
-        }else{
+        }else {
             if paginationOffSet != 0 {
-                // remove the ids from the last and add the new ones
-                for each in items {
-                    idsOfAllFetchedRecords.insert(each.id)
-                }
+                for each in items { idsOfAllFetchedRecords.insert(each.id) }
                 self.items.append(contentsOf: items)
-            }else{
-                for each in items {
-                    idsOfAllFetchedRecords.insert(each.id)
-                }
+            }else {
+                for each in items { idsOfAllFetchedRecords.insert(each.id) }
                 self.items = items
             }
         }
-    
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             self.collectionView?.reloadData()
         }
     }
     
+    func configureSegmentedControl() {
+        segmentedControl.addTarget(
+            self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
+    }
+    
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        
-        switch sender.selectedSegmentIndex{
-            case 0:
-                categorySelection = Category.movie
-            case 1:
-                categorySelection = Category.music
-            case 2:
-                categorySelection = Category.ebook
-            case 3:
-                categorySelection = Category.podcast
-        default:
-            fatalError("Error occured with segmentedControlValueChanged()")
+        switch sender.selectedSegmentIndex {
+            case 0: categorySelection = Category.movie
+            case 1: categorySelection = Category.music
+            case 2: categorySelection = Category.ebook
+            case 3: categorySelection = Category.podcast
+        default: fatalError("Error occured with segmentedControlValueChanged()")
         }
     }
-
 }
 
 // MARK: Extensions
 
-/************************   CollectionView  ************************/
-/// DataSource
+/* ViewModel - Delegate */
+extension SearchView: SearchViewModelDelegate {
+    
+    func refreshItems(_ retrived: [SearchCellModel]) {
+        setItems(retrived)
+    }
+}
+
+/* CollectionView - Data */
 extension SearchView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -132,55 +111,63 @@ extension SearchView: UICollectionViewDataSource {
         return cell
     }
 }
-/// Delegate
+
+/* CollectionView - Delegate */
 extension SearchView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         collectionView.deselectItem(at: indexPath, animated: true)
-        switch categorySelection{
-            case .movie:
-                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: "MovieDetailView") as? DetailView{
-                    embedViewControllerWithId(&detailPage)
-                    self.navigationController?.pushViewController(detailPage, animated: true)
+        switch categorySelection {
+            
+        case .movie:
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.movie.rawValue) as? DetailView{
+                embedViewControllerWithId(&detailPage)
+                self.navigationController?.pushViewController(detailPage, animated: true)
             }
-            case .music:
-                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: "MusicDetailView") as? DetailView{
-                    embedViewControllerWithId(&detailPage)
-                    self.navigationController?.pushViewController(detailPage, animated: true)
+        case .music:
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.music.rawValue) as? DetailView{
+                embedViewControllerWithId(&detailPage)
+                self.navigationController?.pushViewController(detailPage, animated: true)
             }
-            case .ebook:
-                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: "EbookDetailView") as? DetailView{
-                    embedViewControllerWithId(&detailPage)
-                    self.navigationController?.pushViewController(detailPage, animated: true)
+        case .ebook:
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.ebook.rawValue) as? DetailView{
+                embedViewControllerWithId(&detailPage)
+                self.navigationController?.pushViewController(detailPage, animated: true)
             }
-            case .podcast:
-                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: "PodcastDetailView") as? DetailView{
-                    embedViewControllerWithId(&detailPage)
-                    self.navigationController?.pushViewController(detailPage, animated: true)
+        case .podcast:
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.podcast.rawValue) as? DetailView{
+                embedViewControllerWithId(&detailPage)
+                self.navigationController?.pushViewController(detailPage, animated: true)
             }
+        default:
+            return
         }
-        func embedViewControllerWithId(_ vc: inout DetailView){
+        func embedViewControllerWithId(_ vc: inout DetailView) {
+            
             let searchEntity = items[indexPath.item]
             let searchId = searchEntity.id
             vc.id = searchId
         }
     }
+    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         if endOfRecordsFlag{
             return
         }
-        
         let latestItemNumeric = items.count - 1
-        
-        if indexPath.item == latestItemNumeric { // user wants more content
-            let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        if indexPath.item == latestItemNumeric {
+            
+            guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+            guard let category = categorySelection else { return }
             paginationOffSet += requestLimit
-            self.viewModel.searchInvoked(searchText ?? "", categorySelection, paginationOffSet)
+            self.viewModel.searchInvoked(searchText, category, paginationOffSet)
         }
     }
 }
-/// FlowLayout
+
+/* CollectionView - Flow */
 extension SearchView: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -191,58 +178,59 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
             return CGSize(width: itemWidth, height: itemHeight)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        10
     }
     
 }
-/************************   SearchBar  ************************/
+
+/* SearchBar - Delegate */
 extension SearchView: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         searchBar.resignFirstResponder()
-        let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        guard let category = categorySelection else { return }
+    
         paginationOffSet = 0
         endOfRecordsFlag = false
-        viewModel.searchInvoked(searchText ?? "", categorySelection, paginationOffSet)
-        
+        viewModel.searchInvoked(searchText, category, paginationOffSet)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        
         timeControl?.invalidate()
-        timeControl = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
-            if (0...2).contains(searchText!.count){
-                self.activityIndicator.stopAnimating()
+        timeControl = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] (timer) in
+            
+            guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+            
+            if (0...2).contains(searchText.count){
+                self?.activityIndicator.stopAnimating()
             }
-            if searchText!.count == 0 {
+            if searchText.count == 0 {
                 DispatchQueue.main.async {
-                    self.items.removeAll()
-                    self.collectionView.reloadData()
+                    self?.items.removeAll()
+                    self?.collectionView.reloadData()
                 }
-            }else if searchText!.count > 2 {
-                self.paginationOffSet = 0
-                self.endOfRecordsFlag = false
-                self.activityIndicator.startAnimating()
-                self.viewModel.searchInvoked(searchText!, self.categorySelection, self.paginationOffSet)
+            }else if searchText.count > 2 {
+                guard let category = self?.categorySelection else { return }
+                guard let offSet = self?.paginationOffSet else { return }
+                self?.paginationOffSet = 0
+                self?.endOfRecordsFlag = false
+                self?.activityIndicator.startAnimating()
+                self?.viewModel.searchInvoked(searchText, category, offSet)
             }
         })
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchBar.text = nil
         self.items.removeAll()
-        searchBar.text = ""
         self.collectionView.reloadData()
-    }
-}
-
-/************************   ViewModel  ************************/
-extension SearchView: SearchViewModelDelegate {
-    
-    func refreshItems(_ retrived: [SearchCellModel]) {
-        setItems(retrived)
     }
 }
 

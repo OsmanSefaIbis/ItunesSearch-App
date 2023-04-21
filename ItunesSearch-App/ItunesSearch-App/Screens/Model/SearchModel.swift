@@ -2,9 +2,6 @@
 //  Search.swift
 //  ItunesSearch-App
 //
-
-
-
 import Foundation
 
 protocol SearchModelDelegate: AnyObject{
@@ -22,7 +19,7 @@ class SearchModel {
         
         if let url = URL(string: urlCompose){
             var request: URLRequest = .init(url: url)
-            request.httpMethod = "GET"
+            request.httpMethod = HardCoded.getRequest.rawValue
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
                 if error != nil{
                     return
@@ -42,14 +39,5 @@ class SearchModel {
             task.resume()
         }
     }
-    
-    // TODO: Migrate this helper
-    func composeUrl(_ term: String, _ media: Category, _ offset: Int) -> String{
-        let termParam = "term=".appending(term)
-        let mediaParam = "&media=".appending(media.rawValue)
-        let baseUrl = Api.url.scheme + Api.url.domain + Api.url.searchPath
-        let urlCompose = baseUrl + termParam + mediaParam + Api.url.limit + Api.url.offsetLimit + String(offset)
-        
-        return urlCompose
-    }
+
 }

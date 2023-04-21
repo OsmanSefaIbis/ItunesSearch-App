@@ -12,7 +12,6 @@ import AVKit
 
 class DetailView: UIViewController{
     
-    //UIComponents
     @IBOutlet private weak var detailImage: UIImageView!
     @IBOutlet private weak var detailDescription: UITextView!
     @IBOutlet private weak var detailName: UILabel!
@@ -30,15 +29,16 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailEpisodes: UILabel!
     @IBOutlet private weak var detailTrackInfo: UILabel!
     
-    private let webView = WKWebView()
+    private let viewModel = DetailViewModel()
     private var item: Detail?
-    private var viewUrl: URL?
-    private var previewUrl: URL?
+    var id = 0
+    private let dimensionPreference = 600
+
+    private let webView = WKWebView()
     private var player: AVPlayer?
     private var playerViewController: AVPlayerViewController?
-    var id = 0
-    
-    private let viewModel = DetailViewModel()
+    private var viewUrl: URL?
+    private var previewUrl: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,49 +49,76 @@ class DetailView: UIViewController{
     func assignDelegates() {
         viewModel.delegate = self
     }
-    func configureItem(with item: Detail){
-        let modifiedArtworkUrl = changeImageURL(item.artworkUrl, withDimension: 600)
+    func configureItem( with item: Detail){
+        
+        guard let modifiedArtworkUrl =
+                changeImageURL(item.artworkUrl, withDimension: dimensionPreference) else { return }
         configureMutuals(item)
-        let category = item.kind
-        switch category{
-            case "feature-movie":
-                detailDescription.text = item.longDescription
-                detailCollectionName.text = item.collectionName
-                detailPrimaryGenre.text = item.genre
-                previewUrl = URL(string: item.previewUrl)
-            case "song":
-                detailLength.text = formatTimeFromMillis(millis: item.length)
-                detailPrimaryGenre.text = item.genre
-                detailCollectionName.text = item.collectionName
-                detailTrackInfo.text = String(item.trackNumber).appending(" /").appending(String(item.albumNumber))
-                previewUrl = URL(string: item.previewUrl)
-            case "ebook":
-            detailDescription.text = item.description.withoutHtmlEntities
-                detailSize.text = convertBytesToGBorMB(item.size)
-                detailGenres.text = item.genreList.joined(separator: ", ")
-                detailRatingCount.text = item.ratingCount == 0 ? "No Rating" : "# ".appending( String(item.ratingCount))
-                detailRating.text = item.rating == 0.0 ? "No Rating" : String(item.rating).appending(" /5")
-            case "podcast":
-                detailLength.text = formatTimeFromMinutes(minutes: item.length)
-                detailContent.text = item.advisory
-                detailEpisodes.text = "# ".appending(String(item.episodeCount))
-                detailCollectionName.text = item.collectionName
-                detailGenres.text = item.genreList.joined(separator: ", ")
-                detailPrimaryGenre.text = item.genre
+        
+        func configureMutuals(_ item: Detail) {
+            viewUrl = URL(string: item.viewUrl)
+            detailName.text = item.name
+            detailCreator.text = item.creator
+            detailReleaseDate.text = convertDate( for: item.releaseDate)
+            detailImage.kf.setImage(with: URL.init(string: modifiedArtworkUrl))
+            
+            detailPrice.text = (item.price == 0)
+            ? HardCoded.free.rawValue : (HardCoded.dolar.rawValue)
+                .appending(String(item.price))
+        }
+        
+        switch item.kind{
+            case CategoryKind.movie.rawValue: configureMovie()
+            case CategoryKind.music.rawValue: configureMusic()
+            case CategoryKind.ebook.rawValue: configureEbook()
+            case CategoryKind.podcast.rawValue: configurePodcast()
         default:
             return
         }
-        func configureMutuals(_ item: Detail){
-            detailImage.kf.setImage(with: URL.init(string: modifiedArtworkUrl ?? item.artworkUrl))
-            detailName.text = item.name
-            detailCreator.text = item.creator
-            detailReleaseDate.text = convertDate(for: item.releaseDate)
-            detailPrice.text = item.price == 0 ? "Free" : "$ ".appending(String(item.price))
-            viewUrl = URL(string: item.viewUrl)
+        
+        func configureMovie() {
+            previewUrl = URL(string: item.previewUrl)
+            detailPrimaryGenre.text = item.genre
+            detailDescription.text = item.longDescription
+            detailCollectionName.text = item.collectionName
+        }
+        func configureMusic() {
+            previewUrl = URL(string: item.previewUrl)
+            detailPrimaryGenre.text = item.genre
+            detailCollectionName.text = item.collectionName
+            detailLength.text = formatTimeFromMillis(millis: item.length)
+            
+            detailTrackInfo.text = String(item.trackNumber)
+                .appending(HardCoded.trackSeperator.rawValue)
+                .appending(String(item.albumNumber))
+        }
+        func configureEbook() {
+            detailSize.text = convertBytesToGBorMB(item.size)
+            detailDescription.text = item.description.withoutHtmlEntities
+            detailGenres.text = item.genreList.joined(separator: HardCoded.seperator.rawValue)
+            
+            detailRatingCount.text = (item.ratingCount == 0)
+                ? HardCoded.noRating.rawValue : (HardCoded.numberSign.rawValue)
+                    .appending( String(item.ratingCount))
+            detailRating.text = (item.rating == 0.0)
+                ? HardCoded.noRating.rawValue : String(item.rating)
+                    .appending(HardCoded.ratingScale.rawValue)
+        }
+        func configurePodcast() {
+            detailContent.text = item.advisory
+            detailPrimaryGenre.text = item.genre
+            detailCollectionName.text = item.collectionName
+            detailLength.text = formatTimeFromMinutes(minutes: item.length)
+            detailGenres.text = item.genreList.joined(separator: HardCoded.seperator.rawValue)
+            detailEpisodes.text = (HardCoded.numberSign.rawValue)
+                .appending(String(item.episodeCount))
         }
     }
-    // TODO: onPress
+    
+    /* Button Actions */
+    
     @IBAction func viewButtonClicked(_ sender: Any) {
+        
         let webViewVC = UIViewController()
         webViewVC.view = webView
         let request = URLRequest(url: viewUrl!)
@@ -102,14 +129,14 @@ class DetailView: UIViewController{
         navigationController?.pushViewController(webViewVC, animated: true)
     }
     @IBAction func moviePreviewButtonClicked(_ sender: Any) {
+        
         let player = AVPlayer(url: previewUrl!)
         playerViewController = AVPlayerViewController()
         playerViewController?.player = player
-        present(playerViewController!, animated: true) {
-            player.play()
-        }
+        present(playerViewController!, animated: true) { player.play() }
     }
     @IBAction func musicPreviewButtonClicked(_ sender: Any) {
+        
         let playerItem = AVPlayerItem(url: previewUrl!)
         player = AVPlayer(playerItem: playerItem)
         player?.play()
@@ -118,7 +145,7 @@ class DetailView: UIViewController{
 
 // MARK: Extensions
 
-/************************   ViewModel  ************************/
+/* ViewModel Delegate */
 extension DetailView: DetailViewModelDelegate{
     func refreshItem(_ retrieved: [Detail]) {
         DispatchQueue.main.async {
