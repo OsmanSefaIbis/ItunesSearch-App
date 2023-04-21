@@ -14,6 +14,7 @@ struct DetailResultData: Decodable {
 }
 
 struct DetailData: Decodable {
+    
         let wrapperType, kind: String?
         let trackID: Int?
         let artistName, collectionName, trackName: String?
@@ -35,6 +36,7 @@ struct DetailData: Decodable {
         let userRatingCount: Int?
         
         enum CodingKeys: String, CodingKey {
+            
             case wrapperType, kind
             case trackID = "trackId"
             case artistName, collectionName, trackName

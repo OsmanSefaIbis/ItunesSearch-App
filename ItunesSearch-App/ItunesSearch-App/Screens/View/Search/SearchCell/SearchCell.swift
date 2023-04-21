@@ -25,7 +25,7 @@ class SearchCell: UICollectionViewCell {
         artworkImage.kf.setImage(with: URL.init(string: model.artworkUrl))
         releaseDateLabel.text = convertDate(for: model.releaseDate)
         collectionNameLabel.text = model.collectionName
-        collectionPriceLabel.text = "$ ".appending(String(model.collectionPrice))
+        collectionPriceLabel.text = HardCoded.dolar.get().appending(String(model.collectionPrice))
     }
     
     func configureCellLooks(){

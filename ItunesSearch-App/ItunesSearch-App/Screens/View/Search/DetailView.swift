@@ -63,15 +63,15 @@ class DetailView: UIViewController{
             detailImage.kf.setImage(with: URL.init(string: modifiedArtworkUrl))
             
             detailPrice.text = (item.price == 0)
-            ? HardCoded.free.rawValue : (HardCoded.dolar.rawValue)
+            ? HardCoded.free.get() : (HardCoded.dolar.get())
                 .appending(String(item.price))
         }
         
         switch item.kind{
-            case CategoryKind.movie.rawValue: configureMovie()
-            case CategoryKind.music.rawValue: configureMusic()
-            case CategoryKind.ebook.rawValue: configureEbook()
-            case CategoryKind.podcast.rawValue: configurePodcast()
+            case CategoryKind.movie.get(): configureMovie()
+            case CategoryKind.music.get(): configureMusic()
+            case CategoryKind.ebook.get(): configureEbook()
+            case CategoryKind.podcast.get(): configurePodcast()
         default:
             return
         }
@@ -89,34 +89,33 @@ class DetailView: UIViewController{
             detailLength.text = formatTimeFromMillis(millis: item.length)
             
             detailTrackInfo.text = String(item.trackNumber)
-                .appending(HardCoded.trackSeperator.rawValue)
+                .appending(HardCoded.trackSeperator.get())
                 .appending(String(item.albumNumber))
         }
         func configureEbook() {
             detailSize.text = convertBytesToGBorMB(item.size)
             detailDescription.text = item.description.withoutHtmlEntities
-            detailGenres.text = item.genreList.joined(separator: HardCoded.seperator.rawValue)
+            detailGenres.text = item.genreList.joined(separator: HardCoded.seperator.get())
             
             detailRatingCount.text = (item.ratingCount == 0)
-                ? HardCoded.noRating.rawValue : (HardCoded.numberSign.rawValue)
+            ? HardCoded.noRating.get() : (HardCoded.numberSign.get())
                     .appending( String(item.ratingCount))
             detailRating.text = (item.rating == 0.0)
-                ? HardCoded.noRating.rawValue : String(item.rating)
-                    .appending(HardCoded.ratingScale.rawValue)
+                ? HardCoded.noRating.get() : String(item.rating)
+                .appending(HardCoded.ratingScale.get())
         }
         func configurePodcast() {
             detailContent.text = item.advisory
             detailPrimaryGenre.text = item.genre
             detailCollectionName.text = item.collectionName
             detailLength.text = formatTimeFromMinutes(minutes: item.length)
-            detailGenres.text = item.genreList.joined(separator: HardCoded.seperator.rawValue)
-            detailEpisodes.text = (HardCoded.numberSign.rawValue)
+            detailGenres.text = item.genreList.joined(separator: HardCoded.seperator.get())
+            detailEpisodes.text = (HardCoded.numberSign.get())
                 .appending(String(item.episodeCount))
         }
     }
     
     /* Button Actions */
-    
     @IBAction func viewButtonClicked(_ sender: Any) {
         
         let webViewVC = UIViewController()

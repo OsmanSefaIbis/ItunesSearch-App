@@ -17,11 +17,12 @@ class SearchView: UIViewController{
     private var items: [RowItems] = []
     private let viewModel = SearchViewModel()
     private var paginationOffSet = 0
+    private let requestLimit = 20
     private var endOfRecordsFlag = false
     private var idsOfAllFetchedRecords = Set<Int>()
-    private var categorySelection: Category?
+    private var categorySelection: Category? = .movie
     private var timeControl: Timer?
-    private let cellIdentifier = HardCoded.cellIdentifier.rawValue
+    private let cellIdentifier = HardCoded.cellIdentifier.get()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,28 +122,29 @@ extension SearchView: UICollectionViewDelegate {
         switch categorySelection {
             
         case .movie:
-            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.movie.rawValue) as? DetailView{
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.movie.get()) as? DetailView{
                 embedViewControllerWithId(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
         case .music:
-            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.music.rawValue) as? DetailView{
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.music.get()) as? DetailView{
                 embedViewControllerWithId(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
         case .ebook:
-            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.ebook.rawValue) as? DetailView{
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.ebook.get()) as? DetailView{
                 embedViewControllerWithId(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
         case .podcast:
-            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.podcast.rawValue) as? DetailView{
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.podcast.get()) as? DetailView{
                 embedViewControllerWithId(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
         default:
             return
         }
+
         func embedViewControllerWithId(_ vc: inout DetailView) {
             
             let searchEntity = items[indexPath.item]

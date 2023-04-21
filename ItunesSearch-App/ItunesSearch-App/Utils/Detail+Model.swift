@@ -31,5 +31,4 @@ struct Detail{
     let genreList: [String]
     let previewUrl: String
     let viewUrl: String
-
 }

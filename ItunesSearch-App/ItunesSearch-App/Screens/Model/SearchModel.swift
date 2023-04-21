@@ -19,21 +19,15 @@ class SearchModel {
         
         if let url = URL(string: urlCompose){
             var request: URLRequest = .init(url: url)
-            request.httpMethod = HardCoded.getRequest.rawValue
+            request.httpMethod = HardCoded.getRequest.get()
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                if error != nil{
-                    return
-                }
-                if let data = data{
+                if error != nil { return }
+                if let data = data {
                     do{
                         let SearchResultData = try JSONDecoder().decode(SearchResultData.self, from: data)
-                        if let searchData = SearchResultData.results{
-                            self.dataFetched = searchData
-                        }
+                        if let searchData = SearchResultData.results { self.dataFetched = searchData }
                         self.delegate?.dataDidFetch()
-                    } catch {
-                        fatalError("Error occured with fetchDataWith() - Cause: Decoding Error --> \(error)")
-                    }
+                    } catch { fatalError(HardCoded.fetchDataWithError.get() + "\(error)" ) }
                 }
             }
             task.resume()

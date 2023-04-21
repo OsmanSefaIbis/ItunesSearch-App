@@ -21,27 +21,18 @@ class DetailModel{
         
         if let url = URL(string: urlCompose){
             var request: URLRequest = .init(url: url)
-            request.httpMethod = HardCoded.getRequest.rawValue
+            request.httpMethod = HardCoded.getRequest.get()
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                if error != nil{
-                    return
-                }
+                if error != nil { return }
                 if let data = data{
                     do{
                         let DetailResultData = try JSONDecoder().decode(DetailResultData.self, from: data)
-                        if let detailData = DetailResultData.results{
-                            self.dataFetched = detailData
-                        }
+                        if let detailData = DetailResultData.results { self.dataFetched = detailData }
                         self.delegate?.dataDidFetch()
-                    } catch {
-                        fatalError("Error occured with fetchSingularData() - Cause: Decoding Error --> \(error)")
-                    }
+                    } catch { fatalError(HardCoded.fetchSingularDataError.get() + "\(error)" ) }
                 }
             }
             task.resume()
         }
-        
-        
     }
 }
-

@@ -9,8 +9,14 @@ import Foundation
 
 enum CategoryView: String{
     
-    case movie = "MovieDetailView"
-    case music = "MusicDetailView"
-    case ebook = "EbookDetailView"
-    case podcast = "PodcastDetailView"
+    case movie, music, ebook, podcast
+    
+    func get() -> String{
+        switch self{
+            case .movie: return "MovieDetailView"
+            case .music: return "MusicDetailView"
+            case .ebook: return "EbookDetailView"
+            case .podcast: return "PodcastDetailView"
+        }
+    }
 }

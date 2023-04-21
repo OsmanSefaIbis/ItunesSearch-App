@@ -9,8 +9,14 @@ import Foundation
 
 enum Category: String{
     
-    case movie
-    case music
-    case ebook
-    case podcast
+    case movie, music, ebook, podcast
+    
+    func get() -> String{
+        switch self{
+            case .movie: return rawValue
+            case .music: return rawValue
+            case .ebook: return rawValue
+            case .podcast: return rawValue
+        }
+    }
 }

@@ -26,6 +26,7 @@ class DetailViewModel{
 extension DetailViewModel: DetailModelDelegate{
     func dataDidFetch(){
         let retrievedData: [Detail] = model.dataFetched.map{
+            
             .init(
                 id: $0.trackID ?? 0,
                 kind: $0.kind ?? "",

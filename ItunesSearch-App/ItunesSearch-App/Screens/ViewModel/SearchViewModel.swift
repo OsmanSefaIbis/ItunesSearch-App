@@ -26,6 +26,7 @@ class SearchViewModel{
 extension SearchViewModel: SearchModelDelegate{
     func dataDidFetch(){
         let retrievedData: [SearchCellModel] = model.dataFetched.map{
+            
             .init(
                 id: $0.trackID ?? 0,
                 artworkUrl: $0.artworkUrl100 ?? "",

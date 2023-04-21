@@ -12,6 +12,7 @@ struct SearchResultData: Decodable {
     let results: [SearchData]?
 }
 struct SearchData: Decodable {
+    
     let wrapperType: WrapperType?
     let kind: Kind?
     let trackID: Int?
@@ -23,6 +24,7 @@ struct SearchData: Decodable {
     let primaryGenreName: String?
     
     enum CodingKeys: String, CodingKey {
+        
         case wrapperType, kind
         case trackID = "trackId"
         case artistName, collectionName, trackName
@@ -31,6 +33,7 @@ struct SearchData: Decodable {
 }
 
 enum Kind: String, Codable {
+    // all of them are needed , o.w causes decoding errors
     case featureMovie = "feature-movie"
     case podcast = "podcast"
     case song = "song"
@@ -47,6 +50,7 @@ enum Kind: String, Codable {
 }
 
 enum WrapperType: String, Codable {
+    // all of them are needed , o.w causes decoding errors
     case track = "track"
     case collection = "collection"
     case artist = "artist"

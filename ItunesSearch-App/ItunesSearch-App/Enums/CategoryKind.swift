@@ -7,10 +7,15 @@
 
 import Foundation
 
-enum CategoryKind: String{
+enum CategoryKind: String {
+    case movie, music, ebook, podcast
     
-    case movie = "feature-movie"
-    case music = "song"
-    case ebook = "ebook"
-    case podcast = "podcast"
+    func get() -> String {
+        switch self{
+            case .movie: return "feature-movie"
+            case .music: return "song"
+            case .ebook: return "ebook"
+            case .podcast: return "podcast"
+        }
+    }
 }
