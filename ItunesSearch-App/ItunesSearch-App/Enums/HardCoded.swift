@@ -11,7 +11,7 @@ enum HardCoded: String{
     case cellIdentifier, getRequest,free, dolar, trackSeperator, seperator,
          noRating, numberSign, ratingScale, termParam, mediaParam, idParam,
          fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat, locale_US,
-         colonSeperator, zeroColonSeperator, errorPromptOne
+         colonSeperator, zeroColonSeperator, errorPromptOne, segmentedControlError
     
     func get() -> String{
         switch self{
@@ -37,6 +37,8 @@ enum HardCoded: String{
                 return "Error occured with fetchDataWith() - Cause: Decoding Error --> "
             case .fetchSingularDataError:
                 return "Error occured with fetchSingularData() - Cause: Decoding Error --> "
+            case .segmentedControlError :
+                return "Error occured with segmentedControlValueChanged()"
         }
     }
 }

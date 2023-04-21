@@ -83,7 +83,7 @@ class SearchView: UIViewController{
             case 1: categorySelection = Category.music
             case 2: categorySelection = Category.ebook
             case 3: categorySelection = Category.podcast
-        default: fatalError("Error occured with segmentedControlValueChanged()")
+        default: fatalError(HardCoded.segmentedControlError.get())
         }
     }
 }
