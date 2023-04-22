@@ -22,13 +22,26 @@ class SearchCell: UICollectionViewCell {
     
     func configureCell(with model: SearchCellModel) {
         
-        artworkImage.kf.setImage(with: URL.init(string: model.artworkUrl))
+        artworkImage.kf.setImage(with: URL(string: model.artworkUrl)) { result in
+            switch result {
+            case .success(let value):
+                let averageColor = value.image.averageColor
+                let opaqueColor = averageColor?.withAlphaComponent(0.7)
+                DispatchQueue.main.async { [weak self] in
+                    self?.contentView.subviews.first?.backgroundColor = opaqueColor
+                }
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
         releaseDateLabel.text = convertDate(for: model.releaseDate)
         nameLabel.text = model.name
         collectionPriceLabel.text = HardCoded.dolar.get().appending(String(model.collectionPrice))
     }
     
     func configureCellLooks(){
+        contentView.layer.cornerRadius = 10.0
+        contentView.clipsToBounds = true
         artworkImage.layer.cornerRadius = 10.0
         artworkImage.layer.masksToBounds = true
     }
