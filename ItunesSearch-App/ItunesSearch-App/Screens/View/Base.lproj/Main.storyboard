@@ -294,7 +294,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
                                                         <subviews>
                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gea-fA-1aZ">
-                                                                <rect key="frame" x="5" y="5" width="383" height="140"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim $$$ MOVIE DESCRIPTION $$$ in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
                                                                 <color key="textColor" systemColor="labelColor"/>
@@ -303,12 +303,12 @@
                                                             </textView>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstItem="Gea-fA-1aZ" firstAttribute="top" secondItem="0R8-Sv-ZOq" secondAttribute="top" constant="5" id="Qxb-5M-4xj"/>
-                                                            <constraint firstAttribute="trailing" secondItem="Gea-fA-1aZ" secondAttribute="trailing" constant="5" id="f8Q-ad-Qsd"/>
+                                                            <constraint firstItem="Gea-fA-1aZ" firstAttribute="top" secondItem="0R8-Sv-ZOq" secondAttribute="top" id="Qxb-5M-4xj"/>
+                                                            <constraint firstAttribute="trailing" secondItem="Gea-fA-1aZ" secondAttribute="trailing" id="f8Q-ad-Qsd"/>
                                                             <constraint firstItem="Gea-fA-1aZ" firstAttribute="centerY" secondItem="0R8-Sv-ZOq" secondAttribute="centerY" id="k9M-iF-f2c"/>
                                                             <constraint firstItem="Gea-fA-1aZ" firstAttribute="centerX" secondItem="0R8-Sv-ZOq" secondAttribute="centerX" id="nlV-Gs-Ixu"/>
-                                                            <constraint firstAttribute="bottom" secondItem="Gea-fA-1aZ" secondAttribute="bottom" constant="5" id="opl-A8-DFB"/>
-                                                            <constraint firstItem="Gea-fA-1aZ" firstAttribute="leading" secondItem="0R8-Sv-ZOq" secondAttribute="leading" constant="5" id="p2t-if-XoU"/>
+                                                            <constraint firstAttribute="bottom" secondItem="Gea-fA-1aZ" secondAttribute="bottom" id="opl-A8-DFB"/>
+                                                            <constraint firstItem="Gea-fA-1aZ" firstAttribute="leading" secondItem="0R8-Sv-ZOq" secondAttribute="leading" id="p2t-if-XoU"/>
                                                         </constraints>
                                                     </scrollView>
                                                 </subviews>
@@ -381,14 +381,21 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="detailButtonsView" destination="dgk-xt-Zr6" id="8Ha-Ap-TcQ"/>
                         <outlet property="detailCollectionName" destination="UNR-N7-n8v" id="ski-vg-aeq"/>
+                        <outlet property="detailContainerView" destination="get-ib-fy0" id="33D-2p-khQ"/>
                         <outlet property="detailCreator" destination="GN5-DA-MbQ" id="z0R-9E-o7Z"/>
                         <outlet property="detailDescription" destination="Gea-fA-1aZ" id="paE-oa-PV3"/>
+                        <outlet property="detailDescriptionTextView" destination="Gea-fA-1aZ" id="dE8-4M-z4u"/>
+                        <outlet property="detailDescriptionView" destination="bra-va-xkW" id="Wf2-pN-mps"/>
+                        <outlet property="detailFieldsView" destination="a7a-uX-XVT" id="zZu-Ch-D4p"/>
                         <outlet property="detailImage" destination="pne-yR-C0g" id="4oe-Nj-P1l"/>
+                        <outlet property="detailImageContainerView" destination="gTr-82-LYT" id="MlK-Xi-5vf"/>
                         <outlet property="detailName" destination="5J1-Nq-c8f" id="6gs-rx-LUZ"/>
                         <outlet property="detailPrice" destination="j1R-a9-Jeb" id="Ymp-l0-ZPd"/>
                         <outlet property="detailPrimaryGenre" destination="UsX-Nt-dah" id="wJU-EY-EL7"/>
                         <outlet property="detailReleaseDate" destination="3aT-mf-pGM" id="Kp5-dY-fAE"/>
+                        <outlet property="detailView" destination="j24-BL-PlS" id="NVZ-eP-My3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bT5-dM-got" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -627,15 +634,20 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="detailButtonsView" destination="xBr-Pn-W3N" id="oTE-Ix-wBN"/>
                         <outlet property="detailCollectionName" destination="PoK-O5-h9S" id="jMs-xD-Yg9"/>
+                        <outlet property="detailContainerView" destination="A91-N7-cit" id="OCP-fh-R5F"/>
                         <outlet property="detailCreator" destination="GX3-Rt-IV4" id="D0n-OO-UYg"/>
+                        <outlet property="detailFieldsView" destination="bhz-Cr-x1V" id="3RJ-nF-jar"/>
                         <outlet property="detailImage" destination="8Tq-rs-aUP" id="PRa-bP-YX7"/>
+                        <outlet property="detailImageContainerView" destination="tNy-xR-uZ7" id="yj0-Yj-VXm"/>
                         <outlet property="detailLength" destination="Io9-OX-Ar5" id="fiP-hO-aTi"/>
                         <outlet property="detailName" destination="6FF-Yp-9r4" id="pTJ-LJ-Ix7"/>
                         <outlet property="detailPrice" destination="ugo-C5-JxI" id="hC7-Aq-Nwb"/>
                         <outlet property="detailPrimaryGenre" destination="Nzt-tI-FpI" id="5vi-Vh-WSz"/>
                         <outlet property="detailReleaseDate" destination="NO4-Al-QIA" id="8Yx-Px-yFO"/>
                         <outlet property="detailTrackInfo" destination="j8z-MC-K07" id="Ny3-34-kBb"/>
+                        <outlet property="detailView" destination="Rgm-Wy-tF8" id="Kc6-Xn-s0O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="86p-ms-zbd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -823,7 +835,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
                                                         <subviews>
                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q34-4g-jmv">
-                                                                <rect key="frame" x="5" y="5" width="383" height="140"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim $$$ E-BOOK DESCRIPTION $$$ in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
                                                                 <color key="textColor" systemColor="labelColor"/>
@@ -832,12 +844,12 @@
                                                             </textView>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstAttribute="trailing" secondItem="Q34-4g-jmv" secondAttribute="trailing" constant="5" id="VL1-wA-dF8"/>
-                                                            <constraint firstAttribute="bottom" secondItem="Q34-4g-jmv" secondAttribute="bottom" constant="5" id="bgL-eS-xH7"/>
-                                                            <constraint firstItem="Q34-4g-jmv" firstAttribute="top" secondItem="KjT-bu-c7Y" secondAttribute="top" constant="5" id="cXn-cp-x9a"/>
+                                                            <constraint firstAttribute="trailing" secondItem="Q34-4g-jmv" secondAttribute="trailing" id="VL1-wA-dF8"/>
+                                                            <constraint firstAttribute="bottom" secondItem="Q34-4g-jmv" secondAttribute="bottom" id="bgL-eS-xH7"/>
+                                                            <constraint firstItem="Q34-4g-jmv" firstAttribute="top" secondItem="KjT-bu-c7Y" secondAttribute="top" id="cXn-cp-x9a"/>
                                                             <constraint firstItem="Q34-4g-jmv" firstAttribute="centerY" secondItem="KjT-bu-c7Y" secondAttribute="centerY" id="dc0-Zn-zME"/>
                                                             <constraint firstItem="Q34-4g-jmv" firstAttribute="centerX" secondItem="KjT-bu-c7Y" secondAttribute="centerX" id="hz5-EF-A54"/>
-                                                            <constraint firstItem="Q34-4g-jmv" firstAttribute="leading" secondItem="KjT-bu-c7Y" secondAttribute="leading" constant="5" id="oR5-yS-nG8"/>
+                                                            <constraint firstItem="Q34-4g-jmv" firstAttribute="leading" secondItem="KjT-bu-c7Y" secondAttribute="leading" id="oR5-yS-nG8"/>
                                                         </constraints>
                                                     </scrollView>
                                                 </subviews>
@@ -901,16 +913,23 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="detailButtonsView" destination="8B3-Lf-lCQ" id="Btf-TL-Cqc"/>
+                        <outlet property="detailContainerView" destination="8mb-bR-aDt" id="cfj-T3-WiT"/>
                         <outlet property="detailCreator" destination="tfX-XN-I9d" id="bt4-IV-6jd"/>
                         <outlet property="detailDescription" destination="Q34-4g-jmv" id="ggF-uD-aj0"/>
+                        <outlet property="detailDescriptionTextView" destination="Q34-4g-jmv" id="OXE-Ty-2Qe"/>
+                        <outlet property="detailDescriptionView" destination="bSb-VG-6HZ" id="VQJ-ES-l4E"/>
+                        <outlet property="detailFieldsView" destination="RYw-MI-OHZ" id="bR6-Z9-xYr"/>
                         <outlet property="detailGenres" destination="WHP-hg-8JJ" id="KBW-WZ-fzv"/>
                         <outlet property="detailImage" destination="Sbe-j8-5nt" id="Rjr-hh-2vJ"/>
+                        <outlet property="detailImageContainerView" destination="jaD-S9-C1L" id="XCu-3i-YFc"/>
                         <outlet property="detailName" destination="PGv-zF-vzA" id="wq3-8a-ZSx"/>
                         <outlet property="detailPrice" destination="jhd-ec-xOK" id="dMz-Ea-xJw"/>
                         <outlet property="detailRating" destination="dOr-h9-yun" id="bhx-yr-j43"/>
                         <outlet property="detailRatingCount" destination="iFV-jP-1fp" id="9BF-HJ-j9P"/>
                         <outlet property="detailReleaseDate" destination="EnW-PP-dVH" id="Dce-iG-EZe"/>
                         <outlet property="detailSize" destination="zXC-R6-DS6" id="efi-AK-GjY"/>
+                        <outlet property="detailView" destination="nVH-LK-cwt" id="xlG-G2-Nv1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TzQ-dL-hx6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1164,17 +1183,22 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="detailButtonsView" destination="Bzs-rs-uOt" id="8Se-aA-gud"/>
                         <outlet property="detailCollectionName" destination="cxo-Ia-Tht" id="BPZ-g4-5UF"/>
+                        <outlet property="detailContainerView" destination="MYJ-wG-1hI" id="Wt8-MO-6T8"/>
                         <outlet property="detailContent" destination="nh2-F2-9j2" id="Xcy-Gk-9kz"/>
                         <outlet property="detailCreator" destination="eVI-rz-aYc" id="fhZ-uU-1XT"/>
                         <outlet property="detailEpisodes" destination="x2i-Ga-fwz" id="QZZ-Pu-X2M"/>
+                        <outlet property="detailFieldsView" destination="8bX-Lg-bsd" id="iAw-q7-BhP"/>
                         <outlet property="detailGenres" destination="VOI-9K-DSO" id="Tes-G8-t2P"/>
                         <outlet property="detailImage" destination="5gj-Db-ZUc" id="u8E-RT-rra"/>
+                        <outlet property="detailImageContainerView" destination="rXa-wH-aER" id="66j-yM-mwn"/>
                         <outlet property="detailLength" destination="PcG-of-TAB" id="v5x-GY-4E2"/>
                         <outlet property="detailName" destination="Oro-sf-sSc" id="k3L-Ej-F0j"/>
                         <outlet property="detailPrice" destination="IpK-U3-N5c" id="IQK-u4-eTm"/>
                         <outlet property="detailPrimaryGenre" destination="Dmj-a5-Bit" id="lyd-Un-7Ss"/>
                         <outlet property="detailReleaseDate" destination="GvH-CQ-1PX" id="kRl-Fg-z4d"/>
+                        <outlet property="detailView" destination="dZ6-8q-UZ1" id="U1Y-7M-bWe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9g-LQ-yi8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

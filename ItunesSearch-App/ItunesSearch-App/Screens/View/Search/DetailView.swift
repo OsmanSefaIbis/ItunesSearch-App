@@ -9,9 +9,17 @@ import UIKit
 import WebKit
 import AVFoundation
 import AVKit
+import Kingfisher
 
 class DetailView: UIViewController{
     
+    @IBOutlet private weak var detailContainerView: UIView!
+    @IBOutlet private weak var detailView: UIView!
+    @IBOutlet private weak var detailImageContainerView: UIView!
+    @IBOutlet private weak var detailFieldsView: UIView!
+    @IBOutlet private weak var detailDescriptionView: UIView!
+    @IBOutlet private weak var detailButtonsView: UIView!
+    @IBOutlet private weak var detailDescriptionTextView: UITextView!
     @IBOutlet private weak var detailImage: UIImageView!
     @IBOutlet private weak var detailDescription: UITextView!
     @IBOutlet private weak var detailName: UILabel!
@@ -60,11 +68,30 @@ class DetailView: UIViewController{
             detailName.text = item.name
             detailCreator.text = item.creator
             detailReleaseDate.text = convertDate( for: item.releaseDate)
-            detailImage.kf.setImage(with: URL.init(string: modifiedArtworkUrl))
-            
             detailPrice.text = (item.price == 0)
             ? HardCoded.free.get() : (HardCoded.dolar.get())
                 .appending(String(item.price))
+            detailImage.kf.setImage(with: URL(string: modifiedArtworkUrl)) { result in
+                switch result {
+                case .success(let value):
+                    let averageColor = value.image.averageColor
+                    DispatchQueue.main.async { [weak self] in
+                        self?.detailContainerView.backgroundColor = averageColor
+                        self?.detailView.backgroundColor = averageColor
+                        self?.detailImageContainerView.backgroundColor = averageColor
+                        self?.detailFieldsView.backgroundColor = averageColor
+                        self?.detailButtonsView.backgroundColor = averageColor
+                        if let detailDescriptionView = self?.detailDescriptionView {
+                            detailDescriptionView.backgroundColor = averageColor
+                        }
+                        if let detailDescriptionTextView = self?.detailDescriptionTextView {
+                            detailDescriptionTextView.backgroundColor = averageColor
+                        }
+                    }
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            }
         }
         
         switch item.kind{
@@ -80,7 +107,7 @@ class DetailView: UIViewController{
             previewUrl = URL(string: item.previewUrl)
             detailPrimaryGenre.text = item.genre
             detailDescription.text = item.longDescription
-            detailCollectionName.text = item.collectionName
+            detailCollectionName.text = item.collectionName.isEmpty ? HardCoded.notAvailable.get() : item.collectionName
         }
         func configureMusic() {
             previewUrl = URL(string: item.previewUrl)

@@ -26,9 +26,9 @@ class SearchCell: UICollectionViewCell {
             switch result {
             case .success(let value):
                 let averageColor = value.image.averageColor
-                let opaqueColor = averageColor?.withAlphaComponent(0.7)
+                let opaqueAverageColor = averageColor?.withAlphaComponent(0.7)
                 DispatchQueue.main.async { [weak self] in
-                    self?.contentView.subviews.first?.backgroundColor = opaqueColor
+                    self?.contentView.subviews.first?.backgroundColor = opaqueAverageColor
                 }
             case .failure(let error):
                 print("Error: \(error)")

@@ -8,7 +8,7 @@
 import Foundation
 
 enum HardCoded: String{
-    case cellIdentifier, getRequest,free, dolar, trackSeperator, seperator,
+    case cellIdentifier, getRequest,free, dolar, notAvailable, trackSeperator, seperator,
          noRating, numberSign, ratingScale, termParam, mediaParam, idParam,
          fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
          convertedDateFormatShort, locale_US, colonSeperator, zeroColonSeperator,
@@ -20,6 +20,7 @@ enum HardCoded: String{
             case .getRequest: return "GET"
             case .free: return "Free"
             case .dolar: return "$ "
+            case .notAvailable: return "N/A"
             case .trackSeperator: return " /"
             case .seperator: return ", "
             case .noRating: return "No Rating"
