@@ -10,8 +10,9 @@ import Foundation
 enum HardCoded: String{
     case cellIdentifier, getRequest,free, dolar, trackSeperator, seperator,
          noRating, numberSign, ratingScale, termParam, mediaParam, idParam,
-         fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat, locale_US,
-         colonSeperator, zeroColonSeperator, errorPromptOne, segmentedControlError
+         fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
+         convertedDateFormatShort, locale_US, colonSeperator, zeroColonSeperator,
+         errorPromptOne, segmentedControlError
     
     func get() -> String{
         switch self{
@@ -29,6 +30,7 @@ enum HardCoded: String{
             case .idParam: return "id="
             case .apiDateFormat: return "yyyy-MM-dd'T'HH:mm:ssZ"
             case .convertedDateFormat: return "MMMM d, yyyy"
+            case .convertedDateFormatShort: return "MMM d, yyyy"
             case .locale_US: return "en_US"
             case .colonSeperator: return ":"
             case .zeroColonSeperator: return "0:0"

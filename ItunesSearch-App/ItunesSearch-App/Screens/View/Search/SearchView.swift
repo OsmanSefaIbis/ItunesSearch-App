@@ -18,6 +18,7 @@ class SearchView: UIViewController{
     private let viewModel = SearchViewModel()
     private var paginationOffSet = 0
     private let requestLimit = 20
+    private let collectionViewColumn: CGFloat = 2
     private var endOfRecordsFlag = false
     private var idsOfAllFetchedRecords = Set<Int>()
     private var categorySelection: Category? = .movie
@@ -175,18 +176,21 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
             let availableWidth = collectionView.bounds.width
-            let itemWidth = (availableWidth / 2).rounded(.down)
-            let itemHeight = 100.0
-            return CGSize(width: itemWidth, height: itemHeight)
+            let columnWidth = ((availableWidth) / collectionViewColumn).rounded(.down)
+            let gridLayoutCellSize = CGSize(width: columnWidth, height:columnWidth/3)
+            return gridLayoutCellSize
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        10
+        if let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.minimumInteritemSpacing = 5
+            return flowLayout.minimumInteritemSpacing
+        }
+        return 0
     }
-    
 }
 
 /* SearchBar - Delegate */

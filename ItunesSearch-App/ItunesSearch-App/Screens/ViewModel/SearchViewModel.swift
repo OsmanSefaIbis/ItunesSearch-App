@@ -31,6 +31,7 @@ extension SearchViewModel: SearchModelDelegate{
                 id: $0.trackID ?? 0,
                 artworkUrl: $0.artworkUrl100 ?? "",
                 releaseDate: $0.releaseDate ?? "",
+                name: $0.trackName ?? "",
                 collectionName: $0.collectionName ?? "",
                 collectionPrice: $0.collectionPrice ?? 0
             )

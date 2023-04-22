@@ -17,7 +17,7 @@ extension SearchCell {
             fatalError(HardCoded.errorPromptOne.get())
         }
         let outputDF = DateFormatter()
-        outputDF.dateFormat = HardCoded.convertedDateFormat.get()
+        outputDF.dateFormat = HardCoded.convertedDateFormatShort.get()
         outputDF.locale = Locale(identifier: HardCoded.locale_US.get())
         let output = outputDF.string(from: inputDate)
         return output

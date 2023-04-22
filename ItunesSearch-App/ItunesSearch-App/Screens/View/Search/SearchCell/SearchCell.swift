@@ -2,7 +2,7 @@
 //  SearchCell.swift
 //  ItunesSearch-App
 //
-//  Created by Sefa İbiş on 14.04.2023.
+//  Created by Sefa İbiş on 22.04.2023.
 //
 
 import UIKit
@@ -12,7 +12,7 @@ class SearchCell: UICollectionViewCell {
     
     @IBOutlet weak var artworkImage: UIImageView!
     @IBOutlet weak var releaseDateLabel: UILabel!
-    @IBOutlet weak var collectionNameLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var collectionPriceLabel: UILabel!
     
     override func awakeFromNib() {
@@ -24,7 +24,7 @@ class SearchCell: UICollectionViewCell {
         
         artworkImage.kf.setImage(with: URL.init(string: model.artworkUrl))
         releaseDateLabel.text = convertDate(for: model.releaseDate)
-        collectionNameLabel.text = model.collectionName
+        nameLabel.text = model.name
         collectionPriceLabel.text = HardCoded.dolar.get().appending(String(model.collectionPrice))
     }
     

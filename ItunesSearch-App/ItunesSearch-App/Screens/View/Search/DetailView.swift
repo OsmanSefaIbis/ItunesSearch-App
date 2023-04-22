@@ -116,6 +116,7 @@ class DetailView: UIViewController{
     }
     
     /* Button Actions */
+
     @IBAction func viewButtonClicked(_ sender: Any) {
         
         let webViewVC = UIViewController()
