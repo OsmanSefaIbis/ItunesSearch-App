@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 protocol DetailModelDelegate: AnyObject{
     func dataDidFetch()
@@ -17,6 +18,7 @@ class DetailModel{
     private(set) var dataFetched: [DetailData] = []
     weak var delegate: DetailModelDelegate?
     
+    ///URLSession
     func fetchSingularData(for idValue: Int){
         
         if InternetManager.shared.isInternetActive() {
@@ -25,9 +27,11 @@ class DetailModel{
             if let url = URL(string: urlCompose){
                 var request: URLRequest = .init(url: url)
                 request.httpMethod = HardCoded.getRequest.get()
+                
                 let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
                     if error != nil { return }
-                    if let data = data{
+                    if let data = data {
+                        
                         if ((self?.isValidJSON(String(data: data, encoding: .utf8)!)) != nil) {
                             do{
                                 let DetailResultData = try JSONDecoder().decode(DetailResultData.self, from: data)
@@ -40,6 +44,24 @@ class DetailModel{
                     }
                 }
                 task.resume()
+            }
+        }else {
+            delegate?.dataCannotFetch()
+        }
+    }
+    ///Alamofire
+    func fetchSingularDataWithAF(for idValue: Int) {
+        
+        if InternetManager.shared.isInternetActive() {
+            let urlCompose = composeUrl(idValue)
+            AF.request(urlCompose).responseDecodable(of: DetailResultData.self){ (res) in
+                guard let response = res.value
+                else{
+                    self.delegate?.dataCannotFetch()
+                    return
+                }
+                self.dataFetched = response.results ?? []
+                self.delegate?.dataDidFetch()
             }
         }else {
             delegate?.dataCannotFetch()

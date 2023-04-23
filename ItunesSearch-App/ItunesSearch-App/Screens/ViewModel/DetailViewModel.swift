@@ -20,7 +20,7 @@ class DetailViewModel{
         model.delegate = self
     }
     func didViewLoad(withId idValue: Int){
-        model.fetchSingularData(for: idValue)
+        model.fetchSingularDataWithAF(for: idValue)
     }
 }
 

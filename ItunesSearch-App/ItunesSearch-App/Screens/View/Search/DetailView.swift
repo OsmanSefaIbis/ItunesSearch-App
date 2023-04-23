@@ -21,6 +21,7 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailButtonsView: UIView!
     @IBOutlet private weak var detailDescriptionTextView: UITextView!
     @IBOutlet private weak var detailImage: UIImageView!
+    /// above is added for colorization
     @IBOutlet private weak var detailDescription: UITextView!
     @IBOutlet private weak var detailName: UILabel!
     @IBOutlet private weak var detailCreator: UILabel!
@@ -83,7 +84,7 @@ class DetailView: UIViewController{
                         self?.detailButtonsView.backgroundColor = averageColor
                         if let detailDescriptionView = self?.detailDescriptionView {
                             detailDescriptionView.backgroundColor = averageColor
-                        }// Music and Podcast dont have these
+                        }/// Music and Podcast dont have these
                         if let detailDescriptionTextView = self?.detailDescriptionTextView {
                             detailDescriptionTextView.backgroundColor = averageColor
                         }
