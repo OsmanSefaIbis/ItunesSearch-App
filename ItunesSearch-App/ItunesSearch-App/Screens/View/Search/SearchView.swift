@@ -49,6 +49,7 @@ class SearchView: UIViewController{
     }
     
     func setItems( _ items: [RowItems]) {
+        
         if items.count != requestLimit { endOfRecordsFlag = true }
         if endOfRecordsFlag {
             var lastRecords: [RowItems] = []
@@ -79,13 +80,37 @@ class SearchView: UIViewController{
     }
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        
         switch sender.selectedSegmentIndex {
             case 0: categorySelection = Category.movie
+                if searchText.count > 2 {
+                    resetAndSearch(searchText, Category.movie)
+                }
             case 1: categorySelection = Category.music
+                if searchText.count > 2 {
+                    resetAndSearch(searchText, Category.music)
+                }
             case 2: categorySelection = Category.ebook
+                if searchText.count > 2 {
+                    resetAndSearch(searchText, Category.ebook)
+                }
             case 3: categorySelection = Category.podcast
+                if searchText.count > 2 {
+                    resetAndSearch(searchText, Category.podcast)
+                }
         default: fatalError(HardCoded.segmentedControlError.get())
         }
+    }
+    func resetAndSearch(_ searchTerm: String, _ category: Category){
+        paginationOffSet = 0
+        endOfRecordsFlag = false
+        DispatchQueue.main.async {
+            self.items.removeAll()
+            self.collectionView.reloadData()
+        }
+        activityIndicator.startAnimating()
+        viewModel.searchInvoked(searchTerm, category, paginationOffSet)
     }
 }
 
@@ -204,6 +229,7 @@ extension SearchView: UISearchBarDelegate {
     
         paginationOffSet = 0
         endOfRecordsFlag = false
+        activityIndicator.startAnimating()
         viewModel.searchInvoked(searchText, category, paginationOffSet)
     }
     

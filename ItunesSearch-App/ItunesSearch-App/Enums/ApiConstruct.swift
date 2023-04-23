@@ -21,11 +21,19 @@ enum Api: String {
     }
 }
 
-enum mediaParam: String {
+enum MediaParam: String {
     case movie, music, ebook, podcast
     
     func get() -> String{
         switch self{
+            case .movie: return "&media=movie"
+            case .music: return "&media=music"
+            case .ebook: return "&media=ebook"
+            case .podcast: return "&media=podcast"
+        }
+    }
+    static func getWith(_ categoryValue: Category) -> String{
+        switch categoryValue{
             case .movie: return "&media=movie"
             case .music: return "&media=music"
             case .ebook: return "&media=ebook"

@@ -12,7 +12,7 @@ enum HardCoded: String{
          noRating, numberSign, ratingScale, termParam, mediaParam, idParam,
          fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
          convertedDateFormatShort, locale_US, colonSeperator, zeroColonSeperator,
-         errorPromptOne, segmentedControlError
+         errorPromptOne, segmentedControlError, invalidJSON
     
     func get() -> String{
         switch self{
@@ -42,6 +42,8 @@ enum HardCoded: String{
                 return "Error occured with fetchSingularData() - Cause: Decoding Error --> "
             case .segmentedControlError :
                 return "Error occured with segmentedControlValueChanged()"
+            case .invalidJSON:
+                return "Invalid JSON data"
         }
     }
 }
