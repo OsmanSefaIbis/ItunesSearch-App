@@ -85,24 +85,24 @@ class SearchView: UIViewController{
         switch sender.selectedSegmentIndex {
             case 0: categorySelection = Category.movie
                 if searchText.count > 2 {
-                    resetAndSearch(searchText, Category.movie)
+                    resetAndSearch(searchText, Category.movie, nil)
                 }
             case 1: categorySelection = Category.music
                 if searchText.count > 2 {
-                    resetAndSearch(searchText, Category.music)
+                    resetAndSearch(searchText, Category.music, nil)
                 }
             case 2: categorySelection = Category.ebook
                 if searchText.count > 2 {
-                    resetAndSearch(searchText, Category.ebook)
+                    resetAndSearch(searchText, Category.ebook, nil)
                 }
             case 3: categorySelection = Category.podcast
                 if searchText.count > 2 {
-                    resetAndSearch(searchText, Category.podcast)
+                    resetAndSearch(searchText, Category.podcast, nil)
                 }
         default: fatalError(HardCoded.segmentedControlError.get())
         }
     }
-    func resetAndSearch(_ searchTerm: String, _ category: Category){
+    func resetAndSearch(_ searchTerm: String, _ category: Category, _ offSetValue: Int?){
         paginationOffSet = 0
         endOfRecordsFlag = false
         DispatchQueue.main.async {
@@ -110,7 +110,12 @@ class SearchView: UIViewController{
             self.collectionView.reloadData()
         }
         activityIndicator.startAnimating()
-        viewModel.searchInvoked(searchTerm, category, paginationOffSet)
+        
+        if let offSet = offSetValue{
+            viewModel.searchInvoked(searchTerm, category, offSet)
+        }else{
+            viewModel.searchInvoked(searchTerm, category, paginationOffSet)
+        }
     }
 }
 
@@ -251,10 +256,7 @@ extension SearchView: UISearchBarDelegate {
             }else if searchText.count > 2 {
                 guard let category = self?.categorySelection else { return }
                 guard let offSet = self?.paginationOffSet else { return }
-                self?.paginationOffSet = 0
-                self?.endOfRecordsFlag = false
-                self?.activityIndicator.startAnimating()
-                self?.viewModel.searchInvoked(searchText, category, offSet)
+                self?.resetAndSearch(searchText, category, offSet)
             }
         })
     }
