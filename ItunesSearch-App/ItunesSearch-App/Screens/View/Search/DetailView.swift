@@ -83,7 +83,7 @@ class DetailView: UIViewController{
                         self?.detailButtonsView.backgroundColor = averageColor
                         if let detailDescriptionView = self?.detailDescriptionView {
                             detailDescriptionView.backgroundColor = averageColor
-                        }
+                        }// Music and Podcast dont have these
                         if let detailDescriptionTextView = self?.detailDescriptionTextView {
                             detailDescriptionTextView.backgroundColor = averageColor
                         }
@@ -174,9 +174,19 @@ class DetailView: UIViewController{
 
 /* ViewModel Delegate */
 extension DetailView: DetailViewModelDelegate{
+    
     func refreshItem(_ retrieved: [Detail]) {
         DispatchQueue.main.async {
             self.configureItem(with: retrieved.first!)
         }
     }
+    func internetUnreachable(_ errorPrompt: String) {
+        let alertController = UIAlertController(title: "Warning", message: errorPrompt, preferredStyle: .alert )
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (action:UIAlertAction!) in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true)
+    }
+    
 }

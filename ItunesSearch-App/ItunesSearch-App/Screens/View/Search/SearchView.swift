@@ -117,6 +117,13 @@ class SearchView: UIViewController{
             viewModel.searchInvoked(searchTerm, category, paginationOffSet)
         }
     }
+    func reset(){
+        activityIndicator.stopAnimating()
+        DispatchQueue.main.async {
+            self.items.removeAll()
+            self.collectionView.reloadData()
+        }
+    }
 }
 
 // MARK: Extensions
@@ -126,6 +133,15 @@ extension SearchView: SearchViewModelDelegate {
     
     func refreshItems(_ retrived: [SearchCellModel]) {
         setItems(retrived)
+    }
+    
+    func internetUnreachable(_ errorPrompt: String) {
+        let alertController = UIAlertController(title: "Warning", message: errorPrompt, preferredStyle: .alert )
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (action:UIAlertAction!) in
+            self?.reset()
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true)
     }
 }
 

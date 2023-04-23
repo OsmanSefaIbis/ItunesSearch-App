@@ -9,6 +9,7 @@ import Foundation
 
 protocol DetailViewModelDelegate: AnyObject{
     func refreshItem(_ retrieved: [Detail])
+    func internetUnreachable(_ errorPrompt: String)
 }
 
 class DetailViewModel{
@@ -53,5 +54,9 @@ extension DetailViewModel: DetailModelDelegate{
             )
         }
         self.delegate?.refreshItem(retrievedData)
+    }
+    
+    func dataCannotFetch() {
+        delegate?.internetUnreachable("Check internet connectivity !")
     }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		961BFE6F29F16DC8009838AA /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BFE6E29F16DC8009838AA /* String+Extension.swift */; };
+		9662827629F58DDA001A8338 /* InternetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9662827529F58DDA001A8338 /* InternetManager.swift */; };
 		967395CE29E9D94900D3403F /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967395CD29E9D94900D3403F /* SearchViewModel.swift */; };
 		967395D129EAB76E00D3403F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967395D029EAB76E00D3403F /* Category.swift */; };
 		967395D629EB268C00D3403F /* Search+CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967395D529EB268C00D3403F /* Search+CellModel.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		961BFE6E29F16DC8009838AA /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		9662827529F58DDA001A8338 /* InternetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetManager.swift; sourceTree = "<group>"; };
 		967395CD29E9D94900D3403F /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		967395D029EAB76E00D3403F /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		967395D529EB268C00D3403F /* Search+CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Search+CellModel.swift"; sourceTree = "<group>"; };
@@ -101,6 +103,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		9662827429F58DB9001A8338 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				9662827529F58DDA001A8338 /* InternetManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		967395CF29EAB73100D3403F /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +150,7 @@
 				96E83D3D29E93C5B001B517E /* Screens */,
 				967395CF29EAB73100D3403F /* Enums */,
 				961BFE6D29F16DB0009838AA /* Extensions */,
+				9662827429F58DB9001A8338 /* Manager */,
 				96E83D1629E65B26001B517E /* Utils */,
 			);
 			path = "ItunesSearch-App";
@@ -335,6 +346,7 @@
 				96E8225929F305E8009B56F0 /* DetailView+Extension.swift in Sources */,
 				96E8225329F2BF8C009B56F0 /* CategoryKind.swift in Sources */,
 				96E8226E29F44B11009B56F0 /* UIImage+Extension.swift in Sources */,
+				9662827629F58DDA001A8338 /* InternetManager.swift in Sources */,
 				96E8225129F2B2D0009B56F0 /* CategoryView.swift in Sources */,
 				961BFE6F29F16DC8009838AA /* String+Extension.swift in Sources */,
 				967395D629EB268C00D3403F /* Search+CellModel.swift in Sources */,

@@ -16,4 +16,16 @@ extension DetailModel {
         let urlCompose = baseUrl + idParam
         return urlCompose
     }
+    
+    func isValidJSON(_ jsonString: String) -> Bool {
+        if let data = jsonString.data(using: .utf8) {
+            do {
+                _ = try JSONSerialization.jsonObject(with: data, options: [])
+                return true
+            } catch {
+                return false
+            }
+        }
+        return false
+    }
 }

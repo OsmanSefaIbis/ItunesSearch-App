@@ -9,6 +9,7 @@ import Foundation
 
 protocol SearchViewModelDelegate: AnyObject{
     func refreshItems(_ retrieved: [SearchCellModel])
+    func internetUnreachable(_ errorPrompt: String)
 }
 
 class SearchViewModel{
@@ -37,5 +38,9 @@ extension SearchViewModel: SearchModelDelegate{
             )
         }
         self.delegate?.refreshItems(retrievedData)
+    }
+    
+    func dataCannotFetch() {
+        delegate?.internetUnreachable("Check internet connectivity !")
     }
 }
