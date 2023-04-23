@@ -10,6 +10,7 @@ import Kingfisher
 
 class SearchCell: UICollectionViewCell {
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var artworkImage: UIImageView!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -21,7 +22,6 @@ class SearchCell: UICollectionViewCell {
     }
     
     func configureCell(with model: SearchCellModel) {
-        
         artworkImage.kf.setImage(with: URL(string: model.artworkUrl)) { result in
             switch result {
             case .success(let value):
@@ -44,6 +44,8 @@ class SearchCell: UICollectionViewCell {
         contentView.clipsToBounds = true
         artworkImage.layer.cornerRadius = 10.0
         artworkImage.layer.masksToBounds = true
+        artworkImage.kf.indicatorType = .activity
+        (artworkImage.kf.indicator?.view as? UIActivityIndicatorView)?.color = .gray
     }
 }
 

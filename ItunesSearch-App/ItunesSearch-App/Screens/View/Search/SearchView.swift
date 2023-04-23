@@ -267,18 +267,13 @@ extension SearchView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         searchBar.resignFirstResponder()
-        guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-        guard let category = categorySelection else { return }
-        if (0...2).contains(searchText.count){
-            activityIndicator.stopAnimating()
-        }
-        if searchText.count == 0 {
+        guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        
+        if (0...2).contains(searchText.count) {
             DispatchQueue.main.async {
                 self.items.removeAll()
                 self.collectionView.reloadData()
-        }
-        }else if searchText.count > 2 {
-            resetAndSearch(searchText, category, nil)
+            }
         }
     }
     
@@ -287,7 +282,7 @@ extension SearchView: UISearchBarDelegate {
         timeControl?.invalidate()
         timeControl = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] (timer) in
             
-            guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+            guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
             
             if (0...2).contains(searchText.count){
                 self?.activityIndicator.stopAnimating()

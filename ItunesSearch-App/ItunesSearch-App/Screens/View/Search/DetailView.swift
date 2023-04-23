@@ -20,8 +20,8 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailDescriptionView: UIView!
     @IBOutlet private weak var detailButtonsView: UIView!
     @IBOutlet private weak var detailDescriptionTextView: UITextView!
-    @IBOutlet private weak var detailImage: UIImageView!
     /// above is added for colorization
+    @IBOutlet private weak var detailImage: UIImageView!
     @IBOutlet private weak var detailDescription: UITextView!
     @IBOutlet private weak var detailName: UILabel!
     @IBOutlet private weak var detailCreator: UILabel!
@@ -40,8 +40,8 @@ class DetailView: UIViewController{
     
     private let viewModel = DetailViewModel()
     private var item: Detail?
-    var id = 0
     private let dimensionPreference = 600
+    var id = 0
 
     private let webView = WKWebView()
     private var player: AVPlayer?
@@ -69,9 +69,7 @@ class DetailView: UIViewController{
             detailName.text = item.name
             detailCreator.text = item.creator
             detailReleaseDate.text = convertDate( for: item.releaseDate)
-            detailPrice.text = (item.price == 0)
-            ? HardCoded.free.get() : (HardCoded.dolar.get())
-                .appending(String(item.price))
+            detailPrice.text = (item.price == 0) ? HardCoded.free.get() : (HardCoded.dolar.get()).appending(String(item.price))
             detailImage.kf.setImage(with: URL(string: modifiedArtworkUrl)) { result in
                 switch result {
                 case .success(let value):
