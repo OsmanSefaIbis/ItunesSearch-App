@@ -202,18 +202,29 @@ extension SearchView: UICollectionViewDelegate {
 
 /* CollectionView - Flow */
 extension SearchView: UICollectionViewDelegateFlowLayout{
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
             let availableWidth = collectionView.bounds.width
             let columnWidth = ((availableWidth) / collectionViewColumn).rounded(.down)
-            let gridLayoutCellSize = CGSize(width: columnWidth, height:columnWidth/3)
+            let gridLayoutCellSize = CGSize(width: columnWidth, height: 0) // image within the cell overrides
             return gridLayoutCellSize
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5) }
+        
+        if categorySelection == .movie || categorySelection == .ebook{
+            let cellSpacing: CGFloat = flowLayout.minimumLineSpacing;
+            let cellWidth: CGFloat = flowLayout.itemSize.width;
+            var inset: CGFloat = (collectionView.bounds.size.width - (collectionViewColumn * cellWidth) - ((collectionViewColumn - 1)*cellSpacing)) * 0.5;
+            inset = max(inset, 0.0);
+            return UIEdgeInsets(top: 0, left: inset/collectionViewColumn, bottom: 0, right: inset/collectionViewColumn)
+        }else{
+            return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         if let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.minimumInteritemSpacing = 5
@@ -231,11 +242,17 @@ extension SearchView: UISearchBarDelegate {
         searchBar.resignFirstResponder()
         guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
         guard let category = categorySelection else { return }
-    
-        paginationOffSet = 0
-        endOfRecordsFlag = false
-        activityIndicator.startAnimating()
-        viewModel.searchInvoked(searchText, category, paginationOffSet)
+        if (0...2).contains(searchText.count){
+            activityIndicator.stopAnimating()
+        }
+        if searchText.count == 0 {
+            DispatchQueue.main.async {
+                self.items.removeAll()
+                self.collectionView.reloadData()
+        }
+        }else if searchText.count > 2 {
+            resetAndSearch(searchText, category, nil)
+        }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -252,7 +269,7 @@ extension SearchView: UISearchBarDelegate {
                 DispatchQueue.main.async {
                     self?.items.removeAll()
                     self?.collectionView.reloadData()
-                }
+            }
             }else if searchText.count > 2 {
                 guard let category = self?.categorySelection else { return }
                 guard let offSet = self?.paginationOffSet else { return }
