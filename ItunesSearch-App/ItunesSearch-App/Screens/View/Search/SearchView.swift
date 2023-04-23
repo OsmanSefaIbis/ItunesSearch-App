@@ -34,6 +34,7 @@ class SearchView: UIViewController{
         configureCollectionView()
         assignDelegates()
         configureSegmentedControl()
+        configureGesture()
     }
     
     func assignDelegates() {
@@ -72,6 +73,16 @@ class SearchView: UIViewController{
             self.activityIndicator.stopAnimating()
             self.collectionView?.reloadData()
         }
+    }
+    
+    func configureGesture(){
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        swipeGesture.direction = .down
+        view.addGestureRecognizer(swipeGesture)
+    }
+    
+    @objc func dismissKeyboard() {
+        searchBar.resignFirstResponder()
     }
     
     func configureSegmentedControl() {
