@@ -52,15 +52,20 @@ class SearchView: UIViewController{
     func setItems( _ items: [RowItems]) {
         
         if items.count != requestLimit { endOfRecordsFlag = true }
+
         if endOfRecordsFlag {
-            var lastRecords: [RowItems] = []
-            for each in items {
-                if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue }
-                else { lastRecords.append(each) }
+            if items.count > requestLimit { // case: hit the end of all records
+                var lastRecords: [RowItems] = []
+                for each in items {
+                    if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue }
+                    else { lastRecords.append(each) }
+                }
+                self.items.append(contentsOf: lastRecords)
+                idsOfAllFetchedRecords.removeAll()
+            } else { // case: user search resulted less than 20 items
+                self.items = items
             }
-            self.items.append(contentsOf: lastRecords)
-            idsOfAllFetchedRecords.removeAll()
-        }else {
+        } else {
             if paginationOffSet != 0 {
                 for each in items { idsOfAllFetchedRecords.insert(each.id) }
                 self.items.append(contentsOf: items)
@@ -116,12 +121,13 @@ class SearchView: UIViewController{
     func resetAndSearch(_ searchTerm: String, _ category: Category, _ offSetValue: Int?){
         paginationOffSet = 0
         endOfRecordsFlag = false
-        DispatchQueue.main.async {
-            self.items.removeAll()
-            self.collectionView.reloadData()
+        if items.count > 0{
+            DispatchQueue.main.async {
+                self.items.removeAll()
+                self.collectionView.reloadData()
+            }
         }
         activityIndicator.startAnimating()
-        
         if let offSet = offSetValue{
             viewModel.searchInvoked(searchTerm, category, offSet)
         }else{
@@ -230,13 +236,6 @@ extension SearchView: UICollectionViewDelegate {
 /* CollectionView - Flow */
 extension SearchView: UICollectionViewDelegateFlowLayout{
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-            let availableWidth = collectionView.bounds.width
-            let columnWidth = ((availableWidth) / collectionViewColumn).rounded(.down)
-            let gridLayoutCellSize = CGSize(width: columnWidth, height: 0) // image within the cell overrides
-            return gridLayoutCellSize
-    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5) }
@@ -271,16 +270,20 @@ extension SearchView: UISearchBarDelegate {
         
         if (0...2).contains(searchText.count) {
             DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
                 self.items.removeAll()
                 self.collectionView.reloadData()
             }
+        }else {
+            guard let category = categorySelection else { return }
+            self.resetAndSearch(searchText, category, paginationOffSet)
         }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         timeControl?.invalidate()
-        timeControl = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] (timer) in
+        timeControl = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { [weak self] (timer) in
             
             guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
             

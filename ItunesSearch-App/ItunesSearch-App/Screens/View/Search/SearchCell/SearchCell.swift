@@ -10,7 +10,6 @@ import Kingfisher
 
 class SearchCell: UICollectionViewCell {
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var artworkImage: UIImageView!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!

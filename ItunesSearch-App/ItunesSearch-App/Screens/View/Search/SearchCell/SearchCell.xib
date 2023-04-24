@@ -24,8 +24,12 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Hgw-dD-ET5" userLabel="HStack">
                                 <rect key="frame" x="0.0" y="0.0" width="179" height="100"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Z5T-EM-uhV">
-                                        <rect key="frame" x="0.0" y="0.0" width="97" height="100"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Z5T-EM-uhV">
+                                        <rect key="frame" x="0.0" y="1.6666666666666643" width="97" height="97"/>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="Z5T-EM-uhV" secondAttribute="height" multiplier="67:100" id="4za-pM-sDU"/>
+                                        </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="Ea8-ny-b5r">
                                         <rect key="frame" x="99" y="0.0" width="80" height="100"/>
@@ -37,10 +41,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Name&quot;" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iDg-CG-gwv" userLabel="Name">
-                                                <rect key="frame" x="0.0" y="33.333333333333329" width="80" height="33.333333333333329"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="80" id="Qti-1D-ANj"/>
-                                                </constraints>
+                                                <rect key="frame" x="40" y="33.333333333333329" width="40" height="33.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -53,7 +54,7 @@
                                             </label>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="XDa-8p-Aos"/>
+                                            <constraint firstAttribute="width" constant="80" id="XDa-8p-Aos"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -87,6 +88,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="photo" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
