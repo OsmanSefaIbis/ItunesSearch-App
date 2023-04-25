@@ -8,6 +8,7 @@ import UIKit
 class SearchView: UIViewController{
     
     typealias RowItems = SearchCellModel
+    private let cellIdentifier = HardCoded.cellIdentifier.get()
     
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var searchBar: UISearchBar!
@@ -16,14 +17,13 @@ class SearchView: UIViewController{
     
     private var items: [RowItems] = []
     private let viewModel = SearchViewModel()
+    private var idsOfAllFetchedRecords = Set<Int>()
+    private var timeControl: Timer?
     private var paginationOffSet = 0
     private let requestLimit = 20
     private let collectionViewColumn: CGFloat = 2
     private var lessThanPage_Flag = false
-    private var idsOfAllFetchedRecords = Set<Int>()
     private var categorySelection: Category? = .movie
-    private var timeControl: Timer?
-    private let cellIdentifier = HardCoded.cellIdentifier.get()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,20 +50,20 @@ class SearchView: UIViewController{
     }
     
     func setItems( _ items: [RowItems]) {
-        // incoming data -> items
+        /// existing data -> self.items !!! incoming data -> items
     
-        if items.count != requestLimit { lessThanPage_Flag = true } // decision point
+        if items.count != requestLimit { lessThanPage_Flag = true } /// decision point (true == do not fetch more)
 
-        if lessThanPage_Flag { // less than a page
+        if lessThanPage_Flag { /// less than a page
             if self.items.count >= requestLimit { /// case: last page with less than request limit
                 var lastRecords: [RowItems] = []
                 /// NOTE: API sends as the requestLimit, records can overlap at the end, so extract only the required
                 for each in items {
-                    if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue } // skip
-                    else { lastRecords.append(each) } // track
+                    if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue } /// skip
+                    else { lastRecords.append(each) } /// track
                 }
-                self.items.append(contentsOf: lastRecords) // add track
-                //idsOfAllFetchedRecords.removeAll()
+                self.items.append(contentsOf: lastRecords) /// add track
+                idsOfAllFetchedRecords.removeAll() /// dealloc track
             } else { /// case: first page with less than request limit
                 self.items = items
             }
