@@ -19,7 +19,7 @@ class SearchView: UIViewController{
     private var paginationOffSet = 0
     private let requestLimit = 20
     private let collectionViewColumn: CGFloat = 2
-    private var endOfRecordsFlag = false
+    private var lessThanPage_Flag = false
     private var idsOfAllFetchedRecords = Set<Int>()
     private var categorySelection: Category? = .movie
     private var timeControl: Timer?
@@ -50,30 +50,33 @@ class SearchView: UIViewController{
     }
     
     func setItems( _ items: [RowItems]) {
-        
-        if items.count != requestLimit { endOfRecordsFlag = true }
+        // incoming data -> items
+    
+        if items.count != requestLimit { lessThanPage_Flag = true } // decision point
 
-        if endOfRecordsFlag {
-            if items.count > requestLimit { // case: hit the end of all records
+        if lessThanPage_Flag { // less than a page
+            if self.items.count >= requestLimit { /// case: last page with less than request limit
                 var lastRecords: [RowItems] = []
+                /// NOTE: API sends as the requestLimit, records can overlap at the end, so extract only the required
                 for each in items {
-                    if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue }
-                    else { lastRecords.append(each) }
+                    if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue } // skip
+                    else { lastRecords.append(each) } // track
                 }
-                self.items.append(contentsOf: lastRecords)
-                idsOfAllFetchedRecords.removeAll()
-            } else { // case: user search resulted less than 20 items
+                self.items.append(contentsOf: lastRecords) // add track
+                //idsOfAllFetchedRecords.removeAll()
+            } else { /// case: first page with less than request limit
                 self.items = items
             }
-        } else {
-            if paginationOffSet != 0 {
+        } else { /// each page
+            if paginationOffSet == 0 { /// first full page
+                for each in items { idsOfAllFetchedRecords.insert(each.id) }
+                self.items = items
+            }else { /// next page
                 for each in items { idsOfAllFetchedRecords.insert(each.id) }
                 self.items.append(contentsOf: items)
-            }else {
-                for each in items { idsOfAllFetchedRecords.insert(each.id) }
-                self.items = items
             }
         }
+        /// render
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             self.collectionView?.reloadData()
@@ -119,8 +122,12 @@ class SearchView: UIViewController{
         }
     }
     func resetAndSearch(_ searchTerm: String, _ category: Category, _ offSetValue: Int?){
+        
+        idsOfAllFetchedRecords.removeAll() ///  dealloc
+
         paginationOffSet = 0
-        endOfRecordsFlag = false
+        lessThanPage_Flag = false
+        
         if items.count > 0{
             reset()
         }
@@ -132,8 +139,8 @@ class SearchView: UIViewController{
         }
     }
     func reset(){
-        activityIndicator.stopAnimating()
         DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
             self.items.removeAll()
             self.collectionView.reloadData()
         }
@@ -218,7 +225,7 @@ extension SearchView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
-        if endOfRecordsFlag{
+        if lessThanPage_Flag{
             return
         }
         let latestItemNumeric = items.count - 1
@@ -265,16 +272,18 @@ extension SearchView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         timeControl?.invalidate()
-        timeControl = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { [weak self] (timer) in
+        timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
             
             guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
             
             if (0...2).contains(searchText.count){
                 self?.activityIndicator.stopAnimating()
             }
-            if searchText.count == 0 {
+            if searchText.isEmpty {
                 self?.reset()
-            } else if searchText.count > 2 {
+                return
+            }
+            if searchText.count > 2 {
                 guard let category = self?.categorySelection else { return }
                 guard let offSet = self?.paginationOffSet else { return }
                 self?.resetAndSearch(searchText, category, offSet)
