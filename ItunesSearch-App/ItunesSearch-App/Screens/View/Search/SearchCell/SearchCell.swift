@@ -15,13 +15,26 @@ class SearchCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var collectionPriceLabel: UILabel!
     
+    private let dimensionPreference = 200
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         configureCellLooks()
     }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        artworkImage.image = nil
+        releaseDateLabel.text = nil
+        nameLabel.text = nil
+        collectionPriceLabel.text = nil
+    }
     
     func configureCell(with model: SearchCellModel) {
-        artworkImage.kf.setImage(with: URL(string: model.artworkUrl)) { result in
+        
+        guard let modifiedArtworkUrl =
+                changeImageURL(model.artworkUrl, withDimension: dimensionPreference) else { return }
+        
+        artworkImage.kf.setImage(with: URL(string: modifiedArtworkUrl)) { result in
             switch result {
             case .success(let value):
                 let averageColor = value.image.averageColor

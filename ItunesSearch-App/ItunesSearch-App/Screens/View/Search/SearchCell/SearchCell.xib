@@ -12,27 +12,27 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SearchCell" customModule="ItunesSearch_App" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="181" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="184" height="100"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="181" height="100"/>
+                <rect key="frame" x="0.0" y="0.0" width="184" height="100"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m5X-ZV-Fek" userLabel="Container">
-                        <rect key="frame" x="0.0" y="0.0" width="181" height="100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="184" height="100"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Hgw-dD-ET5" userLabel="HStack">
-                                <rect key="frame" x="0.0" y="0.0" width="179" height="100"/>
+                                <rect key="frame" x="0.0" y="0.0" width="182" height="100"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Z5T-EM-uhV">
-                                        <rect key="frame" x="0.0" y="1.6666666666666643" width="97" height="97"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Z5T-EM-uhV">
+                                        <rect key="frame" x="0.0" y="1.6666666666666643" width="100" height="97"/>
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="Z5T-EM-uhV" secondAttribute="height" multiplier="67:100" id="4za-pM-sDU"/>
+                                            <constraint firstAttribute="width" constant="100" id="gfD-Rx-Byu"/>
                                         </constraints>
                                     </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="Ea8-ny-b5r">
-                                        <rect key="frame" x="99" y="0.0" width="80" height="100"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="500" horizontalCompressionResistancePriority="500" axis="vertical" distribution="fillEqually" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="Ea8-ny-b5r">
+                                        <rect key="frame" x="102" y="0.0" width="80" height="100"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Date&quot;" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPX-1R-LZ7" userLabel="Date">
                                                 <rect key="frame" x="53.333333333333336" y="0.0" width="26.666666666666664" height="33.333333333333336"/>
@@ -42,6 +42,9 @@
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Name&quot;" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iDg-CG-gwv" userLabel="Name">
                                                 <rect key="frame" x="40" y="33.333333333333329" width="40" height="33.333333333333329"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="PfH-JC-hq7"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -54,14 +57,18 @@
                                             </label>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="XDa-8p-Aos"/>
+                                            <constraint firstAttribute="width" constant="80" id="2KF-lO-Xmj"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="Z5T-EM-uhV" firstAttribute="height" secondItem="Ea8-ny-b5r" secondAttribute="height" id="ErJ-HI-nIk"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="height" constant="100" id="3er-Rr-i5o"/>
                             <constraint firstItem="Hgw-dD-ET5" firstAttribute="top" secondItem="m5X-ZV-Fek" secondAttribute="top" id="kNv-Rg-lMw"/>
                             <constraint firstAttribute="trailing" secondItem="Hgw-dD-ET5" secondAttribute="trailing" constant="2" id="owd-5b-VzZ"/>
                             <constraint firstAttribute="bottom" secondItem="Hgw-dD-ET5" secondAttribute="bottom" id="pQX-Gg-vzj"/>
@@ -77,14 +84,14 @@
                 <constraint firstAttribute="trailing" secondItem="m5X-ZV-Fek" secondAttribute="trailing" id="CaJ-mc-8ko"/>
                 <constraint firstItem="m5X-ZV-Fek" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="fEE-Bc-kKX"/>
             </constraints>
-            <size key="customSize" width="175" height="98"/>
+            <size key="customSize" width="178" height="98"/>
             <connections>
                 <outlet property="artworkImage" destination="Z5T-EM-uhV" id="NGl-mc-V9s"/>
                 <outlet property="collectionPriceLabel" destination="cM6-pJ-6tb" id="hHr-ln-d8Q"/>
                 <outlet property="nameLabel" destination="iDg-CG-gwv" id="BMQ-Az-xbe"/>
                 <outlet property="releaseDateLabel" destination="GPX-1R-LZ7" id="VSm-ON-D8F"/>
             </connections>
-            <point key="canvasLocation" x="122.90076335877862" y="7.042253521126761"/>
+            <point key="canvasLocation" x="125.19083969465649" y="7.042253521126761"/>
         </collectionViewCell>
     </objects>
     <resources>

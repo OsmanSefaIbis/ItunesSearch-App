@@ -122,10 +122,7 @@ class SearchView: UIViewController{
         paginationOffSet = 0
         endOfRecordsFlag = false
         if items.count > 0{
-            DispatchQueue.main.async {
-                self.items.removeAll()
-                self.collectionView.reloadData()
-            }
+            reset()
         }
         activityIndicator.startAnimating()
         if let offSet = offSetValue{
@@ -236,19 +233,27 @@ extension SearchView: UICollectionViewDelegate {
 /* CollectionView - Flow */
 extension SearchView: UICollectionViewDelegateFlowLayout{
 
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//
+//            let availableWidth = collectionView.bounds.width
+//            let columnWidth = ((availableWidth) / collectionViewColumn).rounded(.down)
+//            let gridLayoutCellSize = CGSize(width: columnWidth, height:100)
+//            return gridLayoutCellSize
+//    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
-        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5) }
-        
-        if categorySelection == .movie || categorySelection == .ebook{
-            let cellSpacing: CGFloat = flowLayout.minimumLineSpacing;
-            let cellWidth: CGFloat = flowLayout.itemSize.width;
-            var inset: CGFloat = (collectionView.bounds.size.width - (collectionViewColumn * cellWidth) - ((collectionViewColumn - 1)*cellSpacing)) * 0.5;
-            inset = max(inset, 0.0);
-            return UIEdgeInsets(top: 0, left: inset/collectionViewColumn, bottom: 0, right: inset/collectionViewColumn)
-        }else{
-            return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-        }
+//        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5) }
+//        if categorySelection == .movie || categorySelection == .ebook{
+//            let cellSpacing: CGFloat = flowLayout.minimumLineSpacing;
+//            let cellWidth: CGFloat = flowLayout.itemSize.width;
+//            var inset: CGFloat = (collectionView.bounds.size.width - (collectionViewColumn * cellWidth) - ((collectionViewColumn - 1)*cellSpacing)) * 0.5;
+//            inset = max(inset, 0.0);
+//            return UIEdgeInsets(top: 0, left: inset/collectionViewColumn, bottom: 0, right: inset/collectionViewColumn)
+//        }else{
+//            return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+//        }
+        return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -269,11 +274,7 @@ extension SearchView: UISearchBarDelegate {
         guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
         
         if (0...2).contains(searchText.count) {
-            DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
-                self.items.removeAll()
-                self.collectionView.reloadData()
-            }
+            reset()
         }else {
             guard let category = categorySelection else { return }
             self.resetAndSearch(searchText, category, paginationOffSet)
@@ -291,11 +292,8 @@ extension SearchView: UISearchBarDelegate {
                 self?.activityIndicator.stopAnimating()
             }
             if searchText.count == 0 {
-                DispatchQueue.main.async {
-                    self?.items.removeAll()
-                    self?.collectionView.reloadData()
-            }
-            }else if searchText.count > 2 {
+                self?.reset()
+            } else if searchText.count > 2 {
                 guard let category = self?.categorySelection else { return }
                 guard let offSet = self?.paginationOffSet else { return }
                 self?.resetAndSearch(searchText, category, offSet)
@@ -303,10 +301,8 @@ extension SearchView: UISearchBarDelegate {
         })
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
         searchBar.text = nil
-        self.items.removeAll()
-        self.collectionView.reloadData()
+        reset()
     }
 }
 
