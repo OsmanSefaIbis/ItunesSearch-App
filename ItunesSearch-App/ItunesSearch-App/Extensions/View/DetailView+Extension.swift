@@ -85,7 +85,11 @@ extension DetailView{
         inputDF.dateFormat = HardCoded.apiDateFormat.get()
         
         guard let inputDate = inputDF.date(from: dateValue) else {
-            fatalError(HardCoded.errorPromptOne.get())
+            if dateValue.isEmpty {
+                return "N/A"
+            }else{
+                fatalError(HardCoded.errorPromptOne.get())
+            }
         }
         let outputDF = DateFormatter()
         outputDF.dateFormat = HardCoded.convertedDateFormat.get()

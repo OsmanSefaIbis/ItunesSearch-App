@@ -2,7 +2,7 @@
 //  SearchCell.swift
 //  ItunesSearch-App
 //
-//  Created by Sefa İbiş on 22.04.2023.
+//  Created by Sefa İbiş on 25.04.2023.
 //
 
 import UIKit
@@ -60,4 +60,5 @@ class SearchCell: UICollectionViewCell {
         (artworkImage.kf.indicator?.view as? UIActivityIndicatorView)?.color = .gray
     }
 }
+
 

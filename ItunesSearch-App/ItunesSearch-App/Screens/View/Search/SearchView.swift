@@ -177,6 +177,8 @@ extension SearchView: UICollectionViewDataSource {
 /* CollectionView - Delegate */
 extension SearchView: UICollectionViewDelegate {
     
+    
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         collectionView.deselectItem(at: indexPath, animated: true)
@@ -232,36 +234,15 @@ extension SearchView: UICollectionViewDelegate {
 
 /* CollectionView - Flow */
 extension SearchView: UICollectionViewDelegateFlowLayout{
-
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//            let availableWidth = collectionView.bounds.width
-//            let columnWidth = ((availableWidth) / collectionViewColumn).rounded(.down)
-//            let gridLayoutCellSize = CGSize(width: columnWidth, height:100)
-//            return gridLayoutCellSize
-//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
-//        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5) }
-//        if categorySelection == .movie || categorySelection == .ebook{
-//            let cellSpacing: CGFloat = flowLayout.minimumLineSpacing;
-//            let cellWidth: CGFloat = flowLayout.itemSize.width;
-//            var inset: CGFloat = (collectionView.bounds.size.width - (collectionViewColumn * cellWidth) - ((collectionViewColumn - 1)*cellSpacing)) * 0.5;
-//            inset = max(inset, 0.0);
-//            return UIEdgeInsets(top: 0, left: inset/collectionViewColumn, bottom: 0, right: inset/collectionViewColumn)
-//        }else{
-//            return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-//        }
-        return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.minimumInteritemSpacing = 5
-            return flowLayout.minimumInteritemSpacing
-        }
-        return 0
+        
+        let cellSpacing: CGFloat = 5;
+        let cellWidth: CGFloat = 160.0;
+        var inset: CGFloat = (collectionView.bounds.size.width - (collectionViewColumn * cellWidth) - ((collectionViewColumn - 1)*cellSpacing)) * 0.5;
+        inset = max(inset, 0.0);
+        return UIEdgeInsets(top: 0, left: inset/collectionViewColumn, bottom: 0, right: inset/collectionViewColumn)
     }
 }
 
