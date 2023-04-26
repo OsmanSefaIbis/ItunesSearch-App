@@ -57,7 +57,7 @@ class SearchCell: UICollectionViewCell {
         artworkImage.layer.cornerRadius = 10.0
         artworkImage.layer.masksToBounds = true
         artworkImage.kf.indicatorType = .activity
-        (artworkImage.kf.indicator?.view as? UIActivityIndicatorView)?.color = .gray
+        (artworkImage.kf.indicator?.view as? UIActivityIndicatorView)?.color = .systemPink
     }
 }
 

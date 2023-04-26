@@ -14,6 +14,8 @@
 		967395D629EB268C00D3403F /* Search+CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967395D529EB268C00D3403F /* Search+CellModel.swift */; };
 		9689A94F29F7EB6100C2BA82 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A94D29F7EB6100C2BA82 /* SearchCell.swift */; };
 		9689A95029F7EB6100C2BA82 /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9689A94E29F7EB6100C2BA82 /* SearchCell.xib */; };
+		9689A95329F966E700C2BA82 /* LoadingReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A95129F966E700C2BA82 /* LoadingReusableView.swift */; };
+		9689A95429F966E700C2BA82 /* LoadingReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9689A95229F966E700C2BA82 /* LoadingReusableView.xib */; };
 		9694A91229E31C93000B010E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9694A91129E31C93000B010E /* AppDelegate.swift */; };
 		9694A91629E31C93000B010E /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9694A91529E31C93000B010E /* SearchView.swift */; };
 		9694A91929E31C93000B010E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9694A91729E31C93000B010E /* Main.storyboard */; };
@@ -50,6 +52,8 @@
 		967395D529EB268C00D3403F /* Search+CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Search+CellModel.swift"; sourceTree = "<group>"; };
 		9689A94D29F7EB6100C2BA82 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		9689A94E29F7EB6100C2BA82 /* SearchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
+		9689A95129F966E700C2BA82 /* LoadingReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingReusableView.swift; sourceTree = "<group>"; };
+		9689A95229F966E700C2BA82 /* LoadingReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingReusableView.xib; sourceTree = "<group>"; };
 		9694A90E29E31C93000B010E /* ItunesSearch-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ItunesSearch-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9694A91129E31C93000B010E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9694A91529E31C93000B010E /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
@@ -121,6 +125,23 @@
 				96E8225429F2C473009B56F0 /* HardCoded.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		9689A95529F96ECB00C2BA82 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9689A95629F96F1D00C2BA82 /* CollectionViewBottomActivityIndicator */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		9689A95629F96F1D00C2BA82 /* CollectionViewBottomActivityIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				9689A95229F966E700C2BA82 /* LoadingReusableView.xib */,
+				9689A95129F966E700C2BA82 /* LoadingReusableView.swift */,
+			);
+			path = CollectionViewBottomActivityIndicator;
 			sourceTree = "<group>";
 		};
 		9694A90529E31C93000B010E = {
@@ -232,6 +253,7 @@
 		96E83D1729E65B57001B517E /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				9689A95529F96ECB00C2BA82 /* Utils */,
 				96E83D3629E90E41001B517E /* SearchCell */,
 				9694A91529E31C93000B010E /* SearchView.swift */,
 				96B5868829EDD20E004F5B27 /* DetailView.swift */,
@@ -328,6 +350,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9689A95429F966E700C2BA82 /* LoadingReusableView.xib in Resources */,
 				9694A91E29E31C94000B010E /* LaunchScreen.storyboard in Resources */,
 				9689A95029F7EB6100C2BA82 /* SearchCell.xib in Resources */,
 				9694A91B29E31C94000B010E /* Assets.xcassets in Resources */,
@@ -362,6 +385,7 @@
 				96B5868929EDD20E004F5B27 /* DetailView.swift in Sources */,
 				96B5868729EDD1FE004F5B27 /* DetailViewModel.swift in Sources */,
 				96E8225729F2E267009B56F0 /* ApiConstruct.swift in Sources */,
+				9689A95329F966E700C2BA82 /* LoadingReusableView.swift in Sources */,
 				9694A91229E31C93000B010E /* AppDelegate.swift in Sources */,
 				96E8226029F30EC9009B56F0 /* SearchCell+Extension.swift in Sources */,
 				96E8225529F2C473009B56F0 /* HardCoded.swift in Sources */,

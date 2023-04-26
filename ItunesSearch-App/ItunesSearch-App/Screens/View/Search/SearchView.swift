@@ -19,14 +19,14 @@ class SearchView: UIViewController{
     private let viewModel = SearchViewModel()
     private var idsOfAllFetchedRecords = Set<Int>()
     private var timeControl: Timer?
-    private var activityIndicatorBottomView = UIActivityIndicatorView(style: .medium)
+    
+    var loadingView: LoadingReusableView?
     private var paginationOffSet = 0
     private let requestLimit = 20
     private let collectionViewColumn: CGFloat = 2
     private var lessThanPage_Flag = false
     private var isLoadingNextPage = false
     private var categorySelection: Category? = .movie
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,8 @@ class SearchView: UIViewController{
         assignDelegates()
         configureSegmentedControl()
         configureGesture()
-        configureBottomActivityIndicator()
+        configureActivityIndicator()
+    
     }
     
     func assignDelegates() {
@@ -51,6 +52,9 @@ class SearchView: UIViewController{
         collectionView?.dataSource = self
         collectionView?.register(
             .init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
+        let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
+                collectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
+
     }
     
     func setItems( _ items: [RowItems]) {
@@ -82,14 +86,17 @@ class SearchView: UIViewController{
             }
         }
         /// render
-        DispatchQueue.main.async {
-            self.activityIndicatorOverall.stopAnimating()
-            self.activityIndicatorBottomView.stopAnimating()
-            self.collectionView?.reloadData()
+        DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
+            DispatchQueue.main.async {
+                self.activityIndicatorOverall.stopAnimating()
+                self.collectionView?.reloadData()
+                self.isLoadingNextPage = false
+            }
         }
-        isLoadingNextPage = false
     }
-    
+    func configureActivityIndicator(){
+        activityIndicatorOverall.color = .systemPink
+    }
     func configureGesture(){
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         swipeGesture.direction = .down
@@ -98,19 +105,6 @@ class SearchView: UIViewController{
     
     @objc func dismissKeyboard() {
         searchBar.resignFirstResponder()
-    }
-    
-    func configureBottomActivityIndicator(){
-        activityIndicatorBottomView.color = .darkGray
-        activityIndicatorBottomView.hidesWhenStopped = true
-        collectionView.addSubview(activityIndicatorBottomView)
-        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "FooterView")
-    }
-    func showActivityIndicator() {
-        
-        let footerView = collectionView.visibleSupplementaryViews(ofKind: UICollectionView.elementKindSectionFooter).first
-        activityIndicatorBottomView.startAnimating()
-        footerView?.addSubview(activityIndicatorBottomView)
     }
     
     func configureSegmentedControl() {
@@ -148,7 +142,7 @@ class SearchView: UIViewController{
         paginationOffSet = 0
         lessThanPage_Flag = false
         
-        if items.count > 0{
+        if items.count > 0 {
             reset()
         }
         activityIndicatorOverall.startAnimating()
@@ -204,8 +198,6 @@ extension SearchView: UICollectionViewDataSource {
 /* CollectionView - Delegate */
 extension SearchView: UICollectionViewDelegate {
     
-    
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         collectionView.deselectItem(at: indexPath, animated: true)
@@ -249,7 +241,7 @@ extension SearchView: UICollectionViewDelegate {
             return
         }
         let latestItemNumeric = items.count - 1
-        if indexPath.item == latestItemNumeric && !isLoadingNextPage {
+        if indexPath.item == latestItemNumeric {
             
             guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
             guard let category = categorySelection else { return }
@@ -258,14 +250,33 @@ extension SearchView: UICollectionViewDelegate {
             self.viewModel.searchInvoked(searchText, category, paginationOffSet)
         }
     }
-    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        
-        if elementKind == UICollectionView.elementKindSectionFooter && isLoadingNextPage {
-            showActivityIndicator()
-        }
-    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 50)
+        if self.isLoadingNextPage {
+                    return CGSize.zero
+                } else {
+                    return CGSize(width: collectionView.bounds.size.width, height: 60)
+                }
+    }
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+            if kind == UICollectionView.elementKindSectionFooter {
+                let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "loadingresuableviewid", for: indexPath) as! LoadingReusableView
+                loadingView = aFooterView
+                loadingView?.backgroundColor = UIColor.clear
+                return aFooterView
+            }
+            return UICollectionReusableView()
+        }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+            if elementKind == UICollectionView.elementKindSectionFooter && isLoadingNextPage {
+                self.loadingView?.activityIndicator.startAnimating()
+            }
+        }
+
+    func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        if elementKind == UICollectionView.elementKindSectionFooter {
+            self.loadingView?.activityIndicator.stopAnimating()
+        }
     }
 }
 
@@ -294,6 +305,7 @@ extension SearchView: UISearchBarDelegate {
         if (0...2).contains(searchText.count) {
             reset()
         }else {
+            paginationOffSet = 0
             guard let category = categorySelection else { return }
             self.resetAndSearch(searchText, category, paginationOffSet)
         }
