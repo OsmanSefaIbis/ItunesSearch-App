@@ -10,7 +10,7 @@ class SearchView: UIViewController{
     typealias RowItems = SearchCellModel
     private let cellIdentifier = HardCoded.cellIdentifier.get()
     
-    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var activityIndicatorOverall: UIActivityIndicatorView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -19,11 +19,14 @@ class SearchView: UIViewController{
     private let viewModel = SearchViewModel()
     private var idsOfAllFetchedRecords = Set<Int>()
     private var timeControl: Timer?
+    private var activityIndicatorBottomView = UIActivityIndicatorView(style: .medium)
     private var paginationOffSet = 0
     private let requestLimit = 20
     private let collectionViewColumn: CGFloat = 2
     private var lessThanPage_Flag = false
+    private var isLoadingNextPage = false
     private var categorySelection: Category? = .movie
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +38,7 @@ class SearchView: UIViewController{
         assignDelegates()
         configureSegmentedControl()
         configureGesture()
+        configureBottomActivityIndicator()
     }
     
     func assignDelegates() {
@@ -50,7 +54,8 @@ class SearchView: UIViewController{
     }
     
     func setItems( _ items: [RowItems]) {
-        /// existing data -> self.items !!! incoming data -> items
+        /// NOTE: API does not support pagination via json, offset and limit used
+        /// self.items <- existing data  incoming data -> items
     
         if items.count != requestLimit { lessThanPage_Flag = true } /// decision point (true == do not fetch more)
 
@@ -78,9 +83,11 @@ class SearchView: UIViewController{
         }
         /// render
         DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
+            self.activityIndicatorOverall.stopAnimating()
+            self.activityIndicatorBottomView.stopAnimating()
             self.collectionView?.reloadData()
         }
+        isLoadingNextPage = false
     }
     
     func configureGesture(){
@@ -91,6 +98,19 @@ class SearchView: UIViewController{
     
     @objc func dismissKeyboard() {
         searchBar.resignFirstResponder()
+    }
+    
+    func configureBottomActivityIndicator(){
+        activityIndicatorBottomView.color = .darkGray
+        activityIndicatorBottomView.hidesWhenStopped = true
+        collectionView.addSubview(activityIndicatorBottomView)
+        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "FooterView")
+    }
+    func showActivityIndicator() {
+        
+        let footerView = collectionView.visibleSupplementaryViews(ofKind: UICollectionView.elementKindSectionFooter).first
+        activityIndicatorBottomView.startAnimating()
+        footerView?.addSubview(activityIndicatorBottomView)
     }
     
     func configureSegmentedControl() {
@@ -131,7 +151,7 @@ class SearchView: UIViewController{
         if items.count > 0{
             reset()
         }
-        activityIndicator.startAnimating()
+        activityIndicatorOverall.startAnimating()
         if let offSet = offSetValue{
             viewModel.searchInvoked(searchTerm, category, offSet)
         }else{
@@ -140,7 +160,7 @@ class SearchView: UIViewController{
     }
     func reset(){
         DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
+            self.activityIndicatorOverall.stopAnimating()
             self.items.removeAll()
             self.collectionView.reloadData()
         }
@@ -229,13 +249,23 @@ extension SearchView: UICollectionViewDelegate {
             return
         }
         let latestItemNumeric = items.count - 1
-        if indexPath.item == latestItemNumeric {
+        if indexPath.item == latestItemNumeric && !isLoadingNextPage {
             
             guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
             guard let category = categorySelection else { return }
             paginationOffSet += requestLimit
+            isLoadingNextPage = true
             self.viewModel.searchInvoked(searchText, category, paginationOffSet)
         }
+    }
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        
+        if elementKind == UICollectionView.elementKindSectionFooter && isLoadingNextPage {
+            showActivityIndicator()
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 50)
     }
 }
 
@@ -277,7 +307,7 @@ extension SearchView: UISearchBarDelegate {
             guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
             
             if (0...2).contains(searchText.count){
-                self?.activityIndicator.stopAnimating()
+                self?.activityIndicatorOverall.stopAnimating()
             }
             if searchText.isEmpty {
                 self?.reset()
@@ -295,6 +325,8 @@ extension SearchView: UISearchBarDelegate {
         reset()
     }
 }
+
+
 
 
 

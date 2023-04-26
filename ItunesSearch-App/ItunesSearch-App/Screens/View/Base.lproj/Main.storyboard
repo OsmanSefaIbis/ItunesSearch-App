@@ -127,7 +127,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="shh-sI-rZw"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="YUk-fA-Ql5" id="db9-Yb-jzt"/>
+                        <outlet property="activityIndicatorOverall" destination="YUk-fA-Ql5" id="iud-aY-TDG"/>
                         <outlet property="collectionView" destination="MaV-jM-Uqw" id="K5A-db-nWC"/>
                         <outlet property="searchBar" destination="6eP-Xg-isB" id="OuV-5M-mbP"/>
                         <outlet property="segmentedControl" destination="6c7-Rr-t4k" id="uVH-2e-FeJ"/>
