@@ -78,8 +78,8 @@
             filePath = "ItunesSearch-App/Screens/View/Search/SearchView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "328"
-            endingLineNumber = "328"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "searchBar(_:textDidChange:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -119,22 +119,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "135EBDD1-4C83-4AD5-9E9F-EE7CECD14B32"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Screens/View/Search/SearchView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "resetAndSearch(_:_:_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "026CC581-627C-4BB9-B82C-649803F505EF"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -142,25 +126,9 @@
             filePath = "ItunesSearch-App/Screens/View/Search/SearchView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "resetAndSearch(_:_:_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6E44D31B-0FC5-481B-9562-8ECFBF2F5B44"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Screens/View/Search/SearchView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
-            landmarkName = "refreshItems(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -194,102 +162,6 @@
             endingLineNumber = "64"
             landmarkName = "setItems(_:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F951F9E3-4CAC-42AD-B342-F0FFFF641466"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Screens/View/Search/SearchView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
-            landmarkName = "collectionView(_:willDisplaySupplementaryView:forElementKind:at:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F951F9E3-4CAC-42AD-B342-F0FFFF641466 - b3c556ce133d2733"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ItunesSearch_App.SearchView.collectionView(_: __C.UICollectionView, willDisplaySupplementaryView: __C.UICollectionReusableView, forElementKind: Swift.String, at: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "ItunesSearch-App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Screens/View/Search/SearchView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "269"
-                  endingLineNumber = "269"
-                  offsetFromSymbolStart = "116">
-               </Location>
-               <Location
-                  uuid = "F951F9E3-4CAC-42AD-B342-F0FFFF641466 - b3c556ce133d2733"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ItunesSearch_App.SearchView.collectionView(_: __C.UICollectionView, willDisplaySupplementaryView: __C.UICollectionReusableView, forElementKind: Swift.String, at: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "ItunesSearch-App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Screens/View/Search/SearchView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "269"
-                  endingLineNumber = "269"
-                  offsetFromSymbolStart = "212">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9CEE9F89-43A6-4A93-A5A2-FED098EADFF5"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Screens/View/Search/SearchView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
-            landmarkName = "collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "9CEE9F89-43A6-4A93-A5A2-FED098EADFF5 - 4db2bc0274d45995"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ItunesSearch_App.SearchView.collectionView(_: __C.UICollectionView, didEndDisplayingSupplementaryView: __C.UICollectionReusableView, forElementOfKind: Swift.String, at: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "ItunesSearch-App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Screens/View/Search/SearchView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "275"
-                  endingLineNumber = "275"
-                  offsetFromSymbolStart = "116">
-               </Location>
-               <Location
-                  uuid = "9CEE9F89-43A6-4A93-A5A2-FED098EADFF5 - 4db2bc0274d45995"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ItunesSearch_App.SearchView.collectionView(_: __C.UICollectionView, didEndDisplayingSupplementaryView: __C.UICollectionReusableView, forElementOfKind: Swift.String, at: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "ItunesSearch-App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Screens/View/Search/SearchView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "275"
-                  endingLineNumber = "275"
-                  offsetFromSymbolStart = "212">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

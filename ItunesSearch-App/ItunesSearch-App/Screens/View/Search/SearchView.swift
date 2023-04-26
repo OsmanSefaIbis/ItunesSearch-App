@@ -95,7 +95,7 @@ class SearchView: UIViewController{
         }
     }
     func configureActivityIndicator(){
-        activityIndicatorOverall.color = .systemPink
+        activityIndicatorOverall.color = AppConstants.activityIndicatorColor
     }
     func configureGesture(){
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -145,7 +145,9 @@ class SearchView: UIViewController{
         if items.count > 0 {
             reset()
         }
-        activityIndicatorOverall.startAnimating()
+        DispatchQueue.main.async {
+            self.activityIndicatorOverall.startAnimating()
+        }
         if let offSet = offSetValue{
             viewModel.searchInvoked(searchTerm, category, offSet)
         }else{
@@ -254,7 +256,7 @@ extension SearchView: UICollectionViewDelegate {
         if self.isLoadingNextPage {
                     return CGSize.zero
                 } else {
-                    return CGSize(width: collectionView.bounds.size.width, height: 60)
+                    return CGSize(width: collectionView.bounds.size.width, height: 40)
                 }
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -284,13 +286,15 @@ extension SearchView: UICollectionViewDelegate {
 extension SearchView: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
-        
+    
         let cellSpacing: CGFloat = 5;
         let cellWidth: CGFloat = 160.0;
         var inset: CGFloat = (collectionView.bounds.size.width - (collectionViewColumn * cellWidth) - ((collectionViewColumn - 1)*cellSpacing)) * 0.5;
         inset = max(inset, 0.0);
         return UIEdgeInsets(top: 0, left: inset/collectionViewColumn, bottom: 0, right: inset/collectionViewColumn)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 25
     }
 }
 

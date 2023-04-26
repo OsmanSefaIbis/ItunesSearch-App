@@ -34,7 +34,7 @@ class SearchCell: UICollectionViewCell {
         guard let modifiedArtworkUrl =
                 changeImageURL(model.artworkUrl, withDimension: dimensionPreference) else { return }
         
-        artworkImage.kf.setImage(with: URL(string: modifiedArtworkUrl)) { result in
+        artworkImage.kf.setImage(with: URL(string: modifiedArtworkUrl)){ result in
             switch result {
             case .success(let value):
                 let averageColor = value.image.averageColor
@@ -57,7 +57,7 @@ class SearchCell: UICollectionViewCell {
         artworkImage.layer.cornerRadius = 10.0
         artworkImage.layer.masksToBounds = true
         artworkImage.kf.indicatorType = .activity
-        (artworkImage.kf.indicator?.view as? UIActivityIndicatorView)?.color = .systemPink
+        (artworkImage.kf.indicator?.view as? UIActivityIndicatorView)?.color = AppConstants.activityIndicatorColor
     }
 }
 

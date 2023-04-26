@@ -14,7 +14,7 @@ class LoadingReusableView: UICollectionReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        activityIndicator.color = .systemPink
+        activityIndicator.color = AppConstants.activityIndicatorColor
         activityIndicator.hidesWhenStopped = true
     }
     
