@@ -21,6 +21,7 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailButtonsView: UIView!
     @IBOutlet private weak var detailDescriptionTextView: UITextView!
     /// above is added for colorization
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var detailImage: UIImageView!
     @IBOutlet private weak var detailDescription: UITextView!
     @IBOutlet private weak var detailName: UILabel!
@@ -53,15 +54,19 @@ class DetailView: UIViewController{
         super.viewDidLoad()
         assignDelegates()
         viewModel.didViewLoad(withId: id)
+        configureActivityIndicator()
     }
     
     func assignDelegates() {
         viewModel.delegate = self
     }
+    func configureActivityIndicator(){
+        activityIndicator.startAnimating()
+        activityIndicator.color = AppConstants.activityIndicatorColor
+    }
     func configureItem( with item: Detail){
         
-        guard let modifiedArtworkUrl =
-                changeImageURL(item.artworkUrl, withDimension: dimensionPreference) else { return }
+        guard let modifiedArtworkUrl = changeImageURL(item.artworkUrl, withDimension: dimensionPreference) else { return }
         configureMutuals(item)
         
         func configureMutuals(_ item: Detail) {
@@ -177,6 +182,7 @@ extension DetailView: DetailViewModelDelegate{
     func refreshItem(_ retrieved: [Detail]) {
         DispatchQueue.main.async {
             self.configureItem(with: retrieved.first!)
+            self.activityIndicator.stopAnimating()
         }
     }
     func internetUnreachable(_ errorPrompt: String) {

@@ -20,13 +20,11 @@ class SearchView: UIViewController{
     private var idsOfAllFetchedRecords = Set<Int>()
     private var timeControl: Timer?
     
-    var loadingView: LoadingReusableView?
     private var paginationOffSet = 0
-    private let requestLimit = 20
-    private let collectionViewColumn: CGFloat = 2
     private var lessThanPage_Flag = false
     private var isLoadingNextPage = false
     private var categorySelection: Category? = .movie
+    private var loadingView: LoadingReusableView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,18 +51,17 @@ class SearchView: UIViewController{
         collectionView?.register(
             .init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
         let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
-                collectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
-
+        collectionView?.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
     }
     
     func setItems( _ items: [RowItems]) {
         /// NOTE: API does not support pagination via json, offset and limit used
         /// self.items <- existing data  incoming data -> items
     
-        if items.count != requestLimit { lessThanPage_Flag = true } /// decision point (true == do not fetch more)
+        if items.count != AppConstants.requestLimit { lessThanPage_Flag = true } /// decision point (true == do not fetch more)
 
         if lessThanPage_Flag { /// less than a page
-            if self.items.count >= requestLimit { /// case: last page with less than request limit
+            if self.items.count >= AppConstants.requestLimit  { /// case: last page with less than request limit
                 var lastRecords: [RowItems] = []
                 /// NOTE: API sends as the requestLimit, records can overlap at the end, so extract only the required
                 for each in items {
@@ -86,7 +83,7 @@ class SearchView: UIViewController{
             }
         }
         /// render
-        DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) {
             DispatchQueue.main.async {
                 self.activityIndicatorOverall.stopAnimating()
                 self.collectionView?.reloadData()
@@ -136,9 +133,7 @@ class SearchView: UIViewController{
         }
     }
     func resetAndSearch(_ searchTerm: String, _ category: Category, _ offSetValue: Int?){
-        
         idsOfAllFetchedRecords.removeAll() ///  dealloc
-
         paginationOffSet = 0
         lessThanPage_Flag = false
         
@@ -164,7 +159,6 @@ class SearchView: UIViewController{
 }
 
 // MARK: Extensions
-
 /* ViewModel - Delegate */
 extension SearchView: SearchViewModelDelegate {
     
@@ -247,7 +241,7 @@ extension SearchView: UICollectionViewDelegate {
             
             guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
             guard let category = categorySelection else { return }
-            paginationOffSet += requestLimit
+            paginationOffSet += AppConstants.requestLimit
             isLoadingNextPage = true
             self.viewModel.searchInvoked(searchText, category, paginationOffSet)
         }
@@ -289,9 +283,11 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
     
         let cellSpacing: CGFloat = 5;
         let cellWidth: CGFloat = 160.0;
-        var inset: CGFloat = (collectionView.bounds.size.width - (collectionViewColumn * cellWidth) - ((collectionViewColumn - 1)*cellSpacing)) * 0.5;
+        var inset: CGFloat = (collectionView.bounds.size.width -
+                               (AppConstants.collectionViewColumn * cellWidth) -
+                               ((AppConstants.collectionViewColumn - 1)*cellSpacing)) * 0.5
         inset = max(inset, 0.0);
-        return UIEdgeInsets(top: 0, left: inset/collectionViewColumn, bottom: 0, right: inset/collectionViewColumn)
+        return UIEdgeInsets(top: 0, left: inset/AppConstants.collectionViewColumn, bottom: 0, right: inset/AppConstants.collectionViewColumn)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 25

@@ -10,4 +10,6 @@ import UIKit
 struct AppConstants {
     
     static let activityIndicatorColor: UIColor = .systemPink
+    static let requestLimit: Int = 20
+    static let collectionViewColumn: CGFloat = 2
 }
