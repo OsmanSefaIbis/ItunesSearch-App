@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SearchView: UIViewController{
     
@@ -17,6 +18,7 @@ class SearchView: UIViewController{
     
     private var items: [RowItems] = []
     private let viewModel = SearchViewModel()
+    private var detailViewModel = DetailViewModel()
     private var idsOfAllFetchedRecords = Set<Int>()
     private var timeControl: Timer?
     
@@ -25,6 +27,8 @@ class SearchView: UIViewController{
     private var isLoadingNextPage = false
     private var categorySelection: Category? = .movie
     private var loadingView: LoadingReusableView?
+    private var cacheDetails: [Int : Detail] = [:]
+    private let imageDimensionForDetail = 600
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,12 +41,13 @@ class SearchView: UIViewController{
         configureSegmentedControl()
         configureGesture()
         configureActivityIndicator()
-    
+
     }
     
     func assignDelegates() {
         viewModel.delegate = self
         searchBar.delegate = self
+        detailViewModel.delegate = self
     }
     
     func configureCollectionView() {
@@ -52,6 +57,7 @@ class SearchView: UIViewController{
             .init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
         let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
         collectionView?.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
+        collectionView.isPrefetchingEnabled = true
     }
     
     func setItems( _ items: [RowItems]) {
@@ -90,7 +96,13 @@ class SearchView: UIViewController{
                 self.isLoadingNextPage = false
             }
         }
+        
     }
+    
+    func startPrefetchingDetails(for ids: [Int]){
+        detailViewModel.searchInvoked(withIds: ids)
+    }
+    
     func configureActivityIndicator(){
         activityIndicatorOverall.color = AppConstants.activityIndicatorColor
     }
@@ -134,6 +146,7 @@ class SearchView: UIViewController{
     }
     func resetAndSearch(_ searchTerm: String, _ category: Category, _ offSetValue: Int?){
         idsOfAllFetchedRecords.removeAll() ///  dealloc
+        cacheDetails.removeAll() /// dealloc
         paginationOffSet = 0
         lessThanPage_Flag = false
         
@@ -150,11 +163,21 @@ class SearchView: UIViewController{
         }
     }
     func reset(){
+        idsOfAllFetchedRecords.removeAll() ///  dealloc
+        cacheDetails.removeAll() /// dealloc
+        
         DispatchQueue.main.async {
             self.activityIndicatorOverall.stopAnimating()
             self.items.removeAll()
             self.collectionView.reloadData()
         }
+    }
+    func providesIds(_ items: [SearchCellModel]) -> [Int] {
+        var holdsIds: [Int] = []
+        for each in items{
+            holdsIds.append(each.id)
+        }
+        return holdsIds
     }
 }
 
@@ -164,6 +187,7 @@ extension SearchView: SearchViewModelDelegate {
     
     func refreshItems(_ retrived: [SearchCellModel]) {
         setItems(retrived)
+        startPrefetchingDetails(for: providesIds(retrived))
     }
     
     func internetUnreachable(_ errorPrompt: String) {
@@ -175,7 +199,14 @@ extension SearchView: SearchViewModelDelegate {
         self.present(alertController, animated: true)
     }
 }
-
+extension SearchView: DetailViewModelDelegate{
+    func refreshItem(_ retrieved: [Detail]) {
+        for each in retrieved{
+            cacheDetails[each.id] = each
+        }
+    }
+}
+    
 /* CollectionView - Data */
 extension SearchView: UICollectionViewDataSource {
     
@@ -201,33 +232,57 @@ extension SearchView: UICollectionViewDelegate {
             
         case .movie:
             if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.movie.get()) as? DetailView{
-                embedViewControllerWithId(&detailPage)
+                embedViewControllerWithCached(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
         case .music:
             if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.music.get()) as? DetailView{
-                embedViewControllerWithId(&detailPage)
+                embedViewControllerWithCached(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
         case .ebook:
             if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.ebook.get()) as? DetailView{
-                embedViewControllerWithId(&detailPage)
+                embedViewControllerWithCached(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
         case .podcast:
             if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.podcast.get()) as? DetailView{
-                embedViewControllerWithId(&detailPage)
+                embedViewControllerWithCached(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
         default:
             return
         }
-
-        func embedViewControllerWithId(_ vc: inout DetailView) {
-            
-            let searchEntity = items[indexPath.item]
-            let searchId = searchEntity.id
-            vc.id = searchId
+        func embedViewControllerWithCached(_ vc: inout DetailView) {
+            let currentItem = items[indexPath.item]
+            let detailId = currentItem.id
+            guard let detailData = cacheDetails[detailId] else { return }
+            provideImageAndColor(currentItem.artworkUrl) { [weak vc] imageAndColor in
+                guard let detailTuple = imageAndColor else { return }
+                DispatchQueue.main.async { [weak vc] in
+                    vc?.id = detailId
+                    vc?.configureItem(with: detailData, image: detailTuple.artwork, color: detailTuple.colorAverage)
+                }
+            }
+        }
+        
+        func provideImageAndColor(_ imageUrl: String, completion: @escaping ((artwork: UIImage, colorAverage: UIColor)?) -> Void) {
+            guard let modifiedArtworkUrl = changeImageURL(imageUrl, dimension: imageDimensionForDetail) else {
+                completion(nil)
+                return
+            }
+            KingfisherManager.shared.retrieveImage(with: URL(string: modifiedArtworkUrl)!) { result in
+                switch result {
+                case .success(let value):
+                    guard let color = value.image.averageColor else {
+                        completion(nil)
+                        return
+                    }
+                    completion((value.image, color))
+                case .failure(_):
+                    completion(nil)
+                }
+            }
         }
     }
     
@@ -290,7 +345,7 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
         return UIEdgeInsets(top: 0, left: inset/AppConstants.collectionViewColumn, bottom: 0, right: inset/AppConstants.collectionViewColumn)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 25
+        return 5
     }
 }
 

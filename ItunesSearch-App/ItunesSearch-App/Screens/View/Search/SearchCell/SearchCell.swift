@@ -10,6 +10,7 @@ import Kingfisher
 
 class SearchCell: UICollectionViewCell {
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var artworkImage: UIImageView!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -23,6 +24,7 @@ class SearchCell: UICollectionViewCell {
     }
     override func prepareForReuse() {
         super.prepareForReuse()
+        containerView.backgroundColor = nil
         artworkImage.image = nil
         releaseDateLabel.text = nil
         nameLabel.text = nil

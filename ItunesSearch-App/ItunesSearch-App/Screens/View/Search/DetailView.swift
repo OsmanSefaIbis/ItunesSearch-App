@@ -21,7 +21,6 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailButtonsView: UIView!
     @IBOutlet private weak var detailDescriptionTextView: UITextView!
     /// above is added for colorization
-    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var detailImage: UIImageView!
     @IBOutlet private weak var detailDescription: UITextView!
     @IBOutlet private weak var detailName: UILabel!
@@ -39,9 +38,7 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailEpisodes: UILabel!
     @IBOutlet private weak var detailTrackInfo: UILabel!
     
-    private let viewModel = DetailViewModel()
     private var item: Detail?
-    private let dimensionPreference = 600
     var id = 0
 
     private let webView = WKWebView()
@@ -52,21 +49,10 @@ class DetailView: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        assignDelegates()
-        viewModel.didViewLoad(withId: id)
-        configureActivityIndicator()
     }
     
-    func assignDelegates() {
-        viewModel.delegate = self
-    }
-    func configureActivityIndicator(){
-        activityIndicator.startAnimating()
-        activityIndicator.color = AppConstants.activityIndicatorColor
-    }
-    func configureItem( with item: Detail){
+    func configureItem( with item: Detail, image artworkImage: UIImage, color averageColor: UIColor){
         
-        guard let modifiedArtworkUrl = changeImageURL(item.artworkUrl, withDimension: dimensionPreference) else { return }
         configureMutuals(item)
         
         func configureMutuals(_ item: Detail) {
@@ -75,27 +61,8 @@ class DetailView: UIViewController{
             detailCreator.text = item.creator
             detailReleaseDate.text = convertDate( for: item.releaseDate)
             detailPrice.text = (item.price == 0) ? HardCoded.free.get() : (HardCoded.dolar.get()).appending(String(item.price))
-            detailImage.kf.setImage(with: URL(string: modifiedArtworkUrl)) { result in
-                switch result {
-                case .success(let value):
-                    let averageColor = value.image.averageColor
-                    DispatchQueue.main.async { [weak self] in
-                        self?.detailContainerView.backgroundColor = averageColor
-                        self?.detailView.backgroundColor = averageColor
-                        self?.detailImageContainerView.backgroundColor = averageColor
-                        self?.detailFieldsView.backgroundColor = averageColor
-                        self?.detailButtonsView.backgroundColor = averageColor
-                        if let detailDescriptionView = self?.detailDescriptionView {
-                            detailDescriptionView.backgroundColor = averageColor
-                        }/// Music and Podcast dont have these
-                        if let detailDescriptionTextView = self?.detailDescriptionTextView {
-                            detailDescriptionTextView.backgroundColor = averageColor
-                        }
-                    }
-                case .failure(let error):
-                    print("Error: \(error)")
-                }
-            }
+            detailImage.image = artworkImage
+            configureBackgroundColors(averageColor)
         }
         
         switch item.kind{
@@ -144,10 +111,24 @@ class DetailView: UIViewController{
             detailEpisodes.text = (HardCoded.numberSign.get())
                 .appending(String(item.episodeCount))
         }
+        func configureBackgroundColors(_ averageColor: UIColor){
+           DispatchQueue.main.async { [weak self] in
+               self?.detailContainerView.backgroundColor = averageColor
+               self?.detailView.backgroundColor = averageColor
+               self?.detailImageContainerView.backgroundColor = averageColor
+               self?.detailFieldsView.backgroundColor = averageColor
+               self?.detailButtonsView.backgroundColor = averageColor
+               if let detailDescriptionView = self?.detailDescriptionView {
+                   detailDescriptionView.backgroundColor = averageColor
+               }/// Music and Podcast dont have these
+               if let detailDescriptionTextView = self?.detailDescriptionTextView {
+                   detailDescriptionTextView.backgroundColor = averageColor
+               }
+           }
+       }
     }
     
     /* Button Actions */
-
     @IBAction func viewButtonClicked(_ sender: Any) {
         
         let webViewVC = UIViewController()
@@ -159,6 +140,7 @@ class DetailView: UIViewController{
         scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         navigationController?.pushViewController(webViewVC, animated: true)
     }
+    
     @IBAction func moviePreviewButtonClicked(_ sender: Any) {
         
         let player = AVPlayer(url: previewUrl!)
@@ -166,32 +148,11 @@ class DetailView: UIViewController{
         playerViewController?.player = player
         present(playerViewController!, animated: true) { player.play() }
     }
+    
     @IBAction func musicPreviewButtonClicked(_ sender: Any) {
         
         let playerItem = AVPlayerItem(url: previewUrl!)
         player = AVPlayer(playerItem: playerItem)
         player?.play()
     }
-}
-
-// MARK: Extensions
-
-/* ViewModel Delegate */
-extension DetailView: DetailViewModelDelegate{
-    
-    func refreshItem(_ retrieved: [Detail]) {
-        DispatchQueue.main.async {
-            self.configureItem(with: retrieved.first!)
-            self.activityIndicator.stopAnimating()
-        }
-    }
-    func internetUnreachable(_ errorPrompt: String) {
-        let alertController = UIAlertController(title: "Warning", message: errorPrompt, preferredStyle: .alert )
-        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (action:UIAlertAction!) in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true)
-    }
-    
 }

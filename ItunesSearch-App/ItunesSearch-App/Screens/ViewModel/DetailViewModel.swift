@@ -19,8 +19,8 @@ class DetailViewModel{
     init(){
         model.delegate = self
     }
-    func didViewLoad(withId idValue: Int){
-        model.fetchSingularData(for: idValue)
+    func searchInvoked(withIds idValues: [Int]){
+        model.fetchByIds(for: idValues)
     }
 }
 

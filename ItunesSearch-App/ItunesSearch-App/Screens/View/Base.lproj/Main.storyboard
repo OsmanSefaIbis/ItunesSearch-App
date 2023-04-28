@@ -148,9 +148,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j24-BL-PlS" userLabel="Detail Container">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Z8q-dR-hfO">
-                                        <rect key="frame" x="178" y="361" width="37" height="37"/>
-                                    </activityIndicatorView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jNb-1x-DiI" userLabel="VStack">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                                         <subviews>
@@ -367,9 +364,7 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="Z8q-dR-hfO" firstAttribute="centerX" secondItem="j24-BL-PlS" secondAttribute="centerX" id="7BX-ob-fI8"/>
                                     <constraint firstItem="jNb-1x-DiI" firstAttribute="top" secondItem="j24-BL-PlS" secondAttribute="top" id="Oob-Ca-q7E"/>
-                                    <constraint firstItem="Z8q-dR-hfO" firstAttribute="centerY" secondItem="j24-BL-PlS" secondAttribute="centerY" id="Y9L-D1-igD"/>
                                     <constraint firstAttribute="bottom" secondItem="jNb-1x-DiI" secondAttribute="bottom" id="ona-dD-ske"/>
                                     <constraint firstAttribute="trailing" secondItem="jNb-1x-DiI" secondAttribute="trailing" id="vxB-QA-yf2"/>
                                     <constraint firstItem="jNb-1x-DiI" firstAttribute="leading" secondItem="j24-BL-PlS" secondAttribute="leading" id="yCY-u8-oEp"/>
@@ -386,7 +381,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="Z8q-dR-hfO" id="mXH-rP-G7d"/>
                         <outlet property="detailButtonsView" destination="dgk-xt-Zr6" id="8Ha-Ap-TcQ"/>
                         <outlet property="detailCollectionName" destination="UNR-N7-n8v" id="ski-vg-aeq"/>
                         <outlet property="detailContainerView" destination="get-ib-fy0" id="33D-2p-khQ"/>
@@ -419,9 +413,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rgm-Wy-tF8" userLabel="Detail Container">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="4V4-NK-oa1">
-                                        <rect key="frame" x="178" y="361" width="37" height="37"/>
-                                    </activityIndicatorView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="LJF-5K-Lzb" userLabel="VStack">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                                         <subviews>
@@ -628,9 +619,7 @@
                                 <constraints>
                                     <constraint firstItem="LJF-5K-Lzb" firstAttribute="leading" secondItem="Rgm-Wy-tF8" secondAttribute="leading" id="0UD-2F-ogj"/>
                                     <constraint firstItem="LJF-5K-Lzb" firstAttribute="top" secondItem="Rgm-Wy-tF8" secondAttribute="top" id="4pf-3N-k58"/>
-                                    <constraint firstItem="4V4-NK-oa1" firstAttribute="centerY" secondItem="Rgm-Wy-tF8" secondAttribute="centerY" id="Qof-Ji-hBh"/>
                                     <constraint firstAttribute="trailing" secondItem="LJF-5K-Lzb" secondAttribute="trailing" id="X2p-AB-wGE"/>
-                                    <constraint firstItem="4V4-NK-oa1" firstAttribute="centerX" secondItem="Rgm-Wy-tF8" secondAttribute="centerX" id="agV-I5-76q"/>
                                     <constraint firstAttribute="bottom" secondItem="LJF-5K-Lzb" secondAttribute="bottom" id="z9S-zx-uDf"/>
                                 </constraints>
                             </view>
@@ -645,7 +634,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="4V4-NK-oa1" id="WJ1-qP-5O5"/>
                         <outlet property="detailButtonsView" destination="xBr-Pn-W3N" id="oTE-Ix-wBN"/>
                         <outlet property="detailCollectionName" destination="PoK-O5-h9S" id="jMs-xD-Yg9"/>
                         <outlet property="detailContainerView" destination="A91-N7-cit" id="OCP-fh-R5F"/>
@@ -677,9 +665,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nVH-LK-cwt" userLabel="Detail Container">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="O65-pJ-otc">
-                                        <rect key="frame" x="178" y="361" width="37" height="37"/>
-                                    </activityIndicatorView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="7ac-nm-iEE" userLabel="VStack">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                                         <subviews>
@@ -912,8 +897,6 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="7ac-nm-iEE" firstAttribute="leading" secondItem="nVH-LK-cwt" secondAttribute="leading" id="Ted-11-5xX"/>
-                                    <constraint firstItem="O65-pJ-otc" firstAttribute="centerX" secondItem="nVH-LK-cwt" secondAttribute="centerX" id="fni-fZ-vwg"/>
-                                    <constraint firstItem="O65-pJ-otc" firstAttribute="centerY" secondItem="nVH-LK-cwt" secondAttribute="centerY" id="i3n-Ju-fI7"/>
                                     <constraint firstItem="7ac-nm-iEE" firstAttribute="top" secondItem="nVH-LK-cwt" secondAttribute="top" id="kxu-XG-a7J"/>
                                     <constraint firstAttribute="trailing" secondItem="7ac-nm-iEE" secondAttribute="trailing" id="oqE-mN-la9"/>
                                     <constraint firstAttribute="bottom" secondItem="7ac-nm-iEE" secondAttribute="bottom" id="vfU-A7-F6f"/>
@@ -964,9 +947,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dZ6-8q-UZ1" userLabel="Detail Container">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="q6y-kY-NwG">
-                                        <rect key="frame" x="178" y="361" width="37" height="37"/>
-                                    </activityIndicatorView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="3ju-Ks-2KH" userLabel="VStack">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                                         <subviews>
@@ -1186,11 +1166,9 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="q6y-kY-NwG" firstAttribute="centerX" secondItem="dZ6-8q-UZ1" secondAttribute="centerX" id="AcL-Kc-sEb"/>
                                     <constraint firstItem="3ju-Ks-2KH" firstAttribute="leading" secondItem="dZ6-8q-UZ1" secondAttribute="leading" id="Owb-jC-Nyc"/>
                                     <constraint firstItem="3ju-Ks-2KH" firstAttribute="top" secondItem="dZ6-8q-UZ1" secondAttribute="top" id="V8z-oW-0Zb"/>
                                     <constraint firstAttribute="trailing" secondItem="3ju-Ks-2KH" secondAttribute="trailing" id="lDA-Lb-5ag"/>
-                                    <constraint firstItem="q6y-kY-NwG" firstAttribute="centerY" secondItem="dZ6-8q-UZ1" secondAttribute="centerY" id="mpo-nu-Yyr"/>
                                     <constraint firstAttribute="bottom" secondItem="3ju-Ks-2KH" secondAttribute="bottom" id="qPf-2f-4K5"/>
                                 </constraints>
                             </view>

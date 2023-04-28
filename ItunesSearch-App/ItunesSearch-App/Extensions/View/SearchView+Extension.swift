@@ -7,19 +7,17 @@
 
 import Foundation
 
-extension SearchViewModel{
+extension SearchView{
     
-    func convertDate(for dateValue: String) -> String{
-        let inputDF = DateFormatter()
-        inputDF.dateFormat = HardCoded.apiDateFormat.get()
-        
-        guard let inputDate = inputDF.date(from: dateValue) else {
-            fatalError(HardCoded.errorPromptOne.get())
+    func changeImageURL(_ urlString: String, dimension dimensionValue: Int) -> String? {
+        guard var urlComponents = URLComponents(string: urlString) else {
+            return nil
         }
-        let outputDF = DateFormatter()
-        outputDF.dateFormat = HardCoded.convertedDateFormat.get()
-        outputDF.locale = Locale(identifier: HardCoded.locale_US.get())
-        let output = outputDF.string(from: inputDate)
-        return output
+        if urlComponents.path.hasSuffix("/100x100bb.jpg") {
+            urlComponents.path = urlComponents.path.replacingOccurrences(of: "/100x100bb.jpg", with: "/\(dimensionValue)x\(dimensionValue)bb.jpg")
+            return urlComponents.string
+        } else {
+            return urlComponents.string
+        }
     }
 }

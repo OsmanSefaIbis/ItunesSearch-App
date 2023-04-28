@@ -9,9 +9,9 @@ import Foundation
 
 extension DetailModel {
     
-    func composeUrl(_ id: Int) -> String {
+    func composeUrl(_ ids: [Int]) -> String {
         
-        let idParam = HardCoded.idParam.get().appending(String(id))
+        let idParam = HardCoded.idParam.get().appending( ids.map { String($0) }.joined(separator: ",") )
         let baseUrl = Api.scheme.get() + Api.domain.get() + Api.lookupPath.get()
         let urlCompose = baseUrl + idParam
         return urlCompose
