@@ -17,7 +17,7 @@ class SearchView: UIViewController{
     @IBOutlet private weak var collectionView: UICollectionView!
     
     private var items: [RowItems] = []
-    private let viewModel = SearchViewModel()
+    private let searchViewModel = SearchViewModel()
     private var detailViewModel = DetailViewModel()
     private var idsOfAllFetchedRecords = Set<Int>()
     private var timeControl: Timer?
@@ -28,6 +28,7 @@ class SearchView: UIViewController{
     private var categorySelection: Category? = .movie
     private var loadingView: LoadingReusableView?
     private var cacheDetails: [Int : Detail] = [:]
+    private var cacheDetailImagesAndColors: [Int : (UIImage, UIColor)] = [:]
     private let imageDimensionForDetail = 600
     
     override func viewDidLoad() {
@@ -45,9 +46,9 @@ class SearchView: UIViewController{
     }
     
     func assignDelegates() {
-        viewModel.delegate = self
-        searchBar.delegate = self
+        searchViewModel.delegate = self
         detailViewModel.delegate = self
+        searchBar.delegate = self
     }
     
     func configureCollectionView() {
@@ -57,7 +58,6 @@ class SearchView: UIViewController{
             .init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
         let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
         collectionView?.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
-        collectionView.isPrefetchingEnabled = true
     }
     
     func setItems( _ items: [RowItems]) {
@@ -89,14 +89,32 @@ class SearchView: UIViewController{
             }
         }
         /// render
-        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { // TODO: GET RID OF THIS LINE, OPTIMIZE !!!
             DispatchQueue.main.async {
                 self.activityIndicatorOverall.stopAnimating()
                 self.collectionView?.reloadData()
                 self.isLoadingNextPage = false
             }
         }
-        
+    }
+    
+    func provideImageAndColor(_ imageUrl: String, completion: @escaping ((artwork: UIImage, colorAverage: UIColor)?) -> Void) {
+        guard let modifiedArtworkUrl = changeImageURL(imageUrl, dimension: imageDimensionForDetail) else {
+            completion(nil)
+            return
+        }
+        KingfisherManager.shared.retrieveImage(with: URL(string: modifiedArtworkUrl)!) { result in
+            switch result {
+            case .success(let value):
+                guard let averagedColor = value.image.averageColor else {
+                    completion(nil)
+                    return
+                }
+                completion((value.image, averagedColor))
+            case .failure(_):
+                completion(nil)
+            }
+        }
     }
     
     func startPrefetchingDetails(for ids: [Int]){
@@ -145,8 +163,7 @@ class SearchView: UIViewController{
         }
     }
     func resetAndSearch(_ searchTerm: String, _ category: Category, _ offSetValue: Int?){
-        idsOfAllFetchedRecords.removeAll() ///  dealloc
-        cacheDetails.removeAll() /// dealloc
+        resetCollections() /// dealloc
         paginationOffSet = 0
         lessThanPage_Flag = false
         
@@ -157,21 +174,26 @@ class SearchView: UIViewController{
             self.activityIndicatorOverall.startAnimating()
         }
         if let offSet = offSetValue{
-            viewModel.searchInvoked(searchTerm, category, offSet)
+            searchViewModel.searchInvoked(searchTerm, category, offSet)
         }else{
-            viewModel.searchInvoked(searchTerm, category, paginationOffSet)
+            searchViewModel.searchInvoked(searchTerm, category, paginationOffSet)
         }
     }
     func reset(){
-        idsOfAllFetchedRecords.removeAll() ///  dealloc
-        cacheDetails.removeAll() /// dealloc
-        
+        resetCollections() /// dealloc
         DispatchQueue.main.async {
             self.activityIndicatorOverall.stopAnimating()
             self.items.removeAll()
             self.collectionView.reloadData()
         }
     }
+    
+    func resetCollections(){
+        idsOfAllFetchedRecords.removeAll()
+        cacheDetails.removeAll()
+        cacheDetailImagesAndColors.removeAll()
+    }
+    
     func providesIds(_ items: [SearchCellModel]) -> [Int] {
         var holdsIds: [Int] = []
         for each in items{
@@ -182,7 +204,7 @@ class SearchView: UIViewController{
 }
 
 // MARK: Extensions
-/* ViewModel - Delegate */
+/* ViewModel - Delegates */
 extension SearchView: SearchViewModelDelegate {
     
     func refreshItems(_ retrived: [SearchCellModel]) {
@@ -203,6 +225,10 @@ extension SearchView: DetailViewModelDelegate{
     func refreshItem(_ retrieved: [Detail]) {
         for each in retrieved{
             cacheDetails[each.id] = each
+            provideImageAndColor( each.artworkUrl) { [weak self] imageAndColor in
+                guard let detailTuple = imageAndColor else { return }
+                self?.cacheDetailImagesAndColors[each.id] = detailTuple
+            }
         }
     }
 }
@@ -257,31 +283,11 @@ extension SearchView: UICollectionViewDelegate {
             let currentItem = items[indexPath.item]
             let detailId = currentItem.id
             guard let detailData = cacheDetails[detailId] else { return }
-            provideImageAndColor(currentItem.artworkUrl) { [weak vc] imageAndColor in
-                guard let detailTuple = imageAndColor else { return }
-                DispatchQueue.main.async { [weak vc] in
-                    vc?.id = detailId
-                    vc?.configureItem(with: detailData, image: detailTuple.artwork, color: detailTuple.colorAverage)
-                }
-            }
-        }
-        
-        func provideImageAndColor(_ imageUrl: String, completion: @escaping ((artwork: UIImage, colorAverage: UIColor)?) -> Void) {
-            guard let modifiedArtworkUrl = changeImageURL(imageUrl, dimension: imageDimensionForDetail) else {
-                completion(nil)
-                return
-            }
-            KingfisherManager.shared.retrieveImage(with: URL(string: modifiedArtworkUrl)!) { result in
-                switch result {
-                case .success(let value):
-                    guard let color = value.image.averageColor else {
-                        completion(nil)
-                        return
-                    }
-                    completion((value.image, color))
-                case .failure(_):
-                    completion(nil)
-                }
+            guard let detailImageAndColor = cacheDetailImagesAndColors[detailId] else { return }
+            
+            DispatchQueue.main.async { [weak vc] in
+                vc?.id = detailId
+                vc?.configureItem(with: detailData, image: detailImageAndColor.0, color: detailImageAndColor.1)
             }
         }
     }
@@ -298,7 +304,7 @@ extension SearchView: UICollectionViewDelegate {
             guard let category = categorySelection else { return }
             paginationOffSet += AppConstants.requestLimit
             isLoadingNextPage = true
-            self.viewModel.searchInvoked(searchText, category, paginationOffSet)
+            self.searchViewModel.searchInvoked(searchText, category, paginationOffSet)
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
@@ -332,6 +338,8 @@ extension SearchView: UICollectionViewDelegate {
 }
 
 /* CollectionView - Flow */
+// TODO: YOU ARE NEXT !!!
+// TODO: GRID FLOW LAYOUT STYLE & AUTOLAYOUT
 extension SearchView: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
