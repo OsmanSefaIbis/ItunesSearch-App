@@ -368,9 +368,13 @@ extension SearchView: UISearchBarDelegate {
         if (0...2).contains(searchText.count) {
             reset()
         }else {
-            paginationOffSet = 0
-            guard let category = categorySelection else { return }
-            self.resetAndSearch(searchText, category, paginationOffSet)
+            if (1...20).contains(items.count)  {
+                searchBar.resignFirstResponder()
+            }else{
+                paginationOffSet = 0
+                guard let category = categorySelection else { return }
+                self.resetAndSearch(searchText, category, paginationOffSet)
+            }
         }
     }
     
