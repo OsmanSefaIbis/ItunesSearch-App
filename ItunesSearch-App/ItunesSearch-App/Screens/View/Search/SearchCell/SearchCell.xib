@@ -88,7 +88,6 @@
             <connections>
                 <outlet property="artworkImage" destination="Z5T-EM-uhV" id="NGl-mc-V9s"/>
                 <outlet property="collectionPriceLabel" destination="cM6-pJ-6tb" id="hHr-ln-d8Q"/>
-                <outlet property="containerView" destination="m5X-ZV-Fek" id="Xp2-AD-uCt"/>
                 <outlet property="nameLabel" destination="iDg-CG-gwv" id="BMQ-Az-xbe"/>
                 <outlet property="releaseDateLabel" destination="GPX-1R-LZ7" id="VSm-ON-D8F"/>
             </connections>
