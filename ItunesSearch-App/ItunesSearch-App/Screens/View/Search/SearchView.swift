@@ -32,6 +32,7 @@ class SearchView: UIViewController{
     private let imageDimensionForDetail = 600
     private let defaultCellSize = CGSize(width: 160, height: 80)
     private var sizingValue: CGFloat = 80.0
+    private var defaultMinimumCellSpacing = 10.0
     private var collectionViewColumnCount: Int = 2
     private let defaultSectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     
@@ -346,54 +347,7 @@ extension SearchView: UICollectionViewDelegate {
 }
 
 /* CollectionView - Flow */
-// TODO: YOU ARE NEXT !!!
-// TODO: GRID FLOW LAYOUT STYLE & AUTOLAYOUT
-
-/*-----------------------------------------------------------------------------------------------
-    /*-- MODELS ----- MAX IOS --- WIDTH POINT -- HEIGHT POINT ---
-    |    6s             15           375            667         |
-    |    SE Gen1        15           320(MIN)       568         |
-    |    SE Gen2        16           375            667         |
-    |    13 Pro         16           390            844         |
-    |    14 Pro         16           393            852         |
-    |    14 Pro Max     16           430(MAX)       932         |
-    -----------------------------------------------------------*/
--------------------------------------------------------------------------------------------------
-    z = 2x + y + 4k     --> EQ1
--------------------------------------------------------------------------------------------------
-    z --> totalAvailableWidth      --> known        --> varies between : 320~430
-    x --> cellWidth                --> unknown      --> calculate
-    y --> minimumInterItemSpacing  --> can adjust   --> size: 10
-    k --> left and right inset     --> can adjust   --> size: 5
--------------------------------------------------------------------------------------------------
-    x = i + v = 5A      --> EQ2
--------------------------------------------------------------------------------------------------
-    x      --> cellWidth                    --> 5A
-    i      --> imageWidth ( 2A )            --> cellHeight == imageHeight == labelsHeight == 2A
-    v      --> stackedLabelsWidth ( 3A )
-    i/v    --> 2/3 aspect ratio of widths   --> UPDATE THIS --> FIND THE SWEET SPOT --> Critical
--------------------------------------------------------------------------------------------------
-    z = 320 --> MIN CASE
-    y = 10
-    k = 5
-    x = 320 - 10 - 20 = 290 / 2 = 145 = 5A --> A = 29 --> sizingValue
-        Cell Width   = 5A = 145
-        Cell Height  = 2A = 58   --> how will the labels fit ??? --> maybe smaller font
-        Image Width  = 2A = 58
-        Labels Width = 3A = 87
--------------------------------------------------------------------------------------------------
-    z = 430 --> MAX CASE
-    y = 10
-    k = 5
-    x = 430 - 10 - 20 = 400 / 2 = 200 = 5A --> A = 40 --> sizingValue
-        Cell Width   = 5A = 200
-        Cell Height  = 2A = 80
-        Image Width  = 2A = 80
-        Labels Width = 3A = 120
--------------------------------------------------------------------------------------------------
- Equation that concludes -->  A = [ ( ( z - y - ( columnCount * ( 2k )))/ columnCount) / 5 ]
--------------------------------------------------------------------------------------------------*/
-
+/// At the end of code there is an explanation
 extension SearchView: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -401,7 +355,11 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return defaultCellSize }
         let totalWidth = collectionView.bounds.width
         let sectionInsets = flowLayout.sectionInset
-        let cellSpacingMin = (CGFloat(collectionViewColumnCount) * flowLayout.minimumInteritemSpacing)
+        // FIXME: Read Below
+            /// Decreasing the multiplier causes one column
+            /// Increasing the multiplier causes the last item in the grid to clip to left item, but
+            /// when user wants more data the last cell orients back to alignment
+        let cellSpacingMin = ( (1.4) * (flowLayout.minimumInteritemSpacing) ) // band aid solution
         let totalInsetSpace = (CGFloat(collectionViewColumnCount)  * ( sectionInsets.left + sectionInsets.right ))
         
         let availableWidthForCells = (totalWidth - cellSpacingMin - totalInsetSpace)
@@ -409,6 +367,7 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
         let cellWidth = sizingValue * 5
         let cellHeight = sizingValue * 2
         let cellSize = CGSize(width: cellWidth, height: cellHeight)
+        
         return cellSize
     }
     
@@ -419,8 +378,8 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return 5.0 }
-        flowLayout.minimumInteritemSpacing = 10
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return defaultMinimumCellSpacing }
+        flowLayout.minimumInteritemSpacing = defaultMinimumCellSpacing
         return flowLayout.minimumInteritemSpacing
     }
 }
@@ -472,6 +431,51 @@ extension SearchView: UISearchBarDelegate {
         reset()
     }
 }
+
+/*-----------------------------------------------------------------------------------------------
+    /*-- MODELS ----- MAX IOS --- WIDTH POINT -- HEIGHT POINT ---
+    |    6s             15           375            667         |
+    |    SE Gen1        15           320(MIN)       568         |
+    |    SE Gen2        16           375            667         |
+    |    13 Pro         16           390            844         |
+    |    14 Pro         16           393            852         |
+    |    14 Pro Max     16           430(MAX)       932         |
+    -----------------------------------------------------------*/
+-------------------------------------------------------------------------------------------------
+    z = 2x + 2y + 4k     --> EQ1
+-------------------------------------------------------------------------------------------------
+    z --> totalAvailableWidth      --> known        --> varies between : 320~430
+    x --> cellWidth                --> unknown      --> calculate
+    y --> minimumInterItemSpacing  --> can adjust   --> size: 10
+    k --> left and right inset     --> can adjust   --> size: 5
+-------------------------------------------------------------------------------------------------
+    x = i + v = 5A      --> EQ2
+-------------------------------------------------------------------------------------------------
+    x      --> cellWidth                    --> 5A
+    i      --> imageWidth ( 2A )            --> cellHeight == imageHeight == labelsHeight == 2A
+    v      --> stackedLabelsWidth ( 3A )
+    i/v    --> 2/3 aspect ratio of widths   --> UPDATE THIS --> FIND THE SWEET SPOT --> Critical
+-------------------------------------------------------------------------------------------------
+    z = 320 --> MIN CASE
+    y = 10
+    k = 5
+    x = 320 - 20 - 20 = 280 / 2 = 140 = 5A --> A = 28 --> sizingValue
+        Cell Width   = 5A = 140
+        Cell Height  = 2A = 56   --> how will the labels fit ??? --> maybe smaller font
+        Image Width  = 2A = 56
+        Labels Width = 3A = 84
+-------------------------------------------------------------------------------------------------
+    z = 430 --> MAX CASE
+    y = 10
+    k = 5
+    x = 430 - 20 - 20 = 390 / 2 = 195 = 5A --> A = 39 --> sizingValue
+        Cell Width   = 5A = 195
+        Cell Height  = 2A = 78
+        Image Width  = 2A = 78
+        Labels Width = 3A = 117
+-------------------------------------------------------------------------------------------------
+ Conclusion:  A = [ ( ( z - ( columnCount * y ) - ( columnCount * ( 2k )))/ columnCount) / 5 ]
+-------------------------------------------------------------------------------------------------*/
 
 
 
