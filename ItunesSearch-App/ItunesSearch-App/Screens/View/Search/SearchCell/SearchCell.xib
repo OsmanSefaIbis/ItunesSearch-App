@@ -25,50 +25,37 @@
                                 <rect key="frame" x="0.0" y="0.0" width="162" height="80"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Z5T-EM-uhV">
-                                        <rect key="frame" x="0.0" y="1.6666666666666643" width="80" height="77"/>
+                                        <rect key="frame" x="0.0" y="1.6666666666666643" width="58.333333333333336" height="77"/>
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="I6E-Lj-5h9"/>
-                                        </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="500" horizontalCompressionResistancePriority="500" axis="vertical" distribution="fillEqually" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="Ea8-ny-b5r">
-                                        <rect key="frame" x="82" y="0.0" width="80" height="80"/>
+                                        <rect key="frame" x="60.333333333333336" y="0.0" width="101.66666666666666" height="80"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Date&quot;" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPX-1R-LZ7" userLabel="Date">
-                                                <rect key="frame" x="53.333333333333336" y="0.0" width="26.666666666666664" height="26.666666666666668"/>
+                                                <rect key="frame" x="75" y="0.0" width="26.666666666666671" height="26.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Name&quot;" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iDg-CG-gwv" userLabel="Name">
-                                                <rect key="frame" x="40" y="26.666666666666664" width="40" height="26.666666666666664"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="PfH-JC-hq7"/>
-                                                </constraints>
+                                                <rect key="frame" x="61.666666666666657" y="26.666666666666664" width="40" height="26.666666666666664"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Price&quot;" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cM6-pJ-6tb" userLabel="Price">
-                                                <rect key="frame" x="51.666666666666664" y="53.333333333333336" width="28.333333333333336" height="26.666666666666664"/>
+                                                <rect key="frame" x="73.333333333333314" y="53.333333333333336" width="28.333333333333329" height="26.666666666666664"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="2KF-lO-Xmj"/>
-                                        </constraints>
                                     </stackView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="Z5T-EM-uhV" firstAttribute="height" secondItem="Ea8-ny-b5r" secondAttribute="height" id="ErJ-HI-nIk"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="80" id="3er-Rr-i5o"/>
                             <constraint firstAttribute="trailing" secondItem="Hgw-dD-ET5" secondAttribute="trailing" constant="5" id="Roc-3y-OCr"/>
                             <constraint firstItem="Hgw-dD-ET5" firstAttribute="top" secondItem="m5X-ZV-Fek" secondAttribute="top" id="kNv-Rg-lMw"/>
                             <constraint firstAttribute="bottom" secondItem="Hgw-dD-ET5" secondAttribute="bottom" id="pQX-Gg-vzj"/>
@@ -90,6 +77,7 @@
                 <outlet property="collectionPriceLabel" destination="cM6-pJ-6tb" id="hHr-ln-d8Q"/>
                 <outlet property="nameLabel" destination="iDg-CG-gwv" id="BMQ-Az-xbe"/>
                 <outlet property="releaseDateLabel" destination="GPX-1R-LZ7" id="VSm-ON-D8F"/>
+                <outlet property="vStackLabels" destination="Ea8-ny-b5r" id="8ND-8w-zVg"/>
             </connections>
             <point key="canvasLocation" x="112.21374045801527" y="0.0"/>
         </collectionViewCell>

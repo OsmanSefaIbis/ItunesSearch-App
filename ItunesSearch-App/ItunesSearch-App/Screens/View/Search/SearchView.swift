@@ -30,6 +30,10 @@ class SearchView: UIViewController{
     private var cacheDetails: [Int : Detail] = [:]
     private var cacheDetailImagesAndColors: [Int : (UIImage, UIColor)] = [:]
     private let imageDimensionForDetail = 600
+    private let defaultCellSize = CGSize(width: 160, height: 80)
+    private var sizingValue: CGFloat = 80.0
+    private var collectionViewColumnCount: Int = 2
+    private let defaultSectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -243,6 +247,10 @@ extension SearchView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! SearchCell
+        cell.setImageHeigth( 2 * sizingValue )
+        cell.setImageWidth( 2 * sizingValue )
+        cell.setStackedLabelsHeigth( 2 * sizingValue )
+        cell.setStackedLabelsWidth( 3 * sizingValue )
         cell.configureCell(with: items[indexPath.row])
         return cell
     }
@@ -352,14 +360,14 @@ extension SearchView: UICollectionViewDelegate {
     -----------------------------------------------------------*/
 -------------------------------------------------------------------------------------------------
     z = 2x + y + 4k     --> EQ1
- -------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
     z --> totalAvailableWidth      --> known        --> varies between : 320~430
     x --> cellWidth                --> unknown      --> calculate
     y --> minimumInterItemSpacing  --> can adjust   --> size: 10
-    k --> left or right inset      --> can adjust   --> size: 5
+    k --> left and right inset     --> can adjust   --> size: 5
 -------------------------------------------------------------------------------------------------
     x = i + v = 5A      --> EQ2
- -------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
     x      --> cellWidth                    --> 5A
     i      --> imageWidth ( 2A )            --> cellHeight == imageHeight == labelsHeight == 2A
     v      --> stackedLabelsWidth ( 3A )
@@ -368,8 +376,7 @@ extension SearchView: UICollectionViewDelegate {
     z = 320 --> MIN CASE
     y = 10
     k = 5
-    x = 320 - 10 - 20 = 290 / 2 = 145
-    x = 5A --> A = 29
+    x = 320 - 10 - 20 = 290 / 2 = 145 = 5A --> A = 29 --> sizingValue
         Cell Width   = 5A = 145
         Cell Height  = 2A = 58   --> how will the labels fit ??? --> maybe smaller font
         Image Width  = 2A = 58
@@ -378,36 +385,44 @@ extension SearchView: UICollectionViewDelegate {
     z = 430 --> MAX CASE
     y = 10
     k = 5
-    x = 430 - 10 - 20 = 400 / 2 = 200 = 5A --> A = 40
+    x = 430 - 10 - 20 = 400 / 2 = 200 = 5A --> A = 40 --> sizingValue
         Cell Width   = 5A = 200
         Cell Height  = 2A = 80
         Image Width  = 2A = 80
         Labels Width = 3A = 120
+-------------------------------------------------------------------------------------------------
+ Equation that concludes -->  A = [ ( ( z - y - ( columnCount * ( 2k )))/ columnCount) / 5 ]
 -------------------------------------------------------------------------------------------------*/
 
 extension SearchView: UICollectionViewDelegateFlowLayout{
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    
-        let cellSpacing: CGFloat = 5;
-        let cellWidth: CGFloat = 160.0;
-        var inset: CGFloat = (collectionView.bounds.size.width -
-                               (AppConstants.collectionViewColumn * cellWidth) -
-                               ((AppConstants.collectionViewColumn - 1)*cellSpacing)) * 0.5
-        inset = max(inset, 0.0);
-        return UIEdgeInsets(top: 0, left: inset/AppConstants.collectionViewColumn, bottom: 0, right: inset/AppConstants.collectionViewColumn)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return defaultCellSize }
+        let totalWidth = collectionView.bounds.width
+        let sectionInsets = flowLayout.sectionInset
+        let cellSpacingMin = (CGFloat(collectionViewColumnCount) * flowLayout.minimumInteritemSpacing)
+        let totalInsetSpace = (CGFloat(collectionViewColumnCount)  * ( sectionInsets.left + sectionInsets.right ))
+        
+        let availableWidthForCells = (totalWidth - cellSpacingMin - totalInsetSpace)
+        sizingValue =  ( availableWidthForCells / CGFloat(collectionViewColumnCount) ) / 5
+        let cellWidth = sizingValue * 5
+        let cellHeight = sizingValue * 2
+        let cellSize = CGSize(width: cellWidth, height: cellHeight)
+        return cellSize
     }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let blank = CGSize(width: 160, height: 80)
-//        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return blank}
-//        let totalAvailableWidth = collectionView.bounds.width
-//        let availableWidth = totalAvailableWidth - flowLayout.minimumInteritemSpacing
-//    }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return 5.0 }
-//        flowLayout.minimumInteritemSpacing = 10
-//        return flowLayout.minimumInteritemSpacing
-//    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return defaultSectionInset }
+        flowLayout.sectionInset = defaultSectionInset
+        return flowLayout.sectionInset
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return 5.0 }
+        flowLayout.minimumInteritemSpacing = 10
+        return flowLayout.minimumInteritemSpacing
+    }
 }
 
 /* SearchBar - Delegate */
