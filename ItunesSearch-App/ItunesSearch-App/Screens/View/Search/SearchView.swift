@@ -347,7 +347,7 @@ extension SearchView: UICollectionViewDelegate {
 }
 
 /* CollectionView - Flow */
-/// At the end of code there is an explanation
+
 extension SearchView: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -355,13 +355,14 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return defaultCellSize }
         let totalWidth = collectionView.bounds.width
         let sectionInsets = flowLayout.sectionInset
-        // FIXME: Read Below
-            /// Decreasing the multiplier causes one column
-            /// Increasing the multiplier causes the last item in the grid to clip to left item, but
-            /// when user wants more data the last cell orients back to alignment
+        /* FIXME: Read Below
+                - Decreasing the multiplier causes one column
+                - Increasing the multiplier causes the last item in the grid to clip to left item
+                - But when user wants more data the last cell orients back to alignment
+            --> At the end of code there is an explanation about flow
+         */
         let cellSpacingMin = ( (1.4) * (flowLayout.minimumInteritemSpacing) ) // band aid solution
         let totalInsetSpace = (CGFloat(collectionViewColumnCount)  * ( sectionInsets.left + sectionInsets.right ))
-        
         let availableWidthForCells = (totalWidth - cellSpacingMin - totalInsetSpace)
         sizingValue =  ( availableWidthForCells / CGFloat(collectionViewColumnCount) ) / 5
         let cellWidth = sizingValue * 5
@@ -369,6 +370,7 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
         let cellSize = CGSize(width: cellWidth, height: cellHeight)
         
         return cellSize
+       
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
