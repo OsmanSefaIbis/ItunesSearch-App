@@ -21,22 +21,22 @@ extension DetailView{
     
     func readableFormatTimeFromSeconds(seconds: Int) -> String {
         let totalSeconds = seconds
-        let remainderSeconds = totalSeconds % 60
-        let totalMinutes = totalSeconds / 60
-        let totalHours = totalMinutes / 60
+        let seconds = totalSeconds % 60
+        let minutes = (totalSeconds / 60) % 60
+        let hours = totalSeconds / 3600
         
         var timeComponents = [String]()
         
-        if totalHours > 0 {
-            timeComponents.append("\(totalHours)h")
+        if hours > 0 {
+            timeComponents.append("\(hours)h")
         }
         
-        if totalMinutes > 0 {
-            timeComponents.append("\(totalMinutes)m")
+        if minutes > 0 {
+            timeComponents.append("\(minutes)m")
         }
         
-        if totalSeconds > 0 {
-            timeComponents.append("\(remainderSeconds)s")
+        if seconds > 0 {
+            timeComponents.append("\(seconds)s")
         }
         
         if timeComponents.count == 0 {
