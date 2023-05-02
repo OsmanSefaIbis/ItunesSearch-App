@@ -60,7 +60,7 @@ class DetailView: UIViewController{
             detailName.text = item.name
             detailCreator.text = item.creator
             detailReleaseDate.text = convertDate( for: item.releaseDate)
-            detailPrice.text = (item.price == 0) ? HardCoded.free.get() : (HardCoded.dolar.get()).appending(String(item.price))
+            detailPrice.text = (item.price <= 0) ? HardCoded.free.get() : (HardCoded.dolar.get()).appending(String(item.price))
             detailImage.image = artworkImage
             configureBackgroundColors(averageColor)
         }
@@ -85,7 +85,7 @@ class DetailView: UIViewController{
             previewUrl = URL(string: item.previewUrl)
             detailPrimaryGenre.text = item.genre
             detailCollectionName.text = item.collectionName
-            detailLength.text = formatTimeFromMillis(millis: item.length)
+            detailLength.text = readableFormatTimeFromMillis(millis: item.length)
             
             detailTrackInfo.text = String(item.trackNumber)
                 .appending(HardCoded.trackSeperator.get())
@@ -93,7 +93,7 @@ class DetailView: UIViewController{
         }
         func configureEbook() {
             detailSize.text = convertBytesToGBorMB(item.size)
-            detailDescription.text = item.description.withoutHtmlEntities
+            detailDescription.text = capitalizeUppercaseWords(input: item.description.withoutHtmlEntities)
             detailGenres.text = item.genreList.joined(separator: HardCoded.seperator.get())
             
             detailRatingCount.text = (item.ratingCount == 0)
@@ -107,7 +107,7 @@ class DetailView: UIViewController{
             detailContent.text = item.advisory
             detailPrimaryGenre.text = item.genre
             detailCollectionName.text = item.collectionName
-            detailLength.text = formatTimeFromMinutes(minutes: item.length)
+            detailLength.text = readableFormatTimeFromSeconds(seconds: item.length)
             detailGenres.text = item.genreList.joined(separator: HardCoded.seperator.get())
             detailEpisodes.text = (HardCoded.numberSign.get())
                 .appending(String(item.episodeCount))

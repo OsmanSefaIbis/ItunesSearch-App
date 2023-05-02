@@ -19,53 +19,31 @@ extension DetailView{
         }
     }
     
-    func formatTimeFromMinutes(minutes: Int) -> String {
-        let totalMinutes = minutes
-        let minutes = totalMinutes % 60
-        let hours = totalMinutes / 60
+    func readableFormatTimeFromSeconds(seconds: Int) -> String {
+        let totalSeconds = seconds
+        let remainderSeconds = totalSeconds % 60
+        let totalMinutes = totalSeconds / 60
+        let totalHours = totalMinutes / 60
         
         var timeComponents = [String]()
         
-        if hours > 0 {
-            timeComponents.append(String(format: "%02d", hours))
+        if totalHours > 0 {
+            timeComponents.append("\(totalHours)h")
         }
         
-        if minutes > 0 {
-            timeComponents.append(String(format: "%02d", minutes))
+        if totalMinutes > 0 {
+            timeComponents.append("\(totalMinutes)m")
         }
         
-        if timeComponents.count == 0 {
-            timeComponents.append(HardCoded.zeroColonSeperator.get())
-        }
-        
-        return timeComponents.joined(separator: HardCoded.colonSeperator.get())
-    }
-    
-    func formatTimeFromMillis(millis: Int) -> String {
-        let totalSeconds = Int(millis / 1000)
-        let seconds = totalSeconds % 60
-        let minutes = (totalSeconds / 60) % 60
-        let hours = totalSeconds / 3600
-        
-        var timeComponents = [String]()
-        
-        if hours > 0 {
-            timeComponents.append(String(format: "%02d", hours))
-        }
-        
-        if hours == 0 && minutes > 0 {
-            timeComponents.append(String(format: "%02d", minutes))
-        }
-        
-        if seconds > 0 {
-            timeComponents.append(String(format: "%02d", seconds))
+        if totalSeconds > 0 {
+            timeComponents.append("\(remainderSeconds)s")
         }
         
         if timeComponents.count == 0 {
             timeComponents.append(HardCoded.notAvailable.get())
         }
         
-        return timeComponents.joined(separator: HardCoded.colonSeperator.get())
+        return timeComponents.joined(separator: " ")
     }
     
     func readableFormatTimeFromMillis(millis: Int) -> String {
@@ -80,16 +58,16 @@ extension DetailView{
             timeComponents.append("\(hours)h")
         }
         
-        if hours == 0 && minutes > 0 {
-            timeComponents.append("\(minutes)h")
+        if minutes > 0 {
+            timeComponents.append("\(minutes)m")
         }
         
         if seconds > 0 {
-            timeComponents.append("\(seconds)h")
+            timeComponents.append("\(seconds)s")
         }
         
         if timeComponents.count == 0 {
-            timeComponents.append(HardCoded.zeroColonSeperator.get())
+            timeComponents.append(HardCoded.notAvailable.get())
         }
         
         return timeComponents.joined(separator: " ")

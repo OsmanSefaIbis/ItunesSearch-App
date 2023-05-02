@@ -11,7 +11,7 @@ enum HardCoded: String{
     case cellIdentifier, getRequest,free, dolar, notAvailable, trackSeperator, seperator,
          noRating, numberSign, ratingScale, termParam, mediaParam, idParam,
          fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
-         convertedDateFormatShort, locale_US, colonSeperator, zeroColonSeperator,
+         convertedDateFormatShort, locale_US, colonSeperator,
          errorPromptOne, segmentedControlError, invalidJSON
     
     func get() -> String{
@@ -34,7 +34,6 @@ enum HardCoded: String{
             case .convertedDateFormatShort: return "MMM d, yyyy"
             case .locale_US: return "en_US"
             case .colonSeperator: return " : "
-            case .zeroColonSeperator: return "0:0"
             case .errorPromptOne: return "Invalid date string"
             case .fetchDataWithError:
                 return "Error occured with fetchDataWith() - Cause: Decoding Error --> "
