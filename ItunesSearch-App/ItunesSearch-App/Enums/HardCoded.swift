@@ -33,7 +33,7 @@ enum HardCoded: String{
             case .convertedDateFormat: return "MMMM d, yyyy"
             case .convertedDateFormatShort: return "MMM d, yyyy"
             case .locale_US: return "en_US"
-            case .colonSeperator: return ":"
+            case .colonSeperator: return " : "
             case .zeroColonSeperator: return "0:0"
             case .errorPromptOne: return "Invalid date string"
             case .fetchDataWithError:

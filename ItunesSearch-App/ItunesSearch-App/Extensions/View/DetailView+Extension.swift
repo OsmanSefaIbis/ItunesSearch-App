@@ -62,7 +62,7 @@ extension DetailView{
         }
         
         if timeComponents.count == 0 {
-            timeComponents.append(HardCoded.zeroColonSeperator.get())
+            timeComponents.append(HardCoded.notAvailable.get())
         }
         
         return timeComponents.joined(separator: HardCoded.colonSeperator.get())
