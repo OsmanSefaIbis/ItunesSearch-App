@@ -77,7 +77,8 @@ class DetailView: UIViewController{
         func configureMovie() {
             previewUrl = URL(string: item.previewUrl)
             detailPrimaryGenre.text = item.genre
-            detailDescription.text = item.longDescription
+            detailDescription.text = capitalizeUppercaseWords(input: item.longDescription)
+            detailLength.text = readableFormatTimeFromMillis(millis: item.length)
             detailCollectionName.text = item.collectionName.isEmpty ? HardCoded.notAvailable.get() : item.collectionName
         }
         func configureMusic() {

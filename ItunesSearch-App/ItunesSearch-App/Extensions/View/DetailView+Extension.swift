@@ -68,6 +68,33 @@ extension DetailView{
         return timeComponents.joined(separator: HardCoded.colonSeperator.get())
     }
     
+    func readableFormatTimeFromMillis(millis: Int) -> String {
+        let totalSeconds = Int(millis / 1000)
+        let seconds = totalSeconds % 60
+        let minutes = (totalSeconds / 60) % 60
+        let hours = totalSeconds / 3600
+        
+        var timeComponents = [String]()
+        
+        if hours > 0 {
+            timeComponents.append("\(hours)h")
+        }
+        
+        if hours == 0 && minutes > 0 {
+            timeComponents.append("\(minutes)h")
+        }
+        
+        if seconds > 0 {
+            timeComponents.append("\(seconds)h")
+        }
+        
+        if timeComponents.count == 0 {
+            timeComponents.append(HardCoded.zeroColonSeperator.get())
+        }
+        
+        return timeComponents.joined(separator: " ")
+    }
+    
     func convertDate(for dateValue: String) -> String{
         let inputDF = DateFormatter()
         inputDF.dateFormat = HardCoded.apiDateFormat.get()
@@ -84,6 +111,21 @@ extension DetailView{
         outputDF.locale = Locale(identifier: HardCoded.locale_US.get())
         let output = outputDF.string(from: inputDate)
         return output
+    }
+    
+    func capitalizeUppercaseWords(input: String) -> String {
+        let words = input.components(separatedBy: " ")
+        var capitalizedWords = [String]()
+        
+        for word in words {
+            if word == word.uppercased() {
+                capitalizedWords.append(word.capitalized)
+            } else {
+                capitalizedWords.append(word)
+            }
+        }
+        
+        return capitalizedWords.joined(separator: " ")
     }
     
 }

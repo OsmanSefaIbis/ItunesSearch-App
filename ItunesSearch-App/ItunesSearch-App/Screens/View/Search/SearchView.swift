@@ -47,7 +47,6 @@ class SearchView: UIViewController{
         configureSegmentedControl()
         configureGesture()
         configureActivityIndicator()
-
     }
     
     func assignDelegates() {
