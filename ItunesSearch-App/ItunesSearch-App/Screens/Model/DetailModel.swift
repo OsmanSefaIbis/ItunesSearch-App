@@ -50,21 +50,21 @@ class DetailModel{
         }
     }
     ///Alamofire
-//    func fetchSingularDataWithAF(for idValue: Int) {
-//
-//        if InternetManager.shared.isInternetActive() {
-//            let urlCompose = composeUrl(idValue)
-//            AF.request(urlCompose).responseDecodable(of: DetailResultData.self){ (res) in
-//                guard let response = res.value
-//                else{
-//                    self.delegate?.dataCannotFetch()
-//                    return
-//                }
-//                self.dataFetched = response.results ?? []
-//                self.delegate?.dataDidFetch()
-//            }
-//        }else {
-//            delegate?.dataCannotFetch()
-//        }
-//    }
+    func fetchSingularDataWithAF(for idValues: [Int]) {
+
+        if InternetManager.shared.isInternetActive() {
+            let urlCompose = composeUrl(idValues)
+            AF.request(urlCompose).responseDecodable(of: DetailResultData.self){ (res) in
+                guard let response = res.value
+                else{
+                    self.delegate?.dataCannotFetch()
+                    return
+                }
+                self.dataFetched = response.results ?? []
+                self.delegate?.dataDidFetch()
+            }
+        }else {
+            delegate?.dataCannotFetch()
+        }
+    }
 }

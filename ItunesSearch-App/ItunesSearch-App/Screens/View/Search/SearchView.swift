@@ -101,18 +101,6 @@ class SearchView: UIViewController{
             }
         }
     }
-    func setRandomItems( _ items: [RowItems]) {
-        
-        for each in items { idsOfAllFetchedRecords.insert(each.id) }
-        self.items.append(contentsOf: items)
-        
-        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { // TODO: GET RID OF THIS LINE, OPTIMIZE !!!
-            DispatchQueue.main.async {
-                self.activityIndicatorOverall.stopAnimating()
-                self.collectionView?.reloadData()
-            }
-        }
-    }
     
     func provideImageAndColor(_ imageUrl: String, completion: @escaping ((artwork: UIImage, colorAverage: UIColor)?) -> Void) {
         guard let modifiedArtworkUrl = changeImageURL(imageUrl, dimension: imageDimensionForDetail) else {
@@ -135,10 +123,6 @@ class SearchView: UIViewController{
     
     func startPrefetchingDetails(for ids: [Int]){
         detailViewModel.searchInvoked(withIds: ids)
-    }
-    
-    func startPrefetchingDetailsForRandom(for ids: [Int]){
-        detailViewModel.randomInvoked(withIds: ids)
     }
     
     func configureActivityIndicator(){
@@ -164,29 +148,13 @@ class SearchView: UIViewController{
         
         switch sender.selectedSegmentIndex {
             case 0: categorySelection = Category.movie
-                if searchText.count > 2 {
-                    resetAndSearch(searchText, Category.movie, nil)
-                } else {
-                    resetAndDiscover(Category.movie, self.randomizeOffset())
-                }
+                if searchText.count > 2 { resetAndSearch(searchText, Category.movie, nil) }
             case 1: categorySelection = Category.music
-                if searchText.count > 2 {
-                    resetAndSearch(searchText, Category.music, nil)
-                } else {
-                    resetAndDiscover(Category.music, self.randomizeOffset())
-                }
+                if searchText.count > 2 { resetAndSearch(searchText, Category.music, nil) }
             case 2: categorySelection = Category.ebook
-                if searchText.count > 2 {
-                    resetAndSearch(searchText, Category.ebook, nil)
-                } else {
-                    resetAndDiscover(Category.ebook, self.randomizeOffset())
-                }
+                if searchText.count > 2 { resetAndSearch(searchText, Category.ebook, nil) }
             case 3: categorySelection = Category.podcast
-                if searchText.count > 2 {
-                    resetAndSearch(searchText, Category.podcast, nil)
-                } else {
-                    resetAndDiscover(Category.podcast, self.randomizeOffset())
-                }
+                if searchText.count > 2 { resetAndSearch(searchText, Category.podcast, nil) }
         default: fatalError(HardCoded.segmentedControlError.get())
         }
     }
@@ -206,17 +174,6 @@ class SearchView: UIViewController{
         }else{
             searchViewModel.searchInvoked(searchTerm, category, paginationOffSet)
         }
-    }
-    func resetAndDiscover(_ category: Category, _ offSetValue: Int){
-        reset()
-        self.discoveryInvoke(category, offSetValue)
-    }
-    
-    func discoveryInvoke(_ category: Category, _ offSetValue: Int){
-        DispatchQueue.main.async {
-            self.activityIndicatorOverall.startAnimating()
-        }
-        searchViewModel.randomInvoked(category, offSetValue)
     }
     
     func reset(){
@@ -241,10 +198,6 @@ class SearchView: UIViewController{
         }
         return holdsIds
     }
-    
-    func randomizeOffset() -> Int{
-        Int.random(in: 0 ..< 3000) // upperLimit is unknown, discovery is limited by this value
-    }
 }
 
 // MARK: Extensions
@@ -254,12 +207,6 @@ extension SearchView: SearchViewModelDelegate {
     func refreshItems(_ retrived: [SearchCellModel]) {
         setItems(retrived)
         startPrefetchingDetails(for: providesIds(retrived))
-    }
-    
-    func refreshRandomItems(_ retrieved: [SearchCellModel]) {
-        setRandomItems(retrieved)
-        startPrefetchingDetailsForRandom(for: providesIds(retrieved))
-        
     }
     
     func internetUnreachable(_ errorPrompt: String) {
@@ -358,11 +305,7 @@ extension SearchView: UICollectionViewDelegate {
             guard let category = categorySelection else { return }
             paginationOffSet += AppConstants.requestLimit
             isLoadingNextPage = true
-            if (0...2).contains(searchBar.text!.count){
-                self.searchViewModel.randomInvoked(category, self.randomizeOffset())
-            }else{
-                self.searchViewModel.searchInvoked(searchText, category, paginationOffSet)
-            }
+            self.searchViewModel.searchInvoked(searchText, category, paginationOffSet)
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
@@ -455,24 +398,25 @@ extension SearchView: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        timeControl?.invalidate()
-        timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
-            
-            guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-            guard let category = self?.categorySelection else { return }
-
-            if (0...2).contains(searchText.count){
-                if let offset = self?.randomizeOffset(){
-                    self?.discoveryInvoke(category, offset)
-                }
-            }
-            if searchText.count > 2 {
-                guard let offSet = self?.paginationOffSet else { return }
-                self?.resetAndSearch(searchText, category, offSet)
-            }
-        })
-    }
+           
+           timeControl?.invalidate()
+           timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
+               
+               guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+               if (0...2).contains(searchText.count){
+                   self?.activityIndicatorOverall.stopAnimating()
+               }
+               if searchText.isEmpty {
+                   self?.reset()
+                   return
+               }
+               if searchText.count > 2 {
+                   guard let category = self?.categorySelection else { return }
+                   guard let offSet = self?.paginationOffSet else { return }
+                   self?.resetAndSearch(searchText, category, offSet)
+               }
+           })
+       }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
         reset()

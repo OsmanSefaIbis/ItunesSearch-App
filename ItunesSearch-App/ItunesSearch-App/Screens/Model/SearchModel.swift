@@ -9,14 +9,11 @@ import Alamofire
 protocol SearchModelDelegate: AnyObject{
     func dataDidFetch()
     func dataDidNotFetch()
-    func randomDataDidFetch()
-    func randomDataDidNotFetch()
 }
 
 class SearchModel {
     
     private(set) var dataFetched: [SearchData] = []
-    private(set) var randomDataFetched: [SearchData] = []
     weak var delegate: SearchModelDelegate?
     
     /// URLSession
@@ -51,36 +48,6 @@ class SearchModel {
         }
     }
     
-    func fetchRandomDataByCategory(media mediaType: Category, startFrom offset: Int) {
-        
-        if InternetManager.shared.isInternetActive() {
-            let urlCompose = composeUrl( mediaType, offset)
-            
-            if let url = URL(string: urlCompose) {
-                var request: URLRequest = .init(url: url)
-                request.httpMethod = HardCoded.getRequest.get()
-                
-                let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-                    if error != nil { return }
-                    if let data = data {
-                        
-                        if ((self?.isValidJSON(String(data: data, encoding: .utf8)!)) != nil) {
-                            do{
-                                let SearchResultData = try JSONDecoder().decode(SearchResultData.self, from: data)
-                                if let searchData = SearchResultData.results { self?.dataFetched = searchData }
-                                self?.delegate?.randomDataDidFetch()
-                            } catch { fatalError(HardCoded.fetchDataWithError.get() + "\(error)" ) }
-                        } else {
-                            fatalError(HardCoded.invalidJSON.get())
-                        }
-                    }
-                }
-                task.resume()
-            }
-        }else {
-            delegate?.randomDataDidNotFetch()
-        }
-    }
     /// Alamofire
     func fetchDataWithAF(input termValue: String, media mediaType: Category, startFrom offset: Int) {
         

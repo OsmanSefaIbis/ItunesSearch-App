@@ -105,7 +105,7 @@ extension DetailView{
         
         return capitalizedWords.joined(separator: " ")
     }
-    
+    // TODO: use this to resolve the UX issue, make text white if the background is so dark
     func isColorDark(_ color: UIColor) -> Bool {
         var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
