@@ -102,18 +102,14 @@ class SearchView: UIViewController{
         }
     }
     func setRandomItems( _ items: [RowItems]) {
-        if paginationOffSet == 0 { /// first full page
-            for each in items { idsOfAllFetchedRecords.insert(each.id) }
-            self.items = items
-        }else { /// next page
-            for each in items { idsOfAllFetchedRecords.insert(each.id) }
-            self.items.append(contentsOf: items)
-        }
+        
+        for each in items { idsOfAllFetchedRecords.insert(each.id) }
+        self.items.append(contentsOf: items)
+        
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { // TODO: GET RID OF THIS LINE, OPTIMIZE !!!
             DispatchQueue.main.async {
                 self.activityIndicatorOverall.stopAnimating()
                 self.collectionView?.reloadData()
-                self.isLoadingNextPage = false
             }
         }
     }
@@ -170,18 +166,26 @@ class SearchView: UIViewController{
             case 0: categorySelection = Category.movie
                 if searchText.count > 2 {
                     resetAndSearch(searchText, Category.movie, nil)
+                } else {
+                    resetAndDiscover(Category.movie, self.randomizeOffset())
                 }
             case 1: categorySelection = Category.music
                 if searchText.count > 2 {
                     resetAndSearch(searchText, Category.music, nil)
+                } else {
+                    resetAndDiscover(Category.music, self.randomizeOffset())
                 }
             case 2: categorySelection = Category.ebook
                 if searchText.count > 2 {
                     resetAndSearch(searchText, Category.ebook, nil)
+                } else {
+                    resetAndDiscover(Category.ebook, self.randomizeOffset())
                 }
             case 3: categorySelection = Category.podcast
                 if searchText.count > 2 {
                     resetAndSearch(searchText, Category.podcast, nil)
+                } else {
+                    resetAndDiscover(Category.podcast, self.randomizeOffset())
                 }
         default: fatalError(HardCoded.segmentedControlError.get())
         }
@@ -203,6 +207,18 @@ class SearchView: UIViewController{
             searchViewModel.searchInvoked(searchTerm, category, paginationOffSet)
         }
     }
+    func resetAndDiscover(_ category: Category, _ offSetValue: Int){
+        reset()
+        self.discoveryInvoke(category, offSetValue)
+    }
+    
+    func discoveryInvoke(_ category: Category, _ offSetValue: Int){
+        DispatchQueue.main.async {
+            self.activityIndicatorOverall.startAnimating()
+        }
+        searchViewModel.randomInvoked(category, offSetValue)
+    }
+    
     func reset(){
         resetCollections() /// dealloc
         DispatchQueue.main.async {
@@ -225,19 +241,25 @@ class SearchView: UIViewController{
         }
         return holdsIds
     }
+    
+    func randomizeOffset() -> Int{
+        Int.random(in: 0 ..< 3000) // upperLimit is unknown, discovery is limited by this value
+    }
 }
 
 // MARK: Extensions
 /* ViewModel - Delegates */
 extension SearchView: SearchViewModelDelegate {
-    func refreshRandomItems(_ retrieved: [SearchCellModel]) {
-        setRandomItems(retrieved)
-        startPrefetchingDetails(for: providesIds(retrieved))
-    }
     
     func refreshItems(_ retrived: [SearchCellModel]) {
         setItems(retrived)
-        startPrefetchingDetailsForRandom(for: providesIds(retrived))
+        startPrefetchingDetails(for: providesIds(retrived))
+    }
+    
+    func refreshRandomItems(_ retrieved: [SearchCellModel]) {
+        setRandomItems(retrieved)
+        startPrefetchingDetailsForRandom(for: providesIds(retrieved))
+        
     }
     
     func internetUnreachable(_ errorPrompt: String) {
@@ -336,7 +358,11 @@ extension SearchView: UICollectionViewDelegate {
             guard let category = categorySelection else { return }
             paginationOffSet += AppConstants.requestLimit
             isLoadingNextPage = true
-            self.searchViewModel.searchInvoked(searchText, category, paginationOffSet)
+            if (0...2).contains(searchBar.text!.count){
+                self.searchViewModel.randomInvoked(category, self.randomizeOffset())
+            }else{
+                self.searchViewModel.searchInvoked(searchText, category, paginationOffSet)
+            }
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
@@ -434,16 +460,14 @@ extension SearchView: UISearchBarDelegate {
         timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
             
             guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-            // TODO: Place logic for discovery
+            guard let category = self?.categorySelection else { return }
+
             if (0...2).contains(searchText.count){
-                self?.activityIndicatorOverall.stopAnimating()
-            }
-            if searchText.isEmpty {
-                self?.reset()
-                return
+                if let offset = self?.randomizeOffset(){
+                    self?.discoveryInvoke(category, offset)
+                }
             }
             if searchText.count > 2 {
-                guard let category = self?.categorySelection else { return }
                 guard let offSet = self?.paginationOffSet else { return }
                 self?.resetAndSearch(searchText, category, offSet)
             }

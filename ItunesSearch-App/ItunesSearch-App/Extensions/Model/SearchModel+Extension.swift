@@ -19,10 +19,10 @@ extension SearchModel{
     }
     
     func composeUrl(_ media: Category, _ offset: Int) -> String {
-        
+        let termParam = HardCoded.termParamAll.get()
         let mediaParam = MediaParam.getWith(media)
         let baseUrl = Api.scheme.get() + Api.domain.get() + Api.searchPath.get()
-        let urlCompose = baseUrl + mediaParam + Api.limit.get() + Api.offsetLimit.get() + String(offset)
+        let urlCompose = baseUrl + termParam  + mediaParam + Api.limit.get() + Api.offsetLimit.get() + String(offset)
         return urlCompose
     }
     

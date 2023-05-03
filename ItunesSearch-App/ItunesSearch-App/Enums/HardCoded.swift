@@ -9,7 +9,7 @@ import Foundation
 
 enum HardCoded: String{
     case cellIdentifier, getRequest,free, dolar, notAvailable, trackSeperator, seperator,
-         noRating, numberSign, ratingScale, termParam, mediaParam, idParam,
+         noRating, numberSign, ratingScale, termParam, termParamAll, mediaParam, idParam,
          fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
          convertedDateFormatShort, locale_US, colonSeperator,
          errorPromptOne, segmentedControlError, invalidJSON
@@ -27,6 +27,7 @@ enum HardCoded: String{
             case .numberSign: return "# "
             case .ratingScale: return " /5"
             case .termParam: return "term="
+            case .termParamAll: return "term=%22%22"
             case .mediaParam: return "&media="
             case .idParam: return "id="
             case .apiDateFormat: return "yyyy-MM-dd'T'HH:mm:ssZ"
