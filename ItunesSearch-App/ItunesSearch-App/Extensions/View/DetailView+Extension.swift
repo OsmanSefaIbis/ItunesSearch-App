@@ -5,7 +5,7 @@
 //  Created by Sefa İbiş on 21.04.2023.
 //
 
-import Foundation
+import UIKit
 
 extension DetailView{
     
@@ -106,5 +106,11 @@ extension DetailView{
         return capitalizedWords.joined(separator: " ")
     }
     
+    func isColorDark(_ color: UIColor) -> Bool {
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        let brightness = (red + green + blue) / 3.0
+        return brightness < 0.5
+    }
 }
 

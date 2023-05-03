@@ -22,6 +22,10 @@ class DetailViewModel{
     func searchInvoked(withIds idValues: [Int]){
         model.fetchByIds(for: idValues)
     }
+    func randomInvoked(withIds idValues: [Int]){
+        model.fetchByIds(for: idValues)
+    }
+    
 }
 
 extension DetailViewModel: DetailModelDelegate{

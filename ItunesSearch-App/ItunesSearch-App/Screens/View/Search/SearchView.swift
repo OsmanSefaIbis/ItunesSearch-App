@@ -101,6 +101,22 @@ class SearchView: UIViewController{
             }
         }
     }
+    func setRandomItems( _ items: [RowItems]) {
+        if paginationOffSet == 0 { /// first full page
+            for each in items { idsOfAllFetchedRecords.insert(each.id) }
+            self.items = items
+        }else { /// next page
+            for each in items { idsOfAllFetchedRecords.insert(each.id) }
+            self.items.append(contentsOf: items)
+        }
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { // TODO: GET RID OF THIS LINE, OPTIMIZE !!!
+            DispatchQueue.main.async {
+                self.activityIndicatorOverall.stopAnimating()
+                self.collectionView?.reloadData()
+                self.isLoadingNextPage = false
+            }
+        }
+    }
     
     func provideImageAndColor(_ imageUrl: String, completion: @escaping ((artwork: UIImage, colorAverage: UIColor)?) -> Void) {
         guard let modifiedArtworkUrl = changeImageURL(imageUrl, dimension: imageDimensionForDetail) else {
@@ -123,6 +139,10 @@ class SearchView: UIViewController{
     
     func startPrefetchingDetails(for ids: [Int]){
         detailViewModel.searchInvoked(withIds: ids)
+    }
+    
+    func startPrefetchingDetailsForRandom(for ids: [Int]){
+        detailViewModel.randomInvoked(withIds: ids)
     }
     
     func configureActivityIndicator(){
@@ -210,10 +230,14 @@ class SearchView: UIViewController{
 // MARK: Extensions
 /* ViewModel - Delegates */
 extension SearchView: SearchViewModelDelegate {
+    func refreshRandomItems(_ retrieved: [SearchCellModel]) {
+        setRandomItems(retrieved)
+        startPrefetchingDetails(for: providesIds(retrieved))
+    }
     
     func refreshItems(_ retrived: [SearchCellModel]) {
         setItems(retrived)
-        startPrefetchingDetails(for: providesIds(retrived))
+        startPrefetchingDetailsForRandom(for: providesIds(retrived))
     }
     
     func internetUnreachable(_ errorPrompt: String) {
@@ -346,19 +370,17 @@ extension SearchView: UICollectionViewDelegate {
 }
 
 /* CollectionView - Flow */
-
 extension SearchView: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+        // SearchView+Pseudo --> Inludes the pseudocode of below logic
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return defaultCellSize }
         let totalWidth = collectionView.bounds.width
         let sectionInsets = flowLayout.sectionInset
-        /* FIXME: Read Below
+        /* FIXME: NOT URGENT
                 - Decreasing the multiplier causes one column
                 - Increasing the multiplier causes the last item in the grid to clip to left item
                 - But when user wants more data the last cell orients back to alignment
-            --> At the end of code there is an explanation about flow
          */
         let cellSpacingMin = ( (1.4) * (flowLayout.minimumInteritemSpacing) ) // band aid solution
         let totalInsetSpace = (CGFloat(collectionViewColumnCount)  * ( sectionInsets.left + sectionInsets.right ))
@@ -412,7 +434,7 @@ extension SearchView: UISearchBarDelegate {
         timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
             
             guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-            
+            // TODO: Place logic for discovery
             if (0...2).contains(searchText.count){
                 self?.activityIndicatorOverall.stopAnimating()
             }
@@ -433,50 +455,6 @@ extension SearchView: UISearchBarDelegate {
     }
 }
 
-/*-----------------------------------------------------------------------------------------------
-    /*-- MODELS ----- MAX IOS --- WIDTH POINT -- HEIGHT POINT ---
-    |    6s             15           375            667         |
-    |    SE Gen1        15           320(MIN)       568         |
-    |    SE Gen2        16           375            667         |
-    |    13 Pro         16           390            844         |
-    |    14 Pro         16           393            852         |
-    |    14 Pro Max     16           430(MAX)       932         |
-    -----------------------------------------------------------*/
--------------------------------------------------------------------------------------------------
-    z = 2x + 2y + 4k     --> EQ1
--------------------------------------------------------------------------------------------------
-    z --> totalAvailableWidth      --> known        --> varies between : 320~430
-    x --> cellWidth                --> unknown      --> calculate
-    y --> minimumInterItemSpacing  --> can adjust   --> size: 10
-    k --> left and right inset     --> can adjust   --> size: 5
--------------------------------------------------------------------------------------------------
-    x = i + v = 5A      --> EQ2
--------------------------------------------------------------------------------------------------
-    x      --> cellWidth                    --> 5A
-    i      --> imageWidth ( 2A )            --> cellHeight == imageHeight == labelsHeight == 2A
-    v      --> stackedLabelsWidth ( 3A )
-    i/v    --> 2/3 aspect ratio of widths   --> UPDATE THIS --> FIND THE SWEET SPOT --> Critical
--------------------------------------------------------------------------------------------------
-    z = 320 --> MIN CASE
-    y = 10
-    k = 5
-    x = 320 - 20 - 20 = 280 / 2 = 140 = 5A --> A = 28 --> sizingValue
-        Cell Width   = 5A = 140
-        Cell Height  = 2A = 56   --> how will the labels fit ??? --> maybe smaller font
-        Image Width  = 2A = 56
-        Labels Width = 3A = 84
--------------------------------------------------------------------------------------------------
-    z = 430 --> MAX CASE
-    y = 10
-    k = 5
-    x = 430 - 20 - 20 = 390 / 2 = 195 = 5A --> A = 39 --> sizingValue
-        Cell Width   = 5A = 195
-        Cell Height  = 2A = 78
-        Image Width  = 2A = 78
-        Labels Width = 3A = 117
--------------------------------------------------------------------------------------------------
- Conclusion:  A = [ ( ( z - ( columnCount * y ) - ( columnCount * ( 2k )))/ columnCount) / 5 ]
--------------------------------------------------------------------------------------------------*/
 
 
 

@@ -53,6 +53,8 @@ class DetailView: UIViewController{
     
     func configureItem( with item: Detail, image artworkImage: UIImage, color averageColor: UIColor){
         
+        //let textColor: UIColor = isColorDark(averageColor) ? .white : .black
+        
         configureMutuals(item)
         
         func configureMutuals(_ item: Detail) {
@@ -112,6 +114,7 @@ class DetailView: UIViewController{
             detailEpisodes.text = (HardCoded.numberSign.get())
                 .appending(String(item.episodeCount))
         }
+        // TODO: Change this, go by subviews and set
         func configureBackgroundColors(_ averageColor: UIColor){
            DispatchQueue.main.async { [weak self] in
                self?.detailContainerView.backgroundColor = averageColor

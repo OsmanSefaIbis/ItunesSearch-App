@@ -18,6 +18,14 @@ extension SearchModel{
         return urlCompose
     }
     
+    func composeUrl(_ media: Category, _ offset: Int) -> String {
+        
+        let mediaParam = MediaParam.getWith(media)
+        let baseUrl = Api.scheme.get() + Api.domain.get() + Api.searchPath.get()
+        let urlCompose = baseUrl + mediaParam + Api.limit.get() + Api.offsetLimit.get() + String(offset)
+        return urlCompose
+    }
+    
     func isValidJSON(_ jsonString: String) -> Bool {
         if let data = jsonString.data(using: .utf8) {
             do {
