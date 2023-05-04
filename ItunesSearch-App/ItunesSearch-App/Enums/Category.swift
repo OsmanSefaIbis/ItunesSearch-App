@@ -19,4 +19,12 @@ enum Category: String{
             case .podcast: return rawValue
         }
     }
+    func getTop() -> String{
+        switch self{
+        case .movie: return "topmovies/"
+        case .music: return "topsongs/"
+        case .ebook: return "topebooks/"
+        case .podcast: return "toppodcasts/"
+        }
+    }
 }

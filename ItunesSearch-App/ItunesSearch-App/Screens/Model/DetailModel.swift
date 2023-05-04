@@ -34,8 +34,8 @@ class DetailModel{
                         
                         if ((self?.isValidJSON(String(data: data, encoding: .utf8)!)) != nil) {
                             do{
-                                let DetailResultData = try JSONDecoder().decode(DetailResultData.self, from: data)
-                                if let detailData = DetailResultData.results { self?.dataFetched = detailData }
+                                let detailResultData = try JSONDecoder().decode(DetailResultData.self, from: data)
+                                if let detailData = detailResultData.results { self?.dataFetched = detailData }
                                 self?.delegate?.dataDidFetch()
                             } catch { fatalError(HardCoded.fetchSingularDataError.get() + "\(error)" ) }
                         } else{

@@ -36,6 +36,8 @@ class SearchView: UIViewController{
     private var collectionViewColumnCount: Int = 2
     private let defaultSectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initiating()
@@ -47,6 +49,7 @@ class SearchView: UIViewController{
         configureSegmentedControl()
         configureGesture()
         configureActivityIndicator()
+        initiateTopResults()
     }
     
     func assignDelegates() {
@@ -62,6 +65,14 @@ class SearchView: UIViewController{
             .init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
         let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
         collectionView?.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
+    }
+    
+    func initiateTopResults(){
+        DispatchQueue.main.async {
+            self.activityIndicatorOverall.startAnimating()
+        }
+        guard let category = categorySelection else { return }
+        searchViewModel.topInvoked(category)
     }
     
     func setItems( _ items: [RowItems]) {
@@ -148,18 +159,30 @@ class SearchView: UIViewController{
         
         switch sender.selectedSegmentIndex {
             case 0: categorySelection = Category.movie
+            
                 if searchText.count > 2 { resetAndSearch(searchText, Category.movie, nil) }
+                else { resetAndTrend(Category.movie) }
+            
             case 1: categorySelection = Category.music
+            
                 if searchText.count > 2 { resetAndSearch(searchText, Category.music, nil) }
+                else { resetAndTrend(Category.music) }
+            
             case 2: categorySelection = Category.ebook
+            
                 if searchText.count > 2 { resetAndSearch(searchText, Category.ebook, nil) }
+                else { resetAndTrend(Category.ebook) }
+            
             case 3: categorySelection = Category.podcast
+            
                 if searchText.count > 2 { resetAndSearch(searchText, Category.podcast, nil) }
+                else { resetAndTrend(Category.podcast) }
+            
         default: fatalError(HardCoded.segmentedControlError.get())
         }
     }
     func resetAndSearch(_ searchTerm: String, _ category: Category, _ offSetValue: Int?){
-        resetCollections() /// dealloc
+        resetCollections()
         paginationOffSet = 0
         lessThanPage_Flag = false
         
@@ -175,9 +198,16 @@ class SearchView: UIViewController{
             searchViewModel.searchInvoked(searchTerm, category, paginationOffSet)
         }
     }
+    func resetAndTrend(_ category: Category){
+        reset()
+        DispatchQueue.main.async {
+            self.activityIndicatorOverall.startAnimating()
+        }
+        searchViewModel.topInvoked(category)
+    }
     
     func reset(){
-        resetCollections() /// dealloc
+        resetCollections()
         DispatchQueue.main.async {
             self.activityIndicatorOverall.stopAnimating()
             self.items.removeAll()
@@ -185,7 +215,7 @@ class SearchView: UIViewController{
         }
     }
     
-    func resetCollections(){
+    func resetCollections(){ /// dealloc
         idsOfAllFetchedRecords.removeAll()
         cacheDetails.removeAll()
         cacheDetailImagesAndColors.removeAll()
@@ -198,15 +228,26 @@ class SearchView: UIViewController{
         }
         return holdsIds
     }
+    func invokeTopIds( _ topIds: [Top]){
+        var holdsTopIds: [String] = []
+        for each in topIds{
+            holdsTopIds.append(each.id)
+        }
+        searchViewModel.topWithIdsInvoked(holdsTopIds)
+    }
 }
 
 // MARK: Extensions
 /* ViewModel - Delegates */
 extension SearchView: SearchViewModelDelegate {
+
+    func refreshItems(_ retrieved: [SearchCellModel]) {
+        setItems(retrieved)
+        startPrefetchingDetails(for: providesIds(retrieved))
+    }
     
-    func refreshItems(_ retrived: [SearchCellModel]) {
-        setItems(retrived)
-        startPrefetchingDetails(for: providesIds(retrived))
+    func topItems(_ retrieved: [Top]) {
+        invokeTopIds(retrieved)
     }
     
     func internetUnreachable(_ errorPrompt: String) {
@@ -383,15 +424,15 @@ extension SearchView: UISearchBarDelegate {
         
         searchBar.resignFirstResponder()
         guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        guard let category = categorySelection else { return }
         
         if (0...2).contains(searchText.count) {
             reset()
-        }else {
+        } else {
             if (1...20).contains(items.count)  {
                 searchBar.resignFirstResponder()
             }else{
                 paginationOffSet = 0
-                guard let category = categorySelection else { return }
                 self.resetAndSearch(searchText, category, paginationOffSet)
             }
         }

@@ -9,6 +9,7 @@ import Foundation
 
 protocol SearchViewModelDelegate: AnyObject{
     func refreshItems(_ retrieved: [SearchCellModel])
+    func topItems(_ retrived: [Top])
     func internetUnreachable(_ errorPrompt: String)
 }
 
@@ -19,6 +20,14 @@ class SearchViewModel{
     init(){
         model.delegate = self
     }
+    func topInvoked(_ mediaType: Category){
+        model.fetchTopTrendingByCategory(media: mediaType)
+    }
+    
+    func topWithIdsInvoked(_ topIds: [String]){
+        model.fetchByIds(for: topIds)
+    }
+    
     func searchInvoked(_ searchTerm: String, _ mediaType: Category, _ offSetValue: Int) {
         model.fetchDataWith(input: searchTerm, media: mediaType, startFrom: offSetValue)
     }
@@ -42,6 +51,20 @@ extension SearchViewModel: SearchModelDelegate{
     }
 
     func dataDidNotFetch() {
+        delegate?.internetUnreachable("Check internet connectivity !")
+    }
+    
+    func topDataDidFetch() {
+        let retrievedIds: [Top] = model.topDataIdsFetched.map{
+            
+            .init(
+                id: $0.id?.attributes?.imID ?? ""
+            )
+        }
+        self.delegate?.topItems(retrievedIds)
+    }
+    
+    func topDataDidNotFetch() {
         delegate?.internetUnreachable("Check internet connectivity !")
     }
 }
