@@ -25,8 +25,10 @@ class SearchView: UIViewController{
     private var paginationOffSet = 0
     private var lessThanPage_Flag = false
     private var isLoadingNextPage = false
+    private var isSearchActive = false
     private var categorySelection: Category? = .movie
     private var loadingView: LoadingReusableView?
+    private var headerView: HeaderReusableView?
     private var cacheDetails: [Int : Detail] = [:]
     private var cacheDetailImagesAndColors: [Int : (UIImage, UIColor)] = [:]
     private let imageDimensionForDetail = 600
@@ -34,7 +36,7 @@ class SearchView: UIViewController{
     private var sizingValue: CGFloat = 80.0
     private var defaultMinimumCellSpacing = 10.0
     private var collectionViewColumnCount: Int = 2
-    private let defaultSectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+    private let defaultSectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 5)
     
     
     
@@ -61,10 +63,15 @@ class SearchView: UIViewController{
     func configureCollectionView() {
         collectionView?.delegate = self
         collectionView?.dataSource = self
-        collectionView?.register(
-            .init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
+        registersCollectionView()
+    }
+    
+    func registersCollectionView(){
         let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
+        let headerReusableNib = UINib(nibName: "HeaderReusableView", bundle: nil)
+        collectionView?.register(.init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
         collectionView?.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
+        collectionView?.register(headerReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerreusableviewid")
     }
     
     func initiateTopResults(){
@@ -293,6 +300,7 @@ extension SearchView: UICollectionViewDataSource {
 /* CollectionView - Delegate */
 extension SearchView: UICollectionViewDelegate {
     
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         collectionView.deselectItem(at: indexPath, animated: true)
@@ -349,26 +357,47 @@ extension SearchView: UICollectionViewDelegate {
             self.searchViewModel.searchInvoked(searchText, category, paginationOffSet)
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if self.isSearchActive{
+            return CGSize.zero
+        } else {
+            return CGSize(width: collectionView.bounds.size.width, height: 25)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         if self.isLoadingNextPage {
-                    return CGSize.zero
-                } else {
-                    return CGSize(width: collectionView.bounds.size.width, height: 40)
-                }
+            return CGSize.zero
+        } else {
+            return CGSize(width: collectionView.bounds.size.width, height: 40)
+        }
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-            if kind == UICollectionView.elementKindSectionFooter {
+        
+        switch kind {
+            case UICollectionView.elementKindSectionFooter:
                 let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "loadingresuableviewid", for: indexPath) as! LoadingReusableView
                 loadingView = aFooterView
                 loadingView?.backgroundColor = UIColor.clear
                 return aFooterView
-            }
-            return UICollectionReusableView()
+            case UICollectionView.elementKindSectionHeader:
+                let aHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerreusableviewid", for: indexPath) as! HeaderReusableView
+                headerView = aHeaderView
+                return aHeaderView
+        default:
+            assert(false, "Unexpected element kind")
         }
+        return UICollectionReusableView()
+    }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
             if elementKind == UICollectionView.elementKindSectionFooter && isLoadingNextPage {
                 self.loadingView?.activityIndicator.startAnimating()
+            }
+            if elementKind == UICollectionView.elementKindSectionHeader && !isSearchActive {
+                guard let category = self.categorySelection else { return }
+                self.headerView?.setTitle(with: category.get().capitalized)
             }
         }
 
@@ -376,6 +405,10 @@ extension SearchView: UICollectionViewDelegate {
         if elementKind == UICollectionView.elementKindSectionFooter {
             self.loadingView?.activityIndicator.stopAnimating()
         }
+        if elementKind == UICollectionView.elementKindSectionHeader {
+            // Should you do smth?
+        }
+        
     }
 }
 
@@ -415,6 +448,12 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
         flowLayout.minimumInteritemSpacing = defaultMinimumCellSpacing
         return flowLayout.minimumInteritemSpacing
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return defaultMinimumCellSpacing }
+        flowLayout.minimumLineSpacing = defaultMinimumCellSpacing
+        return flowLayout.minimumLineSpacing
+    }
 }
 
 /* SearchBar - Delegate */
@@ -426,12 +465,15 @@ extension SearchView: UISearchBarDelegate {
         guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
         guard let category = categorySelection else { return }
         
-        if (0...2).contains(searchText.count) {
+        if searchText.isEmpty{
+            resetAndTrend(category)
+        }
+        else if (1...2).contains(searchText.count) {
             reset()
         } else {
-            if (1...20).contains(items.count)  {
+            if (1...20).contains(items.count) {
                 searchBar.resignFirstResponder()
-            }else{
+            } else {
                 paginationOffSet = 0
                 self.resetAndSearch(searchText, category, paginationOffSet)
             }
@@ -444,15 +486,18 @@ extension SearchView: UISearchBarDelegate {
            timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
                
                guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+               guard let category = self?.categorySelection else { return }
+               
                if (0...2).contains(searchText.count){
+                   self?.isSearchActive = false
                    self?.activityIndicatorOverall.stopAnimating()
                }
                if searchText.isEmpty {
-                   self?.reset()
-                   return
+                   self?.isSearchActive = false
+                   self?.resetAndTrend(category)
                }
                if searchText.count > 2 {
-                   guard let category = self?.categorySelection else { return }
+                   self?.isSearchActive = true
                    guard let offSet = self?.paginationOffSet else { return }
                    self?.resetAndSearch(searchText, category, offSet)
                }

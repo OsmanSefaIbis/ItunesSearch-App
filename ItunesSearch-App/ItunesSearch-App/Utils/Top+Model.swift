@@ -8,7 +8,6 @@
 import Foundation
 
 struct Top{
-    
     let id: String
 }
 
