@@ -154,8 +154,10 @@ class DetailView: UIViewController{
     }
     
     @IBAction func musicPreviewButtonClicked(_ sender: Any) {
-        
-        let playerItem = AVPlayerItem(url: previewUrl!)
+        guard let previewUrl = previewUrl else {
+            return
+        }
+        playerItem = AVPlayerItem(url: previewUrl)
         player = AVPlayer(playerItem: playerItem)
         player?.play()
     }

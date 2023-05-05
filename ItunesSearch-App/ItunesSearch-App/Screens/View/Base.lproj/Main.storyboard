@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -349,7 +350,7 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tnn-b8-9G5" userLabel="Preview">
                                                                 <rect key="frame" x="0.0" y="8" width="96.666666666666671" height="34.333333333333336"/>
-                                                                <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                                                                <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="Preview" cornerStyle="capsule"/>
                                                                 <connections>
@@ -358,7 +359,7 @@
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCc-LX-Wss" userLabel="View">
                                                                 <rect key="frame" x="196.66666666666666" y="8" width="96.333333333333343" height="34.333333333333336"/>
-                                                                <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                                                                <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
                                                                 <connections>
@@ -610,7 +611,7 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dLa-OP-LLp" userLabel="Preview">
                                                                 <rect key="frame" x="0.0" y="8" width="96.666666666666671" height="34.333333333333336"/>
-                                                                <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                                                                <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="Preview" cornerStyle="capsule"/>
                                                                 <connections>
@@ -619,7 +620,7 @@
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RdK-DS-moB" userLabel="View">
                                                                 <rect key="frame" x="196.66666666666666" y="8" width="96.333333333333343" height="34.333333333333336"/>
-                                                                <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                                                                <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
                                                                 <connections>
@@ -913,7 +914,7 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8T-z3-aJz" userLabel="View">
                                                                 <rect key="frame" x="0.0" y="8" width="93" height="34.333333333333336"/>
-                                                                <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                                                                <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
                                                                 <connections>
@@ -1190,7 +1191,7 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GKK-Kw-EKL" userLabel="View">
                                                                 <rect key="frame" x="0.0" y="8" width="93" height="34.333333333333336"/>
-                                                                <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                                                                <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
                                                                 <connections>
@@ -1277,6 +1278,9 @@
         <image name="music.mic" catalog="system" width="128" height="119"/>
         <image name="music.note" catalog="system" width="96" height="128"/>
         <image name="popcorn" catalog="system" width="102" height="128"/>
+        <namedColor name="AccentColor">
+            <color red="0.075999997556209564" green="0.078000001609325409" blue="0.10899999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
