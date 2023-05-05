@@ -24,6 +24,8 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailDescriptionTextView: UITextView!
     /// above is added for colorization
     @IBOutlet weak var musicPreviewButton: UIButton!
+    @IBOutlet private weak var viewButton: UIButton!
+    @IBOutlet private weak var moviePreviewButton: UIButton!
     @IBOutlet private weak var detailImage: UIImageView!
     @IBOutlet private weak var detailDescription: UITextView!
     @IBOutlet private weak var detailName: UILabel!
@@ -60,8 +62,12 @@ class DetailView: UIViewController{
     
     func configureItem( with item: Detail, image artworkImage: UIImage, color averageColor: UIColor){
         
+        // TODO: Refactor to make below clean
         if isColorDark(averageColor){
             detailView.setAllTextColors(.white)
+            handleAgainstDark(.white)
+        } else {
+            navigationController?.navigationBar.tintColor = UIColor(named: "AccentColor")
         }
         
         configureMutuals(item)
@@ -141,8 +147,18 @@ class DetailView: UIViewController{
        }
     }
     
+    func handleAgainstDark(_ tintColor: UIColor){
+        DispatchQueue.main.async { [weak self] in
+            if let view = self?.viewButton { view.tintColor = tintColor }
+            if let movie = self?.moviePreviewButton { movie.tintColor = tintColor }
+            if let music = self?.musicPreviewButton { music.tintColor = tintColor }
+            if let navBar = self?.navigationController?.navigationBar { navBar.tintColor = .lightGray }
+        }
+    }
+    
     @objc func playerDidFinishPlaying(_ notification: Notification) { /// used for music preview
         removeAudioRelated()
+        isAudioPlaying.toggle()
     }
     /* Button Actions */
     @IBAction func viewButtonClicked(_ sender: Any) {

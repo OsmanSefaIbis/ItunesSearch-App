@@ -420,6 +420,8 @@
                         <outlet property="detailPrimaryGenre" destination="UsX-Nt-dah" id="wJU-EY-EL7"/>
                         <outlet property="detailReleaseDate" destination="3aT-mf-pGM" id="Kp5-dY-fAE"/>
                         <outlet property="detailView" destination="j24-BL-PlS" id="NVZ-eP-My3"/>
+                        <outlet property="moviePreviewButton" destination="tnn-b8-9G5" id="7ZA-97-h6l"/>
+                        <outlet property="viewButton" destination="tCc-LX-Wss" id="rqz-Xi-kge"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bT5-dM-got" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -684,6 +686,7 @@
                         <outlet property="detailTrackInfo" destination="j8z-MC-K07" id="Ny3-34-kBb"/>
                         <outlet property="detailView" destination="Rgm-Wy-tF8" id="Kc6-Xn-s0O"/>
                         <outlet property="musicPreviewButton" destination="dLa-OP-LLp" id="HuG-9W-Uvy"/>
+                        <outlet property="viewButton" destination="RdK-DS-moB" id="Is9-TP-9ra"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="86p-ms-zbd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -983,6 +986,7 @@
                         <outlet property="detailReleaseDate" destination="EnW-PP-dVH" id="Dce-iG-EZe"/>
                         <outlet property="detailSize" destination="zXC-R6-DS6" id="efi-AK-GjY"/>
                         <outlet property="detailView" destination="nVH-LK-cwt" id="xlG-G2-Nv1"/>
+                        <outlet property="viewButton" destination="l8T-z3-aJz" id="IRL-C0-AgK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TzQ-dL-hx6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1261,6 +1265,7 @@
                         <outlet property="detailPrimaryGenre" destination="Dmj-a5-Bit" id="lyd-Un-7Ss"/>
                         <outlet property="detailReleaseDate" destination="GvH-CQ-1PX" id="kRl-Fg-z4d"/>
                         <outlet property="detailView" destination="dZ6-8q-UZ1" id="U1Y-7M-bWe"/>
+                        <outlet property="viewButton" destination="GKK-Kw-EKL" id="aXY-xb-WAK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9g-LQ-yi8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
