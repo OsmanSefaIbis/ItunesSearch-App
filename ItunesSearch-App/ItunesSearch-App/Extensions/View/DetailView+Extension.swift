@@ -112,6 +112,7 @@ extension DetailView{
         let brightness = (red + green + blue) / 3.0
         return brightness < 0.5
     }
+    
     func addPlayIndicator() {
         let playIndicator = UIActivityIndicatorView(style: .medium)
         playIndicator.color = AppConstants.activityIndicatorColor
@@ -123,6 +124,17 @@ extension DetailView{
             playIndicator.centerYAnchor.constraint(equalTo: self.musicPreviewButton.centerYAnchor),
         ])
         playIndicator.startAnimating()
+    }
+    
+    func removeAudioRelated(){
+        musicPreviewButton.setTitle(HardCoded.previewButtonText.get(), for: .normal)
+        musicPreviewButton.subviews.forEach { subview in
+            if let playIndicator = subview as? UIActivityIndicatorView {
+                playIndicator.stopAnimating()
+                playIndicator.removeFromSuperview()
+            }
+        }
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
 }
 

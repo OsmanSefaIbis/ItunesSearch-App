@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A3396EE6-B4D2-4B1A-9F8E-A99FCAE4E09E"
+            uuid = "2976CFA9-8B52-4F09-A7E7-CE45FE830198"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Extensions/View/DetailView+Extension.swift"
+            filePath = "ItunesSearch-App/Screens/View/Search/DetailView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
-            landmarkName = "addPlayIndicator()"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "playerDidFinishPlaying(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

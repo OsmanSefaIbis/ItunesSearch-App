@@ -41,10 +41,11 @@ class DetailView: UIViewController{
     @IBOutlet weak var musicPreviewButton: UIButton!
     private var item: Detail?
     var id = 0
+    private var isAudioPlaying = false
 
     private let webView = WKWebView()
     private var player: AVPlayer?
-    private var playerItem: AVPlayerItem?
+    var playerItem: AVPlayerItem?
     private var playerViewController: AVPlayerViewController?
     private var viewUrl: URL?
     private var previewUrl: URL?
@@ -135,14 +136,7 @@ class DetailView: UIViewController{
     }
     
     @objc func playerDidFinishPlaying(_ notification: Notification) { /// used for music preview
-        musicPreviewButton.setTitle(HardCoded.previewButtonText.get(), for: .normal)
-        musicPreviewButton.subviews.forEach { subview in
-            if let playIndicator = subview as? UIActivityIndicatorView {
-                playIndicator.stopAnimating()
-                playIndicator.removeFromSuperview()
-            }
-        }
-        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
+        removeAudioRelated()
     }
     /* Button Actions */
     @IBAction func viewButtonClicked(_ sender: Any) {
@@ -166,14 +160,19 @@ class DetailView: UIViewController{
     }
     
     @IBAction func musicPreviewButtonClicked(_ sender: Any) {
-        guard let previewUrl = previewUrl else {
-            return
+        guard let previewUrl = previewUrl else { return }
+        
+        if isAudioPlaying{
+            player?.pause()
+            removeAudioRelated()
+        } else {
+            playerItem = AVPlayerItem(url: previewUrl)
+            player = AVPlayer(playerItem: playerItem)
+            player?.play()
+            
+            addPlayIndicator()
+            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(_:)), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
         }
-       playerItem = AVPlayerItem(url: previewUrl)
-       player = AVPlayer(playerItem: playerItem)
-       player?.play()
-       
-       addPlayIndicator()
-       NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(_:)), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
+        isAudioPlaying.toggle()
     }
 }
