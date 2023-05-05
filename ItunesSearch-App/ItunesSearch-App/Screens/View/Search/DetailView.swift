@@ -37,12 +37,14 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailContent: UILabel!
     @IBOutlet private weak var detailEpisodes: UILabel!
     @IBOutlet private weak var detailTrackInfo: UILabel!
-    
+        
+    @IBOutlet weak var musicPreviewButton: UIButton!
     private var item: Detail?
     var id = 0
 
     private let webView = WKWebView()
     private var player: AVPlayer?
+    private var playerItem: AVPlayerItem?
     private var playerViewController: AVPlayerViewController?
     private var viewUrl: URL?
     private var previewUrl: URL?
@@ -132,6 +134,16 @@ class DetailView: UIViewController{
        }
     }
     
+    @objc func playerDidFinishPlaying(_ notification: Notification) { /// used for music preview
+        musicPreviewButton.setTitle(HardCoded.previewButtonText.get(), for: .normal)
+        musicPreviewButton.subviews.forEach { subview in
+            if let playIndicator = subview as? UIActivityIndicatorView {
+                playIndicator.stopAnimating()
+                playIndicator.removeFromSuperview()
+            }
+        }
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
+    }
     /* Button Actions */
     @IBAction func viewButtonClicked(_ sender: Any) {
         
@@ -157,8 +169,11 @@ class DetailView: UIViewController{
         guard let previewUrl = previewUrl else {
             return
         }
-        playerItem = AVPlayerItem(url: previewUrl)
-        player = AVPlayer(playerItem: playerItem)
-        player?.play()
+       playerItem = AVPlayerItem(url: previewUrl)
+       player = AVPlayer(playerItem: playerItem)
+       player?.play()
+       
+       addPlayIndicator()
+       NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(_:)), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
 }

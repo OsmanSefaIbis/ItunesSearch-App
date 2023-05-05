@@ -112,5 +112,17 @@ extension DetailView{
         let brightness = (red + green + blue) / 3.0
         return brightness < 0.5
     }
+    func addPlayIndicator() {
+        let playIndicator = UIActivityIndicatorView(style: .medium)
+        playIndicator.color = AppConstants.activityIndicatorColor
+        self.musicPreviewButton.setTitle(HardCoded.audioEmoji.get(), for: .normal)
+        self.musicPreviewButton.addSubview(playIndicator)
+        playIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            playIndicator.leadingAnchor.constraint(equalTo: musicPreviewButton.titleLabel!.trailingAnchor, constant: 8),
+            playIndicator.centerYAnchor.constraint(equalTo: self.musicPreviewButton.centerYAnchor),
+        ])
+        playIndicator.startAnimating()
+    }
 }
 

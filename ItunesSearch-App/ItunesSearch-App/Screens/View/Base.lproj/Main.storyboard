@@ -675,6 +675,7 @@
                         <outlet property="detailReleaseDate" destination="NO4-Al-QIA" id="8Yx-Px-yFO"/>
                         <outlet property="detailTrackInfo" destination="j8z-MC-K07" id="Ny3-34-kBb"/>
                         <outlet property="detailView" destination="Rgm-Wy-tF8" id="Kc6-Xn-s0O"/>
+                        <outlet property="musicPreviewButton" destination="dLa-OP-LLp" id="HuG-9W-Uvy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="86p-ms-zbd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
