@@ -20,4 +20,14 @@ extension SearchView{
             return urlComponents.string
         }
     }
+    
+    func hapticFeedbackHeavy() {
+        hapticHeavy.prepare()
+        hapticHeavy.impactOccurred(intensity: 1.0)
+    }
+    
+    func hapticFeedbackSoft() {
+        hapticSoft.prepare()
+        hapticSoft.impactOccurred(intensity: 1.0)
+    }
 }

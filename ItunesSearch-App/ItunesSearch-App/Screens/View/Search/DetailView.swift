@@ -13,6 +13,8 @@ import Kingfisher
 
 class DetailView: UIViewController{
     
+    let hapticMedium = UIImpactFeedbackGenerator(style: .medium)
+
     @IBOutlet private weak var detailContainerView: UIView!
     @IBOutlet private weak var detailView: UIView!
     @IBOutlet private weak var detailImageContainerView: UIView!
@@ -21,6 +23,7 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailButtonsView: UIView!
     @IBOutlet private weak var detailDescriptionTextView: UITextView!
     /// above is added for colorization
+    @IBOutlet weak var musicPreviewButton: UIButton!
     @IBOutlet private weak var detailImage: UIImageView!
     @IBOutlet private weak var detailDescription: UITextView!
     @IBOutlet private weak var detailName: UILabel!
@@ -38,7 +41,8 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailEpisodes: UILabel!
     @IBOutlet private weak var detailTrackInfo: UILabel!
         
-    @IBOutlet weak var musicPreviewButton: UIButton!
+    
+    
     private var item: Detail?
     var id = 0
     private var isAudioPlaying = false
@@ -140,7 +144,7 @@ class DetailView: UIViewController{
     }
     /* Button Actions */
     @IBAction func viewButtonClicked(_ sender: Any) {
-        
+        hapticFeedbackMedium()
         let webViewVC = UIViewController()
         webViewVC.view = webView
         let request = URLRequest(url: viewUrl!)
@@ -152,7 +156,7 @@ class DetailView: UIViewController{
     }
     
     @IBAction func moviePreviewButtonClicked(_ sender: Any) {
-        
+        hapticFeedbackMedium()
         let player = AVPlayer(url: previewUrl!)
         playerViewController = AVPlayerViewController()
         playerViewController?.player = player
@@ -160,6 +164,7 @@ class DetailView: UIViewController{
     }
     
     @IBAction func musicPreviewButtonClicked(_ sender: Any) {
+        hapticFeedbackMedium()
         guard let previewUrl = previewUrl else { return }
         
         if isAudioPlaying{

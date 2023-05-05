@@ -11,6 +11,9 @@ class SearchView: UIViewController{
     typealias RowItems = SearchCellModel
     private let cellIdentifier = HardCoded.cellIdentifier.get()
     
+    let hapticHeavy = UIImpactFeedbackGenerator(style: .heavy)
+    let hapticSoft = UIImpactFeedbackGenerator(style: .soft)
+    
     @IBOutlet private weak var activityIndicatorOverall: UIActivityIndicatorView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
@@ -163,7 +166,7 @@ class SearchView: UIViewController{
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-        
+        hapticFeedbackSoft()
         switch sender.selectedSegmentIndex {
             case 0: categorySelection = Category.movie
             
@@ -302,7 +305,7 @@ extension SearchView: UICollectionViewDelegate {
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        hapticFeedbackHeavy()
         collectionView.deselectItem(at: indexPath, animated: true)
         switch categorySelection {
             
@@ -460,7 +463,7 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
 extension SearchView: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
+        hapticFeedbackSoft()
         searchBar.resignFirstResponder()
         guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
         guard let category = categorySelection else { return }
@@ -479,7 +482,10 @@ extension SearchView: UISearchBarDelegate {
             }
         }
     }
-    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+        reset()
+    }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
            
            timeControl?.invalidate()
@@ -502,11 +508,7 @@ extension SearchView: UISearchBarDelegate {
                    self?.resetAndSearch(searchText, category, offSet)
                }
            })
-       }
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = nil
-        reset()
-    }
+   }
 }
 
 

@@ -136,5 +136,10 @@ extension DetailView{
         }
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
+    
+    func hapticFeedbackMedium() {
+        hapticMedium.prepare()
+        hapticMedium.impactOccurred(intensity: 1.0)
+    }
 }
 
