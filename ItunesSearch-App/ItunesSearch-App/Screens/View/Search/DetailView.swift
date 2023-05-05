@@ -60,7 +60,9 @@ class DetailView: UIViewController{
     
     func configureItem( with item: Detail, image artworkImage: UIImage, color averageColor: UIColor){
         
-        //let textColor: UIColor = isColorDark(averageColor) ? .white : .black
+        if isColorDark(averageColor){
+            detailView.setAllTextColors(.white)
+        }
         
         configureMutuals(item)
         

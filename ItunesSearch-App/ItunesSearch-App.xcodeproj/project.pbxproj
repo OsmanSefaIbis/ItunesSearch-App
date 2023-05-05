@@ -13,6 +13,7 @@
 		9651B1912A03C7E600D94A6F /* Top+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9651B1902A03C7E600D94A6F /* Top+Model.swift */; };
 		9651B1952A04294800D94A6F /* HeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9651B1932A04294800D94A6F /* HeaderReusableView.swift */; };
 		9651B1962A04294800D94A6F /* HeaderReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9651B1942A04294800D94A6F /* HeaderReusableView.xib */; };
+		9651B1982A057AF100D94A6F /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9651B1972A057AF100D94A6F /* UIView+Extension.swift */; };
 		9662827629F58DDA001A8338 /* InternetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9662827529F58DDA001A8338 /* InternetManager.swift */; };
 		967395CE29E9D94900D3403F /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967395CD29E9D94900D3403F /* SearchViewModel.swift */; };
 		967395D129EAB76E00D3403F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967395D029EAB76E00D3403F /* Category.swift */; };
@@ -57,6 +58,7 @@
 		9651B1902A03C7E600D94A6F /* Top+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Top+Model.swift"; sourceTree = "<group>"; };
 		9651B1932A04294800D94A6F /* HeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderReusableView.swift; sourceTree = "<group>"; };
 		9651B1942A04294800D94A6F /* HeaderReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderReusableView.xib; sourceTree = "<group>"; };
+		9651B1972A057AF100D94A6F /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		9662827529F58DDA001A8338 /* InternetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetManager.swift; sourceTree = "<group>"; };
 		967395CD29E9D94900D3403F /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		967395D029EAB76E00D3403F /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				96E8225A29F305F0009B56F0 /* Model */,
 				961BFE6E29F16DC8009838AA /* String+Extension.swift */,
 				96E8226D29F44B11009B56F0 /* UIImage+Extension.swift */,
+				9651B1972A057AF100D94A6F /* UIView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				9651B1952A04294800D94A6F /* HeaderReusableView.swift in Sources */,
 				96E83D3329E71C02001B517E /* SearchModel.swift in Sources */,
 				96B5868E29EFE097004F5B27 /* Detail+Model.swift in Sources */,
+				9651B1982A057AF100D94A6F /* UIView+Extension.swift in Sources */,
 				96E8224B29F2A72A009B56F0 /* SearchModel+Extension.swift in Sources */,
 				9651B18F2A03BCA500D94A6F /* TopData.swift in Sources */,
 				96B5868929EDD20E004F5B27 /* DetailView.swift in Sources */,

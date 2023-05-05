@@ -468,11 +468,10 @@ extension SearchView: UISearchBarDelegate {
         guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
         guard let category = categorySelection else { return }
         
-        if searchText.isEmpty{
-            resetAndTrend(category)
-        }
-        else if (1...2).contains(searchText.count) {
-            reset()
+        if (0...2).contains(searchText.count){
+            if items.isEmpty{
+                resetAndTrend(category)
+            }
         } else {
             if (1...20).contains(items.count) {
                 searchBar.resignFirstResponder()
@@ -497,10 +496,6 @@ extension SearchView: UISearchBarDelegate {
                if (0...2).contains(searchText.count){
                    self?.isSearchActive = false
                    self?.activityIndicatorOverall.stopAnimating()
-               }
-               if searchText.isEmpty {
-                   self?.isSearchActive = false
-                   self?.resetAndTrend(category)
                }
                if searchText.count > 2 {
                    self?.isSearchActive = true

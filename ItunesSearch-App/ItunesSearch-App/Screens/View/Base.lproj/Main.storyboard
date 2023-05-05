@@ -201,19 +201,19 @@
                                                                 <rect key="frame" x="0.0" y="137.33333333333337" width="393" height="82.666666666666686"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="WWI-qK-k9y" userLabel="HStack Left">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="229.33333333333334" height="82.666666666666671"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="222" height="82.666666666666671"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="C3c-Wl-dnt" userLabel="VStack Left">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="98.333333333333329" height="82.666666666666671"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="95.333333333333329" height="82.666666666666671"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre:  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bjy-o9-y66">
-                                                                                        <rect key="frame" x="53.666666666666671" y="0.0" width="44.666666666666671" height="41.333333333333336"/>
+                                                                                        <rect key="frame" x="50.666666666666671" y="0.0" width="44.666666666666671" height="41.333333333333336"/>
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Premiered:  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhJ-jU-RmI">
-                                                                                        <rect key="frame" x="29.999999999999993" y="41.333333333333258" width="68.333333333333314" height="41.333333333333343"/>
+                                                                                        <rect key="frame" x="27" y="41.333333333333258" width="68.333333333333329" height="41.333333333333343"/>
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
@@ -221,7 +221,7 @@
                                                                                 </subviews>
                                                                             </stackView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="bl1-Ai-w9d" userLabel="VStack Right">
-                                                                                <rect key="frame" x="98.333333333333314" y="0.0" width="131" height="82.666666666666671"/>
+                                                                                <rect key="frame" x="95.333333333333314" y="0.0" width="126.66666666666669" height="82.666666666666671"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Movie Genre&quot;" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UsX-Nt-dah" userLabel="Genre">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="92.666666666666671" height="41.333333333333336"/>
@@ -245,19 +245,19 @@
                                                                         </constraints>
                                                                     </stackView>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="g5g-gQ-eeR" userLabel="HStack Right">
-                                                                        <rect key="frame" x="229.33333333333337" y="0.0" width="163.66666666666663" height="82.666666666666671"/>
+                                                                        <rect key="frame" x="222" y="0.0" width="171" height="82.666666666666671"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="mjH-Id-knz" userLabel="VStack Left">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="70" height="82.666666666666671"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="73.333333333333329" height="82.666666666666671"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Runtime:  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QGi-gq-CsY">
-                                                                                        <rect key="frame" x="13" y="0.0" width="57" height="41.333333333333336"/>
+                                                                                        <rect key="frame" x="16.333333333333343" y="0.0" width="57" height="41.333333333333336"/>
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price:  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4s-Z1-zYv">
-                                                                                        <rect key="frame" x="30.666666666666661" y="41.333333333333258" width="39.333333333333343" height="41.333333333333343"/>
+                                                                                        <rect key="frame" x="34" y="41.333333333333258" width="39.333333333333343" height="41.333333333333343"/>
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
@@ -265,7 +265,7 @@
                                                                                 </subviews>
                                                                             </stackView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="uKa-aE-MUY" userLabel="VStack Right">
-                                                                                <rect key="frame" x="69.999999999999972" y="0.0" width="93.666666666666657" height="82.666666666666671"/>
+                                                                                <rect key="frame" x="73.333333333333314" y="0.0" width="97.666666666666686" height="82.666666666666671"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Duration&quot;" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9V8-Ea-SyP">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="68.333333333333329" height="41.333333333333336"/>
@@ -288,7 +288,7 @@
                                                                     </stackView>
                                                                 </subviews>
                                                                 <constraints>
-                                                                    <constraint firstItem="WWI-qK-k9y" firstAttribute="width" secondItem="g5g-gQ-eeR" secondAttribute="width" multiplier="1.4" id="le4-34-OsO"/>
+                                                                    <constraint firstItem="WWI-qK-k9y" firstAttribute="width" secondItem="g5g-gQ-eeR" secondAttribute="width" multiplier="1.3" id="le4-34-OsO"/>
                                                                 </constraints>
                                                             </stackView>
                                                         </subviews>
@@ -352,7 +352,9 @@
                                                                 <rect key="frame" x="0.0" y="8" width="96.666666666666671" height="34.333333333333336"/>
                                                                 <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="filled" title="Preview" cornerStyle="capsule"/>
+                                                                <buttonConfiguration key="configuration" style="filled" title="Preview" cornerStyle="capsule">
+                                                                    <color key="baseForegroundColor" systemColor="opaqueSeparatorColor"/>
+                                                                </buttonConfiguration>
                                                                 <connections>
                                                                     <action selector="moviePreviewButtonClicked:" destination="hyU-kR-gp3" eventType="touchUpInside" id="GgK-C9-Ape"/>
                                                                 </connections>
@@ -361,7 +363,9 @@
                                                                 <rect key="frame" x="196.66666666666666" y="8" width="96.333333333333343" height="34.333333333333336"/>
                                                                 <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
+                                                                <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule">
+                                                                    <color key="baseForegroundColor" systemColor="opaqueSeparatorColor"/>
+                                                                </buttonConfiguration>
                                                                 <connections>
                                                                     <action selector="viewButtonClicked:" destination="hyU-kR-gp3" eventType="touchUpInside" id="jwd-Xk-lBV"/>
                                                                 </connections>
@@ -613,7 +617,9 @@
                                                                 <rect key="frame" x="0.0" y="8" width="96.666666666666671" height="34.333333333333336"/>
                                                                 <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="filled" title="Preview" cornerStyle="capsule"/>
+                                                                <buttonConfiguration key="configuration" style="filled" title="Preview" cornerStyle="capsule">
+                                                                    <color key="baseForegroundColor" systemColor="opaqueSeparatorColor"/>
+                                                                </buttonConfiguration>
                                                                 <connections>
                                                                     <action selector="musicPreviewButtonClicked:" destination="ZIj-fG-fhU" eventType="touchUpInside" id="WVG-hv-xp5"/>
                                                                 </connections>
@@ -622,7 +628,9 @@
                                                                 <rect key="frame" x="196.66666666666666" y="8" width="96.333333333333343" height="34.333333333333336"/>
                                                                 <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
+                                                                <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule">
+                                                                    <color key="baseForegroundColor" systemColor="opaqueSeparatorColor"/>
+                                                                </buttonConfiguration>
                                                                 <connections>
                                                                     <action selector="viewButtonClicked:" destination="ZIj-fG-fhU" eventType="touchUpInside" id="Ygq-tx-AIv"/>
                                                                 </connections>
@@ -917,7 +925,9 @@
                                                                 <rect key="frame" x="0.0" y="8" width="93" height="34.333333333333336"/>
                                                                 <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
+                                                                <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule">
+                                                                    <color key="baseForegroundColor" systemColor="opaqueSeparatorColor"/>
+                                                                </buttonConfiguration>
                                                                 <connections>
                                                                     <action selector="viewButtonClicked:" destination="vvo-p8-Bbg" eventType="touchUpInside" id="t6C-y4-otH"/>
                                                                 </connections>
@@ -1194,7 +1204,9 @@
                                                                 <rect key="frame" x="0.0" y="8" width="93" height="34.333333333333336"/>
                                                                 <color key="tintColor" name="AccentColor"/>
                                                                 <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule"/>
+                                                                <buttonConfiguration key="configuration" style="filled" title="View" cornerStyle="capsule">
+                                                                    <color key="baseForegroundColor" systemColor="opaqueSeparatorColor"/>
+                                                                </buttonConfiguration>
                                                                 <connections>
                                                                     <action selector="viewButtonClicked:" destination="yvt-6q-5ng" eventType="touchUpInside" id="pck-J1-t9H"/>
                                                                 </connections>
@@ -1280,7 +1292,7 @@
         <image name="music.note" catalog="system" width="96" height="128"/>
         <image name="popcorn" catalog="system" width="102" height="128"/>
         <namedColor name="AccentColor">
-            <color red="0.075999997556209564" green="0.078000001609325409" blue="0.10899999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.070000000000000007" green="0.070000000000000007" blue="0.10000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
