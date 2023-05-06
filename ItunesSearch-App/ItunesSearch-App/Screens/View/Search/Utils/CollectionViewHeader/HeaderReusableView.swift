@@ -18,7 +18,7 @@ class HeaderReusableView: UICollectionReusableView {
          headerView.layer.masksToBounds = true
     }
     
-    func setTitle(with categoryType: String){
-        headerTitle.text = categoryType.appending(HardCoded.collectionViewHeaderPhrase.get())
+    func setTitle(with MediaTypeType: String){
+        headerTitle.text = MediaTypeType.appending(HardCoded.collectionViewHeaderPhrase.get())
     }
 }

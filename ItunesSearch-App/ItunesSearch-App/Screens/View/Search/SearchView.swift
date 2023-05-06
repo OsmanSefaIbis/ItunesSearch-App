@@ -29,7 +29,7 @@ class SearchView: UIViewController{
     private var lessThanPage_Flag = false
     private var isLoadingNextPage = false
     private var isSearchActive = false
-    private var categorySelection: Category? = .movie
+    private var MediaTypeSelection: MediaType? = .movie
     private var loadingView: LoadingReusableView?
     private var headerView: HeaderReusableView?
     private var cacheDetails: [Int : Detail] = [:]
@@ -81,8 +81,8 @@ class SearchView: UIViewController{
         DispatchQueue.main.async {
             self.activityIndicatorOverall.startAnimating()
         }
-        guard let category = categorySelection else { return }
-        searchViewModel.topInvoked(category)
+        guard let MediaType = MediaTypeSelection else { return }
+        searchViewModel.topInvoked(MediaType)
     }
     
     func setItems( _ items: [RowItems]) {
@@ -168,30 +168,30 @@ class SearchView: UIViewController{
         guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
         hapticFeedbackSoft()
         switch sender.selectedSegmentIndex {
-            case 0: categorySelection = Category.movie
+            case 0: MediaTypeSelection = MediaType.movie
             
-                if searchText.count > 2 { resetAndSearch(searchText, Category.movie, nil) }
-                else { resetAndTrend(Category.movie) }
+                if searchText.count > 2 { resetAndSearch(searchText, MediaType.movie, nil) }
+                else { resetAndTrend(MediaType.movie) }
             
-            case 1: categorySelection = Category.music
+            case 1: MediaTypeSelection = MediaType.music
             
-                if searchText.count > 2 { resetAndSearch(searchText, Category.music, nil) }
-                else { resetAndTrend(Category.music) }
+                if searchText.count > 2 { resetAndSearch(searchText, MediaType.music, nil) }
+                else { resetAndTrend(MediaType.music) }
             
-            case 2: categorySelection = Category.ebook
+            case 2: MediaTypeSelection = MediaType.ebook
             
-                if searchText.count > 2 { resetAndSearch(searchText, Category.ebook, nil) }
-                else { resetAndTrend(Category.ebook) }
+                if searchText.count > 2 { resetAndSearch(searchText, MediaType.ebook, nil) }
+                else { resetAndTrend(MediaType.ebook) }
             
-            case 3: categorySelection = Category.podcast
+            case 3: MediaTypeSelection = MediaType.podcast
             
-                if searchText.count > 2 { resetAndSearch(searchText, Category.podcast, nil) }
-                else { resetAndTrend(Category.podcast) }
+                if searchText.count > 2 { resetAndSearch(searchText, MediaType.podcast, nil) }
+                else { resetAndTrend(MediaType.podcast) }
             
         default: fatalError(HardCoded.segmentedControlError.get())
         }
     }
-    func resetAndSearch(_ searchTerm: String, _ category: Category, _ offSetValue: Int?){
+    func resetAndSearch(_ searchTerm: String, _ MediaType: MediaType, _ offSetValue: Int?){
         resetCollections()
         paginationOffSet = 0
         lessThanPage_Flag = false
@@ -203,17 +203,17 @@ class SearchView: UIViewController{
             self.activityIndicatorOverall.startAnimating()
         }
         if let offSet = offSetValue{
-            searchViewModel.searchInvoked(searchTerm, category, offSet)
+            searchViewModel.searchInvoked(searchTerm, MediaType, offSet)
         }else{
-            searchViewModel.searchInvoked(searchTerm, category, paginationOffSet)
+            searchViewModel.searchInvoked(searchTerm, MediaType, paginationOffSet)
         }
     }
-    func resetAndTrend(_ category: Category){
+    func resetAndTrend(_ MediaType: MediaType){
         reset()
         DispatchQueue.main.async {
             self.activityIndicatorOverall.startAnimating()
         }
-        searchViewModel.topInvoked(category)
+        searchViewModel.topInvoked(MediaType)
     }
     
     func reset(){
@@ -307,25 +307,25 @@ extension SearchView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         hapticFeedbackHeavy()
         collectionView.deselectItem(at: indexPath, animated: true)
-        switch categorySelection {
+        switch MediaTypeSelection {
             
         case .movie:
-            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.movie.get()) as? DetailView{
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: MediaType.movie.getView()) as? DetailView{
                 embedViewControllerWithCached(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
         case .music:
-            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.music.get()) as? DetailView{
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: MediaType.music.getView()) as? DetailView{
                 embedViewControllerWithCached(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
         case .ebook:
-            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.ebook.get()) as? DetailView{
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: MediaType.ebook.getView()) as? DetailView{
                 embedViewControllerWithCached(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
         case .podcast:
-            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: CategoryView.podcast.get()) as? DetailView{
+            if var detailPage =  storyboard?.instantiateViewController(withIdentifier: MediaType.podcast.getView()) as? DetailView{
                 embedViewControllerWithCached(&detailPage)
                 self.navigationController?.pushViewController(detailPage, animated: true)
             }
@@ -354,10 +354,10 @@ extension SearchView: UICollectionViewDelegate {
         if indexPath.item == latestItemNumeric {
             
             guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-            guard let category = categorySelection else { return }
+            guard let MediaType = MediaTypeSelection else { return }
             paginationOffSet += AppConstants.requestLimit
             isLoadingNextPage = true
-            self.searchViewModel.searchInvoked(searchText, category, paginationOffSet)
+            self.searchViewModel.searchInvoked(searchText, MediaType, paginationOffSet)
         }
     }
     
@@ -399,8 +399,8 @@ extension SearchView: UICollectionViewDelegate {
                 self.loadingView?.activityIndicator.startAnimating()
             }
             if elementKind == UICollectionView.elementKindSectionHeader && !isSearchActive {
-                guard let category = self.categorySelection else { return }
-                self.headerView?.setTitle(with: category.get().capitalized)
+                guard let MediaType = self.MediaTypeSelection else { return }
+                self.headerView?.setTitle(with: MediaType.get().capitalized)
             }
         }
 
@@ -466,18 +466,18 @@ extension SearchView: UISearchBarDelegate {
         hapticFeedbackSoft()
         searchBar.resignFirstResponder()
         guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-        guard let category = categorySelection else { return }
+        guard let MediaType = MediaTypeSelection else { return }
         
         if (0...2).contains(searchText.count){
             if items.isEmpty{
-                resetAndTrend(category)
+                resetAndTrend(MediaType)
             }
         } else {
             if (1...20).contains(items.count) {
                 searchBar.resignFirstResponder()
             } else {
                 paginationOffSet = 0
-                self.resetAndSearch(searchText, category, paginationOffSet)
+                self.resetAndSearch(searchText, MediaType, paginationOffSet)
             }
         }
     }
@@ -491,7 +491,7 @@ extension SearchView: UISearchBarDelegate {
            timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
                
                guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-               guard let category = self?.categorySelection else { return }
+               guard let MediaType = self?.MediaTypeSelection else { return }
                
                if (0...2).contains(searchText.count){
                    self?.isSearchActive = false
@@ -500,7 +500,7 @@ extension SearchView: UISearchBarDelegate {
                if searchText.count > 2 {
                    self?.isSearchActive = true
                    guard let offSet = self?.paginationOffSet else { return }
-                   self?.resetAndSearch(searchText, category, offSet)
+                   self?.resetAndSearch(searchText, MediaType, offSet)
                }
            })
    }

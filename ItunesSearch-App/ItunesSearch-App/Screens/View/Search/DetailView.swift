@@ -83,10 +83,10 @@ class DetailView: UIViewController{
         }
         
         switch item.kind{
-            case CategoryKind.movie.get(): configureMovie()
-            case CategoryKind.music.get(): configureMusic()
-            case CategoryKind.ebook.get(): configureEbook()
-            case CategoryKind.podcast.get(): configurePodcast()
+            case MediaType.movie.getKind(): configureMovie()
+            case MediaType.music.getKind(): configureMusic()
+            case MediaType.ebook.getKind(): configureEbook()
+            case MediaType.podcast.getKind(): configurePodcast()
         default:
             return
         }

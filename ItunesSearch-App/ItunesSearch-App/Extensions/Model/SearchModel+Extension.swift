@@ -9,17 +9,17 @@ import Foundation
 
 extension SearchModel{
     
-    func composeUrl(_ term: String, _ media: Category, _ offset: Int) -> String {
+    func composeUrl(_ term: String, _ media: MediaType, _ offset: Int) -> String {
         
         let termParam = HardCoded.termParam.get().appending(term)
-        let mediaParam = MediaParam.getWith(media)
+        let mediaParam = MediaType.getParam(with: media)
         let baseUrl = Api.scheme.get() + Api.domain.get() + Api.searchPath.get()
         let urlCompose = baseUrl + termParam + mediaParam + Api.limit.get() + Api.offsetLimit.get() + String(offset)
         
         return urlCompose
     }
     
-    func composeUrl(_ media: Category) -> String {
+    func composeUrl(_ media: MediaType) -> String {
         
         let baseUrl = Api.scheme.get() + Api.domain.get()
         let countryParam = HardCoded.countryParam.get()

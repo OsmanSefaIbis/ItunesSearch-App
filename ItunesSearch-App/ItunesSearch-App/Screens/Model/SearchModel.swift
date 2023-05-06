@@ -20,7 +20,7 @@ class SearchModel {
     weak var delegate: SearchModelDelegate?
     
     /// URLSession
-    func fetchDataWith(input termValue: String, media mediaType: Category, startFrom offset: Int) {
+    func fetchDataWith(input termValue: String, media mediaType: MediaType, startFrom offset: Int) {
         
         if InternetManager.shared.isInternetActive() {
             let urlCompose = composeUrl(termValue, mediaType, offset)
@@ -82,7 +82,7 @@ class SearchModel {
         }
     }
     
-    func fetchTopTrendingByCategory(media mediaType: Category){
+    func fetchTopTrendingByMediaType(media mediaType: MediaType){
         if InternetManager.shared.isInternetActive() {
             let urlCompose = composeUrl(mediaType)
             
@@ -117,7 +117,7 @@ class SearchModel {
     }
     
     /// Alamofire
-    func fetchDataWithAF(input termValue: String, media mediaType: Category, startFrom offset: Int) {
+    func fetchDataWithAF(input termValue: String, media mediaType: MediaType, startFrom offset: Int) {
         
         if InternetManager.shared.isInternetActive() {
             let urlCompose = composeUrl(termValue, mediaType, offset)

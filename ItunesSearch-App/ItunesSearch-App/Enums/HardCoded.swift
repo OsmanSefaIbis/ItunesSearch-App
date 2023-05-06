@@ -7,7 +7,8 @@
 
 import Foundation
 
-enum HardCoded: String{
+enum HardCoded: String {
+    
     case cellIdentifier, getRequest, collectionViewHeaderPhrase, previewButtonText, free,
          dolar, notAvailable, trackSeperator, seperator, noRating, numberSign, ratingScale,
          termParam, limitParam, mediaParam, rssParam, countryParam, jsonParam,  idParam,
@@ -15,8 +16,8 @@ enum HardCoded: String{
          convertedDateFormatShort, locale_US, colonSeperator, errorPromptOne, audioEmoji,
          segmentedControlError, invalidJSON
     
-    func get() -> String{
-        switch self{
+    func get() -> String {
+        switch self {
             case .cellIdentifier: return "SearchCell"
             case .getRequest: return "GET"
             case .collectionViewHeaderPhrase: return " Top Picks"
@@ -43,14 +44,10 @@ enum HardCoded: String{
             case .locale_US: return "en_US"
             case .colonSeperator: return " : "
             case .errorPromptOne: return "Invalid date string"
-            case .fetchDataWithError:
-                return "Error occured with fetchDataWith() - Cause: Decoding Error --> "
-            case .fetchSingularDataError:
-                return "Error occured with fetchSingularData() - Cause: Decoding Error --> "
-            case .segmentedControlError :
-                return "Error occured with segmentedControlValueChanged()"
-            case .invalidJSON:
-                return "Invalid JSON data"
+            case .fetchDataWithError: return "Error occured with fetchDataWith() - Cause: Decoding Error --> "
+            case .fetchSingularDataError: return "Error occured with fetchSingularData() - Cause: Decoding Error --> "
+            case .segmentedControlError : return "Error occured with segmentedControlValueChanged()"
+            case .invalidJSON: return "Invalid JSON data"
         }
     }
 }

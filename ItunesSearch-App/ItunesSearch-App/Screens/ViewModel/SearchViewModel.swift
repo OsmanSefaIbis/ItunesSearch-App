@@ -20,15 +20,15 @@ class SearchViewModel{
     init(){
         model.delegate = self
     }
-    func topInvoked(_ mediaType: Category){
-        model.fetchTopTrendingByCategory(media: mediaType)
+    func topInvoked(_ mediaType: MediaType){
+        model.fetchTopTrendingByMediaType(media: mediaType)
     }
     
     func topWithIdsInvoked(_ topIds: [String]){
         model.fetchByIds(for: topIds)
     }
     
-    func searchInvoked(_ searchTerm: String, _ mediaType: Category, _ offSetValue: Int) {
+    func searchInvoked(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int) {
         model.fetchDataWith(input: searchTerm, media: mediaType, startFrom: offSetValue)
     }
 }
