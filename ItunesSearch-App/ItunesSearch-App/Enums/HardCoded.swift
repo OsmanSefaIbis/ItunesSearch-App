@@ -14,7 +14,9 @@ enum HardCoded: String {
          termParam, limitParam, mediaParam, rssParam, countryParam, jsonParam,  idParam,
          fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
          convertedDateFormatShort, locale_US, colonSeperator, errorPromptOne, audioEmoji,
-         segmentedControlError, invalidJSON
+         segmentedControlError, invalidJSON, offlinePrompt, loadingReusableName,
+         headerReusableName, loadingReusableIdentifier, headerReusableIdentifier,
+         offLineAlertTitlePrompt, offLineActionTitlePrompt
     
     func get() -> String {
         switch self {
@@ -44,6 +46,13 @@ enum HardCoded: String {
             case .locale_US: return "en_US"
             case .colonSeperator: return " : "
             case .errorPromptOne: return "Invalid date string"
+            case .offlinePrompt: return "Check internet connectivity !"
+            case .offLineAlertTitlePrompt: return "Warning"
+            case .offLineActionTitlePrompt: return "Ok"
+            case .loadingReusableName: return "LoadingReusableView"
+            case .loadingReusableIdentifier: return "loadingresuableviewid"
+            case .headerReusableName: return "HeaderReusableView"
+            case .headerReusableIdentifier: return "headerreusableviewid"
             case .fetchDataWithError: return "Error occured with fetchDataWith() - Cause: Decoding Error --> "
             case .fetchSingularDataError: return "Error occured with fetchSingularData() - Cause: Decoding Error --> "
             case .segmentedControlError : return "Error occured with segmentedControlValueChanged()"

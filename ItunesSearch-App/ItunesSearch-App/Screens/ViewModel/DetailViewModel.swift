@@ -8,11 +8,13 @@
 import Foundation
 
 protocol DetailViewModelDelegate: AnyObject{
+    
     func refreshItem(_ retrieved: [Detail])
     func internetUnreachable(_ errorPrompt: String)
 }
 
 class DetailViewModel{
+    
     private let model = DetailModel()
     weak var delegate: DetailViewModelDelegate?
     
@@ -25,9 +27,9 @@ class DetailViewModel{
 }
 
 extension DetailViewModel: DetailModelDelegate{
+    
     func dataDidFetch(){
         let retrievedData: [Detail] = model.dataFetched.map{
-            
             .init(
                 id: $0.trackID ?? 0,
                 kind: $0.kind ?? "",
@@ -55,8 +57,7 @@ extension DetailViewModel: DetailModelDelegate{
         }
         self.delegate?.refreshItem(retrievedData)
     }
-    
-    func dataCannotFetch() {
-        delegate?.internetUnreachable("Check internet connectivity !")
+    func dataDidNotFetch() {
+        delegate?.internetUnreachable(HardCoded.offlinePrompt.get())
     }
 }

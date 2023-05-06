@@ -19,7 +19,6 @@ enum MediaType: String {
             case .podcast: return rawValue
         }
     }
-    
     func getView() -> String {
         switch self {
             case .movie: return "MovieDetailView"
@@ -28,7 +27,6 @@ enum MediaType: String {
             case .podcast: return "PodcastDetailView"
         }
     }
-    
     func getKind() -> String {
         switch self {
             case .movie: return "feature-movie"
@@ -37,7 +35,6 @@ enum MediaType: String {
             case .podcast: return "podcast"
         }
     }
-    
     func getTop() -> String {
         switch self {
             case .movie: return "topmovies/"
@@ -46,7 +43,6 @@ enum MediaType: String {
             case .podcast: return "toppodcasts/"
         }
     }
-    
     static func getParam(with mediaType: MediaType) -> String{
         switch mediaType{
             case .movie: return "&media=movie"

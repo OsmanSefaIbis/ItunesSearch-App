@@ -7,10 +7,10 @@ import UIKit
 import Alamofire
 
 protocol SearchModelDelegate: AnyObject{
+    
     func dataDidFetch()
     func dataDidNotFetch()
     func topDataDidFetch()
-    func topDataDidNotFetch()
 }
 
 class SearchModel {
@@ -20,7 +20,7 @@ class SearchModel {
     weak var delegate: SearchModelDelegate?
     
     /// URLSession
-    func fetchDataWith(input termValue: String, media mediaType: MediaType, startFrom offset: Int) {
+    func fetchDataForSearch(input termValue: String, media mediaType: MediaType, startFrom offset: Int) {
         
         if InternetManager.shared.isInternetActive() {
             let urlCompose = composeUrl(termValue, mediaType, offset)
@@ -50,7 +50,6 @@ class SearchModel {
             delegate?.dataDidNotFetch()
         }
     }
-    
     func fetchByIds(for idValues: [String]){
         
         if InternetManager.shared.isInternetActive() {
@@ -81,8 +80,8 @@ class SearchModel {
             delegate?.dataDidNotFetch()
         }
     }
-    
-    func fetchTopTrendingByMediaType(media mediaType: MediaType){
+    func fetchTopPicks(with mediaType: MediaType){
+        
         if InternetManager.shared.isInternetActive() {
             let urlCompose = composeUrl(mediaType)
             
@@ -112,7 +111,7 @@ class SearchModel {
                 task.resume()
             }
         }else {
-            delegate?.topDataDidNotFetch()
+            delegate?.dataDidNotFetch()
         }
     }
     

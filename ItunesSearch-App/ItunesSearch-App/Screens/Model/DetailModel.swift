@@ -9,8 +9,9 @@ import Foundation
 import Alamofire
 
 protocol DetailModelDelegate: AnyObject{
+    
     func dataDidFetch()
-    func dataCannotFetch()
+    func dataDidNotFetch()
 }
 
 class DetailModel{
@@ -46,7 +47,7 @@ class DetailModel{
                 task.resume()
             }
         }else {
-            delegate?.dataCannotFetch()
+            delegate?.dataDidNotFetch()
         }
     }
     ///Alamofire
@@ -57,14 +58,14 @@ class DetailModel{
             AF.request(urlCompose).responseDecodable(of: DetailResultData.self){ (res) in
                 guard let response = res.value
                 else{
-                    self.delegate?.dataCannotFetch()
+                    self.delegate?.dataDidNotFetch()
                     return
                 }
                 self.dataFetched = response.results ?? []
                 self.delegate?.dataDidFetch()
             }
         }else {
-            delegate?.dataCannotFetch()
+            delegate?.dataDidNotFetch()
         }
     }
 }

@@ -26,7 +26,6 @@ extension SearchCell {
         let output = outputDF.string(from: inputDate)
         return output
     }
-    
     func changeImageURL(_ urlString: String, withDimension dimension: Int) -> String? {
         guard var urlComponents = URLComponents(string: urlString) else {
             return nil

@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIView {
+    
     func setAllTextColors(_ color: UIColor) {
         for subview in self.subviews {
             if let label = subview as? UILabel {

@@ -43,8 +43,6 @@ class DetailView: UIViewController{
     @IBOutlet private weak var detailEpisodes: UILabel!
     @IBOutlet private weak var detailTrackInfo: UILabel!
         
-    
-    
     private var item: Detail?
     var id = 0
     private var isAudioPlaying = false

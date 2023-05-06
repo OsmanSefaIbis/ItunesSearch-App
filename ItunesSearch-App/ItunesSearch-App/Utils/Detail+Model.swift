@@ -5,8 +5,6 @@
 //  Created by Sefa İbiş on 19.04.2023.
 //
 
-import Foundation
-
 struct Detail{
     
     let id: Int
