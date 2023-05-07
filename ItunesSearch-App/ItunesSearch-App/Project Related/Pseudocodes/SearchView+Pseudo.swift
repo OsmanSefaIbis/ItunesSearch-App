@@ -5,9 +5,10 @@
 //  Created by Sefa İbiş on 3.05.2023.
 //
 
-// MARK: Below is migrated from extension SearchView: UICollectionViewDelegateFlowLayout
 
 /*-----------------------------------------------------------------------------------------------
+ • extension SearchView: UICollectionViewDelegateFlowLayout
+-------------------------------------------------------------------------------------------------
     /*-- MODELS ----- MAX IOS --- WIDTH POINT -- HEIGHT POINT ---
     |    6s             15           375            667         |
     |    SE Gen1        15           320(MIN)       568         |
@@ -50,4 +51,50 @@
         Labels Width = 3A = 123
 -------------------------------------------------------------------------------------------------
  Conclusion:  A = [ ( ( z - (( columnCount-1 * y ) - ( 2k )) )  / columnCount ) / 5 ]
+-------------------------------------------------------------------------------------------------*/
+
+
+
+/*-----------------------------------------------------------------------------------------------
+ • class SearchView: UIViewController
+-------------------------------------------------------------------------------------------------
+ 
+ func setItems( _ items: [RowItems]) {
+     /// NOTE: API does not support pagination via json, offset and limit used
+     /// self.items <- existing data  incoming data -> items
+ 
+     if items.count != AppConstants.requestLimit { lessThanPage_Flag = true } /// decision point (true == do not fetch more)
+
+     if lessThanPage_Flag { /// less than a page
+         if self.items.count >= AppConstants.requestLimit  { /// case: last page with less than request limit
+             var lastRecords: [RowItems] = []
+             /// NOTE: API sends as the requestLimit, records can overlap at the end, so extract only the required
+             for each in items {
+                 if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue } /// skip
+                 else { lastRecords.append(each) } /// track
+             }
+             self.items.append(contentsOf: lastRecords) /// add track
+             idsOfAllFetchedRecords.removeAll() /// dealloc track
+         } else { /// case: first page with less than request limit
+             self.items = items
+         }
+     } else { /// each page
+         if paginationOffSet == 0 { /// first full page
+             for each in items { idsOfAllFetchedRecords.insert(each.id) }
+             self.items = items
+         }else { /// next page
+             for each in items { idsOfAllFetchedRecords.insert(each.id) }
+             self.items.append(contentsOf: items)
+         }
+     }
+     /// render
+     DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) {
+         DispatchQueue.main.async {
+             self.activityIndicatorOverall.stopAnimating()
+             self.collectionView?.reloadData()
+             self.isLoadingNextPage = false
+         }
+     }
+ }
+ 
 -------------------------------------------------------------------------------------------------*/
