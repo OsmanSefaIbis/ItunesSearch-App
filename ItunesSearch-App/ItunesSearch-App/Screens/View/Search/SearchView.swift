@@ -6,7 +6,37 @@
 import UIKit
 import Kingfisher
 
-class SearchView: UIViewController{
+protocol SearchViewInterface: AnyObject {
+    
+    // assign specific
+    func assignPropsOfSearchViewModel()
+    func assignPropsOfDetailViewModel()
+    func assignPropsOfSearchBar()
+    
+    // configure specific
+    func configureCollectionView()
+    func configureSegmentedControl()
+    func configureActivityIndicator()
+    
+    // operation specific
+    func initiateTopResults()
+    func startPrefetchingDetails(for ids: [Int])
+    func setItems( _ items: [RowItems])
+    func invokeTopIds( _ topIds: [Top])
+    
+    // data specific
+    func reset()
+    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?)
+    func resetAndTrend(_ mediaType: MediaType)
+    
+    // UI specific
+    func stopActivityIndicator()
+    func startActivityIndicator()
+    func reloadCollectionView()
+    
+}
+
+final class SearchView: UIViewController{
     
     typealias RowItems = SearchCellModel
     private let cellIdentifier = HardCoded.cellIdentifier.get()
@@ -20,15 +50,20 @@ class SearchView: UIViewController{
     @IBOutlet private weak var collectionView: UICollectionView!
     
     private var items: [RowItems] = []
-    private let searchViewModel = SearchViewModel()
+    
+
+    private lazy var  searchViewModel = SearchViewModel()
     private var detailViewModel = DetailViewModel()
+    
+    
     private var idsOfAllFetchedRecords = Set<Int>()
     private var timeControl: Timer?
     
     private var lessThanPage_Flag = false
-    private var isLoadingNextPage = false
-    private var isSearchActive = false
-    private var MediaTypeSelection: MediaType? = .movie
+    private var isLoadingNextPage_Flag = false
+    private var isSearchActive_Flag = false
+    private var mediaType_State: MediaType? = .movie
+    
     private var loadingView: LoadingReusableView?
     private var headerView: HeaderReusableView?
     private var cacheDetails: [Int : Detail] = [:]
@@ -43,84 +78,9 @@ class SearchView: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initiating()
+        searchViewModel.viewDidLoad()
     }
-    func initiating() {
-        assignDelegates()
-        configurations()
-        initiateTopResults()
-    }
-    func assignDelegates() {
-        searchViewModel.delegate = self
-        detailViewModel.delegate = self
-        searchBar.delegate = self
-    }
-    func configurations(){
-        configureCollectionView()
-        configureSegmentedControl()
-        configureGesture()
-        configureActivityIndicator()
-    }
-    func initiateTopResults(){
-        DispatchQueue.main.async {
-            self.activityIndicatorOverall.startAnimating()
-        }
-        guard let MediaType = MediaTypeSelection else { return }
-        searchViewModel.topInvoked(MediaType)
-    }
-    func configureCollectionView() {
-        collectionView?.delegate = self
-        collectionView?.dataSource = self
-        registersOfCollectionView()
-    }
-    func registersOfCollectionView(){
-        let loadingReusableNib = UINib(nibName: HardCoded.loadingReusableName.get(), bundle: nil)
-        let headerReusableNib = UINib(nibName: HardCoded.headerReusableName.get(), bundle: nil)
-        collectionView?.register(.init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
-        collectionView?.register(loadingReusableNib,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                                withReuseIdentifier: HardCoded.loadingReusableIdentifier.get())
-        collectionView?.register(headerReusableNib,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: HardCoded.headerReusableIdentifier.get())
-    }
-    func setItems( _ items: [RowItems]) {
-        /// NOTE: API does not support pagination via json, offset and limit used
-        /// self.items <- existing data  incoming data -> items
-    
-        if items.count != AppConstants.requestLimit { lessThanPage_Flag = true } /// decision point (true == do not fetch more)
 
-        if lessThanPage_Flag { /// less than a page
-            if self.items.count >= AppConstants.requestLimit  { /// case: last page with less than request limit
-                var lastRecords: [RowItems] = []
-                /// NOTE: API sends as the requestLimit, records can overlap at the end, so extract only the required
-                for each in items {
-                    if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue } /// skip
-                    else { lastRecords.append(each) } /// track
-                }
-                self.items.append(contentsOf: lastRecords) /// add track
-                idsOfAllFetchedRecords.removeAll() /// dealloc track
-            } else { /// case: first page with less than request limit
-                self.items = items
-            }
-        } else { /// each page
-            if paginationOffSet == 0 { /// first full page
-                for each in items { idsOfAllFetchedRecords.insert(each.id) }
-                self.items = items
-            }else { /// next page
-                for each in items { idsOfAllFetchedRecords.insert(each.id) }
-                self.items.append(contentsOf: items)
-            }
-        }
-        /// render
-        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { // TODO: GET RID OF THIS LINE, OPTIMIZE !!!
-            DispatchQueue.main.async {
-                self.activityIndicatorOverall.stopAnimating()
-                self.collectionView?.reloadData()
-                self.isLoadingNextPage = false
-            }
-        }
-    }
     func provideImageAndColor(_ imageUrl: String, completion: @escaping ((artwork: UIImage, colorAverage: UIColor)?) -> Void) {
         guard let modifiedArtworkUrl = changeImageURL(imageUrl, dimension: imageDimensionForDetail) else {
             completion(nil)
@@ -139,90 +99,6 @@ class SearchView: UIViewController{
             }
         }
     }
-    func startPrefetchingDetails(for ids: [Int]){
-        detailViewModel.searchInvoked(withIds: ids)
-    }
-    func configureActivityIndicator(){
-        activityIndicatorOverall.color = AppConstants.activityIndicatorColor
-    }
-    func configureGesture(){
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        swipeGesture.direction = .down
-        view.addGestureRecognizer(swipeGesture)
-    }
-    @objc func dismissKeyboard() {
-        searchBar.resignFirstResponder()
-    }
-    func configureSegmentedControl() {
-        segmentedControl.addTarget(
-            self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
-    }
-    @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-        hapticFeedbackSoft()
-        switch sender.selectedSegmentIndex {
-            case 0: MediaTypeSelection = MediaType.movie
-            
-                if searchText.count > 2 { resetAndSearch(searchText, MediaType.movie, nil) }
-                else { resetAndTrend(MediaType.movie) }
-            
-            case 1: MediaTypeSelection = MediaType.music
-            
-                if searchText.count > 2 { resetAndSearch(searchText, MediaType.music, nil) }
-                else { resetAndTrend(MediaType.music) }
-            
-            case 2: MediaTypeSelection = MediaType.ebook
-            
-                if searchText.count > 2 { resetAndSearch(searchText, MediaType.ebook, nil) }
-                else { resetAndTrend(MediaType.ebook) }
-            
-            case 3: MediaTypeSelection = MediaType.podcast
-            
-                if searchText.count > 2 { resetAndSearch(searchText, MediaType.podcast, nil) }
-                else { resetAndTrend(MediaType.podcast) }
-            
-        default: fatalError(HardCoded.segmentedControlError.get())
-        }
-    }
-    func resetAndSearch(_ searchTerm: String, _ MediaType: MediaType, _ offSetValue: Int?){
-        resetCollections()
-        paginationOffSet = 0
-        lessThanPage_Flag = false
-        
-        if items.count > 0 {
-            reset()
-        }
-        DispatchQueue.main.async {
-            self.activityIndicatorOverall.startAnimating()
-        }
-        if let offSet = offSetValue{
-            searchViewModel.searchInvoked(searchTerm, MediaType, offSet)
-        }else{
-            searchViewModel.searchInvoked(searchTerm, MediaType, paginationOffSet)
-        }
-    }
-    func resetAndTrend(_ MediaType: MediaType){
-        reset()
-        DispatchQueue.main.async {
-            self.activityIndicatorOverall.startAnimating()
-        }
-        searchViewModel.topInvoked(MediaType)
-    }
-    
-    func reset(){
-        resetCollections()
-        DispatchQueue.main.async {
-            self.activityIndicatorOverall.stopAnimating()
-            self.items.removeAll()
-            self.collectionView.reloadData()
-        }
-    }
-    
-    func resetCollections(){ /// dealloc
-        idsOfAllFetchedRecords.removeAll()
-        cacheDetails.removeAll()
-        cacheDetailImagesAndColors.removeAll()
-    }
     
     func providesIds(_ items: [SearchCellModel]) -> [Int] {
         var holdsIds: [Int] = []
@@ -231,16 +107,116 @@ class SearchView: UIViewController{
         }
         return holdsIds
     }
-    func invokeTopIds( _ topIds: [Top]){
+    
+
+}
+
+// MARK: Extensions
+
+extension SearchView: SearchViewInterface {
+
+    // assign specific
+    func assignPropsOfSearchViewModel(){
+        searchViewModel.view = self
+        searchViewModel.delegate = self
+    }
+    func assignPropsOfDetailViewModel(){
+        detailViewModel.delegate = self
+    }
+    func assignPropsOfSearchBar(){
+        searchBar.delegate = self
+    }
+    // configure specific
+    func configureCollectionView() {
+        assignPropsOfCollectionView()
+        registersOfCollectionView()
+    }
+    func configureSegmentedControl() {
+        segmentedControl.addTarget(
+            self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
+    }
+    func configureActivityIndicator() {
+        activityIndicatorOverall.color = AppConstants.activityIndicatorColor
+    }
+    // operation specific
+    func initiateTopResults() {
+        startActivityIndicator()
+        guard let MediaType = mediaType_State else { return }
+        searchViewModel.topInvoked(MediaType)
+    }
+    func startPrefetchingDetails(for ids: [Int]) {
+        detailViewModel.searchInvoked(withIds: ids)
+    }
+    func setItems( _ items: [SearchCellModel]) {
+        searchViewModel.setItems(items)
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) {
+            self.stopActivityIndicator()
+            self.reloadCollectionView()
+            self.isLoadingNextPage_Flag = false // ?????
+        }
+    }
+    func invokeTopIds( _ topIds: [Top]) {
         var holdsTopIds: [String] = []
         for each in topIds{
             holdsTopIds.append(each.id)
         }
         searchViewModel.topWithIdsInvoked(holdsTopIds)
     }
+    
+    // data specific
+    func reset() {
+        searchViewModel.reset()
+    }
+    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?){
+        searchViewModel.resetAndSearch(searchTerm, mediaType, offSetValue)
+    }
+    func resetAndTrend(_ mediaType: MediaType) {
+        searchViewModel.resetAndTrend(mediaType)
+    }
+    
+    // UISpecific
+    func stopActivityIndicator() {
+        DispatchQueue.main.async {
+            self.activityIndicatorOverall.stopAnimating()
+        }
+    }
+    func startActivityIndicator() {
+        DispatchQueue.main.async {
+            self.activityIndicatorOverall.startAnimating()
+        }
+    }
+    func reloadCollectionView() {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
+    // Helpers
+    func assignPropsOfCollectionView(){
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+    }
+    func registersOfCollectionView(){
+        let loadingReusableNib = UINib(nibName: HardCoded.loadingReusableName.get(), bundle: nil)
+        let headerReusableNib = UINib(nibName: HardCoded.headerReusableName.get(), bundle: nil)
+        collectionView?.register(.init(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
+        collectionView?.register(loadingReusableNib,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                withReuseIdentifier: HardCoded.loadingReusableIdentifier.get())
+        collectionView?.register(headerReusableNib,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: HardCoded.headerReusableIdentifier.get())
+    }
+    @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        hapticFeedbackSoft()
+        guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        let indexValue = sender.selectedSegmentIndex
+        searchViewModel.segmentedControlValueChanged(to: indexValue, with: searchText)
+    }
 }
 
-// MARK: Extensions
+
+
 /* ViewModel - Delegates */
 extension SearchView: SearchViewModelDelegate {
 
@@ -254,7 +230,7 @@ extension SearchView: SearchViewModelDelegate {
     func internetUnreachable(_ errorPrompt: String) {
         let alertController = UIAlertController(title: HardCoded.offLineAlertTitlePrompt.get(), message: errorPrompt, preferredStyle: .alert )
         let okAction = UIAlertAction(title: HardCoded.offLineActionTitlePrompt.get(), style: .default) { [weak self] (action:UIAlertAction!) in
-            self?.reset()
+            self?.searchViewModel.reset()
         }
         alertController.addAction(okAction)
         self.present(alertController, animated: true)
@@ -297,7 +273,7 @@ extension SearchView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         hapticFeedbackHeavy()
         collectionView.deselectItem(at: indexPath, animated: true)
-        switch MediaTypeSelection {
+        switch mediaType_State {
             case .movie:
                 if var detailPage =  storyboard?.instantiateViewController(withIdentifier: MediaType.movie.getView()) as? DetailView{
                     embedViewControllerWithCached(&detailPage)
@@ -343,15 +319,15 @@ extension SearchView: UICollectionViewDelegate {
         if indexPath.item == latestItemNumeric {
             
             guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-            guard let MediaType = MediaTypeSelection else { return }
+            guard let MediaType = mediaType_State else { return }
             paginationOffSet += AppConstants.requestLimit
-            isLoadingNextPage = true
+            isLoadingNextPage_Flag = true
             self.searchViewModel.searchInvoked(searchText, MediaType, paginationOffSet)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if self.isSearchActive{
+        if self.isSearchActive_Flag{
             return CGSize.zero
         } else {
             return CGSize(width: collectionView.bounds.size.width, height: 25)
@@ -359,7 +335,7 @@ extension SearchView: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if self.isLoadingNextPage {
+        if self.isLoadingNextPage_Flag {
             return CGSize.zero
         } else {
             return CGSize(width: collectionView.bounds.size.width, height: 40)
@@ -384,11 +360,11 @@ extension SearchView: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-            if elementKind == UICollectionView.elementKindSectionFooter && isLoadingNextPage {
+            if elementKind == UICollectionView.elementKindSectionFooter && isLoadingNextPage_Flag {
                 self.loadingView?.activityIndicator.startAnimating()
             }
-            if elementKind == UICollectionView.elementKindSectionHeader && !isSearchActive {
-                guard let MediaType = self.MediaTypeSelection else { return }
+            if elementKind == UICollectionView.elementKindSectionHeader && !isSearchActive_Flag {
+                guard let MediaType = self.mediaType_State else { return }
                 self.headerView?.setTitle(with: MediaType.get().capitalized)
             }
         }
@@ -408,7 +384,7 @@ extension SearchView: UICollectionViewDelegate {
 extension SearchView: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // SearchView+Pseudo --> Inludes the pseudocode of below logic
+        // INFO: SearchView+Pseudo.swift
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return defaultCellSize }
         let totalWidth = collectionView.bounds.width
         let sectionInsets = flowLayout.sectionInset
@@ -455,7 +431,7 @@ extension SearchView: UISearchBarDelegate {
         hapticFeedbackSoft()
         searchBar.resignFirstResponder()
         guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-        guard let MediaType = MediaTypeSelection else { return }
+        guard let MediaType = mediaType_State else { return }
         
         if (0...2).contains(searchText.count){
             if items.isEmpty{
@@ -472,7 +448,7 @@ extension SearchView: UISearchBarDelegate {
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
-        reset()
+        searchViewModel.reset()
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
            
@@ -480,14 +456,14 @@ extension SearchView: UISearchBarDelegate {
            timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
                
                guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-               guard let MediaType = self?.MediaTypeSelection else { return }
+               guard let MediaType = self?.mediaType_State else { return }
                
                if (0...2).contains(searchText.count){
-                   self?.isSearchActive = false
+                   self?.isSearchActive_Flag = false
                    self?.activityIndicatorOverall.stopAnimating()
                }
                if searchText.count > 2 {
-                   self?.isSearchActive = true
+                   self?.isSearchActive_Flag = true
                    guard let offSet = self?.paginationOffSet else { return }
                    self?.resetAndSearch(searchText, MediaType, offSet)
                }
