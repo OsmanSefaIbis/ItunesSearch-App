@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias RowItems = SearchCellModel
+typealias RowItem = SearchCellModel
 
 protocol SearchViewModelDelegate: AnyObject {
     
@@ -17,14 +17,37 @@ protocol SearchViewModelDelegate: AnyObject {
 }
 
 protocol SearchViewModelInterface {
-    var view: SearchViewInterface? { get set }
     
+    // props
+    var view: SearchViewInterface? { get set }
+    var itemCount: Int { get }
+//    var paginationOffSet: Int { get set }
+//    var mediaType_State: MediaType { get }
+//    var lessThanPage_Flag: Bool { get set }
+//    var isSearchActive_Flag: Bool { get set }
+//    var isLoadingNextPage_Flag: Bool { get set }
+    
+    // behavior
     func viewDidLoad()
     func segmentedControlValueChanged(to indexValue: Int, with searchText: String)
+    func setItems(_ items: [RowItem])
+    func cellForItem(at indexPath: IndexPath) -> RowItem
+//    func didSelectItem(at indexPath: IndexPath, with mediaType: MediaType) -> DetailView
+    func willDisplay(at indexPath: IndexPath, with searchText: String)
+    func referenceSizeForHeaderInSection(_ width: CGFloat) -> CGSize
+    func referenceSizeForFooterInSection(_ width: CGFloat) -> CGSize
+    func willDisplaySupplementaryFooterView()
+    func willDisplaySupplementaryHeaderView()
+    func didEndDisplayingSupplementaryView()
+    func searchBarSearchButtonClicked(with searchText: String)
+    func textDidChange(with searchText: String)
+    
+    
+    
+    
     func reset()
     func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?)
     func resetAndTrend(_ mediaType: MediaType)
-    func setItems(_ items: [RowItems])
 }
 
 final class SearchViewModel {
@@ -34,25 +57,32 @@ final class SearchViewModel {
     weak var view: SearchViewInterface?
     weak var delegate: SearchViewModelDelegate?
     
+    var itemCount: Int{
+        get {
+            items.count
+        }
+    }
+    
     // states
-    private var lessThanPage_Flag = false
-    private var isLoadingNextPage_Flag = false
-    private var isSearchActive_Flag = false
-    private var mediaType_State: MediaType? = .movie
-    private var paginationOffSet = 0
+    var lessThanPage_Flag = false
+    var isLoadingNextPage_Flag = false
+    var isSearchActive_Flag = false
+    var paginationOffSet = 0
     
     // partial data
-    
-    private var items: [RowItems] = []
+    // dependencies
+    private var items: [RowItem] = []
     private var idsOfAllFetchedRecords = Set<Int>()
     private var cacheDetails: [Int : Detail] = [:]
+    var mediaType_State: MediaType? = .movie
     
     
     
     init() {
         model.delegate = self
     }
-    func topInvoked(_ mediaType: MediaType) {
+    func topInvoked() {
+        guard let mediaType = mediaType_State else { return }
         model.fetchTopPicks(with: mediaType)
     }
     func topWithIdsInvoked(_ topIds: [String]) {
@@ -88,7 +118,7 @@ extension SearchViewModel: SearchModelDelegate {
 }
 
 extension SearchViewModel: SearchViewModelInterface{
-    
+
     func viewDidLoad() {
         view?.assignPropsOfSearchViewModel()
         view?.assignPropsOfDetailViewModel()
@@ -123,13 +153,13 @@ extension SearchViewModel: SearchViewModelInterface{
         default: fatalError(HardCoded.segmentedControlError.get())
         }
     }
-    func setItems(_ items: [RowItems]) {
+    func setItems(_ items: [RowItem]) {
         // INFO: SearchViewModel+Pseudo.swift
         if items.count != AppConstants.requestLimit { lessThanPage_Flag = true }
         
         if lessThanPage_Flag {
             if self.items.count >= AppConstants.requestLimit  {
-                var lastRecords: [RowItems] = []
+                var lastRecords: [RowItem] = []
                 
                 for each in items {
                     if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue }
@@ -149,9 +179,86 @@ extension SearchViewModel: SearchViewModelInterface{
                 self.items.append(contentsOf: items)
             }
         }
+        isLoadingNextPage_Flag = false // not sure about this part
+        
         
     }
-    
+    func cellForItem(at indexPath: IndexPath) -> RowItem {
+        items[indexPath.item]
+    }
+//    func didSelectItem(at indexPath: IndexPath, with mediaType: MediaType) -> DetailView {
+//        // bak tekrar
+//    }
+    func willDisplay(at indexPath: IndexPath, with searchText: String) {
+        if lessThanPage_Flag{
+            return
+        }
+        let latestItemNumeric = items.count - 1
+        if indexPath.item == latestItemNumeric {
+            
+            guard let MediaType = mediaType_State else { return }
+            paginationOffSet += AppConstants.requestLimit
+            isLoadingNextPage_Flag = true
+            searchInvoked(searchText, MediaType, paginationOffSet)
+        }
+    }
+    func referenceSizeForHeaderInSection(_ width: CGFloat) -> CGSize {
+        if self.isSearchActive_Flag{
+            return CGSize.zero
+        } else {
+            return CGSize(width: width, height: 25)
+        }
+    }
+    func referenceSizeForFooterInSection(_ width: CGFloat) -> CGSize {
+        if self.isLoadingNextPage_Flag {
+            return CGSize.zero
+        } else {
+            return CGSize(width: width, height: 40)
+        }
+    }
+    func willDisplaySupplementaryFooterView() {
+        if isLoadingNextPage_Flag {
+            view?.startReusableViewActivityIndicator()
+        }
+    }
+    func willDisplaySupplementaryHeaderView() {
+        if !isSearchActive_Flag {
+            guard let mediaType = mediaType_State else { return }
+            view?.setReusableViewTitle(with: mediaType.get().capitalized)
+        }
+    }
+    func didEndDisplayingSupplementaryView() {
+        view?.stopReusableViewActivityIndicator()
+    }
+    func searchBarSearchButtonClicked(with searchText: String) {
+        guard let mediaType = mediaType_State else { return }
+        
+        if (0...2).contains(searchText.count){
+            if items.isEmpty{
+                resetAndTrend(mediaType)
+            }
+        } else {
+            if (1...20).contains(items.count) {
+                view?.dismissKeyBoard()
+            } else {
+                paginationOffSet = 0
+                self.resetAndSearch(searchText, mediaType, paginationOffSet)
+            }
+        }
+    }
+    func textDidChange(with searchText: String) {
+        guard let MediaType = mediaType_State else { return }
+        
+        if (0...2).contains(searchText.count){
+            isSearchActive_Flag = false
+            view?.stopActivityIndicator()
+        }
+        if searchText.count > 2 {
+            isSearchActive_Flag = true
+            resetAndSearch(searchText, MediaType, paginationOffSet)
+        }
+    }
+
     func reset() {
         resetCollections()
         view?.stopActivityIndicator()
@@ -176,7 +283,7 @@ extension SearchViewModel: SearchViewModelInterface{
     func resetAndTrend(_ mediaType: MediaType) {
         reset()
         view?.startActivityIndicator()
-        topInvoked(mediaType)
+        topInvoked()
     }
     
     // helpers

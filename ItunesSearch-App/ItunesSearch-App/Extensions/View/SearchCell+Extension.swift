@@ -17,7 +17,7 @@ extension SearchCell {
             if dateValue.isEmpty {
                 return "N/A"
             }else{
-                fatalError(HardCoded.errorPromptOne.get())
+                fatalError(HardCoded.errorPromptDate.get())
             }
         }
         let outputDF = DateFormatter()
