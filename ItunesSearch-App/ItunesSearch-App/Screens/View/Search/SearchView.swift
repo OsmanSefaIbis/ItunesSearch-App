@@ -6,210 +6,160 @@
 import UIKit
 import Kingfisher
 
-protocol SearchViewInterface: AnyObject {
-    
-    // assign specific
-    func assignPropsOfSearchViewModel()
-    func assignPropsOfDetailViewModel()
-    func assignPropsOfSearchBar()
-    
-    // configure specific
-    func configureCollectionView()
-    func configureSegmentedControl()
-    func configureActivityIndicator()
-    
-    // operation specific
-    func initiateTopResults()
-    func startPrefetchingDetails(for ids: [Int])
-    func setItems( _ items: [RowItem])
-    func invokeTopIds( _ topIds: [Top])
-    
-    // data specific
-    func reset()
-    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?)
-    func resetAndTrend(_ mediaType: MediaType)
-    
-    // UI specific
-    func dismissKeyBoard()
-    func setReusableViewTitle(with title: String)
-    func stopReusableViewActivityIndicator()
-    func startReusableViewActivityIndicator()
-    func stopActivityIndicator()
-    func startActivityIndicator()
-    func reloadCollectionView()
-    
-}
 
 final class SearchView: UIViewController{
-    
-    private let cell_ID = HardCoded.cellIdentifier.get()
-    
-    let hapticHeavy = UIImpactFeedbackGenerator(style: .heavy)
-    let hapticSoft = UIImpactFeedbackGenerator(style: .soft)
     
     @IBOutlet private weak var activityIndicatorOverall: UIActivityIndicatorView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var collectionView: UICollectionView!
     
-    private lazy var  searchViewModel = SearchViewModel()
-    private lazy var detailViewModel = DetailViewModel()
-
-    private var items: [RowItem] = []
-    var mediaType_State: MediaType? = .movie
-
-    
-    
-    private var idsOfAllFetchedRecords = Set<Int>()
+    let hapticHeavy = UIImpactFeedbackGenerator(style: .heavy)
+    let hapticSoft = UIImpactFeedbackGenerator(style: .soft)
     private var timeControl: Timer?
+    
+    private let cell_ID = AppConstants.cellIdentifier
+    private let cellSize = AppConstants.defaultCellSize
+    private var cellSpacing = AppConstants.defaultMinimumCellSpacing
+    private let columnCount = AppConstants.collectionViewColumn
+    private var sizingValue = AppConstants.defaultSizingValue
+    private let imageDimension = AppConstants.imageDimensionForDetail
+    private let sectionInset = AppConstants.defaultSectionInset
+    
+    private lazy var searchViewModel = SearchViewModel()
+    private lazy var detailViewModel = DetailViewModel()
     
     private var loadingView: LoadingReusableView?
     private var headerView: HeaderReusableView?
-    private var cacheDetails: [Int : Detail] = [:]
-    private var cacheDetailImagesAndColors: [Int : (UIImage, UIColor)] = [:]
-    private var paginationOffSet = 0
-    private let dimension = AppConstants.imageDimensionForDetail
-    private let cellSize = AppConstants.defaultCellSize
-    private var sizingValue = AppConstants.defaultSizingValue
-    private var cellSpacing = AppConstants.defaultMinimumCellSpacing
-    private var columnCount = AppConstants.collectionViewColumn
-    private let sectionInset = AppConstants.defaultSectionInset
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchViewModel.view = self
         searchViewModel.viewDidLoad()
     }
-    // TODO: migrate
-    func provideImageAndColor(_ imageUrl: String, completion: @escaping ((artwork: UIImage, colorAverage: UIColor)?) -> Void) {
-        guard let modifiedArtworkUrl = changeImageURL(imageUrl, dimension: dimension) else {
-            completion(nil)
-            return
-        }
-        KingfisherManager.shared.retrieveImage(with: URL(string: modifiedArtworkUrl)!) { result in
-            switch result {
-            case .success(let value):
-                guard let averagedColor = value.image.averageColor else {
-                    completion(nil)
-                    return
-                }
-                completion((value.image, averagedColor))
-            case .failure(_):
-                completion(nil)
-            }
-        }
-    }
-    // TODO: migrate as a helper
-    func providesIds(_ items: [SearchCellModel]) -> [Int] {
-        var holdsIds: [Int] = []
-        for each in items{
-            holdsIds.append(each.id)
-        }
-        return holdsIds
-    }
-    
-
 }
-
-// MARK: Extensions
-
+/* Search View - Interface */
 extension SearchView: SearchViewInterface {
-
-    // assign specific
-    func assignPropsOfSearchViewModel(){
-        searchViewModel.view = self
+    
+    func assignPropsOfSearchViewModel() {
         searchViewModel.delegate = self
     }
-    func assignPropsOfDetailViewModel(){
+    
+    func assignPropsOfDetailViewModel() {
         detailViewModel.delegate = self
     }
-    func assignPropsOfSearchBar(){
+    
+    func assignPropsOfSearchBar() {
         searchBar.delegate = self
     }
-    // configure specific
+    
     func configureCollectionView() {
         assignPropsOfCollectionView()
         registersOfCollectionView()
     }
+    
     func configureSegmentedControl() {
         segmentedControl.addTarget(
             self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
     }
+    
     func configureActivityIndicator() {
         activityIndicatorOverall.color = AppConstants.activityIndicatorColor
     }
-    // operation specific
+    
     func initiateTopResults() {
         startActivityIndicator()
         searchViewModel.topInvoked()
     }
+    
     func startPrefetchingDetails(for ids: [Int]) {
         detailViewModel.searchInvoked(withIds: ids)
     }
+    
     func setItems( _ items: [SearchCellModel]) {
+        
         searchViewModel.setItems(items)
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) {
             self.stopActivityIndicator()
             self.reloadCollectionView()
         }
     }
+    
     func invokeTopIds( _ topIds: [Top]) {
-        var holdsTopIds: [String] = []
-        for each in topIds{
-            holdsTopIds.append(each.id)
-        }
-        searchViewModel.topWithIdsInvoked(holdsTopIds)
+        searchViewModel.topWithIdsInvoked(topIds)
     }
     
-    // data specific
     func reset() {
         searchViewModel.reset()
     }
-    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?){
+    
+    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?) {
         searchViewModel.resetAndSearch(searchTerm, mediaType, offSetValue)
     }
+    
     func resetAndTrend(_ mediaType: MediaType) {
         searchViewModel.resetAndTrend(mediaType)
     }
     
-    // UISpecific
     func dismissKeyBoard() {
         searchBar.resignFirstResponder()
     }
+    
     func setReusableViewTitle(with title: String) {
         self.headerView?.setTitle(with: title)
     }
+    
     func stopReusableViewActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
             self?.loadingView?.activityIndicator.stopAnimating()
         }
     }
+    
     func startReusableViewActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
             self?.loadingView?.activityIndicator.startAnimating()
         }
     }
+    
     func stopActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
             self?.activityIndicatorOverall.stopAnimating()
         }
     }
+    
     func startActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
             self?.activityIndicatorOverall.startAnimating()
         }
     }
+    
     func reloadCollectionView() {
         DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
         }
     }
     
-    // Helpers
-    func assignPropsOfCollectionView(){
+    func createDetailView(by storyBoardIdentifier: String) -> DetailView {
+        storyboard?.instantiateViewController(withIdentifier: storyBoardIdentifier) as! DetailView
+    }
+    
+    func pushDetailPageToNavigation(_ detailPage: DetailView) {
+        self.navigationController?.pushViewController(detailPage, animated: true)
+    }
+    
+    func configureDetailView(_ id: Int, _ detail: Detail, _ detailVC: inout DetailView, _ image: UIImage, _ color: UIColor) {
+        DispatchQueue.main.async { [weak detailVC] in
+            detailVC?.id = id
+            detailVC?.configureItem(with: detail, image: image, color: color)
+        }
+    }
+    /// Interface Helpers
+    func assignPropsOfCollectionView() {
         collectionView?.delegate = self
         collectionView?.dataSource = self
     }
-    func registersOfCollectionView(){
+    
+    func registersOfCollectionView() {
         let loadingReusableNib = UINib(nibName: HardCoded.loadingReusableName.get(), bundle: nil)
         let headerReusableNib = UINib(nibName: HardCoded.headerReusableName.get(), bundle: nil)
         collectionView?.register(.init(nibName: cell_ID, bundle: nil), forCellWithReuseIdentifier: cell_ID)
@@ -220,22 +170,39 @@ extension SearchView: SearchViewInterface {
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: HardCoded.headerReusableIdentifier.get())
     }
+    
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         hapticFeedbackSoft()
         guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
         let indexValue = sender.selectedSegmentIndex
         searchViewModel.segmentedControlValueChanged(to: indexValue, with: searchText)
     }
+    
+    func provideImageAndColor(_ imageUrl: String, completion: @escaping (DetailImageAndColor?) -> Void) {
+
+        guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, imageDimension)) else { completion(nil) ; return }
+        
+        KingfisherManager.shared.retrieveImage(with: artworkUrl) { result in
+            switch result {
+            case .success(let value):
+                guard let averagedColor = value.image.averageColor else {
+                    completion(nil)
+                    return
+                }
+                completion(DetailImageAndColor.init(image: value.image, color: averagedColor))
+            case .failure(_):
+                completion(nil)
+            }
+        }
+    }
 }
 
-
-
-/* ViewModel - Delegates */
+/* Search View Model - Delegates */
 extension SearchView: SearchViewModelDelegate {
 
     func refreshItems(_ retrieved: [SearchCellModel]) {
         setItems(retrieved)
-        startPrefetchingDetails(for: providesIds(retrieved))
+        startPrefetchingDetails(for: searchViewModel.providesIds(retrieved))
     }
     func topItems(_ retrieved: [Top]) {
         invokeTopIds(retrieved)
@@ -249,14 +216,15 @@ extension SearchView: SearchViewModelDelegate {
         self.present(alertController, animated: true)
     }
 }
-// TODO: not sure ???
+/* Detail View Model - Delegates */
 extension SearchView: DetailViewModelDelegate{
     func refreshItem(_ retrieved: [Detail]) {
         for each in retrieved{
-            cacheDetails[each.id] = each
+            searchViewModel.setCacheDetails(key: each.id, value: each)
+            
             provideImageAndColor( each.artworkUrl) { [weak self] imageAndColor in
-                guard let detailTuple = imageAndColor else { return }
-                self?.cacheDetailImagesAndColors[each.id] = detailTuple
+                guard let imageAndColorStruct = imageAndColor else { return }
+                self?.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: imageAndColorStruct)
             }
         }
     }
@@ -285,50 +253,14 @@ extension SearchView: UICollectionViewDataSource {
 /* CollectionView - Delegate */
 extension SearchView: UICollectionViewDelegate {
     
-    // TODO: Migrate logic to VM
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         hapticFeedbackHeavy()
-        collectionView.deselectItem(at: indexPath, animated: true)
-        switch mediaType_State {
-            case .movie:
-                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: MediaType.movie.getView()) as? DetailView{
-                    embedViewControllerWithCached(&detailPage)
-                    self.navigationController?.pushViewController(detailPage, animated: true)
-                }
-            case .music:
-                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: MediaType.music.getView()) as? DetailView{
-                    embedViewControllerWithCached(&detailPage)
-                    self.navigationController?.pushViewController(detailPage, animated: true)
-                }
-            case .ebook:
-                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: MediaType.ebook.getView()) as? DetailView{
-                    embedViewControllerWithCached(&detailPage)
-                    self.navigationController?.pushViewController(detailPage, animated: true)
-                }
-            case .podcast:
-                if var detailPage =  storyboard?.instantiateViewController(withIdentifier: MediaType.podcast.getView()) as? DetailView{
-                    embedViewControllerWithCached(&detailPage)
-                    self.navigationController?.pushViewController(detailPage, animated: true)
-                }
-        default:
-            return
-        }
-        func embedViewControllerWithCached(_ vc: inout DetailView) {
-            let currentItem = items[indexPath.item]
-            let detailId = currentItem.id
-            guard let detailData = cacheDetails[detailId] else { return }
-            guard let detailImageAndColor = cacheDetailImagesAndColors[detailId] else { return }
-            
-            DispatchQueue.main.async { [weak vc] in
-                vc?.id = detailId
-                vc?.configureItem(with: detailData, image: detailImageAndColor.0, color: detailImageAndColor.1)
-            }
-        }
+        searchViewModel.didSelectItem(at: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-        searchViewModel.willDisplay( at: indexPath, with: searchText)
+        searchViewModel.willDisplay(at: indexPath, with: searchText)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -388,7 +320,7 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return cellSize }
         let totalWidth = collectionView.bounds.width
         let sectionInsets = flowLayout.sectionInset
-        let cellSpacingMin = ( (1.4) * (flowLayout.minimumInteritemSpacing) ) // band aid solution
+        let cellSpacingMin = (1.4) * (flowLayout.minimumInteritemSpacing)
         let totalInsetSpace = (CGFloat(columnCount)  * ( sectionInsets.left + sectionInsets.right ))
         let availableWidthForCells = (totalWidth - cellSpacingMin - totalInsetSpace)
         sizingValue =  ( availableWidthForCells / CGFloat(columnCount) ) / 5

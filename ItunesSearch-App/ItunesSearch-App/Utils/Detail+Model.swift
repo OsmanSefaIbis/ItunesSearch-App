@@ -30,3 +30,5 @@ struct Detail{
     let previewUrl: String
     let viewUrl: String
 }
+
+
