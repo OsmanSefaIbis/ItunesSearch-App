@@ -50,8 +50,8 @@ final class DetailView: UIViewController{
     @IBOutlet private weak var textView_Description: UITextView!
     
     @IBOutlet private weak var button_MusicPreview: UIButton!
-    @IBOutlet private weak var button_View: UIButton!
     @IBOutlet private weak var button_MoviePreview: UIButton!
+    @IBOutlet private weak var button_WebView: UIButton!
 
     @IBOutlet private weak var label_Name: UILabel!
     @IBOutlet private weak var label_Creator: UILabel!
@@ -67,6 +67,8 @@ final class DetailView: UIViewController{
     @IBOutlet private weak var label_Content: UILabel!
     @IBOutlet private weak var label_Episodes: UILabel!
     @IBOutlet private weak var label_TrackInfo: UILabel!
+    
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     
     private lazy var viewModel = DetailViewModel()
         
@@ -88,14 +90,20 @@ final class DetailView: UIViewController{
     @IBAction func viewButtonClicked(_ sender: Any) {
         hapticFeedbackMedium()
         guard let viewUrl = viewUrl else { return }
-        let webViewVC = UIViewController()
-        webViewVC.view = webView
-        let request = URLRequest(url: viewUrl)
-        webView.load(request)
-        let scrollView = webView.scrollView
-        let topInset = navigationController?.navigationBar.frame.minY ?? 0
-        scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
-        navigationController?.pushViewController(webViewVC, animated: true)
+        webView.load(URLRequest(url: viewUrl))
+        webView.navigationDelegate = self
+        
+        let webVC = UIViewController()
+        webVC.view = webView
+        webVC.view.addSubview(activityIndicator)
+        activityIndicator.color = AppConstants.activityIndicatorColor
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: webVC.view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: webVC.view.centerYAnchor)
+        ])
+        
+        navigationController?.pushViewController(webVC, animated: true)
     }
     
     @IBAction func moviePreviewButtonClicked(_ sender: Any) {
@@ -228,7 +236,7 @@ extension DetailView: DetailViewInterface {
     /// Interface Helpers
     func adaptComponentsForDark(_ tintColor: UIColor){
         DispatchQueue.main.async { [weak self] in
-            if let view = self?.button_View { view.tintColor = tintColor }
+            if let view = self?.button_WebView { view.tintColor = tintColor }
             if let movie = self?.button_MoviePreview { movie.tintColor = tintColor }
             if let music = self?.button_MusicPreview { music.tintColor = tintColor }
             if let navBar = self?.navigationController?.navigationBar { navBar.tintColor = .lightGray }
@@ -240,4 +248,15 @@ extension DetailView: DetailViewInterface {
         viewModel.toggleAudio()
     }
     
+}
+
+extension DetailView: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        activityIndicator.startAnimating()
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        activityIndicator.stopAnimating()
+    }
 }
