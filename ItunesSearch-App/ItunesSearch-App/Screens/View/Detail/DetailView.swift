@@ -29,50 +29,54 @@ protocol DetailViewInterface: AnyObject {
     func convertBytesToGBorMB(_ bytes: Int) -> String
     func setNavigationBarWith( tintColor color: String)
     func setTextColorOfView(_ color: UIColor)
+    func toggleAudioOff()
+    func toggleAudioOn(_ url: URL)
+    func addPlayIndicator()
+    func removeAudioRelated()
 }
 
 final class DetailView: UIViewController{
     
     let hapticMedium = UIImpactFeedbackGenerator(style: .medium)
 
-    @IBOutlet private weak var detailContainerView: UIView!
-    @IBOutlet private weak var detailView: UIView!
-    @IBOutlet private weak var detailImageContainerView: UIView!
-    @IBOutlet private weak var detailFieldsView: UIView!
-    @IBOutlet private weak var detailDescriptionView: UIView!
-    @IBOutlet private weak var detailButtonsView: UIView!
-    @IBOutlet private weak var detailDescriptionTextView: UITextView!
+    @IBOutlet private weak var view_FullContainer: UIView!
+    @IBOutlet private weak var view_FullView: UIView!
+    @IBOutlet private weak var view_ImageContainer: UIView!
+    @IBOutlet private weak var view_Fields: UIView!
+    @IBOutlet private weak var view_Description: UIView!
+    @IBOutlet private weak var view_Buttons: UIView!
     /// above is added for colorization
-    @IBOutlet weak var musicPreviewButton: UIButton!
-    @IBOutlet private weak var viewButton: UIButton!
-    @IBOutlet private weak var moviePreviewButton: UIButton!
-    @IBOutlet private weak var detailImage: UIImageView!
-    @IBOutlet private weak var detailDescription: UITextView!
-    @IBOutlet private weak var detailName: UILabel!
-    @IBOutlet private weak var detailCreator: UILabel!
-    @IBOutlet private weak var detailCollectionName: UILabel!
-    @IBOutlet private weak var detailReleaseDate: UILabel!
-    @IBOutlet private weak var detailPrimaryGenre: UILabel!
-    @IBOutlet private weak var detailPrice: UILabel!
-    @IBOutlet private weak var detailLength: UILabel!
-    @IBOutlet private weak var detailSize: UILabel!
-    @IBOutlet private weak var detailRatingCount: UILabel!
-    @IBOutlet private weak var detailRating: UILabel!
-    @IBOutlet private weak var detailGenres: UILabel!
-    @IBOutlet private weak var detailContent: UILabel!
-    @IBOutlet private weak var detailEpisodes: UILabel!
-    @IBOutlet private weak var detailTrackInfo: UILabel!
+    @IBOutlet private weak var imageView_Image: UIImageView!
+    @IBOutlet private weak var textView_Description: UITextView!
+    
+    @IBOutlet private weak var button_MusicPreview: UIButton!
+    @IBOutlet private weak var button_View: UIButton!
+    @IBOutlet private weak var button_MoviePreview: UIButton!
+
+    @IBOutlet private weak var label_Name: UILabel!
+    @IBOutlet private weak var label_Creator: UILabel!
+    @IBOutlet private weak var label_CollectionName: UILabel!
+    @IBOutlet private weak var label_ReleaseDate: UILabel!
+    @IBOutlet private weak var label_PrimaryGenre: UILabel!
+    @IBOutlet private weak var label_Price: UILabel!
+    @IBOutlet private weak var label_Length: UILabel!
+    @IBOutlet private weak var label_Size: UILabel!
+    @IBOutlet private weak var label_RatingCount: UILabel!
+    @IBOutlet private weak var label_Rating: UILabel!
+    @IBOutlet private weak var label_Genres: UILabel!
+    @IBOutlet private weak var label_Content: UILabel!
+    @IBOutlet private weak var label_Episodes: UILabel!
+    @IBOutlet private weak var label_TrackInfo: UILabel!
     
     private lazy var viewModel = DetailViewModel()
         
     private var item: Detail?
     var id = 0
-    private var isAudioPlaying = false
 
     private let webView = WKWebView()
     private var player: AVPlayer?
-    var playerItem: AVPlayerItem?
-    private var playerViewController: AVPlayerViewController?
+    private var audioPlayerItem: AVPlayerItem?
+    private var moviePlayerVC: AVPlayerViewController?
     private var viewUrl: URL?
     private var previewUrl: URL?
     
@@ -81,12 +85,12 @@ final class DetailView: UIViewController{
         viewModel.view = self
     }
         
-    /* Button Actions */
     @IBAction func viewButtonClicked(_ sender: Any) {
         hapticFeedbackMedium()
+        guard let viewUrl = viewUrl else { return }
         let webViewVC = UIViewController()
         webViewVC.view = webView
-        let request = URLRequest(url: viewUrl!)
+        let request = URLRequest(url: viewUrl)
         webView.load(request)
         let scrollView = webView.scrollView
         let topInset = navigationController?.navigationBar.frame.minY ?? 0
@@ -96,28 +100,17 @@ final class DetailView: UIViewController{
     
     @IBAction func moviePreviewButtonClicked(_ sender: Any) {
         hapticFeedbackMedium()
-        let player = AVPlayer(url: previewUrl!)
-        playerViewController = AVPlayerViewController()
-        playerViewController?.player = player
-        present(playerViewController!, animated: true) { player.play() }
+        guard let previewUrl = previewUrl else { return }
+        let player = AVPlayer(url: previewUrl)
+        moviePlayerVC = AVPlayerViewController()
+        moviePlayerVC?.player = player
+        present(moviePlayerVC!, animated: true) { player.play() }
     }
     
     @IBAction func musicPreviewButtonClicked(_ sender: Any) {
         hapticFeedbackMedium()
         guard let previewUrl = previewUrl else { return }
-        
-        if isAudioPlaying{
-            player?.pause()
-            removeAudioRelated()
-        } else {
-            playerItem = AVPlayerItem(url: previewUrl)
-            player = AVPlayer(playerItem: playerItem)
-            player?.play()
-            
-            addPlayIndicator()
-            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(_:)), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
-        }
-        isAudioPlaying.toggle()
+        viewModel.musicPreviewButtonClicked( previewUrl)
     }
 }
 
@@ -130,61 +123,60 @@ extension DetailView: DetailViewInterface {
     func configureMutualFields(_ item: Detail, _ pair: ImageColorPair) {
         
         configureBackgroundColors(pair.color)
-        detailImage.image = pair.image
+        imageView_Image.image = pair.image
         viewUrl = URL(string: item.viewUrl)
-        detailName.text = item.name
-        detailCreator.text = item.creator
-        detailReleaseDate.text = viewModel.convertDate(item.releaseDate)
-        detailPrice.text = viewModel.handlePrice(item.price)
+        label_Name.text = item.name
+        label_Creator.text = item.creator
+        label_ReleaseDate.text = viewModel.convertDate(item.releaseDate)
+        label_Price.text = viewModel.handlePrice(item.price)
     }
     
     func configureMovie(_ item: Detail) {
         
         previewUrl = URL(string: item.previewUrl)
-        detailPrimaryGenre.text = item.genre
-        detailDescription.text = viewModel.handleDescription(item.longDescription)
-        detailLength.text = viewModel.handleTime(millis: item.length)
-        detailCollectionName.text = viewModel.handleCollectionName(item.collectionName)
+        label_PrimaryGenre.text = item.genre
+        textView_Description.text = viewModel.handleDescription(item.longDescription)
+        label_Length.text = viewModel.handleTime(millis: item.length)
+        label_CollectionName.text = viewModel.handleCollectionName(item.collectionName)
     }
     func configureMusic(_ item: Detail) {
         
         previewUrl = URL(string: item.previewUrl)
-        detailPrimaryGenre.text = item.genre
-        detailCollectionName.text = viewModel.handleCollectionName(item.collectionName)
-        detailLength.text = viewModel.handleTime(millis: item.length)
-        detailTrackInfo.text = viewModel.constructTrackInfo(item.trackNumber, item.albumNumber)
+        label_PrimaryGenre.text = item.genre
+        label_CollectionName.text = viewModel.handleCollectionName(item.collectionName)
+        label_Length.text = viewModel.handleTime(millis: item.length)
+        label_TrackInfo.text = viewModel.constructTrackInfo(item.trackNumber, item.albumNumber)
  
     }
     func configureEbook(_ item: Detail) {
-        detailSize.text = viewModel.handleByteRepresentation(item.size)
-        detailDescription.text = viewModel.handleDescription(item.description.withoutHtmlEntities)
-        detailGenres.text = viewModel.handleJoin(item.genreList)
-        detailRatingCount.text = viewModel.handleRating(item.ratingCount)
-        detailRating.text = viewModel.handleRating(item.rating)
+        label_Size.text = viewModel.handleByteRepresentation(item.size)
+        textView_Description.text = viewModel.handleDescription(item.description.withoutHtmlEntities)
+        label_Genres.text = viewModel.handleJoin(item.genreList)
+        label_RatingCount.text = viewModel.handleRating(item.ratingCount)
+        label_Rating.text = viewModel.handleRating(item.rating)
     }
     func configurePodcast(_ item: Detail) {
-        detailContent.text = item.advisory
-        detailPrimaryGenre.text = item.genre
-        detailCollectionName.text = viewModel.handleCollectionName(item.collectionName)
-        // logic
-        detailLength.text = viewModel.handleTime(seconds: item.length)
-        detailGenres.text = viewModel.handleJoin(item.genreList)
-        detailEpisodes.text = viewModel.constructEpisodeInfo(item.episodeCount)
+        label_Content.text = item.advisory
+        label_PrimaryGenre.text = item.genre
+        label_CollectionName.text = viewModel.handleCollectionName(item.collectionName)
+        label_Length.text = viewModel.handleTime(seconds: item.length)
+        label_Genres.text = viewModel.handleJoin(item.genreList)
+        label_Episodes.text = viewModel.constructEpisodeInfo(item.episodeCount)
     }
     
     // TODO: Change this, go by subviews and set
     func configureBackgroundColors(_ averageColor: UIColor){
        DispatchQueue.main.async { [weak self] in
-           self?.detailContainerView.backgroundColor = averageColor
-           self?.detailView.backgroundColor = averageColor
-           self?.detailImageContainerView.backgroundColor = averageColor
-           self?.detailFieldsView.backgroundColor = averageColor
-           self?.detailButtonsView.backgroundColor = averageColor
-           if let detailDescriptionView = self?.detailDescriptionView {
-               detailDescriptionView.backgroundColor = averageColor
-           }/// Music and Podcast dont have these
-           if let detailDescriptionTextView = self?.detailDescriptionTextView {
-               detailDescriptionTextView.backgroundColor = averageColor
+           self?.view_FullContainer.backgroundColor = averageColor
+           self?.view_FullView.backgroundColor = averageColor
+           self?.view_ImageContainer.backgroundColor = averageColor
+           self?.view_Fields.backgroundColor = averageColor
+           self?.view_Buttons.backgroundColor = averageColor
+           if let descriptionView = self?.view_Description {
+               descriptionView.backgroundColor = averageColor
+           }
+           if let descriptionTextView = self?.textView_Description {
+               descriptionTextView.backgroundColor = averageColor
            }
        }
     }
@@ -193,22 +185,59 @@ extension DetailView: DetailViewInterface {
         navigationController?.navigationBar.tintColor = UIColor(named: colorName)
     }
     func setTextColorOfView(_ color: UIColor) {
-        detailView.setAllTextColors(color)
+        view_FullView.setAllTextColors(color)
+    }
+    
+    func toggleAudioOff() {
+        player?.pause()
+        removeAudioRelated()
+    }
+    
+    func toggleAudioOn(_ url: URL ) {
+        audioPlayerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: audioPlayerItem)
+        player?.play()
+        
+        addPlayIndicator()
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(_:)), name: .AVPlayerItemDidPlayToEndTime, object: audioPlayerItem)
+    }
+    
+    func addPlayIndicator() {
+        let playIndicator = UIActivityIndicatorView(style: .medium)
+        playIndicator.color = AppConstants.activityIndicatorColor
+        self.button_MusicPreview.setTitle(HardCoded.audioEmoji.get(), for: .normal)
+        self.button_MusicPreview.addSubview(playIndicator)
+        playIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            playIndicator.leadingAnchor.constraint(equalTo: button_MusicPreview.titleLabel!.trailingAnchor, constant: 8),
+            playIndicator.centerYAnchor.constraint(equalTo: self.button_MusicPreview.centerYAnchor),
+        ])
+        playIndicator.startAnimating()
+    }
+    func removeAudioRelated(){
+        button_MusicPreview.setTitle(HardCoded.previewText.get(), for: .normal)
+        button_MusicPreview.subviews.forEach { subview in
+            if let playIndicator = subview as? UIActivityIndicatorView {
+                playIndicator.stopAnimating()
+                playIndicator.removeFromSuperview()
+            }
+        }
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: audioPlayerItem)
     }
     
     /// Interface Helpers
     func adaptComponentsForDark(_ tintColor: UIColor){
         DispatchQueue.main.async { [weak self] in
-            if let view = self?.viewButton { view.tintColor = tintColor }
-            if let movie = self?.moviePreviewButton { movie.tintColor = tintColor }
-            if let music = self?.musicPreviewButton { music.tintColor = tintColor }
+            if let view = self?.button_View { view.tintColor = tintColor }
+            if let movie = self?.button_MoviePreview { movie.tintColor = tintColor }
+            if let music = self?.button_MusicPreview { music.tintColor = tintColor }
             if let navBar = self?.navigationController?.navigationBar { navBar.tintColor = .lightGray }
         }
     }
     
-    @objc func playerDidFinishPlaying(_ notification: Notification) { /// used for music preview
+    @objc func playerDidFinishPlaying(_ notification: Notification) {
         removeAudioRelated()
-        isAudioPlaying.toggle()
+        viewModel.toggleAudio()
     }
     
 }

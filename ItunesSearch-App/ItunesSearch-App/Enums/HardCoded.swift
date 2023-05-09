@@ -9,7 +9,7 @@ import Foundation
 
 enum HardCoded: String {
     
-    case getRequest, collectionViewHeaderPhrase, previewButtonText, free,
+    case getRequest, collectionViewHeaderPhrase, previewText, free,
          dolar, notAvailable, trackSeperator, seperator, noRating, numberSign, ratingScale,
          termParam, limitParam, mediaParam, rssParam, countryParam, jsonParam,  idParam,
          fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
@@ -22,7 +22,7 @@ enum HardCoded: String {
         switch self {
             case .getRequest: return "GET"
             case .collectionViewHeaderPhrase: return " Top Picks"
-            case .previewButtonText: return "Preview"
+            case .previewText: return "Preview"
             case .audioEmoji: return "🔊"
             case .free: return "Free"
             case .dolar: return "$ "

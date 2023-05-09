@@ -103,28 +103,6 @@ extension DetailView{
         
         return capitalizedWords.joined(separator: " ")
     }
-    func addPlayIndicator() {
-        let playIndicator = UIActivityIndicatorView(style: .medium)
-        playIndicator.color = AppConstants.activityIndicatorColor
-        self.musicPreviewButton.setTitle(HardCoded.audioEmoji.get(), for: .normal)
-        self.musicPreviewButton.addSubview(playIndicator)
-        playIndicator.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            playIndicator.leadingAnchor.constraint(equalTo: musicPreviewButton.titleLabel!.trailingAnchor, constant: 8),
-            playIndicator.centerYAnchor.constraint(equalTo: self.musicPreviewButton.centerYAnchor),
-        ])
-        playIndicator.startAnimating()
-    }
-    func removeAudioRelated(){
-        musicPreviewButton.setTitle(HardCoded.previewButtonText.get(), for: .normal)
-        musicPreviewButton.subviews.forEach { subview in
-            if let playIndicator = subview as? UIActivityIndicatorView {
-                playIndicator.stopAnimating()
-                playIndicator.removeFromSuperview()
-            }
-        }
-        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
-    }
     func hapticFeedbackMedium() {
         hapticMedium.prepare()
         hapticMedium.impactOccurred(intensity: 1.0)

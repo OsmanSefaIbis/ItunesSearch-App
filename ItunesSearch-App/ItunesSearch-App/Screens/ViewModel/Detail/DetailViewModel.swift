@@ -23,14 +23,21 @@ protocol DetailViewModelInterface {
     func handleRating(_ rate: Double) -> String
     func constructTrackInfo(_ track: Int, _ album: Int) -> String
     func constructEpisodeInfo(_ count: Int) -> String
+    func musicPreviewButtonClicked(_ url: URL)
+    func toggleAudio()
+    
+
 }
 
 final class DetailViewModel{
     
     private let model = DetailModel()
+    private var isAudioPlaying = false
+    
     
     weak var view: DetailViewInterface?
     weak var delegate: DetailViewModelDelegate?
+    
     
     init(){
         model.delegate = self
@@ -107,6 +114,20 @@ extension DetailViewModel: DetailViewModelInterface {
     
     func constructEpisodeInfo(_ count: Int) -> String {
         (HardCoded.numberSign.get()).appending(String(count))
+    }
+    
+    func musicPreviewButtonClicked(_ url: URL) {
+        
+        if isAudioPlaying {
+            view?.toggleAudioOff()
+        } else {
+            view?.toggleAudioOn(url)
+        }
+        isAudioPlaying.toggle()
+    }
+    
+    func toggleAudio() {
+        isAudioPlaying.toggle()
     }
     
     

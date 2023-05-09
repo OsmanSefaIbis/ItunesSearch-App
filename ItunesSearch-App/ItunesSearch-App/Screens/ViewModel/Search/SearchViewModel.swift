@@ -142,12 +142,11 @@ extension SearchViewModel: SearchViewModelInterface {
     func didSelectItem(at indexPath: IndexPath) {
         
         guard let mediaType = mediaType_State else { return }
-        var detailPage = view?.createDetailView(by: mediaType.getView())
+        guard var detailPage = view?.createDetailView(by: mediaType.getView()) else { return }
         
         let id = items[indexPath.item].id
         guard let detailInfo = cacheDetails[id] else { return }
         guard let pair = cacheDetailImagesAndColors[id] else { return }
-        guard var detailPage = detailPage else { return }
         
         view?.configureDetailView(id, detailInfo, &detailPage, pair)
         view?.pushDetailPageToNavigation(detailPage)
