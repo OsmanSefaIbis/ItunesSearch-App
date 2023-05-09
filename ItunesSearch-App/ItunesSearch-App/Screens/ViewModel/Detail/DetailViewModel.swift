@@ -7,15 +7,29 @@
 
 import Foundation
 
-protocol DetailViewModelDelegate: AnyObject{
+protocol DetailViewModelInterface {
     
-    func refreshItem(_ retrieved: [Detail])
-    func internetUnreachable(_ errorPrompt: String)
+    var view: DetailViewInterface? { get set }
+    func configureItem(with item: Detail, _ pair: ImageColorPair)
+    func convertDate(_ date: String) -> String
+    func handlePrice(_ price: Double) -> String
+    func handleDescription(_ description: String) -> String
+    func handleTime(millis: Int) -> String
+    func handleTime(seconds: Int) -> String
+    func handleCollectionName(_ name: String) -> String
+    func handleByteRepresentation(_ byte: Int) -> String
+    func handleJoin(_ list: [String]) -> String
+    func handleRating(_ count: Int) -> String
+    func handleRating(_ rate: Double) -> String
+    func constructTrackInfo(_ track: Int, _ album: Int) -> String
+    func constructEpisodeInfo(_ count: Int) -> String
 }
 
-class DetailViewModel{
+final class DetailViewModel{
     
     private let model = DetailModel()
+    
+    weak var view: DetailViewInterface?
     weak var delegate: DetailViewModelDelegate?
     
     init(){
@@ -24,6 +38,78 @@ class DetailViewModel{
     func searchInvoked(withIds idValues: [Int]){
         model.fetchByIds(for: idValues)
     }
+}
+
+extension DetailViewModel: DetailViewModelInterface {
+    func configureItem(with item: Detail, _ pair: ImageColorPair) {
+        
+        guard let isColorDark = view?.isColorDark(pair.color) else { return }
+        
+        if isColorDark{
+            view?.setTextColorOfView(.white)
+            view?.adaptComponentsForDark(.white)
+        } else {
+            view?.setNavigationBarWith(tintColor: AppConstants.accentColorName)
+        }
+        view?.configureMutualFields(item, pair)
+        
+        switch item.kind{
+            case MediaType.movie.getKind():     view?.configureMovie(item)
+            case MediaType.music.getKind():     view?.configureMusic(item)
+            case MediaType.ebook.getKind():     view?.configureEbook(item)
+            case MediaType.podcast.getKind():   view?.configurePodcast(item)
+        default:
+            assert(false, HardCoded.errorPromptKind.get())
+        }
+    }
+    func convertDate(_ date: String) -> String {
+        view?.convertDate(for: date) ?? ""
+    }
+    
+    func handlePrice(_ price: Double) -> String {
+        price <= 0 ? HardCoded.free.get() : (HardCoded.dolar.get()).appending(String(price))
+    }
+    
+    func handleDescription(_ description: String) -> String {
+        view?.capitalizeUppercaseWords(input: description) ?? ""
+    }
+    
+    func handleTime(millis: Int) -> String {
+        view?.readableFormatTimeFromMillis(millis: millis) ?? ""
+    }
+    func handleTime(seconds: Int) -> String {
+        view?.readableFormatTimeFromSeconds(seconds: seconds) ?? ""
+    }
+    
+    func handleCollectionName(_ name: String) -> String{
+        name.isEmpty ? HardCoded.notAvailable.get() : name
+    }
+    
+    func handleByteRepresentation(_ byte: Int) -> String {
+        view?.convertBytesToGBorMB(byte) ?? ""
+    }
+    
+    func handleJoin(_ list: [String]) -> String {
+        list.joined(separator: HardCoded.seperator.get())
+    }
+    
+    func handleRating(_ count: Int) -> String {
+        count == 0 ? HardCoded.noRating.get() : (HardCoded.numberSign.get()).appending(String(count))
+    }
+    
+    func handleRating(_ rate: Double) -> String {
+        rate == 0.0 ? HardCoded.noRating.get() : String(rate).appending(HardCoded.ratingScale.get())
+    }
+    
+    func constructTrackInfo(_ track: Int, _ album: Int) -> String {
+        String(track).appending(HardCoded.trackSeperator.get()).appending(String(album))
+    }
+    
+    func constructEpisodeInfo(_ count: Int) -> String {
+        (HardCoded.numberSign.get()).appending(String(count))
+    }
+    
+    
 }
 
 extension DetailViewModel: DetailModelDelegate{

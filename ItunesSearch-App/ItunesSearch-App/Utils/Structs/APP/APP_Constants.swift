@@ -12,6 +12,7 @@ struct AppConstants {
     static let activityIndicatorColor: UIColor = .systemPink
     static let requestLimit: Int = 20
     static let cellIdentifier: String = "SearchCell"
+    static let accentColorName: String = "AccentColor"
     static let collectionViewColumn: CGFloat = 2
     static let defaultMinimumCellSpacing: CGFloat = 10.0
     static let defaultSectionInset: UIEdgeInsets = .init(top: 5, left: 5, bottom: 0, right: 5)

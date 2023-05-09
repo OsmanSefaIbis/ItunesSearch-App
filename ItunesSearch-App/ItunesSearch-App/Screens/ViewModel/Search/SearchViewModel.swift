@@ -19,7 +19,7 @@ final class SearchViewModel {
     private var items: [ColumnItem] = []
     private var idsOfAllFetchedRecords = Set<Int>()
     private var cacheDetails: [Int : Detail] = [:]
-    private var cacheDetailImagesAndColors: [Int : DetailImageAndColor] = [:]
+    private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:]
     
     private var paginationOffSet = 0
     private var mediaType_State: MediaType? = .movie
@@ -145,13 +145,11 @@ extension SearchViewModel: SearchViewModelInterface {
         var detailPage = view?.createDetailView(by: mediaType.getView())
         
         let id = items[indexPath.item].id
-        guard let data = cacheDetails[id] else { return }
-        guard let imageAndColor = cacheDetailImagesAndColors[id] else { return }
-        let image = imageAndColor.image
-        let color = imageAndColor.color
+        guard let detailInfo = cacheDetails[id] else { return }
+        guard let pair = cacheDetailImagesAndColors[id] else { return }
         guard var detailPage = detailPage else { return }
         
-        view?.configureDetailView(id, data, &detailPage, image, color)
+        view?.configureDetailView(id, detailInfo, &detailPage, pair)
         view?.pushDetailPageToNavigation(detailPage)
     }
     
@@ -236,8 +234,8 @@ extension SearchViewModel: SearchViewModelInterface {
         cacheDetails[id] = detail
     }
     
-    func setCacheDetailImagesAndColor( key id: Int, value imageAndColor: DetailImageAndColor) {
-        cacheDetailImagesAndColors[id] = imageAndColor
+    func setCacheDetailImagesAndColor( key id: Int, value pair: ImageColorPair) {
+        cacheDetailImagesAndColors[id] = pair
     }
     
     func modifyUrl(_ imageUrl: String, _ imageDimension: Int) -> String {

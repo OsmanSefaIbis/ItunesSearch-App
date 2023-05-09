@@ -39,6 +39,6 @@ protocol SearchViewInterface: AnyObject {
     func reloadCollectionView()
     func createDetailView(by storyBoardIdentifier: String) -> DetailView
     func pushDetailPageToNavigation(_ detailPage: DetailView)
-    func configureDetailView(_ id: Int, _ detail: Detail, _ detailVC: inout DetailView, _ image: UIImage, _ color: UIColor)
+    func configureDetailView(_ id: Int, _ detail: Detail, _ detailVC: inout DetailView, _ pair: ImageColorPair)
     func dismissKeyBoard()
 }

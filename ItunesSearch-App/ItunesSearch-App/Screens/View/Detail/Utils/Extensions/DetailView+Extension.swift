@@ -64,6 +64,14 @@ extension DetailView{
         }
         return timeComponents.joined(separator: " ")
     }
+    
+    func isColorDark(_ color: UIColor) -> Bool {
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        let brightness = (red + green + blue) / 3.0
+        return brightness < 0.2 // critical
+    }
+    
     func convertDate(for dateValue: String) -> String{
         let inputDF = DateFormatter()
         inputDF.dateFormat = HardCoded.apiDateFormat.get()
@@ -94,12 +102,6 @@ extension DetailView{
         }
         
         return capitalizedWords.joined(separator: " ")
-    }
-    func isColorDark(_ color: UIColor) -> Bool {
-        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
-        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        let brightness = (red + green + blue) / 3.0
-        return brightness < 0.2 // critical
     }
     func addPlayIndicator() {
         let playIndicator = UIActivityIndicatorView(style: .medium)

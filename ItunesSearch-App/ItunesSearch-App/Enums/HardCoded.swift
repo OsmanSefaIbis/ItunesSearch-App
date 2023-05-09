@@ -16,7 +16,7 @@ enum HardCoded: String {
          convertedDateFormatShort, locale_US, colonSeperator, errorPromptDate, audioEmoji,
          segmentedControlError, invalidJSON, offlinePrompt, loadingReusableName,
          headerReusableName, loadingReusableIdentifier, headerReusableIdentifier,
-         offLineAlertTitlePrompt, offLineActionTitlePrompt, errorPromptElementKind
+         offLineAlertTitlePrompt, offLineActionTitlePrompt, errorPromptElementKind, errorPromptKind
     
     func get() -> String {
         switch self {
@@ -46,6 +46,7 @@ enum HardCoded: String {
             case .colonSeperator: return " : "
             case .errorPromptDate: return "Invalid date string"
             case .errorPromptElementKind: return "Unexpected element kind"
+            case .errorPromptKind: return "Unexpected kind"
             case .offlinePrompt: return "Check internet connectivity !"
             case .offLineAlertTitlePrompt: return "Warning"
             case .offLineActionTitlePrompt: return "Ok"

@@ -33,5 +33,5 @@ protocol SearchViewModelInterface {
     func modifyUrl(_ imageUrl: String, _ imageDimension: Int) -> String
     func providesIds(_ items: [ColumnItem]) -> [Int]
     func setCacheDetails(key id: Int, value detail: Detail)
-    func setCacheDetailImagesAndColor( key id: Int, value detail: DetailImageAndColor)
+    func setCacheDetailImagesAndColor( key id: Int, value detail: ImageColorPair)
 }

@@ -147,10 +147,10 @@ extension SearchView: SearchViewInterface {
         self.navigationController?.pushViewController(detailPage, animated: true)
     }
     
-    func configureDetailView(_ id: Int, _ detail: Detail, _ detailVC: inout DetailView, _ image: UIImage, _ color: UIColor) {
+    func configureDetailView(_ id: Int, _ detail: Detail, _ detailVC: inout DetailView, _ pair: ImageColorPair) {
         DispatchQueue.main.async { [weak detailVC] in
             detailVC?.id = id
-            detailVC?.configureItem(with: detail, image: image, color: color)
+            detailVC?.configureItem(with: detail, pair)
         }
     }
     /// Interface Helpers
@@ -178,7 +178,7 @@ extension SearchView: SearchViewInterface {
         searchViewModel.segmentedControlValueChanged(to: indexValue, with: searchText)
     }
     
-    func provideImageAndColor(_ imageUrl: String, completion: @escaping (DetailImageAndColor?) -> Void) {
+    func provideImageColorPair(_ imageUrl: String, completion: @escaping (ImageColorPair?) -> Void) {
 
         guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, imageDimension)) else { completion(nil) ; return }
         
@@ -189,7 +189,7 @@ extension SearchView: SearchViewInterface {
                     completion(nil)
                     return
                 }
-                completion(DetailImageAndColor.init(image: value.image, color: averagedColor))
+                completion(.init(image: value.image, color: averagedColor))
             case .failure(_):
                 completion(nil)
             }
@@ -222,9 +222,9 @@ extension SearchView: DetailViewModelDelegate{
         for each in retrieved{
             searchViewModel.setCacheDetails(key: each.id, value: each)
             
-            provideImageAndColor( each.artworkUrl) { [weak self] imageAndColor in
-                guard let imageAndColorStruct = imageAndColor else { return }
-                self?.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: imageAndColorStruct)
+            provideImageColorPair( each.artworkUrl) { [weak self] pair in
+                guard let pair = pair else { return }
+                self?.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: pair)
             }
         }
     }
