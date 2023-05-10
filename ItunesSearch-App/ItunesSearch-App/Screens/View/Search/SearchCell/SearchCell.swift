@@ -10,14 +10,16 @@ import Kingfisher
 
 class SearchCell: UICollectionViewCell {
 
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var container: UIView!
     @IBOutlet weak var artworkImage: UIImageView!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var collectionPriceLabel: UILabel!
-    @IBOutlet weak var vStackLabels: UIStackView!
+    @IBOutlet weak var vStackContainer: UIView!
     
-    var imageHeigthConstraint, imageWidthConstraint, stackedLabelsHeightConstraint, stackedLabelsWidthConstraint : NSLayoutConstraint?
+    var imageHeightConstraint, imageWidthConstraint : NSLayoutConstraint?
+    var stackedLabelsHeightConstraint, stackedLabelsWidthConstraint : NSLayoutConstraint?
+    var nameLabelConstraint : NSLayoutConstraint?
     private let dimensionPreference = 200
 
     override func awakeFromNib() {
@@ -37,13 +39,14 @@ class SearchCell: UICollectionViewCell {
         artworkImage.kf.indicatorType = .activity
         (artworkImage.kf.indicator?.view as? UIActivityIndicatorView)?.color = AppConstants.activityIndicatorColor
         
-        imageHeigthConstraint = artworkImage.heightAnchor.constraint(equalToConstant: 0)
+        imageHeightConstraint = artworkImage.heightAnchor.constraint(equalToConstant: 0)
         imageWidthConstraint = artworkImage.widthAnchor.constraint(equalToConstant: 0)
-        stackedLabelsHeightConstraint = vStackLabels.heightAnchor.constraint(equalToConstant: 0)
-        stackedLabelsWidthConstraint = vStackLabels.widthAnchor.constraint(equalToConstant: 0)
+        stackedLabelsHeightConstraint = vStackContainer.heightAnchor.constraint(equalToConstant: 0)
+        stackedLabelsWidthConstraint = vStackContainer.widthAnchor.constraint(equalToConstant: 0)
         
-        imageHeigthConstraint?.isActive = true ; imageWidthConstraint?.isActive = true
+        imageHeightConstraint?.isActive = true ; imageWidthConstraint?.isActive = true
         stackedLabelsHeightConstraint?.isActive = true ; stackedLabelsWidthConstraint?.isActive = true
+        
     }
     func configureCell(with model: SearchCellModel) {
 
@@ -58,7 +61,7 @@ class SearchCell: UICollectionViewCell {
                 let averageColor = value.image.averageColor
                 let opaqueAverageColor = averageColor?.withAlphaComponent(0.7)
                 DispatchQueue.main.async { [weak self] in
-                    self?.contentView.subviews.first?.backgroundColor = opaqueAverageColor
+                    self?.container.backgroundColor = opaqueAverageColor
                 }
             case .failure(let error):
                 print("Error: \(error)")
@@ -66,17 +69,18 @@ class SearchCell: UICollectionViewCell {
         }
     }
     func setImageHeigth( _ height: CGFloat) { // Setter for Constraints
-        imageHeigthConstraint?.constant = height
+        imageHeightConstraint?.constant = height
     }
     func setImageWidth( _ width: CGFloat) {
         imageWidthConstraint?.constant = width
     }
-    func setStackedLabelsHeigth( _ height: CGFloat) {
-        stackedLabelsHeightConstraint?.constant = height
+    func setStackedLabelsHeight( _ height: CGFloat) {
+        stackedLabelsHeightConstraint?.constant =  height
     }
     func setStackedLabelsWidth( _ width: CGFloat) {
         stackedLabelsWidthConstraint?.constant = width
     }
+
 }
 
 
