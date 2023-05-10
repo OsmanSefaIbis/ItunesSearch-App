@@ -7,28 +7,6 @@
 
 import Foundation
 
-protocol DetailViewModelInterface {
-    
-    var view: DetailViewInterface? { get set }
-    func configureItem(with item: Detail, _ pair: ImageColorPair)
-    func convertDate(_ date: String) -> String
-    func handlePrice(_ price: Double) -> String
-    func handleDescription(_ description: String) -> String
-    func handleTime(millis: Int) -> String
-    func handleTime(seconds: Int) -> String
-    func handleCollectionName(_ name: String) -> String
-    func handleByteRepresentation(_ byte: Int) -> String
-    func handleJoin(_ list: [String]) -> String
-    func handleRating(_ count: Int) -> String
-    func handleRating(_ rate: Double) -> String
-    func constructTrackInfo(_ track: Int, _ album: Int) -> String
-    func constructEpisodeInfo(_ count: Int) -> String
-    func musicPreviewButtonClicked(_ url: URL)
-    func toggleAudio()
-    
-
-}
-
 final class DetailViewModel{
     
     private let model = DetailModel()
@@ -38,12 +16,47 @@ final class DetailViewModel{
     weak var view: DetailViewInterface?
     weak var delegate: DetailViewModelDelegate?
     
-    
     init(){
         model.delegate = self
     }
     func searchInvoked(withIds idValues: [Int]){
         model.fetchByIds(for: idValues)
+    }
+}
+
+extension DetailViewModel: DetailModelDelegate{
+    
+    func dataDidFetch(){
+        let retrievedData: [Detail] = model.dataFetched.map{
+            .init(
+                id: $0.trackID ?? 0,
+                kind: $0.kind ?? "",
+                artworkUrl: $0.artworkUrl100 ?? "",
+                description: $0.description ?? "",
+                longDescription: $0.longDescription ?? "",
+                name: $0.trackName ?? "",
+                creator: $0.artistName ?? "",
+                collectionName: $0.collectionName ?? "",
+                releaseDate: $0.releaseDate ?? "",
+                episodeCount: $0.trackCount ?? 0,
+                genre: $0.primaryGenreName ?? "",
+                advisory: $0.contentAdvisoryRating ?? "",
+                price: $0.trackPrice ?? 0,
+                trackNumber: $0.trackNumber ?? 0,
+                albumNumber: $0.trackCount ?? 0,
+                length: $0.trackTimeMillis ?? 0,
+                size: $0.fileSizeBytes ?? 0,
+                ratingCount: $0.userRatingCount ?? 0,
+                rating: $0.averageUserRating ?? 0,
+                genreList: $0.genres ?? [""],
+                previewUrl: $0.previewURL ?? "",
+                viewUrl: $0.trackViewURL ?? ""
+            )
+        }
+        self.delegate?.refreshItem(retrievedData)
+    }
+    func dataDidNotFetch() {
+        delegate?.internetUnreachable(HardCoded.offlinePrompt.get())
     }
 }
 
@@ -131,40 +144,4 @@ extension DetailViewModel: DetailViewModelInterface {
     }
     
     
-}
-
-extension DetailViewModel: DetailModelDelegate{
-    
-    func dataDidFetch(){
-        let retrievedData: [Detail] = model.dataFetched.map{
-            .init(
-                id: $0.trackID ?? 0,
-                kind: $0.kind ?? "",
-                artworkUrl: $0.artworkUrl100 ?? "",
-                description: $0.description ?? "",
-                longDescription: $0.longDescription ?? "",
-                name: $0.trackName ?? "",
-                creator: $0.artistName ?? "",
-                collectionName: $0.collectionName ?? "",
-                releaseDate: $0.releaseDate ?? "",
-                episodeCount: $0.trackCount ?? 0,
-                genre: $0.primaryGenreName ?? "",
-                advisory: $0.contentAdvisoryRating ?? "",
-                price: $0.trackPrice ?? 0,
-                trackNumber: $0.trackNumber ?? 0,
-                albumNumber: $0.trackCount ?? 0,
-                length: $0.trackTimeMillis ?? 0,
-                size: $0.fileSizeBytes ?? 0,
-                ratingCount: $0.userRatingCount ?? 0,
-                rating: $0.averageUserRating ?? 0,
-                genreList: $0.genres ?? [""],
-                previewUrl: $0.previewURL ?? "",
-                viewUrl: $0.trackViewURL ?? ""
-            )
-        }
-        self.delegate?.refreshItem(retrievedData)
-    }
-    func dataDidNotFetch() {
-        delegate?.internetUnreachable(HardCoded.offlinePrompt.get())
-    }
 }

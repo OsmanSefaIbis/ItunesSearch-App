@@ -6,10 +6,23 @@
 //
 
 import UIKit
+import WebKit
+
+extension DetailView: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        webActivityIndicator.startAnimating()
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webActivityIndicator.stopAnimating()
+    }
+}
 
 extension DetailView{
     
     func convertBytesToGBorMB(_ bytes: Int) -> String {
+        
         let gigabytes = Double(bytes) / 1_000_000_000
         if gigabytes >= 1 {
             return String(format: "%.2f GB", gigabytes)
@@ -18,7 +31,9 @@ extension DetailView{
             return String(format: "%.2f MB", megabytes)
         }
     }
+    
     func readableFormatTimeFromSeconds(seconds: Int) -> String {
+        
         let totalSeconds = seconds
         let seconds = totalSeconds % 60
         let minutes = (totalSeconds / 60) % 60
@@ -42,7 +57,9 @@ extension DetailView{
         }
         return timeComponents.joined(separator: " ")
     }
+    
     func readableFormatTimeFromMillis(millis: Int) -> String {
+        
         let totalSeconds = Int(millis / 1000)
         let seconds = totalSeconds % 60
         let minutes = (totalSeconds / 60) % 60
@@ -66,13 +83,15 @@ extension DetailView{
     }
     
     func isColorDark(_ color: UIColor) -> Bool {
+        
         var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         let brightness = (red + green + blue) / 3.0
         return brightness < 0.2 // critical
     }
     
-    func convertDate(for dateValue: String) -> String{
+    func convertDate(for dateValue: String) -> String {
+        
         let inputDF = DateFormatter()
         inputDF.dateFormat = HardCoded.apiDateFormat.get()
         
@@ -89,7 +108,9 @@ extension DetailView{
         let output = outputDF.string(from: inputDate)
         return output
     }
+    
     func capitalizeUppercaseWords(input: String) -> String {
+        
         let words = input.components(separatedBy: " ")
         var capitalizedWords = [String]()
         
@@ -100,9 +121,9 @@ extension DetailView{
                 capitalizedWords.append(word)
             }
         }
-        
         return capitalizedWords.joined(separator: " ")
     }
+    
     func hapticFeedbackMedium() {
         hapticMedium.prepare()
         hapticMedium.impactOccurred(intensity: 1.0)

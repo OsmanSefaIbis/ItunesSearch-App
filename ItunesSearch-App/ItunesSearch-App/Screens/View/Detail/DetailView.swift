@@ -11,30 +11,6 @@ import AVFoundation
 import AVKit
 import Kingfisher
 
-protocol DetailViewInterface: AnyObject {
-    func configureItem( with item: Detail, _ pair: ImageColorPair)
-    func configureMutualFields(_ item: Detail, _ pair: ImageColorPair)
-    func configureMovie(_ item: Detail)
-    func configureMusic(_ item: Detail)
-    func configureEbook(_ item: Detail)
-    func configurePodcast(_ item: Detail)
-    func configureBackgroundColors(_ averageColor: UIColor)
-    func adaptComponentsForDark(_ tintColor: UIColor)
-    
-    func isColorDark(_ color: UIColor) -> Bool
-    func convertDate(for dateValue: String) -> String
-    func capitalizeUppercaseWords(input: String) -> String
-    func readableFormatTimeFromMillis(millis: Int) -> String
-    func readableFormatTimeFromSeconds(seconds: Int) -> String
-    func convertBytesToGBorMB(_ bytes: Int) -> String
-    func setNavigationBarWith( tintColor color: String)
-    func setTextColorOfView(_ color: UIColor)
-    func toggleAudioOff()
-    func toggleAudioOn(_ url: URL)
-    func addPlayIndicator()
-    func removeAudioRelated()
-}
-
 final class DetailView: UIViewController{
     
     let hapticMedium = UIImpactFeedbackGenerator(style: .medium)
@@ -68,7 +44,7 @@ final class DetailView: UIViewController{
     @IBOutlet private weak var label_Episodes: UILabel!
     @IBOutlet private weak var label_TrackInfo: UILabel!
     
-    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    let webActivityIndicator = UIActivityIndicatorView(style: .large)
     
     private lazy var viewModel = DetailViewModel()
         
@@ -95,12 +71,12 @@ final class DetailView: UIViewController{
         
         let webVC = UIViewController()
         webVC.view = webView
-        webVC.view.addSubview(activityIndicator)
-        activityIndicator.color = AppConstants.activityIndicatorColor
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        webVC.view.addSubview(webActivityIndicator)
+        webActivityIndicator.color = AppConstants.activityIndicatorColor
+        webActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: webVC.view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: webVC.view.centerYAnchor)
+            webActivityIndicator.centerXAnchor.constraint(equalTo: webVC.view.centerXAnchor),
+            webActivityIndicator.centerYAnchor.constraint(equalTo: webVC.view.centerYAnchor)
         ])
         
         navigationController?.pushViewController(webVC, animated: true)
@@ -248,15 +224,4 @@ extension DetailView: DetailViewInterface {
         viewModel.toggleAudio()
     }
     
-}
-
-extension DetailView: WKNavigationDelegate {
-    
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        activityIndicator.startAnimating()
-    }
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        activityIndicator.stopAnimating()
-    }
 }

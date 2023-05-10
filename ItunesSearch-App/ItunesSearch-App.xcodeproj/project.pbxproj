@@ -55,6 +55,7 @@
 		96EDF4912A099D7D00634BDF /* SearchViewModel+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4902A099D7D00634BDF /* SearchViewModel+Delegate.swift */; };
 		96EDF4962A0A3C0D00634BDF /* DetailViewModel+Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4952A0A3C0D00634BDF /* DetailViewModel+Interface.swift */; };
 		96EDF4982A0A3C2200634BDF /* DetailViewModel+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4972A0A3C2200634BDF /* DetailViewModel+Delegate.swift */; };
+		96EDF4AD2A0BA04F00634BDF /* DetailView+Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4AC2A0BA04F00634BDF /* DetailView+Interface.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +106,7 @@
 		96EDF4902A099D7D00634BDF /* SearchViewModel+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewModel+Delegate.swift"; sourceTree = "<group>"; };
 		96EDF4952A0A3C0D00634BDF /* DetailViewModel+Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailViewModel+Interface.swift"; sourceTree = "<group>"; };
 		96EDF4972A0A3C2200634BDF /* DetailViewModel+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailViewModel+Delegate.swift"; sourceTree = "<group>"; };
+		96EDF4AC2A0BA04F00634BDF /* DetailView+Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailView+Interface.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,6 +402,7 @@
 		96EDF49D2A0A598F00634BDF /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				96EDF4AC2A0BA04F00634BDF /* DetailView+Interface.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -631,6 +634,7 @@
 				96EDF4962A0A3C0D00634BDF /* DetailViewModel+Interface.swift in Sources */,
 				96E8226029F30EC9009B56F0 /* SearchCell+Extension.swift in Sources */,
 				96EDF4872A095DB200634BDF /* DetailImageAndColor.swift in Sources */,
+				96EDF4AD2A0BA04F00634BDF /* DetailView+Interface.swift in Sources */,
 				96E8225529F2C473009B56F0 /* HardCoded.swift in Sources */,
 				96B5868529EDD06D004F5B27 /* DetailModel.swift in Sources */,
 				96EDF4982A0A3C2200634BDF /* DetailViewModel+Delegate.swift in Sources */,

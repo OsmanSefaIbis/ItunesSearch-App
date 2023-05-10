@@ -13,23 +13,19 @@ protocol SearchViewInterface: AnyObject {
     func assignPropsOfSearchViewModel()
     func assignPropsOfDetailViewModel()
     func assignPropsOfSearchBar()
-    
     /// configurations
     func configureCollectionView()
     func configureSegmentedControl()
     func configureActivityIndicator()
-    
     /// operations
     func initiateTopResults()
     func startPrefetchingDetails(for ids: [Int])
     func invokeTopIds( _ topIds: [Top])
     func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?)
     func resetAndTrend(_ mediaType: MediaType)
-    
     /// data specific
     func setItems( _ items: [ColumnItem])
     func reset()
-    
     /// UI specific
     func setReusableViewTitle(with title: String)
     func stopReusableViewActivityIndicator()
