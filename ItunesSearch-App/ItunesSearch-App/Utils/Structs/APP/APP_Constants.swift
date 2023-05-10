@@ -13,7 +13,7 @@ struct AppConstants {
     static let requestLimit: Int = 20
     static let cellIdentifier: String = "SearchCell"
     static let accentColorName: String = "AccentColor"
-    static let collectionViewColumn: CGFloat = 2 /// dynamically responds
+    static let collectionViewColumn: CGFloat = 2 /// responds dynamically
     static let defaultMinimumCellSpacing: CGFloat = 10.0
     static let defaultSectionInset: UIEdgeInsets = .init(top: 5, left: 5, bottom: 0, right: 5)
     static let defaultSizingValue: CGFloat = 80.0

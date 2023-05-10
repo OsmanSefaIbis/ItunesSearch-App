@@ -242,8 +242,6 @@ extension SearchView: UICollectionViewDataSource {
         
         cell.setImageHeigth( 2 * sizingValue )
         cell.setImageWidth( 2 * sizingValue )
-        cell.setStackedLabelsHeight( 2 * sizingValue )
-        cell.setStackedLabelsWidth( 3 * sizingValue )
         
         cell.configureCell(with: searchViewModel.cellForItem(at: indexPath))
         return cell

@@ -41,11 +41,8 @@ class SearchCell: UICollectionViewCell {
         
         imageHeightConstraint = artworkImage.heightAnchor.constraint(equalToConstant: 0)
         imageWidthConstraint = artworkImage.widthAnchor.constraint(equalToConstant: 0)
-        stackedLabelsHeightConstraint = vStackContainer.heightAnchor.constraint(equalToConstant: 0)
-        stackedLabelsWidthConstraint = vStackContainer.widthAnchor.constraint(equalToConstant: 0)
-        
+
         imageHeightConstraint?.isActive = true ; imageWidthConstraint?.isActive = true
-        stackedLabelsHeightConstraint?.isActive = true ; stackedLabelsWidthConstraint?.isActive = true
         
     }
     func configureCell(with model: SearchCellModel) {
@@ -54,7 +51,7 @@ class SearchCell: UICollectionViewCell {
 
         releaseDateLabel.text = convertDate(for: model.releaseDate)
         nameLabel.text = model.name
-        collectionPriceLabel.text = HardCoded.dolar.get().appending(String(model.collectionPrice))
+        collectionPriceLabel.text = (model.collectionPrice <= 0) ? HardCoded.free.get() : HardCoded.dolar.get().appending(String(model.collectionPrice))
         artworkImage.kf.setImage(with: URL(string: modifiedArtworkUrl)){ result in
             switch result {
             case .success(let value):
@@ -74,13 +71,6 @@ class SearchCell: UICollectionViewCell {
     func setImageWidth( _ width: CGFloat) {
         imageWidthConstraint?.constant = width
     }
-    func setStackedLabelsHeight( _ height: CGFloat) {
-        stackedLabelsHeightConstraint?.constant =  height
-    }
-    func setStackedLabelsWidth( _ width: CGFloat) {
-        stackedLabelsWidthConstraint?.constant = width
-    }
-
 }
 
 
