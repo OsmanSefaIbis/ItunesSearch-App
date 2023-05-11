@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+// TODO: order properly, order class
+// TODO: Analyze this interface properly to make it as neat as possible
 protocol DetailViewInterface: AnyObject {
     
     ///configure

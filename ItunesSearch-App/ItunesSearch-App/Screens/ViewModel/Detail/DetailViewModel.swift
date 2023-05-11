@@ -6,15 +6,16 @@
 //
 
 import Foundation
-
+// TODO: Add a extension file
+// TODO: migrate independant methods to extension file for this class
 final class DetailViewModel{
     
     private let model = DetailModel()
-    private var isAudioPlaying = false
-    
     
     weak var view: DetailViewInterface?
     weak var delegate: DetailViewModelDelegate?
+    
+    private var isAudioPlaying = false
     
     init(){
         model.delegate = self
@@ -27,7 +28,7 @@ final class DetailViewModel{
 extension DetailViewModel: DetailModelDelegate{
     
     func dataDidFetch(){
-        let retrievedData: [Detail] = model.dataFetched.map{
+        let retrievedData: [Detail] = model.dataFetched.map{    //TODO: Is there a better approach? 
             .init(
                 id: $0.trackID ?? 0,
                 kind: $0.kind ?? "",
@@ -38,7 +39,7 @@ extension DetailViewModel: DetailModelDelegate{
                 creator: $0.artistName ?? "",
                 collectionName: $0.collectionName ?? "",
                 releaseDate: $0.releaseDate ?? "",
-                episodeCount: $0.trackCount ?? 0,
+                episodeCount: $0.trackCount ?? 0,               
                 genre: $0.primaryGenreName ?? "",
                 advisory: $0.contentAdvisoryRating ?? "",
                 price: $0.trackPrice ?? 0,

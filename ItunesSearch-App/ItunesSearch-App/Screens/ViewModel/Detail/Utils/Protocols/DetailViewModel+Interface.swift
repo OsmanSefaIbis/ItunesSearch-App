@@ -6,7 +6,8 @@
 //
 
 import Foundation
-
+// TODO: order properly, order class
+// TODO: Analyze this interface properly to make it as neat as possible
 protocol DetailViewModelInterface {
     
     var view: DetailViewInterface? { get set }

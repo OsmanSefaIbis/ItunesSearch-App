@@ -8,6 +8,8 @@
 import UIKit
 import Kingfisher
 
+// TODO: add interface for this class
+
 class SearchCell: UICollectionViewCell {
 
     @IBOutlet weak var container: UIView!
@@ -15,12 +17,9 @@ class SearchCell: UICollectionViewCell {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var collectionPriceLabel: UILabel!
-    @IBOutlet weak var vStackContainer: UIView!
     
-    var imageHeightConstraint, imageWidthConstraint : NSLayoutConstraint?
-    var stackedLabelsHeightConstraint, stackedLabelsWidthConstraint : NSLayoutConstraint?
-    var nameLabelConstraint : NSLayoutConstraint?
-    private let dimensionPreference = 200
+    private var imageHeightConstraint, imageWidthConstraint : NSLayoutConstraint?
+    private let dimensionPreference = 200 // TODO: migrate this
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,7 +29,7 @@ class SearchCell: UICollectionViewCell {
         super.prepareForReuse()
         prepareReusability()
     }
-    func prepareReusability() {
+    func prepareReusability() { // TODO: cell coloring is causing flickering effect because of cell reuse handle it for UX
         artworkImage.image = nil ; releaseDateLabel.text = nil ; nameLabel.text = nil ; collectionPriceLabel.text = nil
     }
     func configureCellLooks() {
@@ -45,11 +44,11 @@ class SearchCell: UICollectionViewCell {
         imageHeightConstraint?.isActive = true ; imageWidthConstraint?.isActive = true
         
     }
-    func configureCell(with model: SearchCellModel) {
+    func configureCell(with model: SearchCellModel) { // TODO: this method contains logic do you need to migrate for MVVM?
 
         guard let modifiedArtworkUrl = changeImageURL(model.artworkUrl, withDimension: dimensionPreference) else { return }
 
-        releaseDateLabel.text = convertDate(for: model.releaseDate)
+        releaseDateLabel.text = convertDate(for: model.releaseDate) // TODO: can be migrated to a helper for readability
         nameLabel.text = model.name
         collectionPriceLabel.text = (model.collectionPrice <= 0) ? HardCoded.free.get() : HardCoded.dolar.get().appending(String(model.collectionPrice))
         artworkImage.kf.setImage(with: URL(string: modifiedArtworkUrl)){ result in

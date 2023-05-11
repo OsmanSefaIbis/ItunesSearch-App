@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+//TODO: Naming change
 class HeaderReusableView: UICollectionReusableView {
 
     @IBOutlet weak var headerView: UIView!

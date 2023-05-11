@@ -6,6 +6,11 @@ import Foundation
 import UIKit
 import Alamofire
 
+// TODO: Add repository pattern, VM should do the web service calls, VM-M needs refactor
+// TODO: Naming refactor is necessary, coherency is not attained
+// TODO: Clean the code from repetition, detail and search have same service call, write a base class
+// TODO: Consider Moya Apply it as an alternative for learning purposes
+
 protocol SearchModelDelegate: AnyObject{
     
     func dataDidFetch()
@@ -15,8 +20,8 @@ protocol SearchModelDelegate: AnyObject{
 
 class SearchModel {
     
-    private(set) var dataFetched: [SearchData] = []
-    private(set) var topDataIdsFetched: [TopDataIds] = []
+    private(set) var dataFetched: [SearchData] = [] // TODO: dealloc?
+    private(set) var topDataIdsFetched: [TopDataIds] = [] // TODO: dealloc?
     weak var delegate: SearchModelDelegate?
     
     /// URLSession

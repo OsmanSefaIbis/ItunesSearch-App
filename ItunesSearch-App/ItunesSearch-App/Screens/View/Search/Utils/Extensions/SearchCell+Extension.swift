@@ -15,7 +15,7 @@ extension SearchCell {
         
         guard let inputDate = inputDF.date(from: dateValue) else {
             if dateValue.isEmpty {
-                return "N/A"
+                return HardCoded.notAvailable.get()
             }else{
                 fatalError(HardCoded.errorPromptDate.get())
             }
@@ -26,7 +26,7 @@ extension SearchCell {
         let output = outputDF.string(from: inputDate)
         return output
     }
-    func changeImageURL(_ urlString: String, withDimension dimension: Int) -> String? {
+    func changeImageURL(_ urlString: String, withDimension dimension: Int) -> String? { // TODO: hardcoded's?
         guard var urlComponents = URLComponents(string: urlString) else {
             return nil
         }

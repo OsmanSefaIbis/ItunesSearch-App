@@ -9,7 +9,7 @@ import Kingfisher
 
 final class SearchView: UIViewController{
     
-    @IBOutlet private weak var activityIndicatorOverall: UIActivityIndicatorView!
+    @IBOutlet private weak var activityIndicatorOverall: UIActivityIndicatorView! //TODO: Naming
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -21,7 +21,7 @@ final class SearchView: UIViewController{
     private let cell_ID = AppConstants.cellIdentifier
     private let cellSize = AppConstants.defaultCellSize
     private var cellSpacing = AppConstants.defaultMinimumCellSpacing
-    private let columnCount = AppConstants.collectionViewColumn
+    private let columnCount = AppConstants.collectionViewColumn     //TODO: these are not app related constants, migrate them into another struct
     private var sizingValue = AppConstants.defaultSizingValue
     private let imageDimension = AppConstants.imageDimensionForDetail
     private let sectionInset = AppConstants.defaultSectionInset
@@ -29,8 +29,8 @@ final class SearchView: UIViewController{
     private lazy var searchViewModel = SearchViewModel()
     private lazy var detailViewModel = DetailViewModel()
     
-    private var loadingView: LoadingReusableView?
-    private var headerView: HeaderReusableView?
+    private var loadingView: LoadingReusableView? // TODO: Naming
+    private var headerView: HeaderReusableView? // TODO: Naming
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +41,7 @@ final class SearchView: UIViewController{
 /* Search View - Interface */
 extension SearchView: SearchViewInterface {
     
+    // TODO: Maybe assign can be unified
     func assignPropsOfSearchViewModel() {
         searchViewModel.delegate = self
     }
@@ -79,7 +80,7 @@ extension SearchView: SearchViewInterface {
     func setItems( _ items: [SearchCellModel]) {
         
         searchViewModel.setItems(items)
-        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { //TODO: optimize this part, do not let the behavior be statically determined
             self.stopActivityIndicator()
             self.reloadCollectionView()
         }
@@ -147,9 +148,9 @@ extension SearchView: SearchViewInterface {
         self.navigationController?.pushViewController(detailPage, animated: true)
     }
     
-    func configureDetailView(_ id: Int, _ detail: Detail, _ detailVC: inout DetailView, _ pair: ImageColorPair) {
+    func configureDetailView(_ id: Int, _ detail: Detail, _ detailVC: inout DetailView, _ pair: ImageColorPair) { //TODO: is this the right approach?
         DispatchQueue.main.async { [weak detailVC] in
-            detailVC?.id = id
+            detailVC?.id = id                               //TODO: do you need to pass the id ?
             detailVC?.configureItem(with: detail, pair)
         }
     }
@@ -173,7 +174,7 @@ extension SearchView: SearchViewInterface {
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         hapticFeedbackSoft()
-        guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return } //TODO: check if adding percent encoding cause misbehavior
         let indexValue = sender.selectedSegmentIndex
         searchViewModel.segmentedControlValueChanged(to: indexValue, with: searchText)
     }
@@ -240,7 +241,7 @@ extension SearchView: UICollectionViewDataSource {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cell_ID, for: indexPath) as! SearchCell
         
-        cell.setImageHeigth( 2 * sizingValue )
+        cell.setImageHeigth( 2 * sizingValue ) //TODO: Handle these inside the cell
         cell.setImageWidth( 2 * sizingValue )
         
         cell.configureCell(with: searchViewModel.cellForItem(at: indexPath))
@@ -314,7 +315,7 @@ extension SearchView: UICollectionViewDelegate {
 extension SearchView: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // INFO: SearchView+Pseudo.swift
+    // INFO: SearchView+Pseudo.swift
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return cellSize }
         let totalWidth = collectionView.bounds.width
         let sectionInsets = flowLayout.sectionInset
@@ -350,7 +351,7 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
 }
 
 /* SearchBar - Delegate */
-extension SearchView: UISearchBarDelegate {
+extension SearchView: UISearchBarDelegate { //TODO: Handle more use cases
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         hapticFeedbackSoft()
@@ -364,13 +365,13 @@ extension SearchView: UISearchBarDelegate {
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
            
-           timeControl?.invalidate()
-           timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
-               
-               guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-               self?.searchViewModel.textDidChange(with: searchText)
-           })
-   }
+        timeControl?.invalidate()
+        timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
+
+        guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        self?.searchViewModel.textDidChange(with: searchText)
+        })
+    }
 }
 
 

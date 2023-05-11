@@ -18,8 +18,8 @@ final class SearchViewModel {
     
     private var items: [ColumnItem] = []
     private var idsOfAllFetchedRecords = Set<Int>()
-    private var cacheDetails: [Int : Detail] = [:]
-    private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:]
+    private var cacheDetails: [Int : Detail] = [:]                               // TODO: Is this a good approach?
+    private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:]       // TODO: Is this a good approach?
     
     private var paginationOffSet = 0
     private var mediaType_State: MediaType? = .movie
@@ -49,7 +49,7 @@ final class SearchViewModel {
 extension SearchViewModel: SearchModelDelegate {
     
     func dataDidFetch() {
-        let retrievedData: [SearchCellModel] = model.dataFetched.map {
+        let retrievedData: [SearchCellModel] = model.dataFetched.map {  //TODO: Is there a better approach?
             .init(
                 id: $0.trackID ?? 0,
                 artworkUrl: $0.artworkUrl100 ?? "",
@@ -76,7 +76,7 @@ extension SearchViewModel: SearchViewModelInterface {
     
     func viewDidLoad() {
         view?.assignPropsOfSearchViewModel()
-        view?.assignPropsOfDetailViewModel()
+        view?.assignPropsOfDetailViewModel() // TODO: minimize to one call
         view?.assignPropsOfSearchBar()
         view?.configureCollectionView()
         view?.configureSegmentedControl()
@@ -106,8 +106,8 @@ extension SearchViewModel: SearchViewModelInterface {
         }
     }
     
-    func setItems(_ items: [ColumnItem]) { // INFO: SearchViewModel+Pseudo.swift
-
+    func setItems(_ items: [ColumnItem]) {
+    // INFO: SearchViewModel+Pseudo.swift
         if items.count != AppConstants.requestLimit { lessThanPage_Flag = true }
         
         if lessThanPage_Flag {
@@ -132,7 +132,7 @@ extension SearchViewModel: SearchViewModelInterface {
                 self.items.append(contentsOf: items)
             }
         }
-        isLoadingNextPage_Flag = false // bug?
+        isLoadingNextPage_Flag = false // TODO: check if it arises a bug
     }
     
     func cellForItem(at indexPath: IndexPath) -> ColumnItem {
@@ -168,7 +168,7 @@ extension SearchViewModel: SearchViewModelInterface {
         if self.isSearchActive_Flag {
             return CGSize.zero
         } else {
-            return CGSize(width: width, height: 25)
+            return CGSize(width: width, height: 25) // TODO: migrate static int
         }
     }
     
@@ -176,7 +176,7 @@ extension SearchViewModel: SearchViewModelInterface {
         if self.isLoadingNextPage_Flag {
             return CGSize.zero
         } else {
-            return CGSize(width: width, height: 40)
+            return CGSize(width: width, height: 40) // TODO: migrate static int
         }
     }
     

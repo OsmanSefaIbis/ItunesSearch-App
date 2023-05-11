@@ -91,7 +91,6 @@
                 <outlet property="container" destination="m5X-ZV-Fek" id="pTl-v6-lgy"/>
                 <outlet property="nameLabel" destination="iDg-CG-gwv" id="BMQ-Az-xbe"/>
                 <outlet property="releaseDateLabel" destination="GPX-1R-LZ7" id="VSm-ON-D8F"/>
-                <outlet property="vStackContainer" destination="shA-3z-9m5" id="1iv-5A-1es"/>
             </connections>
             <point key="canvasLocation" x="112.21374045801527" y="0.0"/>
         </collectionViewCell>

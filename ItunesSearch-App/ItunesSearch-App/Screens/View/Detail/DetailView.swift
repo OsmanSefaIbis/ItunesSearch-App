@@ -18,7 +18,7 @@ final class DetailView: UIViewController{
     @IBOutlet private weak var view_FullContainer: UIView!
     @IBOutlet private weak var view_FullView: UIView!
     @IBOutlet private weak var view_ImageContainer: UIView!
-    @IBOutlet private weak var view_Fields: UIView!
+    @IBOutlet private weak var view_Fields: UIView!             // TODO: Too much, change configureBackgroundColors() --> to eliminate these, add a recursive solution
     @IBOutlet private weak var view_Description: UIView!
     @IBOutlet private weak var view_Buttons: UIView!
     /// above is added for colorization
@@ -34,7 +34,7 @@ final class DetailView: UIViewController{
     @IBOutlet private weak var label_CollectionName: UILabel!
     @IBOutlet private weak var label_ReleaseDate: UILabel!
     @IBOutlet private weak var label_PrimaryGenre: UILabel!
-    @IBOutlet private weak var label_Price: UILabel!
+    @IBOutlet private weak var label_Price: UILabel!                // TODO: Too much, what should i do, or is this normal idk?
     @IBOutlet private weak var label_Length: UILabel!
     @IBOutlet private weak var label_Size: UILabel!
     @IBOutlet private weak var label_RatingCount: UILabel!
@@ -51,7 +51,7 @@ final class DetailView: UIViewController{
     private var item: Detail?
     var id = 0
 
-    private let webView = WKWebView()
+    private let webView = WKWebView() // TODO: make it optional, unnecassary, or make it lazy idk
     private var player: AVPlayer?
     private var audioPlayerItem: AVPlayerItem?
     private var moviePlayerVC: AVPlayerViewController?

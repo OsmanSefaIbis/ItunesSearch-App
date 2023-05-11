@@ -16,7 +16,7 @@ enum Api: String {
             case .domain: return "itunes.apple.com/"
             case .searchPath: return "search?"
             case .lookupPath: return "lookup?"
-            case .limit: return "&limit=20"
+            case .limit: return "&limit=20" // TODO: static input, handle properly, make this dynamic
             case .offsetLimit: return "&offset="
         }
     }
