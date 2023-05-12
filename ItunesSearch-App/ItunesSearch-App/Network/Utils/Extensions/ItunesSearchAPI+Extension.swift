@@ -1,5 +1,5 @@
 //
-//  ItunesSearchApi.swift
+//  ItunesSearchAPI+Extension.swift
 //  ItunesSearch-App
 //
 //  Created by Sefa İbiş on 12.05.2023.
@@ -7,12 +7,7 @@
 
 import Foundation
 
-public enum ItunesSearchAPI {
-    
-    case search(input: String, media: MediaType, offset: Int)
-    case lookup(idList: [Int])
-    case topMedia(media: MediaType)
-}
+/// enum extension
 extension ItunesSearchAPI: Endpoint {
 
     public var baseUrl: String { Api.scheme.getV2().appending(Api.domain.getV2()) }
@@ -43,7 +38,4 @@ extension ItunesSearchAPI: Endpoint {
                 return params
         }
     }
-
-    
 }
-

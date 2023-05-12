@@ -9,6 +9,7 @@ import Foundation
 
 public typealias Parameters = [String : Any]
 
+/// interface
 public protocol Endpoint {
     
     var baseUrl: String { get }

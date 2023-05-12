@@ -9,14 +9,14 @@ import Foundation
 
 public enum NetworkError: Error {
     
-    case invalid
+    case invalidRequest
     case url(Error)
     case decode(Error)
     case unresolved(Error)
     
-    var localizedDesciption: String {
+    var localizedDescription: String {
         switch self{
-            case .invalid: return "Error: Invalid Request"
+            case .invalidRequest: return "Error: Invalid Request"
             case .url(let error): return "Error: Url Related \(error.localizedDescription)"
             case .decode(let error): return "Error: Decoding Related \(error.localizedDescription)"
             case .unresolved(let error): return "Error: Unresolved \(error.localizedDescription)"
