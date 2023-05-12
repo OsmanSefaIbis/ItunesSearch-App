@@ -50,6 +50,7 @@ class SearchCell: UICollectionViewCell {
 
         releaseDateLabel.text = convertDate(for: model.releaseDate) // TODO: can be migrated to a helper for readability
         nameLabel.text = model.name
+        // TODO: change collection price with track price
         collectionPriceLabel.text = (model.collectionPrice <= 0) ? HardCoded.free.get() : HardCoded.dolar.get().appending(String(model.collectionPrice))
         artworkImage.kf.setImage(with: URL(string: modifiedArtworkUrl)){ result in
             switch result {

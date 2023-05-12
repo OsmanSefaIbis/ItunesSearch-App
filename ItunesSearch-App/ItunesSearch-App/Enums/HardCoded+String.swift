@@ -20,7 +20,7 @@ enum HardCoded: String {
     
     func get() -> String {
         switch self {
-            case .getRequest: return "GET"
+            case .getRequest: return "GET" // delete
             case .collectionViewHeaderPhrase: return " Top Picks"
             case .previewText: return "Preview"
             case .audioEmoji: return "🔊"
@@ -32,13 +32,13 @@ enum HardCoded: String {
             case .noRating: return "No Rating"
             case .numberSign: return "# "
             case .ratingScale: return " /5"
-            case .termParam: return "term="
-            case .limitParam: return "limit=100/"
-            case .mediaParam: return "&media="
-            case .rssParam: return "rss/"
-            case .countryParam: return "us/"
-            case .jsonParam: return "json"
-            case .idParam: return "id="
+            case .termParam: return "term="  // delete
+            case .limitParam: return "limit=100/" // delete
+            case .mediaParam: return "&media=" //delete
+            case .rssParam: return "rss/" //delete
+            case .countryParam: return "us/" // delete
+            case .jsonParam: return "json" // delete
+            case .idParam: return "id=" // delete
             case .apiDateFormat: return "yyyy-MM-dd'T'HH:mm:ssZ"
             case .convertedDateFormat: return "MMMM d, yyyy"
             case .convertedDateFormatShort: return "MMM d, yyyy"

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MediaType: String {
+public enum MediaType: String {
     
     case movie, music, ebook, podcast
     

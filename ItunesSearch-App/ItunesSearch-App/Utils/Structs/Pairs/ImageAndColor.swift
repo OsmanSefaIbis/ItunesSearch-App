@@ -8,6 +8,7 @@
 import UIKit
 
 struct ImageColorPair {
+    
     let image: UIImage
     let color: UIColor
 }

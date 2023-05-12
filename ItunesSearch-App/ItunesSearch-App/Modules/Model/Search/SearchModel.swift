@@ -20,8 +20,8 @@ protocol SearchModelDelegate: AnyObject{
 
 class SearchModel {
     
-    private(set) var dataFetched: [SearchData] = [] // TODO: dealloc?
-    private(set) var topDataIdsFetched: [TopDataIds] = [] // TODO: dealloc?
+    private(set) var dataFetched: [SearchData] = [] 
+    private(set) var topDataIdsFetched: [TopDataIds] = []
     weak var delegate: SearchModelDelegate?
     
     /// URLSession

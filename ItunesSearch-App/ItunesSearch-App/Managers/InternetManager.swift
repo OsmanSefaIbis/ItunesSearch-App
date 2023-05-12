@@ -8,7 +8,7 @@
 import Foundation
 import SystemConfiguration
 
-class InternetManager{
+final class InternetManager{
     
     static var shared = InternetManager()
     
