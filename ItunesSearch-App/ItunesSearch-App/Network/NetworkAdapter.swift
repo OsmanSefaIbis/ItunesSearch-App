@@ -62,7 +62,8 @@ final class NetworkAdapter {
                 }
                 if ((self?.isValidJSON(String(data: data, encoding: .utf8)!)) != nil){
                     guard let result =  try? decoder.decode(dto, from: data) else {
-                        onCompletion(.failure(.decode(error!))) // FIXME: Force Unwrap
+                        onCompletion(.failure(.invalidRequest))
+//                        onCompletion(.failure(.decode(error!))) // FIXME: Force Unwrap
                         return
                     }
                     onCompletion(.success(result))

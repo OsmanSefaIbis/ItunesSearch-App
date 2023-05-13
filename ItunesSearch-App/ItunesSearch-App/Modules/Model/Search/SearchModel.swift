@@ -27,14 +27,31 @@ class SearchModel {
     private var network: NetworkAdapter { NetworkAdapter.shared }
     private var online: InternetManager { InternetManager.shared }
     
-    // Refactored New Code
+    private let dtoSearch =  SearchResultData.self
+    private var dtoTop = TopResultData.self
     
     func fetchSearchResults(input termValue: String, media mediaType: MediaType, startFrom offset: Int){
         
         let query: SearchQuery = .init(input: termValue, media: mediaType, offset: offset) // Migrate to view
         
-        if online.isInternetActive(){
-            network.fetchBySearch(by: query, dto: SearchResultData.self) { response in // add dto inside search query ?
+        if InternetManager.shared.isInternetActive(){
+            NetworkAdapter.shared.fetchBySearch(by: query, dto: dtoSearch) { [weak self] response in
+                switch response {
+                    case .success(let data):
+                        self?.dataFetched = data.results ?? []
+                        self?.delegate?.dataDidFetch()
+                    case .failure(_):
+                        self?.delegate?.dataDidNotFetch()
+                }
+            }
+        } else {
+            delegate?.dataDidNotFetch()
+        }
+    }
+    
+    func fetchIdResults(for idList: [Int]){
+        if InternetManager.shared.isInternetActive(){
+            NetworkAdapter.shared.fetchById(with: idList, dto: dtoSearch) { response in
                 switch response {
                     case .success(let data):
                         self.dataFetched = data.results ?? []
@@ -46,11 +63,28 @@ class SearchModel {
         } else {
             delegate?.dataDidNotFetch()
         }
-       
+    }
+    
+    func fetchTopResults(with media: MediaType){
+        if InternetManager.shared.isInternetActive(){
+            NetworkAdapter.shared.fetchTopPicks(by: media, dto: dtoTop) { response in
+                switch response {
+                    case .success(let data):
+                    guard let results = data.feed?.entry else { return }
+                    self.topDataIdsFetched = results
+                    self.delegate?.topDataDidFetch()
+                    case .failure(_):
+                        self.delegate?.dataDidNotFetch()
+                }
+            }
+        } else {
+            delegate?.dataDidNotFetch()
+        }
     }
     
     // Old Code
     /// URLSession
+/*
     func fetchDataForSearch(input termValue: String, media mediaType: MediaType, startFrom offset: Int) {
         
         if InternetManager.shared.isInternetActive() {
@@ -145,6 +179,7 @@ class SearchModel {
             delegate?.dataDidNotFetch()
         }
     }
+*/
     
     /// Alamofire
     func fetchDataWithAF(input termValue: String, media mediaType: MediaType, startFrom offset: Int) {

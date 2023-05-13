@@ -36,7 +36,7 @@ enum Api: String {
             case .lookupPath: return "/lookup"
             case .termParam: return "term=" // delete
             case .limit: return "&limit=20" // delete
-            case .limitParam: return "limit=100/" // delete
+            case .limitParam: return "/limit=100" // delete
             case .offsetLimit: return "&offset=" // delete
             case .rssParam: return "/rss"
             case .countryParam: return "/us"

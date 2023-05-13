@@ -35,14 +35,14 @@ final class SearchViewModel {
     }
     func topInvoked() {
         guard let mediaType = mediaType_State else { return }
-        model.fetchTopPicks(with: mediaType)
+        model.fetchTopResults(with: mediaType)
     }
     func topWithIdsInvoked(_ topIds: [Top]) {
-        let holdsTopIds = topIds.map { $0.id }
-        model.fetchByIds(for: holdsTopIds)
+        let holdsTopIds = topIds.compactMap { Int($0.id) }
+        model.fetchIdResults(for: holdsTopIds)
     }
     func searchInvoked(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int) {
-        model.fetchDataForSearch(input: searchTerm, media: mediaType, startFrom: offSetValue)
+        model.fetchSearchResults(input: searchTerm, media: mediaType, startFrom: offSetValue)
     }
 }
 

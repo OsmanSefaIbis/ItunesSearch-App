@@ -32,10 +32,8 @@ extension NetworkAdapter {
         }
         if !isNil(param: request.media){
             guard let media = request.media else { return nil }
-            components.path = endpoint.topMediaPath.appending(media.getTop())
-            components.queryItems = endpoint.params.map {
-                URLQueryItem(name: $0.key , value: "\($0.value)")
-            }
+            // TODO: change limit param naming
+            components.path = endpoint.topMediaPath.appending(media.getTopV2()).appending(Api.limitParam.getV2())
 
         }
         guard var url = components.url else {

@@ -33,7 +33,7 @@ extension ItunesSearchAPI: Endpoint {
                 return params
                 
             case .topMedia(_):
-                var params = Parameters()
+            var params = Parameters() // TODO: delete this part
                 params["limit"] = 100
                 return params
         }
