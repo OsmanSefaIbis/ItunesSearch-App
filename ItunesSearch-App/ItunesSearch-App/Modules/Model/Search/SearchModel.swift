@@ -14,7 +14,7 @@ import Alamofire
 protocol SearchModelDelegate: AnyObject{
     
     func dataDidFetch()
-    func dataDidNotFetch()
+    func dataDidNotFetch() // name these properly, let them have a file
     func topDataDidFetch()
 }
 
@@ -24,6 +24,32 @@ class SearchModel {
     private(set) var topDataIdsFetched: [TopDataIds] = []
     weak var delegate: SearchModelDelegate?
     
+    private var network: NetworkAdapter { NetworkAdapter.shared }
+    private var online: InternetManager { InternetManager.shared }
+    
+    // Refactored New Code
+    
+    func fetchSearchResults(input termValue: String, media mediaType: MediaType, startFrom offset: Int){
+        
+        let query: SearchQuery = .init(input: termValue, media: mediaType, offset: offset) // Migrate to view
+        
+        if online.isInternetActive(){
+            network.fetchBySearch(by: query, dto: SearchResultData.self) { response in // add dto inside search query ?
+                switch response {
+                    case .success(let data):
+                        self.dataFetched = data.results ?? []
+                        self.delegate?.dataDidFetch()
+                    case .failure(_):
+                        self.delegate?.dataDidNotFetch()
+                }
+            }
+        } else {
+            delegate?.dataDidNotFetch()
+        }
+       
+    }
+    
+    // Old Code
     /// URLSession
     func fetchDataForSearch(input termValue: String, media mediaType: MediaType, startFrom offset: Int) {
         
