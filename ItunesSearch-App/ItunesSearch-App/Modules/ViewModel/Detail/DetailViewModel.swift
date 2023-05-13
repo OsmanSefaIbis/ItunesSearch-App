@@ -21,14 +21,14 @@ final class DetailViewModel{
         model.delegate = self
     }
     func searchInvoked(withIds idValues: [Int]){
-        model.fetchByIds(for: idValues)
+        model.fetchIdResults(for: idValues)
     }
 }
 
 extension DetailViewModel: DetailModelDelegate{
-    
-    func dataDidFetch(){
-        let retrievedData: [Detail] = model.dataFetched.map{    //TODO: Is there a better approach? 
+
+    func didFetchDetailData(){
+        let retrievedData: [Detail] = model.detailResults.map{    //TODO: Is there a better approach?
             .init(
                 id: $0.trackID ?? 0,
                 kind: $0.kind ?? "",
@@ -56,14 +56,20 @@ extension DetailViewModel: DetailModelDelegate{
         }
         self.delegate?.refreshItem(retrievedData)
     }
-    func dataDidNotFetch() {
+    func failedDataFetch() {
         delegate?.internetUnreachable(HardCoded.offlinePrompt.get())
     }
 }
 
 extension DetailViewModel: DetailViewModelInterface {
+    
+    func assembleView(by foundation: CompactDetail, with skeloton: DetailView){
+        // TODO: 
+        skeloton.configureView(with: foundation.data, foundation.imageAndColor)
+        self.delegate?.passPage(skeloton)
+    }
+    
     func configureItem(with item: Detail, _ pair: ImageColorPair) {
-        
         guard let isColorDark = view?.isColorDark(pair.color) else { return }
         
         if isColorDark{
@@ -83,6 +89,7 @@ extension DetailViewModel: DetailViewModelInterface {
             assert(false, HardCoded.errorPromptKind.get())
         }
     }
+    
     func convertDate(_ date: String) -> String {
         view?.convertDate(for: date) ?? ""
     }

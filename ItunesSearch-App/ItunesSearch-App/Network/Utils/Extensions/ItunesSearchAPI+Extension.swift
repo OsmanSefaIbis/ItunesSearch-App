@@ -8,7 +8,7 @@
 import Foundation
 
 /// enum extension
-extension ItunesSearchAPI: Endpoint {
+extension ItunesSearchAPI: Endpointable {
 
     public var baseUrl: String { Api.scheme.getV2().appending(Api.domain.getV2()) }
     public var searchPath: String { Api.searchPath.getV2() }

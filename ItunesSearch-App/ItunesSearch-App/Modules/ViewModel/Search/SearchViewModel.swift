@@ -23,7 +23,6 @@ final class SearchViewModel {
     
     private var paginationOffSet = 0
     private var mediaType_State: MediaType? = .movie
-    
     private var lessThanPage_Flag = false
     private var isLoadingNextPage_Flag = false
     private var isSearchActive_Flag = false
@@ -141,15 +140,14 @@ extension SearchViewModel: SearchViewModelInterface {
     
     func didSelectItem(at indexPath: IndexPath) {
         
-        guard let mediaType = mediaType_State else { return }
-        guard var detailPage = view?.createDetailView(by: mediaType.getView()) else { return }
-        
         let id = items[indexPath.item].id
-        guard let detailInfo = cacheDetails[id] else { return }
+        guard let media = mediaType_State else { return }
+        guard let detailData = cacheDetails[id] else { return }
         guard let pair = cacheDetailImagesAndColors[id] else { return }
         
-        view?.configureDetailView(id, detailInfo, &detailPage, pair)
-        view?.pushDetailPageToNavigation(detailPage)
+        let detailFoundation: CompactDetail = .init(media: media, data: detailData, imageAndColor: pair)
+        
+        view?.initiateDetailCreation(with: detailFoundation)
     }
     
     func willDisplay(at indexPath: IndexPath, with searchText: String) {

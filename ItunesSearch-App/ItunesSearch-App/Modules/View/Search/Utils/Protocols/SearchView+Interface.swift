@@ -34,8 +34,7 @@ protocol SearchViewInterface: AnyObject {
     func stopActivityIndicator()
     func startActivityIndicator()
     func reloadCollectionView()
-    func createDetailView(by storyBoardIdentifier: String) -> DetailView
-    func pushDetailPageToNavigation(_ detailPage: DetailView)
-    func configureDetailView(_ id: Int, _ detail: Detail, _ detailVC: inout DetailView, _ pair: ImageColorPair)
+    func initiateDetailCreation(with foundation: CompactDetail)
+    func pushPageToNavigation(push thisPage: UIViewController)
     func dismissKeyBoard()
 }

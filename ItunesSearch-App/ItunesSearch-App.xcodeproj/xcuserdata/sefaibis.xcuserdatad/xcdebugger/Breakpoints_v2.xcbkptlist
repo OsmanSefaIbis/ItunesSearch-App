@@ -7,47 +7,47 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6FAA396E-199D-4322-977D-6B120928C1C0"
+            uuid = "73F21717-E06A-4AB7-AA4F-05D89C974760"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Screens/Model/Search/SearchModel.swift"
+            filePath = "ItunesSearch-App/Modules/View/Search/SearchView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "fetchByIds(for:)"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "initiateDetailCreation(with:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "6FAA396E-199D-4322-977D-6B120928C1C0 - 4e00d6449b31c30b"
+                  uuid = "73F21717-E06A-4AB7-AA4F-05D89C974760 - 9769613b94113e47"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in ItunesSearch_App.SearchModel.fetchByIds(for: Swift.Array&lt;Swift.String&gt;) -&gt; ()"
+                  symbolName = "ItunesSearch_App.SearchView.initiateDetailCreation(with: ItunesSearch_App.CompactDetail) -&gt; ()"
                   moduleName = "ItunesSearch-App"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Screens/Model/Search/SearchModel.swift"
+                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Modules/View/Search/SearchView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "74"
-                  endingLineNumber = "74"
-                  offsetFromSymbolStart = "944">
+                  startingLineNumber = "144"
+                  endingLineNumber = "144"
+                  offsetFromSymbolStart = "40">
                </Location>
                <Location
-                  uuid = "6FAA396E-199D-4322-977D-6B120928C1C0 - 4e00d6449b31c30b"
+                  uuid = "73F21717-E06A-4AB7-AA4F-05D89C974760 - 9769613b94113e26"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in ItunesSearch_App.SearchModel.fetchByIds(for: Swift.Array&lt;Swift.String&gt;) -&gt; ()"
+                  symbolName = "ItunesSearch_App.SearchView.initiateDetailCreation(with: ItunesSearch_App.CompactDetail) -&gt; ()"
                   moduleName = "ItunesSearch-App"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Screens/Model/Search/SearchModel.swift"
+                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Modules/View/Search/SearchView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "74"
-                  endingLineNumber = "74"
-                  offsetFromSymbolStart = "980">
+                  startingLineNumber = "145"
+                  endingLineNumber = "145"
+                  offsetFromSymbolStart = "272">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -55,81 +55,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0B9E6860-883A-48E7-A381-42FDE98BE7E3"
+            uuid = "3B1D0782-354A-47F0-9867-BC0C15371723"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Network/NetworkAdapter.swift"
+            filePath = "ItunesSearch-App/Modules/View/Search/SearchView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "executeRequest(request:dto:decoder:onCompletion:)"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
+            landmarkName = "passPage(_:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "0B9E6860-883A-48E7-A381-42FDE98BE7E3 - 9289540ea65699fb"
+                  uuid = "3B1D0782-354A-47F0-9867-BC0C15371723 - 4cdc2b8b3a781e4a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in ItunesSearch_App.NetworkAdapter.executeRequest&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(request: Foundation.URLRequest, dto: &#x3c4;_0_0.Type, decoder: Foundation.JSONDecoder, onCompletion: (Swift.Result&lt;&#x3c4;_0_0, ItunesSearch_App.NetworkError&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "ItunesSearch_App.SearchView.passPage(ItunesSearch_App.DetailView) -&gt; ()"
                   moduleName = "ItunesSearch-App"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Network/NetworkAdapter.swift"
+                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Modules/View/Search/SearchView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "69"
-                  endingLineNumber = "69"
-                  offsetFromSymbolStart = "1840">
+                  startingLineNumber = "225"
+                  endingLineNumber = "225"
+                  offsetFromSymbolStart = "36">
                </Location>
                <Location
-                  uuid = "0B9E6860-883A-48E7-A381-42FDE98BE7E3 - 9289540ea656999a"
+                  uuid = "3B1D0782-354A-47F0-9867-BC0C15371723 - 4cdc2b8b3a781e2d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in ItunesSearch_App.NetworkAdapter.executeRequest&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(request: Foundation.URLRequest, dto: &#x3c4;_0_0.Type, decoder: Foundation.JSONDecoder, onCompletion: (Swift.Result&lt;&#x3c4;_0_0, ItunesSearch_App.NetworkError&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "ItunesSearch_App.SearchView.passPage(ItunesSearch_App.DetailView) -&gt; ()"
                   moduleName = "ItunesSearch-App"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Network/NetworkAdapter.swift"
+                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Modules/View/Search/SearchView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "68"
-                  endingLineNumber = "68"
-                  offsetFromSymbolStart = "1784">
+                  startingLineNumber = "226"
+                  endingLineNumber = "226"
+                  offsetFromSymbolStart = "36">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "093AB8DE-3E01-4125-BF6D-44C7AAC5D850"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Network/NetworkAdapter.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "fetchBySearch(by:dto:onCompletion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3BFCABEE-F344-442F-BEEE-1D0AEDF5B9D8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Network/NetworkAdapter.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "fetchById(with:dto:onCompletion:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

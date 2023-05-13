@@ -49,7 +49,6 @@ final class DetailView: UIViewController{
     private lazy var viewModel = DetailViewModel()
         
     private var item: Detail?
-    var id = 0
 
     private let webView = WKWebView() // TODO: make it optional, unnecassary, or make it lazy idk
     private var player: AVPlayer?
@@ -100,52 +99,61 @@ final class DetailView: UIViewController{
 
 extension DetailView: DetailViewInterface {
     
-    func configureItem( with item: Detail, _ pair: ImageColorPair){
+    func configureView( with item: Detail, _ pair: ImageColorPair){
         viewModel.configureItem(with: item, pair)
     }
     
     func configureMutualFields(_ item: Detail, _ pair: ImageColorPair) {
         
         configureBackgroundColors(pair.color)
-        imageView_Image.image = pair.image
-        viewUrl = URL(string: item.viewUrl)
-        label_Name.text = item.name
-        label_Creator.text = item.creator
-        label_ReleaseDate.text = viewModel.convertDate(item.releaseDate)
-        label_Price.text = viewModel.handlePrice(item.price)
+        DispatchQueue.main.async { [weak self] in
+            self?.imageView_Image.image = pair.image
+            self?.viewUrl = URL(string: item.viewUrl)
+            self?.label_Name.text = item.name
+            self?.label_Creator.text = item.creator
+            self?.label_ReleaseDate.text = self?.viewModel.convertDate(item.releaseDate)
+            self?.label_Price.text = self?.viewModel.handlePrice(item.price)
+        }
     }
     
     func configureMovie(_ item: Detail) {
         
-        previewUrl = URL(string: item.previewUrl)
-        label_PrimaryGenre.text = item.genre
-        textView_Description.text = viewModel.handleDescription(item.longDescription)
-        label_Length.text = viewModel.handleTime(millis: item.length)
-        label_CollectionName.text = viewModel.handleCollectionName(item.collectionName)
+        DispatchQueue.main.async { [weak self] in
+            self?.previewUrl = URL(string: item.previewUrl)
+            self?.label_PrimaryGenre.text = item.genre
+            self?.textView_Description.text = self?.viewModel.handleDescription(item.longDescription)
+            self?.label_Length.text = self?.viewModel.handleTime(millis: item.length)
+            self?.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
+        }
     }
     func configureMusic(_ item: Detail) {
-        
-        previewUrl = URL(string: item.previewUrl)
-        label_PrimaryGenre.text = item.genre
-        label_CollectionName.text = viewModel.handleCollectionName(item.collectionName)
-        label_Length.text = viewModel.handleTime(millis: item.length)
-        label_TrackInfo.text = viewModel.constructTrackInfo(item.trackNumber, item.albumNumber)
+        DispatchQueue.main.async { [weak self] in
+            self?.previewUrl = URL(string: item.previewUrl)
+            self?.label_PrimaryGenre.text = item.genre
+            self?.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
+            self?.label_Length.text = self?.viewModel.handleTime(millis: item.length)
+            self?.label_TrackInfo.text = self?.viewModel.constructTrackInfo(item.trackNumber, item.albumNumber)
+        }
  
     }
     func configureEbook(_ item: Detail) {
-        label_Size.text = viewModel.handleByteRepresentation(item.size)
-        textView_Description.text = viewModel.handleDescription(item.description.withoutHtmlEntities)
-        label_Genres.text = viewModel.handleJoin(item.genreList)
-        label_RatingCount.text = viewModel.handleRating(item.ratingCount)
-        label_Rating.text = viewModel.handleRating(item.rating)
+        DispatchQueue.main.async { [weak self] in
+            self?.label_Size.text = self?.viewModel.handleByteRepresentation(item.size)
+            self?.textView_Description.text = self?.viewModel.handleDescription(item.description.withoutHtmlEntities)
+            self?.label_Genres.text = self?.viewModel.handleJoin(item.genreList)
+            self?.label_RatingCount.text = self?.viewModel.handleRating(item.ratingCount)
+            self?.label_Rating.text = self?.viewModel.handleRating(item.rating)
+        }
     }
     func configurePodcast(_ item: Detail) {
-        label_Content.text = item.advisory
-        label_PrimaryGenre.text = item.genre
-        label_CollectionName.text = viewModel.handleCollectionName(item.collectionName)
-        label_Length.text = viewModel.handleTime(seconds: item.length)
-        label_Genres.text = viewModel.handleJoin(item.genreList)
-        label_Episodes.text = viewModel.constructEpisodeInfo(item.episodeCount)
+        DispatchQueue.main.async { [weak self] in
+            self?.label_Content.text = item.advisory
+            self?.label_PrimaryGenre.text = item.genre
+            self?.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
+            self?.label_Length.text = self?.viewModel.handleTime(seconds: item.length)
+            self?.label_Genres.text = self?.viewModel.handleJoin(item.genreList)
+            self?.label_Episodes.text = self?.viewModel.constructEpisodeInfo(item.episodeCount)
+        }
     }
     
     // TODO: Change this, go by subviews and set

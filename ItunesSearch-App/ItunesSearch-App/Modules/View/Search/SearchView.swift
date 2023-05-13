@@ -40,7 +40,7 @@ final class SearchView: UIViewController{
 }
 /* Search View - Interface */
 extension SearchView: SearchViewInterface {
-    
+
     // TODO: Maybe assign can be unified
     func assignPropsOfSearchViewModel() {
         searchViewModel.delegate = self
@@ -80,7 +80,7 @@ extension SearchView: SearchViewInterface {
     func setItems( _ items: [SearchCellModel]) {
         
         searchViewModel.setItems(items)
-        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { //TODO: optimize this part, do not let the behavior be statically determined
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { //TODO: whyStatic
             self.stopActivityIndicator()
             self.reloadCollectionView()
         }
@@ -140,19 +140,12 @@ extension SearchView: SearchViewInterface {
         }
     }
     
-    func createDetailView(by storyBoardIdentifier: String) -> DetailView {
-        storyboard?.instantiateViewController(withIdentifier: storyBoardIdentifier) as! DetailView
+    func initiateDetailCreation(with foundation: CompactDetail){
+        let skeleton = storyboard?.instantiateViewController(withIdentifier: foundation.media.getView()) as! DetailView
+        detailViewModel.assembleView(by: foundation, with: skeleton)
     }
-    
-    func pushDetailPageToNavigation(_ detailPage: DetailView) {
-        self.navigationController?.pushViewController(detailPage, animated: true)
-    }
-    
-    func configureDetailView(_ id: Int, _ detail: Detail, _ detailVC: inout DetailView, _ pair: ImageColorPair) { //TODO: is this the right approach?
-        DispatchQueue.main.async { [weak detailVC] in
-            detailVC?.id = id                               //TODO: do you need to pass the id ?
-            detailVC?.configureItem(with: detail, pair)
-        }
+    func pushPageToNavigation(push thisPage: UIViewController) {
+        self.navigationController?.pushViewController(thisPage, animated: true)
     }
     /// Interface Helpers
     func assignPropsOfCollectionView() {
@@ -228,6 +221,9 @@ extension SearchView: DetailViewModelDelegate{
                 self?.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: pair)
             }
         }
+    }
+    func passPage(_ page: DetailView) {
+        pushPageToNavigation(push: page)
     }
 }
     

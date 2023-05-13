@@ -10,5 +10,6 @@ import Foundation
 protocol DetailViewModelDelegate: AnyObject{
     
     func refreshItem(_ retrieved: [Detail])
+    func passPage(_ page: DetailView)
     func internetUnreachable(_ errorPrompt: String)
 }

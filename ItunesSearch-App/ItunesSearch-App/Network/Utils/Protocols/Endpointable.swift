@@ -10,7 +10,7 @@ import Foundation
 public typealias Parameters = [String : Any]
 
 /// interface
-public protocol Endpoint {
+public protocol Endpointable {
     
     var baseUrl: String { get }
     var searchPath: String { get }

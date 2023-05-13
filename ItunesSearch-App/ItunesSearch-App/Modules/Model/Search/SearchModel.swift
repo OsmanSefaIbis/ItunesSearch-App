@@ -11,10 +11,10 @@ final class SearchModel {
     
     private(set) var searchResults: [SearchData] = []
     private(set) var topResults: [TopDataIds] = []
-
+    
     private var network: NetworkAdapter { NetworkAdapter.shared }
     private var internet: InternetManager { InternetManager.shared }
-
+    
     private let dtoSearch =  SearchResultData.self
     private let dtoTop = TopResultData.self
     
