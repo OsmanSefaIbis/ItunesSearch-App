@@ -27,7 +27,7 @@ class DetailModel{
     ///URLSession
     func fetchByIds(for idValues: [Int]){
         
-        if InternetManager.shared.isInternetActive() {
+        if InternetManager.shared.isOnline() {
             let urlCompose = composeUrl(idValues)
             
             if let url = URL(string: urlCompose){
@@ -58,7 +58,7 @@ class DetailModel{
     ///Alamofire
     func fetchSingularDataWithAF(for idValues: [Int]) {
 
-        if InternetManager.shared.isInternetActive() {
+        if InternetManager.shared.isOnline() {
             let urlCompose = composeUrl(idValues)
             AF.request(urlCompose).responseDecodable(of: DetailResultData.self){ (res) in
                 guard let response = res.value

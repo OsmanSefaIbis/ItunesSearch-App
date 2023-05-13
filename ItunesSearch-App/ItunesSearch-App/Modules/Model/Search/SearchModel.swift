@@ -1,203 +1,74 @@
 //
-//  Search.swift
+//  SearchModel.swift
 //  ItunesSearch-App
 //
+
 import Foundation
-import UIKit
-import Alamofire
 
-// TODO: Add repository pattern, VM should do the web service calls, VM-M needs refactor
-// TODO: Naming refactor is necessary, coherency is not attained
-// TODO: Clean the code from repetition, detail and search have same service call, write a base class
-// TODO: Consider Moya Apply it as an alternative for learning purposes
-
-protocol SearchModelDelegate: AnyObject{
+final class SearchModel {
     
-    func dataDidFetch()
-    func dataDidNotFetch() // name these properly, let them have a file
-    func topDataDidFetch()
-}
-
-class SearchModel {
-    
-    private(set) var dataFetched: [SearchData] = [] 
-    private(set) var topDataIdsFetched: [TopDataIds] = []
     weak var delegate: SearchModelDelegate?
     
+    private(set) var searchResults: [SearchData] = []
+    private(set) var topResults: [TopDataIds] = []
+
     private var network: NetworkAdapter { NetworkAdapter.shared }
-    private var online: InternetManager { InternetManager.shared }
-    
+    private var internet: InternetManager { InternetManager.shared }
+
     private let dtoSearch =  SearchResultData.self
-    private var dtoTop = TopResultData.self
+    private let dtoTop = TopResultData.self
     
-    func fetchSearchResults(input termValue: String, media mediaType: MediaType, startFrom offset: Int){
+    func fetchSearchResults(with query: SearchQuery){
         
-        let query: SearchQuery = .init(input: termValue, media: mediaType, offset: offset) // Migrate to view
-        
-        if InternetManager.shared.isInternetActive(){
-            NetworkAdapter.shared.fetchBySearch(by: query, dto: dtoSearch) { [weak self] response in
+        if internet.isOnline() {
+            network.fetchBySearch(by: query, dto: dtoSearch) { [weak self] response in
                 switch response {
                     case .success(let data):
-                        self?.dataFetched = data.results ?? []
-                        self?.delegate?.dataDidFetch()
+                        guard let results = data.results else { return }
+                        self?.searchResults = results
+                        self?.delegate?.didFetchSearchData()
                     case .failure(_):
-                        self?.delegate?.dataDidNotFetch()
+                        self?.delegate?.failedDataFetch()
                 }
             }
         } else {
-            delegate?.dataDidNotFetch()
+            delegate?.failedDataFetch()
         }
     }
     
     func fetchIdResults(for idList: [Int]){
-        if InternetManager.shared.isInternetActive(){
-            NetworkAdapter.shared.fetchById(with: idList, dto: dtoSearch) { response in
+        
+        if internet.isOnline() {
+            network.fetchById(with: idList, dto: dtoSearch) { [weak self] response in
                 switch response {
                     case .success(let data):
-                        self.dataFetched = data.results ?? []
-                        self.delegate?.dataDidFetch()
+                        guard let results = data.results else { return }
+                        self?.searchResults = results
+                        self?.delegate?.didFetchSearchData()
                     case .failure(_):
-                        self.delegate?.dataDidNotFetch()
+                        self?.delegate?.failedDataFetch()
                 }
             }
         } else {
-            delegate?.dataDidNotFetch()
+            delegate?.failedDataFetch()
         }
     }
     
     func fetchTopResults(with media: MediaType){
-        if InternetManager.shared.isInternetActive(){
-            NetworkAdapter.shared.fetchTopPicks(by: media, dto: dtoTop) { response in
+        
+        if internet.isOnline() {
+            network.fetchTopPicks(by: media, dto: dtoTop) { [weak self] response in
                 switch response {
                     case .success(let data):
-                    guard let results = data.feed?.entry else { return }
-                    self.topDataIdsFetched = results
-                    self.delegate?.topDataDidFetch()
+                        guard let results = data.feed?.entry else { return }
+                        self?.topResults = results
+                        self?.delegate?.didFetchTopData()
                     case .failure(_):
-                        self.delegate?.dataDidNotFetch()
+                        self?.delegate?.failedDataFetch()
                 }
             }
         } else {
-            delegate?.dataDidNotFetch()
+            delegate?.failedDataFetch()
         }
     }
-    
-    // Old Code
-    /// URLSession
-/*
-    func fetchDataForSearch(input termValue: String, media mediaType: MediaType, startFrom offset: Int) {
-        
-        if InternetManager.shared.isInternetActive() {
-            let urlCompose = composeUrl(termValue, mediaType, offset)
-            
-            if let url = URL(string: urlCompose) {
-                var request: URLRequest = .init(url: url)
-                request.httpMethod = HardCoded.getRequest.get()
-                
-                let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-                    if error != nil { return }
-                    if let data = data {
-                        
-                        if ((self?.isValidJSON(String(data: data, encoding: .utf8)!)) != nil) {
-                            do{
-                                let searchResultData = try JSONDecoder().decode(SearchResultData.self, from: data)
-                                if let searchData = searchResultData.results { self?.dataFetched = searchData }
-                                self?.delegate?.dataDidFetch()
-                            } catch { fatalError(HardCoded.fetchDataWithError.get() + "\(error)" ) }
-                        } else {
-                            fatalError(HardCoded.invalidJSON.get())
-                        }
-                    }
-                }
-                task.resume()
-            }
-        }else {
-            delegate?.dataDidNotFetch()
-        }
-    }
-    func fetchByIds(for idValues: [String]){
-        
-        if InternetManager.shared.isInternetActive() {
-            let urlCompose = composeUrl(idValues)
-            
-            if let url = URL(string: urlCompose){
-                var request: URLRequest = .init(url: url)
-                request.httpMethod = HardCoded.getRequest.get()
-                
-                let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-                    if error != nil { return }
-                    if let data = data {
-                        
-                        if ((self?.isValidJSON(String(data: data, encoding: .utf8)!)) != nil) {
-                            do{
-                                let searchResultData = try JSONDecoder().decode(SearchResultData.self, from: data)
-                                if let searchData = searchResultData.results { self?.dataFetched = searchData }
-                                self?.delegate?.dataDidFetch()
-                            } catch { fatalError(HardCoded.fetchSingularDataError.get() + "\(error)" ) }
-                        } else{
-                            fatalError(HardCoded.invalidJSON.get())
-                        }
-                    }
-                }
-                task.resume()
-            }
-        }else {
-            delegate?.dataDidNotFetch()
-        }
-    }
-    func fetchTopPicks(with mediaType: MediaType){
-        
-        if InternetManager.shared.isInternetActive() {
-            let urlCompose = composeUrl(mediaType)
-            
-            if let url = URL(string: urlCompose) {
-                var request: URLRequest = .init(url: url)
-                request.httpMethod = HardCoded.getRequest.get()
-                
-                let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-                    if error != nil { return }
-                    if let data = data {
-                        
-                        if ((self?.isValidJSON(String(data: data, encoding: .utf8)!)) != nil) {
-                            do{
-                                let topResultData = try JSONDecoder().decode(TopResultData.self, from: data)
-                                if let topData = topResultData.feed {
-                                    if let topDataIds = topData.entry{
-                                        self?.topDataIdsFetched = topDataIds
-                                    }
-                                }
-                                self?.delegate?.topDataDidFetch()
-                            } catch { fatalError(HardCoded.fetchDataWithError.get() + "\(error)" ) }
-                        } else {
-                            fatalError(HardCoded.invalidJSON.get())
-                        }
-                    }
-                }
-                task.resume()
-            }
-        }else {
-            delegate?.dataDidNotFetch()
-        }
-    }
-*/
-    
-    /// Alamofire
-    func fetchDataWithAF(input termValue: String, media mediaType: MediaType, startFrom offset: Int) {
-        
-        if InternetManager.shared.isInternetActive() {
-            let urlCompose = composeUrl(termValue, mediaType, offset)
-            AF.request(urlCompose).responseDecodable(of: SearchResultData.self){ (res) in
-                guard let response = res.value
-                else{
-                    self.delegate?.dataDidNotFetch()
-                    return
-                }
-                self.dataFetched = response.results ?? []
-                self.delegate?.dataDidFetch()
-            }
-        }else {
-            delegate?.dataDidNotFetch()
-        }
-    }
-    
 }

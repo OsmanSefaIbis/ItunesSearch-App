@@ -41,15 +41,15 @@ final class SearchViewModel {
         let holdsTopIds = topIds.compactMap { Int($0.id) }
         model.fetchIdResults(for: holdsTopIds)
     }
-    func searchInvoked(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int) {
-        model.fetchSearchResults(input: searchTerm, media: mediaType, startFrom: offSetValue)
+    func searchInvoked(with query: SearchQuery) {
+        model.fetchSearchResults(with: query)
     }
 }
 
 extension SearchViewModel: SearchModelDelegate {
     
-    func dataDidFetch() {
-        let retrievedData: [SearchCellModel] = model.dataFetched.map {  //TODO: Is there a better approach?
+    func didFetchSearchData() {
+        let retrievedData: [SearchCellModel] = model.searchResults.map {  //TODO: Is there a better approach?
             .init(
                 id: $0.trackID ?? 0,
                 artworkUrl: $0.artworkUrl100 ?? "",
@@ -62,12 +62,12 @@ extension SearchViewModel: SearchModelDelegate {
         self.delegate?.refreshItems(retrievedData)
     }
     
-    func topDataDidFetch() {
-        let retrievedIds: [Top] = model.topDataIdsFetched.map { .init( id: $0.id?.attributes?.imID ?? "" ) }
+    func didFetchTopData() {
+        let retrievedIds: [Top] = model.topResults.map { .init( id: $0.id?.attributes?.imID ?? "" ) }
         self.delegate?.topItems(retrievedIds)
     }
     
-    func dataDidNotFetch() {
+    func failedDataFetch() {
         delegate?.internetUnreachable(HardCoded.offlinePrompt.get())
     }
 }
@@ -157,10 +157,11 @@ extension SearchViewModel: SearchViewModelInterface {
         if lessThanPage_Flag { return }
         let latestItemNumeric = items.count - 1
         if indexPath.item == latestItemNumeric {
-            guard let MediaType = mediaType_State else { return }
+            guard let mediaType = mediaType_State else { return }
             paginationOffSet += AppConstants.requestLimit
             isLoadingNextPage_Flag = true
-            searchInvoked(searchText, MediaType, paginationOffSet)
+            let query: SearchQuery = .init(input: searchText, media: mediaType, offset: paginationOffSet)
+            searchInvoked(with: query)
         }
     }
     
@@ -249,7 +250,7 @@ extension SearchViewModel: SearchViewModelInterface {
         view?.reloadCollectionView()
     }
     
-    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?) {
+    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?) { // TODO: naming
         resetCollections()
         paginationOffSet = 0
         lessThanPage_Flag = false
@@ -259,13 +260,15 @@ extension SearchViewModel: SearchViewModelInterface {
         }
         view?.startActivityIndicator()
         if let offSet = offSetValue {
-            searchInvoked(searchTerm, mediaType, offSet)
+            let query: SearchQuery = .init(input: searchTerm, media: mediaType, offset: offSet)
+            searchInvoked(with: query)
         } else {
-            searchInvoked(searchTerm, mediaType, paginationOffSet)
+            let query: SearchQuery = .init(input: searchTerm, media: mediaType, offset: paginationOffSet)
+            searchInvoked(with: query)
         }
     }
     
-    func resetAndTrend(_ mediaType: MediaType) {
+    func resetAndTrend(_ mediaType: MediaType) { // TODO: naming
         reset()
         view?.startActivityIndicator()
         topInvoked()

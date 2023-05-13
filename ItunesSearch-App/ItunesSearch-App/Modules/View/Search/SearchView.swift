@@ -356,7 +356,7 @@ extension SearchView: UISearchBarDelegate { //TODO: Handle more use cases
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         hapticFeedbackSoft()
         searchBar.resignFirstResponder()
-        guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        guard let searchText = searchBar.text else { return }
         searchViewModel.searchBarSearchButtonClicked(with: searchText)
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -367,10 +367,8 @@ extension SearchView: UISearchBarDelegate { //TODO: Handle more use cases
            
         timeControl?.invalidate()
         timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
-
-        guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-        self?.searchViewModel.textDidChange(with: searchText)
-        })
+            self?.searchViewModel.textDidChange(with: searchText)
+        } )
     }
 }
 
