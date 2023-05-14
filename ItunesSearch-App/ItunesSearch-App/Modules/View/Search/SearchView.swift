@@ -141,7 +141,8 @@ extension SearchView: SearchViewInterface {
     }
     
     func initiateDetailCreation(with foundation: CompactDetail){
-        let skeleton = storyboard?.instantiateViewController(withIdentifier: foundation.media.getView()) as! DetailView
+        var skeleton = storyboard?.instantiateViewController(withIdentifier: foundation.media.getView()) as! DetailView
+        detailViewModel.view = skeleton
         detailViewModel.assembleView(by: foundation, with: skeleton)
     }
     func pushPageToNavigation(push thisPage: UIViewController) {

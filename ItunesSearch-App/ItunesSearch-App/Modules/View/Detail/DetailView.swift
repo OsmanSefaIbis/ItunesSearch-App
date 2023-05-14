@@ -99,7 +99,8 @@ final class DetailView: UIViewController{
 
 extension DetailView: DetailViewInterface {
     
-    func configureView( with item: Detail, _ pair: ImageColorPair){
+    func configureView( with item: Detail, _ pair: ImageColorPair, with skeloton: DetailView){
+        viewModel.view = skeloton
         viewModel.configureItem(with: item, pair)
     }
     

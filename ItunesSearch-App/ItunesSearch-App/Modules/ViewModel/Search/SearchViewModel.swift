@@ -146,7 +146,7 @@ extension SearchViewModel: SearchViewModelInterface {
         guard let pair = cacheDetailImagesAndColors[id] else { return }
         
         let detailFoundation: CompactDetail = .init(media: media, data: detailData, imageAndColor: pair)
-        
+    
         view?.initiateDetailCreation(with: detailFoundation)
     }
     
