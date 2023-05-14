@@ -22,11 +22,12 @@ final class DetailModel{
         
         if internet.isOnline() {
             network.fetchById(with: idList, dto: dtoDetail) { [weak self] response in
+                guard let strongSelf = self else { return }
                 switch response {
                 case .success(let data):
                     guard let results = data.results else { return }
-                    self?.detailResults = results
-                    self?.delegate?.didFetchDetailData()
+                    strongSelf.detailResults = results
+                    strongSelf.delegate?.didFetchDetailData()
                 case .failure(_):
                     self?.delegate?.failedDataFetch()
                 }

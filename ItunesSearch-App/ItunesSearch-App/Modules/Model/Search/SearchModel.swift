@@ -22,11 +22,12 @@ final class SearchModel {
         
         if internet.isOnline() {
             network.fetchBySearch(by: query, dto: dtoSearch) { [weak self] response in
+                guard let strongSelf = self else { return }
                 switch response {
                     case .success(let data):
                         guard let results = data.results else { return }
-                        self?.searchResults = results
-                        self?.delegate?.didFetchSearchData()
+                        strongSelf.searchResults = results
+                        strongSelf.delegate?.didFetchSearchData()
                     case .failure(_):
                         self?.delegate?.failedDataFetch()
                 }
@@ -40,11 +41,12 @@ final class SearchModel {
         
         if internet.isOnline() {
             network.fetchById(with: idList, dto: dtoSearch) { [weak self] response in
+                guard let strongSelf = self else { return }
                 switch response {
                     case .success(let data):
                         guard let results = data.results else { return }
-                        self?.searchResults = results
-                        self?.delegate?.didFetchSearchData()
+                        strongSelf.searchResults = results
+                        strongSelf.delegate?.didFetchSearchData()
                     case .failure(_):
                         self?.delegate?.failedDataFetch()
                 }
@@ -58,11 +60,12 @@ final class SearchModel {
         
         if internet.isOnline() {
             network.fetchTopPicks(by: media, dto: dtoTop) { [weak self] response in
+                guard let strongSelf = self else { return }
                 switch response {
                     case .success(let data):
                         guard let results = data.feed?.entry else { return }
-                        self?.topResults = results
-                        self?.delegate?.didFetchTopData()
+                        strongSelf.topResults = results
+                        strongSelf.delegate?.didFetchTopData()
                     case .failure(_):
                         self?.delegate?.failedDataFetch()
                 }

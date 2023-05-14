@@ -112,36 +112,42 @@ extension SearchView: SearchViewInterface {
     
     func stopReusableViewActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
-            self?.loadingView?.activityIndicator.stopAnimating()
+            guard let strongSelf = self else { return }
+            strongSelf.loadingView?.activityIndicator.stopAnimating()
         }
     }
     
     func startReusableViewActivityIndicator() {
+        
         DispatchQueue.main.async { [weak self] in
-            self?.loadingView?.activityIndicator.startAnimating()
+            guard let strongSelf = self else { return }
+            strongSelf.loadingView?.activityIndicator.startAnimating()
         }
     }
     
     func stopActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
-            self?.activityIndicatorOverall.stopAnimating()
+            guard let strongSelf = self else { return }
+            strongSelf.activityIndicatorOverall.stopAnimating()
         }
     }
     
     func startActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
-            self?.activityIndicatorOverall.startAnimating()
+            guard let strongSelf = self else { return }
+            strongSelf.activityIndicatorOverall.startAnimating()
         }
     }
     
     func reloadCollectionView() {
         DispatchQueue.main.async { [weak self] in
-            self?.collectionView.reloadData()
+            guard let strongSelf = self else { return }
+            strongSelf.collectionView.reloadData()
         }
     }
     
     func initiateDetailCreation(with foundation: CompactDetail){
-        var skeleton = storyboard?.instantiateViewController(withIdentifier: foundation.media.getView()) as! DetailView
+        let skeleton = storyboard?.instantiateViewController(withIdentifier: foundation.media.getView()) as! DetailView
         detailViewModel.view = skeleton
         detailViewModel.assembleView(by: foundation, with: skeleton)
     }
@@ -205,7 +211,8 @@ extension SearchView: SearchViewModelDelegate {
     func internetUnreachable(_ errorPrompt: String) {
         let alertController = UIAlertController(title: HardCoded.offLineAlertTitlePrompt.get(), message: errorPrompt, preferredStyle: .alert )
         let okAction = UIAlertAction(title: HardCoded.offLineActionTitlePrompt.get(), style: .default) { [weak self] (action:UIAlertAction!) in
-            self?.searchViewModel.reset()
+            guard let strongSelf = self else { return }
+            strongSelf.searchViewModel.reset()
         }
         alertController.addAction(okAction)
         self.present(alertController, animated: true)
@@ -218,8 +225,9 @@ extension SearchView: DetailViewModelDelegate{
             searchViewModel.setCacheDetails(key: each.id, value: each)
             
             provideImageColorPair( each.artworkUrl) { [weak self] pair in
+                guard let strongSelf = self else { return }
                 guard let pair = pair else { return }
-                self?.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: pair)
+                strongSelf.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: pair)
             }
         }
     }
@@ -364,7 +372,8 @@ extension SearchView: UISearchBarDelegate { //TODO: Handle more use cases
            
         timeControl?.invalidate()
         timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
-            self?.searchViewModel.textDidChange(with: searchText)
+            guard let strongSelf = self else { return }
+            strongSelf.searchViewModel.textDidChange(with: searchText)
         } )
     }
 }

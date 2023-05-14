@@ -122,67 +122,73 @@ extension DetailView: DetailViewInterface {
         
         configureBackgroundColors(pair.color)
         DispatchQueue.main.async { [weak self] in
-            self?.imageView_Image.image = pair.image
-            self?.viewUrl = URL(string: item.viewUrl)
-            self?.label_Name.text = item.name
-            self?.label_Creator.text = item.creator
-            self?.label_ReleaseDate.text = self?.viewModel.convertDate(item.releaseDate)
-            self?.label_Price.text = self?.viewModel.handlePrice(item.price)
+            guard let strongSelf = self else { return }
+            strongSelf.imageView_Image.image = pair.image
+            strongSelf.viewUrl = URL(string: item.viewUrl)
+            strongSelf.label_Name.text = item.name
+            strongSelf.label_Creator.text = item.creator
+            strongSelf.label_ReleaseDate.text = self?.viewModel.convertDate(item.releaseDate)
+            strongSelf.label_Price.text = self?.viewModel.handlePrice(item.price)
         }
     }
     
     func configureMovie(_ item: Detail) {
         
         DispatchQueue.main.async { [weak self] in
-            self?.previewUrl = URL(string: item.previewUrl)
-            self?.label_PrimaryGenre.text = item.genre
-            self?.textView_Description.text = self?.viewModel.handleDescription(item.longDescription)
-            self?.label_Length.text = self?.viewModel.handleTime(millis: item.length)
-            self?.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
+            guard let strongSelf = self else { return }
+            strongSelf.previewUrl = URL(string: item.previewUrl)
+            strongSelf.label_PrimaryGenre.text = item.genre
+            strongSelf.textView_Description.text = self?.viewModel.handleDescription(item.longDescription)
+            strongSelf.label_Length.text = self?.viewModel.handleTime(millis: item.length)
+            strongSelf.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
         }
     }
     func configureMusic(_ item: Detail) {
         DispatchQueue.main.async { [weak self] in
-            self?.previewUrl = URL(string: item.previewUrl)
-            self?.label_PrimaryGenre.text = item.genre
-            self?.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
-            self?.label_Length.text = self?.viewModel.handleTime(millis: item.length)
-            self?.label_TrackInfo.text = self?.viewModel.constructTrackInfo(item.trackNumber, item.albumNumber)
+            guard let strongSelf = self else { return }
+            strongSelf.previewUrl = URL(string: item.previewUrl)
+            strongSelf.label_PrimaryGenre.text = item.genre
+            strongSelf.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
+            strongSelf.label_Length.text = self?.viewModel.handleTime(millis: item.length)
+            strongSelf.label_TrackInfo.text = self?.viewModel.constructTrackInfo(item.trackNumber, item.albumNumber)
         }
  
     }
     func configureEbook(_ item: Detail) {
         DispatchQueue.main.async { [weak self] in
-            self?.label_Size.text = self?.viewModel.handleByteRepresentation(item.size)
-            self?.textView_Description.text = self?.viewModel.handleDescription(item.description.withoutHtmlEntities)
-            self?.label_Genres.text = self?.viewModel.handleJoin(item.genreList)
-            self?.label_RatingCount.text = self?.viewModel.handleRating(item.ratingCount)
-            self?.label_Rating.text = self?.viewModel.handleRating(item.rating)
+            guard let strongSelf = self else { return }
+            strongSelf.label_Size.text = self?.viewModel.handleByteRepresentation(item.size)
+            strongSelf.textView_Description.text = self?.viewModel.handleDescription(item.description.withoutHtmlEntities)
+            strongSelf.label_Genres.text = self?.viewModel.handleJoin(item.genreList)
+            strongSelf.label_RatingCount.text = self?.viewModel.handleRating(item.ratingCount)
+            strongSelf.label_Rating.text = self?.viewModel.handleRating(item.rating)
         }
     }
     func configurePodcast(_ item: Detail) {
         DispatchQueue.main.async { [weak self] in
-            self?.label_Content.text = item.advisory
-            self?.label_PrimaryGenre.text = item.genre
-            self?.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
-            self?.label_Length.text = self?.viewModel.handleTime(seconds: item.length)
-            self?.label_Genres.text = self?.viewModel.handleJoin(item.genreList)
-            self?.label_Episodes.text = self?.viewModel.constructEpisodeInfo(item.episodeCount)
+            guard let strongSelf = self else { return }
+            strongSelf.label_Content.text = item.advisory
+            strongSelf.label_PrimaryGenre.text = item.genre
+            strongSelf.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
+            strongSelf.label_Length.text = self?.viewModel.handleTime(seconds: item.length)
+            strongSelf.label_Genres.text = self?.viewModel.handleJoin(item.genreList)
+            strongSelf.label_Episodes.text = self?.viewModel.constructEpisodeInfo(item.episodeCount)
         }
     }
     
     // TODO: Change this, go by subviews and set
     func configureBackgroundColors(_ averageColor: UIColor){
        DispatchQueue.main.async { [weak self] in
-           self?.view_FullContainer.backgroundColor = averageColor
-           self?.view_FullView.backgroundColor = averageColor
-           self?.view_ImageContainer.backgroundColor = averageColor
-           self?.view_Fields.backgroundColor = averageColor
-           self?.view_Buttons.backgroundColor = averageColor
-           if let descriptionView = self?.view_Description {
+           guard let strongSelf = self else { return }
+           strongSelf.view_FullContainer.backgroundColor = averageColor
+           strongSelf.view_FullView.backgroundColor = averageColor
+           strongSelf.view_ImageContainer.backgroundColor = averageColor
+           strongSelf.view_Fields.backgroundColor = averageColor
+           strongSelf.view_Buttons.backgroundColor = averageColor
+           if let descriptionView = strongSelf.view_Description {
                descriptionView.backgroundColor = averageColor
            }
-           if let descriptionTextView = self?.textView_Description {
+           if let descriptionTextView = strongSelf.textView_Description {
                descriptionTextView.backgroundColor = averageColor
            }
        }
@@ -192,7 +198,10 @@ extension DetailView: DetailViewInterface {
         navigationController?.navigationBar.tintColor = UIColor(named: colorName)
     }
     func setTextColorOfView(_ color: UIColor) {
-        view_FullView.setAllTextColors(color)
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.view_FullView.setAllTextColors(color)
+        }
     }
     
     func toggleAudioOff() {

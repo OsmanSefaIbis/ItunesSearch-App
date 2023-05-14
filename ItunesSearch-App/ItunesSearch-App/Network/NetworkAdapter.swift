@@ -56,11 +56,13 @@ final class NetworkAdapter {
         onCompletion: @escaping (Result<T, NetworkError>) -> Void) {
 
         let task = session.dataTask(with: request) { [weak self] data, _, error in         // FIXME: Proper Error Handling
+            guard let strongSelf = self else { return }
             do {
                 guard let data = data, error == nil else{
                     throw error! // FIXME: Force Unwrap
                 }
-                if ((self?.isValidJSON(String(data: data, encoding: .utf8)!)) != nil){
+                guard let jsonString = String(data: data, encoding: .utf8) else { return } // ?
+                if strongSelf.isValidJSON(jsonString) {
                     guard let result =  try? decoder.decode(dto, from: data) else {
                         onCompletion(.failure(.decode(error!))) // FIXME: Force Unwrap
                         return

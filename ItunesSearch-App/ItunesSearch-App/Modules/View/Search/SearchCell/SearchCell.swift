@@ -58,7 +58,8 @@ class SearchCell: UICollectionViewCell {
                 let averageColor = value.image.averageColor
                 let opaqueAverageColor = averageColor?.withAlphaComponent(0.7)
                 DispatchQueue.main.async { [weak self] in
-                    self?.container.backgroundColor = opaqueAverageColor
+                    guard let strongSelf = self else { return }
+                    strongSelf.container.backgroundColor = opaqueAverageColor
                 }
             case .failure(let error):
                 print("Error: \(error)")
