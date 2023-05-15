@@ -127,8 +127,8 @@ extension DetailView: DetailViewInterface {
             strongSelf.viewUrl = URL(string: item.viewUrl)
             strongSelf.label_Name.text = item.name
             strongSelf.label_Creator.text = item.creator
-            strongSelf.label_ReleaseDate.text = self?.viewModel.convertDate(item.releaseDate)
-            strongSelf.label_Price.text = self?.viewModel.handlePrice(item.price)
+            strongSelf.label_ReleaseDate.text = strongSelf.viewModel.convertDate(item.releaseDate)
+            strongSelf.label_Price.text = strongSelf.viewModel.handlePrice(item.price)
         }
     }
     
@@ -138,9 +138,9 @@ extension DetailView: DetailViewInterface {
             guard let strongSelf = self else { return }
             strongSelf.previewUrl = URL(string: item.previewUrl)
             strongSelf.label_PrimaryGenre.text = item.genre
-            strongSelf.textView_Description.text = self?.viewModel.handleDescription(item.longDescription)
-            strongSelf.label_Length.text = self?.viewModel.handleTime(millis: item.length)
-            strongSelf.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
+            strongSelf.textView_Description.text = strongSelf.viewModel.handleDescription(item.longDescription)
+            strongSelf.label_Length.text = strongSelf.viewModel.handleTime(millis: item.length)
+            strongSelf.label_CollectionName.text = strongSelf.viewModel.handleCollectionName(item.collectionName)
         }
     }
     func configureMusic(_ item: Detail) {
@@ -148,20 +148,20 @@ extension DetailView: DetailViewInterface {
             guard let strongSelf = self else { return }
             strongSelf.previewUrl = URL(string: item.previewUrl)
             strongSelf.label_PrimaryGenre.text = item.genre
-            strongSelf.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
-            strongSelf.label_Length.text = self?.viewModel.handleTime(millis: item.length)
-            strongSelf.label_TrackInfo.text = self?.viewModel.constructTrackInfo(item.trackNumber, item.albumNumber)
+            strongSelf.label_CollectionName.text = strongSelf.viewModel.handleCollectionName(item.collectionName)
+            strongSelf.label_Length.text = strongSelf.viewModel.handleTime(millis: item.length)
+            strongSelf.label_TrackInfo.text = strongSelf.viewModel.constructTrackInfo(item.trackNumber, item.albumNumber)
         }
  
     }
     func configureEbook(_ item: Detail) {
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.label_Size.text = self?.viewModel.handleByteRepresentation(item.size)
-            strongSelf.textView_Description.text = self?.viewModel.handleDescription(item.description.withoutHtmlEntities)
-            strongSelf.label_Genres.text = self?.viewModel.handleJoin(item.genreList)
-            strongSelf.label_RatingCount.text = self?.viewModel.handleRating(item.ratingCount)
-            strongSelf.label_Rating.text = self?.viewModel.handleRating(item.rating)
+            strongSelf.label_Size.text = strongSelf.viewModel.handleByteRepresentation(item.size)
+            strongSelf.textView_Description.text = strongSelf.viewModel.handleDescription(item.description.withoutHtmlEntities)
+            strongSelf.label_Genres.text = strongSelf.viewModel.handleJoin(item.genreList)
+            strongSelf.label_RatingCount.text = strongSelf.viewModel.handleRating(item.ratingCount)
+            strongSelf.label_Rating.text = strongSelf.viewModel.handleRating(item.rating)
         }
     }
     func configurePodcast(_ item: Detail) {
@@ -169,10 +169,10 @@ extension DetailView: DetailViewInterface {
             guard let strongSelf = self else { return }
             strongSelf.label_Content.text = item.advisory
             strongSelf.label_PrimaryGenre.text = item.genre
-            strongSelf.label_CollectionName.text = self?.viewModel.handleCollectionName(item.collectionName)
-            strongSelf.label_Length.text = self?.viewModel.handleTime(seconds: item.length)
-            strongSelf.label_Genres.text = self?.viewModel.handleJoin(item.genreList)
-            strongSelf.label_Episodes.text = self?.viewModel.constructEpisodeInfo(item.episodeCount)
+            strongSelf.label_CollectionName.text = strongSelf.viewModel.handleCollectionName(item.collectionName)
+            strongSelf.label_Length.text = strongSelf.viewModel.handleTime(seconds: item.length)
+            strongSelf.label_Genres.text = strongSelf.viewModel.handleJoin(item.genreList)
+            strongSelf.label_Episodes.text = strongSelf.viewModel.constructEpisodeInfo(item.episodeCount)
         }
     }
     
@@ -244,10 +244,11 @@ extension DetailView: DetailViewInterface {
     /// Interface Helpers
     func adaptComponentsForDark(_ tintColor: UIColor){
         DispatchQueue.main.async { [weak self] in
-            if let view = self?.button_WebView { view.tintColor = tintColor }
-            if let movie = self?.button_MoviePreview { movie.tintColor = tintColor }
-            if let music = self?.button_MusicPreview { music.tintColor = tintColor }
-            if let navBar = self?.navigationController?.navigationBar { navBar.tintColor = .lightGray }
+            guard let strongSelf = self else { return }
+            if let view = strongSelf.button_WebView { view.tintColor = tintColor }
+            if let movie = strongSelf.button_MoviePreview { movie.tintColor = tintColor }
+            if let music = strongSelf.button_MusicPreview { music.tintColor = tintColor }
+            if let navBar = strongSelf.navigationController?.navigationBar { navBar.tintColor = .lightGray }
         }
     }
     

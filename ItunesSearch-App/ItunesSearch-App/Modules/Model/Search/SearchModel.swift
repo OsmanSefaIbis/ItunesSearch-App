@@ -29,7 +29,7 @@ final class SearchModel {
                         strongSelf.searchResults = results
                         strongSelf.delegate?.didFetchSearchData()
                     case .failure(_):
-                        self?.delegate?.failedDataFetch()
+                        strongSelf.delegate?.failedDataFetch()
                 }
             }
         } else {
@@ -48,7 +48,7 @@ final class SearchModel {
                         strongSelf.searchResults = results
                         strongSelf.delegate?.didFetchSearchData()
                     case .failure(_):
-                        self?.delegate?.failedDataFetch()
+                        strongSelf.delegate?.failedDataFetch()
                 }
             }
         } else {
@@ -67,7 +67,7 @@ final class SearchModel {
                         strongSelf.topResults = results
                         strongSelf.delegate?.didFetchTopData()
                     case .failure(_):
-                        self?.delegate?.failedDataFetch()
+                        strongSelf.delegate?.failedDataFetch()
                 }
             }
         } else {

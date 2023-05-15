@@ -29,7 +29,7 @@ final class DetailModel{
                     strongSelf.detailResults = results
                     strongSelf.delegate?.didFetchDetailData()
                 case .failure(_):
-                    self?.delegate?.failedDataFetch()
+                    strongSelf.delegate?.failedDataFetch()
                 }
             }
         } else {
