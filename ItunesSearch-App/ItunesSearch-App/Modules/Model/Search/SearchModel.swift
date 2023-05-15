@@ -15,21 +15,21 @@ final class SearchModel {
     private var network: NetworkAdapter { NetworkAdapter.shared }
     private var internet: InternetManager { InternetManager.shared }
     
-    private let dtoSearch =  SearchResultData.self
+    private let dtoSearch =  SearchResultData.self // TODO: migrate
     private let dtoTop = TopResultData.self
     
     func fetchSearchResults(with query: SearchQuery){
         
         if internet.isOnline() {
-            network.fetchBySearch(by: query, dto: dtoSearch) { [weak self] response in
-                guard let strongSelf = self else { return }
+            network.fetchBySearch(by: query, dto: dtoSearch) { [weak self] response in // TODO naming
+                guard let self else { return } // apply this
                 switch response {
                     case .success(let data):
                         guard let results = data.results else { return }
-                        strongSelf.searchResults = results
-                        strongSelf.delegate?.didFetchSearchData()
+                        self.searchResults = results
+                        self.delegate?.didFetchSearchData()
                     case .failure(_):
-                        strongSelf.delegate?.failedDataFetch()
+                        self.delegate?.failedDataFetch()
                 }
             }
         } else {

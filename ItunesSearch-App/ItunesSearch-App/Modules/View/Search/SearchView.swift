@@ -14,9 +14,9 @@ final class SearchView: UIViewController{
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var collectionView: UICollectionView!
     
-    let hapticHeavy = UIImpactFeedbackGenerator(style: .heavy)
+    let hapticHeavy = UIImpactFeedbackGenerator(style: .heavy) // helper migrate
     let hapticSoft = UIImpactFeedbackGenerator(style: .soft)
-    private var timeControl: Timer?
+    private var timeControl: Timer? //todo
     
     private let cell_ID = AppConstants.cellIdentifier
     private let cellSize = AppConstants.defaultCellSize
@@ -26,7 +26,7 @@ final class SearchView: UIViewController{
     private let imageDimension = AppConstants.imageDimensionForDetail
     private let sectionInset = AppConstants.defaultSectionInset
     
-    private lazy var searchViewModel = SearchViewModel()
+    private lazy var searchViewModel = SearchViewModel() // why? 
     private lazy var detailViewModel = DetailViewModel()
     
     private var loadingView: LoadingReusableView? // TODO: Naming
@@ -364,7 +364,7 @@ extension SearchView: UISearchBarDelegate { //TODO: Handle more use cases
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
            
         timeControl?.invalidate()
-        timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
+        timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in //TODO: migrate to view model
             guard let strongSelf = self else { return }
             strongSelf.searchViewModel.textDidChange(with: searchText)
         } )
