@@ -129,10 +129,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="shh-sI-rZw"/>
                     <connections>
-                        <outlet property="activityIndicatorOverall" destination="YUk-fA-Ql5" id="iud-aY-TDG"/>
                         <outlet property="collectionView" destination="MaV-jM-Uqw" id="K5A-db-nWC"/>
                         <outlet property="searchBar" destination="6eP-Xg-isB" id="OuV-5M-mbP"/>
                         <outlet property="segmentedControl" destination="6c7-Rr-t4k" id="uVH-2e-FeJ"/>
+                        <outlet property="spinnerCollectionView" destination="YUk-fA-Ql5" id="6A8-NU-14T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1z-qA-2nO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

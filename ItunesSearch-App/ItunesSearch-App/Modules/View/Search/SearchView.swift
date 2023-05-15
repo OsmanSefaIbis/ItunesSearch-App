@@ -9,7 +9,7 @@ import Kingfisher
 
 final class SearchView: UIViewController{
     
-    @IBOutlet private weak var activityIndicatorOverall: UIActivityIndicatorView! //TODO: Naming
+    @IBOutlet private weak var spinnerCollectionView: UIActivityIndicatorView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -41,16 +41,9 @@ final class SearchView: UIViewController{
 /* Search View - Interface */
 extension SearchView: SearchViewInterface {
 
-    // TODO: Maybe assign can be unified
-    func assignPropsOfSearchViewModel() {
+    func assignDelegates() {
         searchViewModel.delegate = self
-    }
-    
-    func assignPropsOfDetailViewModel() {
         detailViewModel.delegate = self
-    }
-    
-    func assignPropsOfSearchBar() {
         searchBar.delegate = self
     }
     
@@ -65,7 +58,7 @@ extension SearchView: SearchViewInterface {
     }
     
     func configureActivityIndicator() {
-        activityIndicatorOverall.color = AppConstants.activityIndicatorColor
+        spinnerCollectionView.color = AppConstants.activityIndicatorColor
     }
     
     func initiateTopResults() {
@@ -128,14 +121,14 @@ extension SearchView: SearchViewInterface {
     func stopActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.activityIndicatorOverall.stopAnimating()
+            strongSelf.spinnerCollectionView.stopAnimating()
         }
     }
     
     func startActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.activityIndicatorOverall.startAnimating()
+            strongSelf.spinnerCollectionView.startAnimating()
         }
     }
     

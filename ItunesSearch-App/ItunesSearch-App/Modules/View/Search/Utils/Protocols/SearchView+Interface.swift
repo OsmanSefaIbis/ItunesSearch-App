@@ -11,9 +11,7 @@ import UIKit
 protocol SearchViewInterface: AnyObject {
     
     /// assignings
-    func assignPropsOfSearchViewModel()
-    func assignPropsOfDetailViewModel()
-    func assignPropsOfSearchBar()
+    func assignDelegates()
     /// configurations
     func configureCollectionView()
     func configureSegmentedControl()
