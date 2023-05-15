@@ -74,9 +74,7 @@ extension SearchViewModel: SearchModelDelegate {
 extension SearchViewModel: SearchViewModelInterface {
     
     func viewDidLoad() {
-        view?.assignPropsOfSearchViewModel()
-        view?.assignPropsOfDetailViewModel() // TODO: minimize to one call
-        view?.assignPropsOfSearchBar()
+        view?.assignDelegates()
         view?.configureCollectionView()
         view?.configureSegmentedControl()
         view?.configureActivityIndicator()
