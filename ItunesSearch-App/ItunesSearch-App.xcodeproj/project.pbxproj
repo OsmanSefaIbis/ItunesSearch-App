@@ -144,6 +144,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		961568872A16C434007282EF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9694A91129E31C93000B010E /* AppDelegate.swift */,
+				9694A91C29E31C94000B010E /* LaunchScreen.storyboard */,
+				9694A91A29E31C94000B010E /* Assets.xcassets */,
+				9694A91F29E31C94000B010E /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		961BFE6D29F16DB0009838AA /* Extensions+SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,10 +230,7 @@
 		9694A91029E31C93000B010E /* ItunesSearch-App */ = {
 			isa = PBXGroup;
 			children = (
-				9694A91129E31C93000B010E /* AppDelegate.swift */,
-				9694A91C29E31C94000B010E /* LaunchScreen.storyboard */,
-				9694A91A29E31C94000B010E /* Assets.xcassets */,
-				9694A91F29E31C94000B010E /* Info.plist */,
+				961568872A16C434007282EF /* Supporting Files */,
 				96EDF4702A07D37100634BDF /* Project Related */,
 				96E83D3D29E93C5B001B517E /* Modules */,
 				967395CF29EAB73100D3403F /* Enums */,

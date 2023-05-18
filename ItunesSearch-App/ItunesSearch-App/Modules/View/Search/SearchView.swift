@@ -26,7 +26,7 @@ final class SearchView: UIViewController{
     private let imageDimension = AppConstants.imageDimensionForDetail
     private let sectionInset = AppConstants.defaultSectionInset
     
-    private lazy var searchViewModel = SearchViewModel() // why? 
+    private lazy var searchViewModel = SearchViewModel() // why?
     private lazy var detailViewModel = DetailViewModel()
     
     private var loadingView: LoadingReusableView? // TODO: Naming
@@ -105,37 +105,37 @@ extension SearchView: SearchViewInterface {
     
     func stopReusableViewActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.loadingView?.activityIndicator.stopAnimating()
+            guard let self else { return }
+            self.loadingView?.activityIndicator.stopAnimating()
         }
     }
     
     func startReusableViewActivityIndicator() {
         
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.loadingView?.activityIndicator.startAnimating()
+            guard let self else { return }
+            self.loadingView?.activityIndicator.startAnimating()
         }
     }
     
     func stopActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.spinnerCollectionView.stopAnimating()
+            guard let self else { return }
+            self.spinnerCollectionView.stopAnimating()
         }
     }
     
     func startActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.spinnerCollectionView.startAnimating()
+            guard let self else { return }
+            self.spinnerCollectionView.startAnimating()
         }
     }
     
     func reloadCollectionView() {
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.collectionView.reloadData()
+            guard let self else { return }
+            self.collectionView.reloadData()
         }
     }
     
@@ -204,8 +204,8 @@ extension SearchView: SearchViewModelDelegate {
     func internetUnreachable(_ errorPrompt: String) {
         let alertController = UIAlertController(title: HardCoded.offLineAlertTitlePrompt.get(), message: errorPrompt, preferredStyle: .alert )
         let okAction = UIAlertAction(title: HardCoded.offLineActionTitlePrompt.get(), style: .default) { [weak self] (action:UIAlertAction!) in
-            guard let strongSelf = self else { return }
-            strongSelf.searchViewModel.reset()
+            guard let self else { return }
+            self.searchViewModel.reset()
         }
         alertController.addAction(okAction)
         self.present(alertController, animated: true)
@@ -218,9 +218,9 @@ extension SearchView: DetailViewModelDelegate{
             searchViewModel.setCacheDetails(key: each.id, value: each)
             
             provideImageColorPair( each.artworkUrl) { [weak self] pair in
-                guard let strongSelf = self else { return }
+                guard let self else { return }
                 guard let pair = pair else { return }
-                strongSelf.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: pair)
+                self.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: pair)
             }
         }
     }
@@ -365,8 +365,8 @@ extension SearchView: UISearchBarDelegate { //TODO: Handle more use cases
            
         timeControl?.invalidate()
         timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in //TODO: migrate to view model
-            guard let strongSelf = self else { return }
-            strongSelf.searchViewModel.textDidChange(with: searchText)
+            guard let self else { return }
+            self.searchViewModel.textDidChange(with: searchText)
         } )
     }
 }

@@ -15,14 +15,11 @@ final class SearchModel {
     private var network: NetworkAdapter { NetworkAdapter.shared }
     private var internet: InternetManager { InternetManager.shared }
     
-    private let dtoSearch =  SearchResultData.self // TODO: migrate
-    private let dtoTop = TopResultData.self
-    
     func fetchSearchResults(with query: SearchQuery){
         
         if internet.isOnline() {
-            network.fetchBySearch(by: query, dto: dtoSearch) { [weak self] response in // TODO naming
-                guard let self else { return } // apply this
+            network.fetchBySearch(by: query) { [weak self] response in
+                guard let self else { return }
                 switch response {
                     case .success(let data):
                         guard let results = data.results else { return }
@@ -40,15 +37,15 @@ final class SearchModel {
     func fetchIdResults(for idList: [Int]){
         
         if internet.isOnline() {
-            network.fetchById(with: idList, dto: dtoSearch) { [weak self] response in
-                guard let strongSelf = self else { return }
+            network.fetchById(with: idList) { [weak self] response in
+                guard let self else { return }
                 switch response {
                     case .success(let data):
                         guard let results = data.results else { return }
-                        strongSelf.searchResults = results
-                        strongSelf.delegate?.didFetchSearchData()
+                        self.searchResults = results
+                        self.delegate?.didFetchSearchData()
                     case .failure(_):
-                        strongSelf.delegate?.failedDataFetch()
+                        self.delegate?.failedDataFetch()
                 }
             }
         } else {
@@ -59,15 +56,15 @@ final class SearchModel {
     func fetchTopResults(with media: MediaType){
         
         if internet.isOnline() {
-            network.fetchTopPicks(by: media, dto: dtoTop) { [weak self] response in
-                guard let strongSelf = self else { return }
+            network.fetchTopPicks(by: media) { [weak self] response in
+                guard let self else { return }
                 switch response {
                     case .success(let data):
                         guard let results = data.feed?.entry else { return }
-                        strongSelf.topResults = results
-                        strongSelf.delegate?.didFetchTopData()
+                        self.topResults = results
+                        self.delegate?.didFetchTopData()
                     case .failure(_):
-                        strongSelf.delegate?.failedDataFetch()
+                        self.delegate?.failedDataFetch()
                 }
             }
         } else {

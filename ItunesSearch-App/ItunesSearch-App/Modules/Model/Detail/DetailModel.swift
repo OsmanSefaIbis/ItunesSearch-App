@@ -16,20 +16,19 @@ final class DetailModel{
     private var network: NetworkAdapter { NetworkAdapter.shared }
     private var internet: InternetManager { InternetManager.shared }
     
-    private let dtoDetail = DetailResultData.self
     
     func fetchIdResults(for idList: [Int]) {
         
         if internet.isOnline() {
-            network.fetchById(with: idList, dto: dtoDetail) { [weak self] response in
-                guard let strongSelf = self else { return }
+            network.fetchById(with: idList) { [weak self] response in
+                guard let self else { return }
                 switch response {
                 case .success(let data):
                     guard let results = data.results else { return }
-                    strongSelf.detailResults = results
-                    strongSelf.delegate?.didFetchDetailData()
+                    self.detailResults = results
+                    self.delegate?.didFetchDetailData()
                 case .failure(_):
-                    strongSelf.delegate?.failedDataFetch()
+                    self.delegate?.failedDataFetch()
                 }
             }
         } else {
