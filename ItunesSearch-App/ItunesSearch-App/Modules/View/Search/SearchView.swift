@@ -156,7 +156,7 @@ extension SearchView: SearchViewInterface {
     func registersOfCollectionView() {
         let loadingReusableNib = UINib(nibName: HardCoded.loadingReusableName.get(), bundle: nil)
         let headerReusableNib = UINib(nibName: HardCoded.headerReusableName.get(), bundle: nil)
-        collectionView?.register(.init(nibName: cell_ID, bundle: nil), forCellWithReuseIdentifier: cell_ID)
+        collectionView?.register(.init(nibName: AppConstants.cellIdentifier, bundle: nil), forCellWithReuseIdentifier: AppConstants.cellIdentifier)
         collectionView?.register(loadingReusableNib,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                 withReuseIdentifier: HardCoded.loadingReusableIdentifier.get())

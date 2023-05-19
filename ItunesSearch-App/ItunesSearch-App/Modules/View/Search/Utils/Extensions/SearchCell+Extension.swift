@@ -26,12 +26,12 @@ extension SearchCell {
         let output = outputDF.string(from: inputDate)
         return output
     }
-    func changeImageURL(_ urlString: String, withDimension dimension: Int) -> String? { // TODO: hardcoded's?
+    func changeImageURL(_ urlString: String, withDimension dimension: Int) -> String? {
         guard var urlComponents = URLComponents(string: urlString) else {
             return nil
         }
-        if urlComponents.path.hasSuffix("/100x100bb.jpg") {
-            urlComponents.path = urlComponents.path.replacingOccurrences(of: "/100x100bb.jpg", with: "/\(dimension)x\(dimension)bb.jpg")
+        if urlComponents.path.hasSuffix(HardCoded.dimensionHundred.get()) {
+            urlComponents.path = urlComponents.path.replacingOccurrences(of: HardCoded.dimensionHundred.get(), with: "/\(dimension)x\(dimension)bb.jpg")
             return urlComponents.string
         } else {
             return urlComponents.string

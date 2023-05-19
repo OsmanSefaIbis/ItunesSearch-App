@@ -11,12 +11,12 @@ enum HardCoded: String {
     
     case getRequest, collectionViewHeaderPhrase, previewText, free,
          dolar, notAvailable, trackSeperator, seperator, noRating, numberSign, ratingScale,
-         termParam, limitParam, mediaParam, rssParam, countryParam, jsonParam,  idParam,
          fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
          convertedDateFormatShort, locale_US, colonSeperator, errorPromptDate, audioEmoji,
          segmentedControlError, invalidJSON, offlinePrompt, loadingReusableName,
          headerReusableName, loadingReusableIdentifier, headerReusableIdentifier,
-         offLineAlertTitlePrompt, offLineActionTitlePrompt, errorPromptElementKind, errorPromptKind
+         offLineAlertTitlePrompt, offLineActionTitlePrompt, errorPromptElementKind,
+         errorPromptKind, dimensionHundred
     
     func get() -> String {
         switch self {
@@ -32,13 +32,7 @@ enum HardCoded: String {
             case .noRating: return "No Rating"
             case .numberSign: return "# "
             case .ratingScale: return " /5"
-            case .termParam: return "term="  // delete
-            case .limitParam: return "limit=100/" // delete
-            case .mediaParam: return "&media=" //delete
-            case .rssParam: return "rss/" //delete
-            case .countryParam: return "us/" // delete
-            case .jsonParam: return "json" // delete
-            case .idParam: return "id=" // delete
+            case .dimensionHundred: return "/100x100bb.jpg"
             case .apiDateFormat: return "yyyy-MM-dd'T'HH:mm:ssZ"
             case .convertedDateFormat: return "MMMM d, yyyy"
             case .convertedDateFormatShort: return "MMM d, yyyy"

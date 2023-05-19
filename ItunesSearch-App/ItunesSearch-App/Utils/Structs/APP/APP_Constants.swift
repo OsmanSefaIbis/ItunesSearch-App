@@ -19,4 +19,5 @@ struct AppConstants {
     static let defaultSizingValue: CGFloat = 80.0
     static let defaultCellSize: CGSize = .init(width: 160, height: 80)
     static let imageDimensionForDetail: Int = 600
+    static let dimensionPreference = 200
 }

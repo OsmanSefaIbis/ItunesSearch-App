@@ -55,7 +55,7 @@ extension SearchViewModel: SearchModelDelegate {
                 releaseDate: $0.releaseDate ?? "",
                 name: $0.trackName ?? "",
                 collectionName: $0.collectionName ?? "",
-                collectionPrice: $0.collectionPrice ?? 0
+                trackPrice: $0.trackPrice ?? 0
             )
         }
         self.delegate?.refreshItems(retrievedData)

@@ -12,6 +12,6 @@ struct SearchCellModel {
     let releaseDate: String
     let name: String
     let collectionName: String
-    let collectionPrice: Double
+    let trackPrice: Double
 }
 

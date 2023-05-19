@@ -18,7 +18,7 @@ struct SearchData: Decodable {
     let trackID: Int?
     let artistName, collectionName, trackName: String?
     let artworkUrl100: String?
-    let collectionPrice, trackPrice: Double?
+    let trackPrice: Double?
     let releaseDate: String?
     let trackTimeMillis: Int?
     let primaryGenreName: String?
@@ -28,7 +28,7 @@ struct SearchData: Decodable {
         case wrapperType, kind
         case trackID = "trackId"
         case artistName, collectionName, trackName
-        case artworkUrl100, collectionPrice, trackPrice, releaseDate, trackTimeMillis, primaryGenreName
+        case artworkUrl100, trackPrice, releaseDate, trackTimeMillis, primaryGenreName
     }
 }
 

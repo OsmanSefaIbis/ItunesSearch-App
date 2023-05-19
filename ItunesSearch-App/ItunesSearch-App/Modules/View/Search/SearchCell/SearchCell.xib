@@ -87,10 +87,10 @@
             <size key="customSize" width="161" height="78"/>
             <connections>
                 <outlet property="artworkImage" destination="Z5T-EM-uhV" id="NGl-mc-V9s"/>
-                <outlet property="collectionPriceLabel" destination="cM6-pJ-6tb" id="hHr-ln-d8Q"/>
                 <outlet property="container" destination="m5X-ZV-Fek" id="pTl-v6-lgy"/>
                 <outlet property="nameLabel" destination="iDg-CG-gwv" id="BMQ-Az-xbe"/>
                 <outlet property="releaseDateLabel" destination="GPX-1R-LZ7" id="VSm-ON-D8F"/>
+                <outlet property="trackPriceLabel" destination="cM6-pJ-6tb" id="rOx-gG-OJb"/>
             </connections>
             <point key="canvasLocation" x="112.21374045801527" y="0.0"/>
         </collectionViewCell>
