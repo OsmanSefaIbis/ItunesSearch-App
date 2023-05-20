@@ -29,8 +29,8 @@ final class SearchView: UIViewController{
     private lazy var searchViewModel = SearchViewModel() // why?
     private lazy var detailViewModel = DetailViewModel()
     
-    private var loadingView: LoadingReusableView? // TODO: Naming
-    private var headerView: HeaderReusableView? // TODO: Naming
+    private var pagingSpinner: PagingSpinnerReusableFooter?
+    private var topPicksBar: TopPicksReusableHeader?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,13 +100,13 @@ extension SearchView: SearchViewInterface {
     }
     
     func setReusableViewTitle(with title: String) {
-        self.headerView?.setTitle(with: title)
+        self.topPicksBar?.setTitle(with: title)
     }
     
     func stopReusableViewActivityIndicator() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            self.loadingView?.activityIndicator.stopAnimating()
+            self.pagingSpinner?.spinner.stopAnimating()
         }
     }
     
@@ -114,7 +114,7 @@ extension SearchView: SearchViewInterface {
         
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            self.loadingView?.activityIndicator.startAnimating()
+            self.pagingSpinner?.spinner.startAnimating()
         }
     }
     
@@ -271,13 +271,13 @@ extension SearchView: UICollectionViewDelegate {
         
         switch kind {
             case UICollectionView.elementKindSectionFooter:
-            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HardCoded.loadingReusableIdentifier.get(), for: indexPath) as! LoadingReusableView
-                loadingView = aFooterView
-                loadingView?.backgroundColor = UIColor.clear
+            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HardCoded.loadingReusableIdentifier.get(), for: indexPath) as! PagingSpinnerReusableFooter
+                pagingSpinner = aFooterView
+                pagingSpinner?.backgroundColor = UIColor.clear
                 return aFooterView
             case UICollectionView.elementKindSectionHeader:
-            let aHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HardCoded.headerReusableIdentifier.get(), for: indexPath) as! HeaderReusableView
-                headerView = aHeaderView
+            let aHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HardCoded.headerReusableIdentifier.get(), for: indexPath) as! TopPicksReusableHeader
+                topPicksBar = aHeaderView
                 return aHeaderView
         default:
             assert(false, HardCoded.errorPromptElementKind.get())

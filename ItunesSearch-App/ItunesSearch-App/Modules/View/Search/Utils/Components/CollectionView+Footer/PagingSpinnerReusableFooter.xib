@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="loadingresuableviewid" id="U6b-Vx-4bR" customClass="LoadingReusableView" customModule="ItunesSearch_App" customModuleProvider="target">
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pagingspinnerreusablefooterid" id="U6b-Vx-4bR" customClass="PagingSpinnerReusableFooter" customModule="ItunesSearch_App" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
@@ -24,7 +24,7 @@
                 <constraint firstItem="wI5-cc-5Sn" firstAttribute="centerX" secondItem="U6b-Vx-4bR" secondAttribute="centerX" id="ZXE-49-m97"/>
             </constraints>
             <connections>
-                <outlet property="activityIndicator" destination="wI5-cc-5Sn" id="TRN-ZJ-oqg"/>
+                <outlet property="spinner" destination="wI5-cc-5Sn" id="6OD-2c-qxS"/>
             </connections>
             <point key="canvasLocation" x="131" y="-11"/>
         </collectionReusableView>
