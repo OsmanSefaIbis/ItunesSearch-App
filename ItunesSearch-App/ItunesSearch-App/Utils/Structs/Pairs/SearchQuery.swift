@@ -11,5 +11,5 @@ struct SearchQuery {
     
     let input: String
     let media: MediaType
-    let offset: Int
+    var offset: Int?
 }

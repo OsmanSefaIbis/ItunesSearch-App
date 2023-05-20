@@ -30,7 +30,7 @@ final class SearchView: UIViewController{
 }
 /* Search View - Interface */
 extension SearchView: SearchViewInterface {
-
+    
     func assignDelegates() {
         searchViewModel.delegate = self
         detailViewModel.delegate = self
@@ -47,12 +47,12 @@ extension SearchView: SearchViewInterface {
             self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
     }
     
-    func configureActivityIndicator() {
+    func configureSpinner() {
         spinnerCollectionView.color = ConstantsApp.spinnerColor
     }
     
     func initiateTopResults() {
-        startActivityIndicator()
+        startSpinner()
         searchViewModel.topInvoked()
     }
     
@@ -64,7 +64,7 @@ extension SearchView: SearchViewInterface {
         
         searchViewModel.setItems(items)
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { //todayTODO: whyStatic
-            self.stopActivityIndicator()
+            self.stopSpinner()
             self.reloadCollectionView()
         }
     }
@@ -77,12 +77,12 @@ extension SearchView: SearchViewInterface {
         searchViewModel.reset()
     }
     
-    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?) {
-        searchViewModel.resetAndSearch(searchTerm, mediaType, offSetValue)
+    func resetAndSearch(with query: SearchQuery) {
+        searchViewModel.resetAndSearch(with: query)
     }
     
-    func resetAndTrend(_ mediaType: MediaType) {
-        searchViewModel.resetAndTrend(mediaType)
+    func resetAndInvokeTop() {
+        searchViewModel.resetAndInvokeTop()
     }
     
     func dismissKeyBoard() {
@@ -93,14 +93,14 @@ extension SearchView: SearchViewInterface {
         self.topPicksBar?.setTitle(with: title)
     }
     
-    func stopReusableViewActivityIndicator() {
+    func stopReusableViewSpinner() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.pagingSpinner?.spinner.stopAnimating()
         }
     }
     
-    func startReusableViewActivityIndicator() {
+    func startReusableViewSpinner() {
         
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
@@ -108,14 +108,14 @@ extension SearchView: SearchViewInterface {
         }
     }
     
-    func stopActivityIndicator() {
+    func stopSpinner() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.spinnerCollectionView.stopAnimating()
         }
     }
     
-    func startActivityIndicator() {
+    func startSpinner() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.spinnerCollectionView.startAnimating()
@@ -184,7 +184,7 @@ extension SearchView: SearchViewInterface {
 ///* Search View Model - Delegates */
 extension SearchView: SearchViewModelDelegate {
 
-    func refreshItems(_ retrieved: [SearchCellModel]) {
+    func renderItems(_ retrieved: [SearchCellModel]) {
         setItems(retrieved)
         startPrefetchingDetails(for: searchViewModel.providesIds(retrieved))
     }
@@ -203,13 +203,13 @@ extension SearchView: SearchViewModelDelegate {
 }
 /* Detail View Model - Delegates */
 extension SearchView: DetailViewModelDelegate{
-    func refreshItem(_ retrieved: [Detail]) {
+    func storeItem(_ retrieved: [Detail]) {
         for each in retrieved{
             searchViewModel.setCacheDetails(key: each.id, value: each)
             
-            provideImageColorPair( each.artworkUrl) { [weak self] pair in
+            provideImageColorPair(each.artworkUrl) { [weak self] pair in
                 guard let self else { return }
-                guard let pair = pair else { return }
+                guard let pair else { return }
                 self.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: pair)
             }
         }

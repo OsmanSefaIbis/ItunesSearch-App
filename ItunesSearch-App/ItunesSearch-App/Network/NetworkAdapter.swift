@@ -20,7 +20,7 @@ final class NetworkAdapter {
     func fetchBySearch(by query: SearchQuery, onCompletion: @escaping (Result <SearchResultData, NetworkError> ) -> Void) {
         
         let requestQuery: RequestQuery = .init(search: query, idList: nil, media: nil)
-        guard let request = composeRequest(endpoint: .search(input: query.input, media: query.media, offset: query.offset), request: requestQuery)
+        guard let request = composeRequest(endpoint: .search(input: query.input, media: query.media, offset: query.offset ?? 0), request: requestQuery)
             else { onCompletion(.failure(.invalidRequest)) ; return }
 
         executeRequest(request: request, dto: dtoSearch, onCompletion: onCompletion)

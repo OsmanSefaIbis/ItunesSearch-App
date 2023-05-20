@@ -11,11 +11,11 @@ import WebKit
 extension DetailView: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        webActivityIndicator.startAnimating()
+        spinnerOfWeb.startAnimating()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        webActivityIndicator.stopAnimating()
+        spinnerOfWeb.stopAnimating()
     }
 }
 

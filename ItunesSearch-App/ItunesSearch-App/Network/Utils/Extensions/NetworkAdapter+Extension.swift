@@ -32,16 +32,16 @@ extension NetworkAdapter {
         }
         if !isNil(param: request.media){
             guard let media = request.media else { return nil }
-            // todayTODO: change limit param naming
-            components.path = endpoint.topMediaPath.appending(media.getTopV2()).appending(Api.limitParam.getV2())
-
+            components.path = endpoint.topMediaPath
+            let remainder = media.getTop().appending(Api.limitParam.get())
+            components.path = components.path.appending(remainder)
         }
         guard var url = components.url else {
             return nil
         }
         if !isNil(param: request.media){
             var urlString = url.absoluteString
-            urlString.append(Api.jsonParam.getV2())
+            urlString.append(Api.jsonParam.get())
             guard let urlChange = URL(string: urlString) else { return nil }
             url = urlChange
         }

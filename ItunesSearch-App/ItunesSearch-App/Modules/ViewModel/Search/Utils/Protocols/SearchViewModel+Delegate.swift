@@ -6,10 +6,10 @@
 //
 
 import Foundation
-// todayTODO: method naming
+
 protocol SearchViewModelDelegate: AnyObject {
     
-    func refreshItems(_ retrieved: [SearchCellModel])
+    func renderItems(_ retrieved: [SearchCellModel])
     func topItems(_ retrived: [Top])
     func internetUnreachable(_ errorPrompt: String)
 }

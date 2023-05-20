@@ -28,8 +28,8 @@ protocol SearchViewModelInterface {
     
     func setItems(_ items: [ColumnItem])
     func reset()
-    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?)
-    func resetAndTrend(_ mediaType: MediaType)
+    func resetAndSearch(with query: SearchQuery)
+    func resetAndInvokeTop()
     
     func modifyUrl(_ imageUrl: String, _ imageDimension: Int) -> String
     func providesIds(_ items: [ColumnItem]) -> [Int]

@@ -7,13 +7,12 @@
 
 import Foundation
 
-/// enum extension
 extension ItunesSearchAPI: Endpointable {
 
-    public var baseUrl: String { Api.scheme.getV2().appending(Api.domain.getV2()) }
-    public var searchPath: String { Api.searchPath.getV2() }
-    public var lookupPath: String { Api.lookupPath.getV2() }
-    public var topMediaPath: String { Api.countryParam.getV2().appending(Api.rssParam.getV2()) }
+    public var baseUrl: String { Api.scheme.get().appending(Api.domain.get()) }
+    public var searchPath: String { Api.searchPath.get() }
+    public var lookupPath: String { Api.lookupPath.get() }
+    public var topMediaPath: String { Api.countryParam.get().appending(Api.rssParam.get()) }
     public var request: RequestType { .get }
     public var params: Parameters {
         
@@ -33,8 +32,7 @@ extension ItunesSearchAPI: Endpointable {
                 return params
                 
             case .topMedia(_):
-            var params = Parameters() // todayTODO: delete this part
-                params["limit"] = 100
+                lazy var params = Parameters()
                 return params
         }
     }

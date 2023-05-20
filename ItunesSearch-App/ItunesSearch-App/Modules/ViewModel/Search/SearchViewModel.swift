@@ -59,7 +59,7 @@ extension SearchViewModel: SearchModelDelegate {
                 trackPrice: $0.trackPrice ?? 0
             )
         }
-        self.delegate?.refreshItems(retrievedData)
+        self.delegate?.renderItems(retrievedData)
     }
     
     func didFetchTopData() {
@@ -78,7 +78,7 @@ extension SearchViewModel: SearchViewModelInterface {
         view?.assignDelegates()
         view?.configureCollectionView()
         view?.configureSegmentedControl()
-        view?.configureActivityIndicator()
+        view?.configureSpinner()
         view?.initiateTopResults()
     }
     
@@ -86,20 +86,29 @@ extension SearchViewModel: SearchViewModelInterface {
         
         switch indexValue {
             case 0: mediaType_State = MediaType.movie
-                if searchText.count > 2 { resetAndSearch(searchText, MediaType.movie, nil) }
-                else { resetAndTrend(MediaType.movie) }
-            
+                if searchText.count > 2 {
+                    let query: SearchQuery = .init(input: searchText, media: MediaType.movie)
+                    resetAndSearch(with: query)
+                } else { resetAndInvokeTop() }
+
             case 1: mediaType_State = MediaType.music
-                if searchText.count > 2 { resetAndSearch(searchText, MediaType.music, nil) }
-                else { resetAndTrend(MediaType.music) }
+                if searchText.count > 2 {
+                    let query: SearchQuery = .init(input: searchText, media: MediaType.music)
+                    resetAndSearch(with: query)
+                } else { resetAndInvokeTop() }
             
             case 2: mediaType_State = MediaType.ebook
-                if searchText.count > 2 { resetAndSearch(searchText, MediaType.ebook, nil) }
-                else { resetAndTrend(MediaType.ebook) }
+                if searchText.count > 2 {
+                    let query: SearchQuery = .init(input: searchText, media: MediaType.ebook)
+                    resetAndSearch(with: query)
+                } else { resetAndInvokeTop() }
             
             case 3: mediaType_State = MediaType.podcast
-                if searchText.count > 2 { resetAndSearch(searchText, MediaType.podcast, nil) }
-                else { resetAndTrend(MediaType.podcast) }
+                if searchText.count > 2 {
+                    let query: SearchQuery = .init(input: searchText, media: MediaType.podcast)
+                    resetAndSearch(with: query)
+                } else { resetAndInvokeTop() }
+            
         default: fatalError(HardCoded.segmentedControlError.get())
         }
     }
@@ -179,7 +188,7 @@ extension SearchViewModel: SearchViewModelInterface {
     }
     
     func willDisplaySupplementaryFooterView() {
-        if isLoadingNextPage_Flag { view?.startReusableViewActivityIndicator() }
+        if isLoadingNextPage_Flag { view?.startReusableViewSpinner() }
     }
     
     func willDisplaySupplementaryHeaderView() {
@@ -190,7 +199,7 @@ extension SearchViewModel: SearchViewModelInterface {
     }
     
     func didEndDisplayingSupplementaryView() {
-        view?.stopReusableViewActivityIndicator()
+        view?.stopReusableViewSpinner()
     }
     
     func searchBarSearchButtonClicked(with searchText: String) {
@@ -198,31 +207,33 @@ extension SearchViewModel: SearchViewModelInterface {
         
         if (0...2).contains(searchText.count) {
             if items.isEmpty {
-                resetAndTrend(mediaType)
+                resetAndInvokeTop()
             }
         } else {
             if (1...20).contains(items.count) {
                 view?.dismissKeyBoard()
             } else {
                 paginationOffSet = 0
-                self.resetAndSearch(searchText, mediaType, paginationOffSet)
+                let query: SearchQuery = .init(input: searchText, media: mediaType, offset: paginationOffSet)
+                self.resetAndSearch(with: query)
             }
         }
     }
     
     func textDidChange(with searchText: String) {
-        guard let MediaType = mediaType_State else { return }
+        guard let mediaType = mediaType_State else { return }
         
         timeControl?.invalidate()
         timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
             guard let self else { return }
             if (0...2).contains(searchText.count) {
                 isSearchActive_Flag = false
-                view?.stopActivityIndicator()
+                view?.stopSpinner()
             }
             if searchText.count > 2 {
                 isSearchActive_Flag = true
-                resetAndSearch(searchText, MediaType, paginationOffSet)
+                let query: SearchQuery = .init(input: searchText, media: mediaType, offset: paginationOffSet)
+                resetAndSearch(with: query)
             }
         } )
         
@@ -247,12 +258,12 @@ extension SearchViewModel: SearchViewModelInterface {
     
     func reset() {
         resetCollections()
-        view?.stopActivityIndicator()
+        view?.stopSpinner()
         items.removeAll()
         view?.reloadCollectionView()
     }
     
-    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?) { // todayTODO: naming
+    func resetAndSearch(with query: SearchQuery) {
         resetCollections()
         paginationOffSet = 0
         lessThanPage_Flag = false
@@ -260,19 +271,18 @@ extension SearchViewModel: SearchViewModelInterface {
         if items.count > 0 {
             reset()
         }
-        view?.startActivityIndicator()
-        if let offSet = offSetValue {
-            let query: SearchQuery = .init(input: searchTerm, media: mediaType, offset: offSet)
+        view?.startSpinner()
+        if let _ = query.offset {
             searchInvoked(with: query)
         } else {
-            let query: SearchQuery = .init(input: searchTerm, media: mediaType, offset: paginationOffSet)
-            searchInvoked(with: query)
+            let modifiedQuery: SearchQuery = .init(input: query.input, media: query.media, offset: paginationOffSet)
+            searchInvoked(with: modifiedQuery)
         }
     }
     
-    func resetAndTrend(_ mediaType: MediaType) { // todayTODO: naming
+    func resetAndInvokeTop() {
         reset()
-        view?.startActivityIndicator()
+        view?.startSpinner()
         topInvoked()
     }
     

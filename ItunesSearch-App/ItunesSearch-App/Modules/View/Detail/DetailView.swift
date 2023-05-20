@@ -44,7 +44,7 @@ final class DetailView: UIViewController{
     @IBOutlet private weak var label_Episodes: UILabel!
     @IBOutlet private weak var label_TrackInfo: UILabel!
     
-    let webActivityIndicator = UIActivityIndicatorView(style: .large)
+    let spinnerOfWeb = UIActivityIndicatorView(style: .large)
     
     private lazy var viewModel = DetailViewModel()
         
@@ -70,12 +70,12 @@ final class DetailView: UIViewController{
         
         let webVC = UIViewController()
         webVC.view = webView
-        webVC.view.addSubview(webActivityIndicator)
-        webActivityIndicator.color = ConstantsApp.spinnerColor
-        webActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        webVC.view.addSubview(spinnerOfWeb)
+        spinnerOfWeb.color = ConstantsApp.spinnerColor
+        spinnerOfWeb.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            webActivityIndicator.centerXAnchor.constraint(equalTo: webVC.view.centerXAnchor),
-            webActivityIndicator.centerYAnchor.constraint(equalTo: webVC.view.centerYAnchor)
+            spinnerOfWeb.centerXAnchor.constraint(equalTo: webVC.view.centerXAnchor),
+            spinnerOfWeb.centerYAnchor.constraint(equalTo: webVC.view.centerYAnchor)
         ])
         
         navigationController?.pushViewController(webVC, animated: true)

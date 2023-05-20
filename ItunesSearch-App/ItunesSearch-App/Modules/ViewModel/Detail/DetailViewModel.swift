@@ -54,7 +54,7 @@ extension DetailViewModel: DetailModelDelegate{
                 viewUrl: $0.trackViewURL ?? ""
             )
         }
-        self.delegate?.refreshItem(retrievedData)
+        self.delegate?.storeItem(retrievedData)
     }
     func failedDataFetch() {
         delegate?.internetUnreachable(HardCoded.offlinePrompt.get())
