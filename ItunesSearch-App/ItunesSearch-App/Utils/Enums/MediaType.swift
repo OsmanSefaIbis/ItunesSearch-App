@@ -43,12 +43,4 @@ public enum MediaType: String {
             case .podcast: return "/toppodcasts"
         }
     }
-    static func getParam(with mediaType: MediaType) -> String{
-        switch mediaType{
-            case .movie: return "&media=movie"
-            case .music: return "&media=music"
-            case .ebook: return "&media=ebook"
-            case .podcast: return "&media=podcast"
-        }
-    }
 }

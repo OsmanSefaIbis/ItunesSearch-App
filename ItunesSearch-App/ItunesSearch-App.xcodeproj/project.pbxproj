@@ -231,6 +231,25 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		961A66ED2A18EEC500445B99 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				967395D529EB268C00D3403F /* Search+CellModel.swift */,
+				96B5868D29EFE097004F5B27 /* Detail+Model.swift */,
+				9651B1902A03C7E600D94A6F /* Top+Model.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		961A66EE2A18EF4D00445B99 /* HardCoded's */ = {
+			isa = PBXGroup;
+			children = (
+				96E8225429F2C473009B56F0 /* HardCoded+String.swift */,
+				96E8225629F2E267009B56F0 /* HardCoded+Api.swift */,
+			);
+			path = "HardCoded's";
+			sourceTree = "<group>";
+		};
 		961BFE6D29F16DB0009838AA /* Extensions+SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,9 +281,8 @@
 		967395CF29EAB73100D3403F /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				961A66EE2A18EF4D00445B99 /* HardCoded's */,
 				967395D029EAB76E00D3403F /* MediaType.swift */,
-				96E8225629F2E267009B56F0 /* HardCoded+Api.swift */,
-				96E8225429F2C473009B56F0 /* HardCoded+String.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -307,13 +325,11 @@
 			isa = PBXGroup;
 			children = (
 				9694A91F29E31C94000B010E /* Info.plist */,
-				961568872A16C434007282EF /* Supporting Files */,
 				96EDF4702A07D37100634BDF /* Project Related */,
-				96E83D3D29E93C5B001B517E /* Modules */,
-				967395CF29EAB73100D3403F /* Enums */,
-				961BFE6D29F16DB0009838AA /* Extensions+SDK */,
-				96E83D1629E65B26001B517E /* Utils */,
+				961568872A16C434007282EF /* Supporting Files */,
 				96EDF4AE2A0DA04800634BDF /* Network */,
+				96E83D1629E65B26001B517E /* Utils */,
+				96E83D3D29E93C5B001B517E /* Modules */,
 			);
 			path = "ItunesSearch-App";
 			sourceTree = "<group>";
@@ -339,8 +355,9 @@
 		96E83D1629E65B26001B517E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				967395CF29EAB73100D3403F /* Enums */,
+				961BFE6D29F16DB0009838AA /* Extensions+SDK */,
 				96EDF4A82A0A5D9D00634BDF /* Structs */,
-				96B5868C29EDD307004F5B27 /* DTO  */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -487,11 +504,10 @@
 		96EDF4A82A0A5D9D00634BDF /* Structs */ = {
 			isa = PBXGroup;
 			children = (
-				96EDF4BB2A0E519300634BDF /* Pairs */,
+				96B5868C29EDD307004F5B27 /* DTO  */,
+				961A66ED2A18EEC500445B99 /* Models */,
+				96EDF4BB2A0E519300634BDF /* Types */,
 				96EDF4A92A0A5DDE00634BDF /* Constants */,
-				967395D529EB268C00D3403F /* Search+CellModel.swift */,
-				96B5868D29EFE097004F5B27 /* Detail+Model.swift */,
-				9651B1902A03C7E600D94A6F /* Top+Model.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -514,7 +530,7 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		96EDF4BB2A0E519300634BDF /* Pairs */ = {
+		96EDF4BB2A0E519300634BDF /* Types */ = {
 			isa = PBXGroup;
 			children = (
 				96EDF4862A095DB200634BDF /* ImageAndColor.swift */,
@@ -522,7 +538,7 @@
 				96EDF4BF2A0E7ACB00634BDF /* RequestQuery.swift */,
 				96EDF4D02A100D2C00634BDF /* CompactDetail.swift */,
 			);
-			path = Pairs;
+			path = Types;
 			sourceTree = "<group>";
 		};
 		96EDF4C32A0E817C00634BDF /* Enums */ = {

@@ -19,6 +19,7 @@ enum HardCoded: String {
          errorPromptKind, dimensionHundred
     
     func get() -> String {
+        
         switch self {
             case .searchCell: return "SearchCell"
             case .accentColor: return "AccentColor"
