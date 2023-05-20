@@ -97,7 +97,7 @@ final class DetailView: UIViewController{
     }
 }
 
-extension DetailView: DetailViewInterface {
+extension DetailView: DetailViewContract {
     
     // todayTODO: Apply below to resolve the issue with code trying to access the outlets before they are fully initialized.
     // todayFIXME: Device and simulator are behaving inconsistent, simulator arises timing related nil of IBOutlet

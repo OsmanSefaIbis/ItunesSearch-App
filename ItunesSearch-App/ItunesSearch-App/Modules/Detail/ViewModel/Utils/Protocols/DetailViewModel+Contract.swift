@@ -8,9 +8,9 @@
 import Foundation
 // laterTODO: order properly, order class
 // laterTODO: Analyze this interface properly to make it as neat as possible
-protocol DetailViewModelInterface {
+protocol DetailViewModelContract {
     
-    var view: DetailViewInterface? { get set }
+    var view: DetailViewContract? { get set }
     func assembleView(by foundation: CompactDetail, with skeleton: DetailView )
     func configureItem(with item: Detail, _ pair: ImageColorPair)
     func convertDate(_ date: String) -> String

@@ -8,9 +8,9 @@
 import Foundation
 // laterTODO: order properly, order class
 // laterTODO: Analyze this interface properly to make it as neat as possible
-protocol SearchViewModelInterface {
+protocol SearchViewModelContract {
     
-    var view: SearchViewInterface? { get set }
+    var view: SearchViewContract? { get set }
     var itemCount: Int { get }
 
     func viewDidLoad()

@@ -8,7 +8,7 @@
 import UIKit
 // laterTODO: order properly, order class
 // laterTODO: Analyze this interface properly to make it as neat as possible
-protocol DetailViewInterface: AnyObject {
+protocol DetailViewContract: AnyObject {
     
     ///configure
     func configureView( with item: Detail, _ pair: ImageColorPair, with skeloton: DetailView)

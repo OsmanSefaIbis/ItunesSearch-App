@@ -8,7 +8,7 @@
 import UIKit
 // laterTODO: order properly, order class
 // laterTODO: Analyze this interface properly to make it as neat as possible
-protocol SearchViewInterface: AnyObject {
+protocol SearchViewContract: AnyObject {
     
     /// assignings
     func assignDelegates()

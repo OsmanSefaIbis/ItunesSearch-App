@@ -13,7 +13,7 @@ final class SearchViewModel {
     
     private let model = SearchModel()
 
-    weak var view: SearchViewInterface?
+    weak var view: SearchViewContract?
     weak var delegate: SearchViewModelDelegate?
     
     private var timeControl: Timer?
@@ -72,7 +72,7 @@ extension SearchViewModel: SearchModelDelegate {
     }
 }
 
-extension SearchViewModel: SearchViewModelInterface {
+extension SearchViewModel: SearchViewModelContract {
     
     func viewDidLoad() {
         view?.assignDelegates()

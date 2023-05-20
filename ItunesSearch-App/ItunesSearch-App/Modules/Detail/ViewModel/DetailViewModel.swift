@@ -12,7 +12,7 @@ final class DetailViewModel{
     
     private let model = DetailModel()
     
-    weak var view: DetailViewInterface?
+    weak var view: DetailViewContract?
     weak var delegate: DetailViewModelDelegate?
     
     private var isAudioPlaying = false
@@ -61,7 +61,7 @@ extension DetailViewModel: DetailModelDelegate{
     }
 }
 
-extension DetailViewModel: DetailViewModelInterface {
+extension DetailViewModel: DetailViewModelContract {
     
     func assembleView(by foundation: CompactDetail, with skeloton: DetailView){
         view?.configureView(with: foundation.data, foundation.imageAndColor, with: skeloton)

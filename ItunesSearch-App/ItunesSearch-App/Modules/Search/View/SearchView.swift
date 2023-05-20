@@ -29,7 +29,7 @@ final class SearchView: UIViewController{
     }
 }
 /* Search View - Interface */
-extension SearchView: SearchViewInterface {
+extension SearchView: SearchViewContract {
     
     func assignDelegates() {
         searchViewModel.delegate = self
