@@ -5,7 +5,10 @@
 //  Created by Sefa İbiş on 21.04.2023.
 //
 
-import Foundation
+import UIKit
+
+let hapticHeavy = UIImpactFeedbackGenerator(style: .heavy)
+let hapticSoft = UIImpactFeedbackGenerator(style: .soft)
 
 extension SearchView{
     

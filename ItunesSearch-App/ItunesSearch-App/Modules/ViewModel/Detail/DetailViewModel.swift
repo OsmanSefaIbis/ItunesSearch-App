@@ -6,8 +6,8 @@
 //
 
 import Foundation
-// TODO: Add a extension file
-// TODO: migrate independant methods to extension file for this class
+// laterTODO: Add a extension file
+// laterTODO: migrate independant methods to extension file for this class
 final class DetailViewModel{
     
     private let model = DetailModel()
@@ -28,7 +28,7 @@ final class DetailViewModel{
 extension DetailViewModel: DetailModelDelegate{
 
     func didFetchDetailData(){
-        let retrievedData: [Detail] = model.detailResults.map{    //TODO: Is there a better approach?
+        let retrievedData: [Detail] = model.detailResults.map{    //searchTODO: Is there a better approach?
             .init(
                 id: $0.trackID ?? 0,
                 kind: $0.kind ?? "",
@@ -77,7 +77,7 @@ extension DetailViewModel: DetailViewModelInterface {
             view?.setTextColorOfView(.white)
             view?.adaptComponentsForDark(.white)
         } else {
-            view?.setNavigationBarWith(tintColor: AppConstants.accentColorName)
+            view?.setNavigationBarWith(tintColor: ConstantsApp.accentColorName)
         }
         view?.configureMutualFields(item, pair)
         

@@ -11,10 +11,10 @@
 |                                                                                                                                                     |
 | func setItems( _ items: [ColumnItems]) {                                                   /// self.items <- existing data  incoming data -> items  |
 |                                                                                                                                                     |
-|     if items.count != AppConstants.requestLimit { lessThanPage_Flag = true }               /// decision point (true == do not fetch more)           |
+|     if items.count != ConstantsApp.requestLimit { lessThanPage_Flag = true }               /// decision point (true == do not fetch more)           |
 |                                                                                                                                                     |
 |     if lessThanPage_Flag {                                                                 /// less than a page                                     |
-|         if self.items.count >= AppConstants.requestLimit  {                                /// case: last page with less than request limit         |
+|         if self.items.count >= ConstantsApp.requestLimit  {                                /// case: last page with less than request limit         |
 |             var lastRecords: [ColumnItems] = []                                                                                                     |
 |                                                                                                                                                     |
 |             for each in items {                                                                                                                     |

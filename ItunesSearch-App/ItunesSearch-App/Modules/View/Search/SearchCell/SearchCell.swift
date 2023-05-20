@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-// TODO: add interface for this class
+// laterTODO: add interface for this class
 
 class SearchCell: UICollectionViewCell {
 
@@ -28,14 +28,14 @@ class SearchCell: UICollectionViewCell {
         super.prepareForReuse()
         prepareReusability()
     }
-    func prepareReusability() { // TODO: cell coloring is causing flickering effect because of cell reuse handle it for UX
+    func prepareReusability() { // searchTODO: cell coloring is causing flickering effect because of cell reuse handle it for UX
         artworkImage.image = nil ; releaseDateLabel.text = nil ; nameLabel.text = nil ; trackPriceLabel.text = nil
     }
     func configureCellLooks() {
         contentView.layer.cornerRadius = 10.0 ; contentView.clipsToBounds = true
         artworkImage.layer.cornerRadius = 10.0 ; artworkImage.layer.masksToBounds = true
         artworkImage.kf.indicatorType = .activity
-        (artworkImage.kf.indicator?.view as? UIActivityIndicatorView)?.color = AppConstants.activityIndicatorColor
+        (artworkImage.kf.indicator?.view as? UIActivityIndicatorView)?.color = ConstantsApp.spinnerColor
         
         imageHeightConstraint = artworkImage.heightAnchor.constraint(equalToConstant: 0)
         imageWidthConstraint = artworkImage.widthAnchor.constraint(equalToConstant: 0)
@@ -45,7 +45,7 @@ class SearchCell: UICollectionViewCell {
     }
     func configureCell(with model: SearchCellModel) {
 
-        guard let modifiedArtworkUrl = changeImageURL(model.artworkUrl, withDimension: AppConstants.dimensionPreference) else { return }
+        guard let modifiedArtworkUrl = changeImageURL(model.artworkUrl, withDimension: ConstantsCV.dimensionPreference) else { return }
 
         releaseDateLabel.text = convertDate(for: model.releaseDate)
         nameLabel.text = model.name

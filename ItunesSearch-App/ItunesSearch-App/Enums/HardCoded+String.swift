@@ -9,7 +9,7 @@ import Foundation
 
 enum HardCoded: String {
     
-    case getRequest, collectionViewHeaderPhrase, previewText, free,
+    case searchCell,accentColor, collectionViewHeaderPhrase, previewText, free,
          dolar, notAvailable, trackSeperator, seperator, noRating, numberSign, ratingScale,
          fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
          convertedDateFormatShort, locale_US, colonSeperator, errorPromptDate, audioEmoji,
@@ -20,7 +20,8 @@ enum HardCoded: String {
     
     func get() -> String {
         switch self {
-            case .getRequest: return "GET" // delete
+            case .searchCell: return "SearchCell"
+            case .accentColor: return "AccentColor"
             case .collectionViewHeaderPhrase: return " Top Picks"
             case .previewText: return "Preview"
             case .audioEmoji: return "🔊"

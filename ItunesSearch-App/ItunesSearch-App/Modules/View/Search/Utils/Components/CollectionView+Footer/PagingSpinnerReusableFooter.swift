@@ -13,7 +13,7 @@ class PagingSpinnerReusableFooter: UICollectionReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        spinner.color = AppConstants.activityIndicatorColor
+        spinner.color = ConstantsApp.spinnerColor
         spinner.hidesWhenStopped = true
     }
     

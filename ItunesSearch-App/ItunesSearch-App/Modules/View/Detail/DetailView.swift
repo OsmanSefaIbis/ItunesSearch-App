@@ -18,7 +18,7 @@ final class DetailView: UIViewController{
     @IBOutlet private weak var view_FullContainer: UIView!
     @IBOutlet private weak var view_FullView: UIView!
     @IBOutlet private weak var view_ImageContainer: UIView!
-    @IBOutlet private weak var view_Fields: UIView!             // TODO: Too much, change configureBackgroundColors() --> to eliminate these, add a recursive solution
+    @IBOutlet private weak var view_Fields: UIView! // todaysearchTODO: Too much, change configureBackgroundColors() --> to eliminate these, add a recursive solution
     @IBOutlet private weak var view_Description: UIView!
     @IBOutlet private weak var view_Buttons: UIView!
     /// above is added for colorization
@@ -34,7 +34,7 @@ final class DetailView: UIViewController{
     @IBOutlet private weak var label_CollectionName: UILabel!
     @IBOutlet private weak var label_ReleaseDate: UILabel!
     @IBOutlet private weak var label_PrimaryGenre: UILabel!
-    @IBOutlet private weak var label_Price: UILabel!                // TODO: Too much, what should i do, or is this normal idk?
+    @IBOutlet private weak var label_Price: UILabel!                //searchTODO: Too much, what should i do, or is this normal idk?
     @IBOutlet private weak var label_Length: UILabel!
     @IBOutlet private weak var label_Size: UILabel!
     @IBOutlet private weak var label_RatingCount: UILabel!
@@ -50,7 +50,7 @@ final class DetailView: UIViewController{
         
     private var item: Detail?
 
-    private let webView = WKWebView() // TODO: make it optional, unnecassary, or make it lazy idk
+    private lazy var webView = WKWebView()
     private var player: AVPlayer?
     private var audioPlayerItem: AVPlayerItem?
     private var moviePlayerVC: AVPlayerViewController?
@@ -71,7 +71,7 @@ final class DetailView: UIViewController{
         let webVC = UIViewController()
         webVC.view = webView
         webVC.view.addSubview(webActivityIndicator)
-        webActivityIndicator.color = AppConstants.activityIndicatorColor
+        webActivityIndicator.color = ConstantsApp.spinnerColor
         webActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             webActivityIndicator.centerXAnchor.constraint(equalTo: webVC.view.centerXAnchor),
@@ -99,10 +99,10 @@ final class DetailView: UIViewController{
 
 extension DetailView: DetailViewInterface {
     
-    // TODO: Apply below to resolve the issue with code trying to access the outlets before they are fully initialized.
-    // FIXME: Device and simulator are behaving inconsistent, simulator arises timing related nil of IBOutlet
+    // todayTODO: Apply below to resolve the issue with code trying to access the outlets before they are fully initialized.
+    // todayFIXME: Device and simulator are behaving inconsistent, simulator arises timing related nil of IBOutlet
     
-    // TODO: Learn differences of the device and simulator capabilities. What might go wrong, what should you know beforehand?
+    // todayTODO: Learn differences of the device and simulator capabilities. What might go wrong, what should you know beforehand?
     /*
      One way to debug this issue is to add print statements throughout your code to track the lifecycle of the outlets. For example, you could add print statements to the viewDidLoad() and viewDidAppear() methods to check if the outlets are being initialized properly. You can also add print statements in the completion handlers of any asynchronous operations that affect the outlets, such as network requests or image loading.
 
@@ -176,7 +176,7 @@ extension DetailView: DetailViewInterface {
         }
     }
     
-    // TODO: Change this, go by subviews and set
+    // todayTODO: Change this, go by subviews and set
     func configureBackgroundColors(_ averageColor: UIColor){
        DispatchQueue.main.async { [weak self] in
            guard let self else { return }
@@ -220,7 +220,7 @@ extension DetailView: DetailViewInterface {
     
     func addPlayIndicator() {
         let playIndicator = UIActivityIndicatorView(style: .medium)
-        playIndicator.color = AppConstants.activityIndicatorColor
+        playIndicator.color = ConstantsApp.spinnerColor
         self.button_MusicPreview.setTitle(HardCoded.audioEmoji.get(), for: .normal)
         self.button_MusicPreview.addSubview(playIndicator)
         playIndicator.translatesAutoresizingMaskIntoConstraints = false

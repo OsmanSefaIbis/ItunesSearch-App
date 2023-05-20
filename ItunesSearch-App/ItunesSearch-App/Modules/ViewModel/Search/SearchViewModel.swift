@@ -16,10 +16,11 @@ final class SearchViewModel {
     weak var view: SearchViewInterface?
     weak var delegate: SearchViewModelDelegate?
     
+    private var timeControl: Timer?
     private var items: [ColumnItem] = []
     private var idsOfAllFetchedRecords = Set<Int>()
-    private var cacheDetails: [Int : Detail] = [:]                               // TODO: Is this a good approach?
-    private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:]       // TODO: Is this a good approach?
+    private var cacheDetails: [Int : Detail] = [:]                               // searchTODO: Is this a good approach?
+    private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:]       // searchTODO: Is this a good approach?
     
     private var paginationOffSet = 0
     private var mediaType_State: MediaType? = .movie
@@ -48,7 +49,7 @@ final class SearchViewModel {
 extension SearchViewModel: SearchModelDelegate {
     
     func didFetchSearchData() {
-        let retrievedData: [SearchCellModel] = model.searchResults.map {  //TODO: Is there a better approach?
+        let retrievedData: [SearchCellModel] = model.searchResults.map {  //searchTODO: Is there a better approach?
             .init(
                 id: $0.trackID ?? 0,
                 artworkUrl: $0.artworkUrl100 ?? "",
@@ -105,10 +106,10 @@ extension SearchViewModel: SearchViewModelInterface {
     
     func setItems(_ items: [ColumnItem]) {
     // INFO: SearchViewModel+Pseudo.swift
-        if items.count != AppConstants.requestLimit { lessThanPage_Flag = true }
+        if items.count != ConstantsApp.requestLimit { lessThanPage_Flag = true }
         
         if lessThanPage_Flag {
-            if self.items.count >= AppConstants.requestLimit  {
+            if self.items.count >= ConstantsApp.requestLimit  {
                 var lastRecords: [ColumnItem] = []
                 
                 for each in items {
@@ -129,7 +130,7 @@ extension SearchViewModel: SearchViewModelInterface {
                 self.items.append(contentsOf: items)
             }
         }
-        isLoadingNextPage_Flag = false // TODO: check if it arises a bug
+        isLoadingNextPage_Flag = false // laterTODO: check if it arises a bug
     }
     
     func cellForItem(at indexPath: IndexPath) -> ColumnItem {
@@ -154,7 +155,7 @@ extension SearchViewModel: SearchViewModelInterface {
         let latestItemNumeric = items.count - 1
         if indexPath.item == latestItemNumeric {
             guard let mediaType = mediaType_State else { return }
-            paginationOffSet += AppConstants.requestLimit
+            paginationOffSet += ConstantsApp.requestLimit
             isLoadingNextPage_Flag = true
             let query: SearchQuery = .init(input: searchText, media: mediaType, offset: paginationOffSet)
             searchInvoked(with: query)
@@ -165,7 +166,7 @@ extension SearchViewModel: SearchViewModelInterface {
         if self.isSearchActive_Flag {
             return CGSize.zero
         } else {
-            return CGSize(width: width, height: 25) // TODO: migrate static int
+            return CGSize(width: width, height: ConstantsCV.headerHeight)
         }
     }
     
@@ -173,7 +174,7 @@ extension SearchViewModel: SearchViewModelInterface {
         if self.isLoadingNextPage_Flag {
             return CGSize.zero
         } else {
-            return CGSize(width: width, height: 40) // TODO: migrate static int
+            return CGSize(width: width, height: ConstantsCV.footerHeight)
         }
     }
     
@@ -212,14 +213,19 @@ extension SearchViewModel: SearchViewModelInterface {
     func textDidChange(with searchText: String) {
         guard let MediaType = mediaType_State else { return }
         
-        if (0...2).contains(searchText.count) {
-            isSearchActive_Flag = false
-            view?.stopActivityIndicator()
-        }
-        if searchText.count > 2 {
-            isSearchActive_Flag = true
-            resetAndSearch(searchText, MediaType, paginationOffSet)
-        }
+        timeControl?.invalidate()
+        timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
+            guard let self else { return }
+            if (0...2).contains(searchText.count) {
+                isSearchActive_Flag = false
+                view?.stopActivityIndicator()
+            }
+            if searchText.count > 2 {
+                isSearchActive_Flag = true
+                resetAndSearch(searchText, MediaType, paginationOffSet)
+            }
+        } )
+        
     }
     
     func providesIds(_ items: [ColumnItem]) -> [Int] {
@@ -246,7 +252,7 @@ extension SearchViewModel: SearchViewModelInterface {
         view?.reloadCollectionView()
     }
     
-    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?) { // TODO: naming
+    func resetAndSearch(_ searchTerm: String, _ mediaType: MediaType, _ offSetValue: Int?) { // todayTODO: naming
         resetCollections()
         paginationOffSet = 0
         lessThanPage_Flag = false
@@ -264,7 +270,7 @@ extension SearchViewModel: SearchViewModelInterface {
         }
     }
     
-    func resetAndTrend(_ mediaType: MediaType) { // TODO: naming
+    func resetAndTrend(_ mediaType: MediaType) { // todayTODO: naming
         reset()
         view?.startActivityIndicator()
         topInvoked()

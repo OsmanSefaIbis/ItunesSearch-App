@@ -6,7 +6,7 @@
 //
 
 import Foundation
-// TODO: naming
+// todayTODO: naming
 protocol DetailViewModelDelegate: AnyObject{
     
     func refreshItem(_ retrieved: [Detail])

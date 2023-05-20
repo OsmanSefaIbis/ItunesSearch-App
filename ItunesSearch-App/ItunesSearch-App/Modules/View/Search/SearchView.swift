@@ -14,23 +14,13 @@ final class SearchView: UIViewController{
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var collectionView: UICollectionView!
     
-    let hapticHeavy = UIImpactFeedbackGenerator(style: .heavy) // helper migrate
-    let hapticSoft = UIImpactFeedbackGenerator(style: .soft)
-    private var timeControl: Timer? //todo
-    
-    private let cell_ID = AppConstants.cellIdentifier
-    private let cellSize = AppConstants.defaultCellSize
-    private var cellSpacing = AppConstants.defaultMinimumCellSpacing
-    private let columnCount = AppConstants.collectionViewColumn     //TODO: these are not app related constants, migrate them into another struct
-    private var sizingValue = AppConstants.defaultSizingValue
-    private let imageDimension = AppConstants.imageDimensionForDetail
-    private let sectionInset = AppConstants.defaultSectionInset
-    
-    private lazy var searchViewModel = SearchViewModel() // why?
-    private lazy var detailViewModel = DetailViewModel()
-    
     private var pagingSpinner: PagingSpinnerReusableFooter?
     private var topPicksBar: TopPicksReusableHeader?
+    
+    private lazy var searchViewModel = SearchViewModel()
+    private lazy var detailViewModel = DetailViewModel()
+    
+    private var sizingValue = ConstantsCV.sizingValue
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +48,7 @@ extension SearchView: SearchViewInterface {
     }
     
     func configureActivityIndicator() {
-        spinnerCollectionView.color = AppConstants.activityIndicatorColor
+        spinnerCollectionView.color = ConstantsApp.spinnerColor
     }
     
     func initiateTopResults() {
@@ -73,7 +63,7 @@ extension SearchView: SearchViewInterface {
     func setItems( _ items: [SearchCellModel]) {
         
         searchViewModel.setItems(items)
-        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { //TODO: whyStatic
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { //todayTODO: whyStatic
             self.stopActivityIndicator()
             self.reloadCollectionView()
         }
@@ -156,7 +146,7 @@ extension SearchView: SearchViewInterface {
     func registersOfCollectionView() {
         let loadingReusableNib = UINib(nibName: HardCoded.loadingReusableName.get(), bundle: nil)
         let headerReusableNib = UINib(nibName: HardCoded.headerReusableName.get(), bundle: nil)
-        collectionView?.register(.init(nibName: AppConstants.cellIdentifier, bundle: nil), forCellWithReuseIdentifier: AppConstants.cellIdentifier)
+        collectionView?.register(.init(nibName: ConstantsCV.cell_ID, bundle: nil), forCellWithReuseIdentifier: ConstantsCV.cell_ID)
         collectionView?.register(loadingReusableNib,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                 withReuseIdentifier: HardCoded.loadingReusableIdentifier.get())
@@ -167,14 +157,14 @@ extension SearchView: SearchViewInterface {
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         hapticFeedbackSoft()
-        guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return } //TODO: check if adding percent encoding cause misbehavior
+        guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
         let indexValue = sender.selectedSegmentIndex
         searchViewModel.segmentedControlValueChanged(to: indexValue, with: searchText)
     }
     
     func provideImageColorPair(_ imageUrl: String, completion: @escaping (ImageColorPair?) -> Void) {
 
-        guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, imageDimension)) else { completion(nil) ; return }
+        guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, ConstantsCV.imageDimension)) else { completion(nil) ; return }
         
         KingfisherManager.shared.retrieveImage(with: artworkUrl) { result in
             switch result {
@@ -237,9 +227,9 @@ extension SearchView: UICollectionViewDataSource {
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cell_ID, for: indexPath) as! SearchCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ConstantsCV.cell_ID, for: indexPath) as! SearchCell
         
-        cell.setImageHeigth( 2 * sizingValue ) //TODO: Handle these inside the cell
+        cell.setImageHeigth( 2 * sizingValue ) //laterTODO: Handle these inside the cell
         cell.setImageWidth( 2 * sizingValue )
         
         cell.configureCell(with: searchViewModel.cellForItem(at: indexPath))
@@ -314,14 +304,14 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     // INFO: SearchView+Pseudo.swift
-        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return cellSize }
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return ConstantsCV.cellSize }
         let totalWidth = collectionView.bounds.width
         let sectionInsets = flowLayout.sectionInset
         let cellSpacingMin = flowLayout.minimumInteritemSpacing
         let totalInsetSpace = (sectionInsets.left + sectionInsets.right)
-        let totalCellSpacing = ((columnCount-1) * cellSpacingMin)
+        let totalCellSpacing = ((ConstantsCV.columnCount-1) * cellSpacingMin)
         let availableWidthForCells = (totalWidth - totalCellSpacing - totalInsetSpace)
-        sizingValue =  (availableWidthForCells / CGFloat(columnCount)) / 5
+        sizingValue = ( availableWidthForCells / CGFloat(ConstantsCV.columnCount) ) / 5
         let cellWidth = sizingValue * 5
         let cellHeight = sizingValue * 2
         let cellSize = CGSize(width: cellWidth, height: cellHeight)
@@ -330,26 +320,26 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return sectionInset }
-        flowLayout.sectionInset = sectionInset
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return ConstantsCV.sectionInset }
+        flowLayout.sectionInset = ConstantsCV.sectionInset
         return flowLayout.sectionInset
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return cellSpacing }
-        flowLayout.minimumInteritemSpacing = cellSpacing
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return ConstantsCV.cellSpacing }
+        flowLayout.minimumInteritemSpacing = ConstantsCV.cellSpacing
         return flowLayout.minimumInteritemSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return cellSpacing }
-        flowLayout.minimumLineSpacing = cellSpacing
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return ConstantsCV.cellSpacing }
+        flowLayout.minimumLineSpacing = ConstantsCV.cellSpacing
         return flowLayout.minimumLineSpacing
     }
 }
 
 /* SearchBar - Delegate */
-extension SearchView: UISearchBarDelegate { //TODO: Handle more use cases
+extension SearchView: UISearchBarDelegate { //laterTODO: Handle more use cases
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         hapticFeedbackSoft()
@@ -362,12 +352,7 @@ extension SearchView: UISearchBarDelegate { //TODO: Handle more use cases
         searchViewModel.reset()
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-           
-        timeControl?.invalidate()
-        timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in //TODO: migrate to view model
-            guard let self else { return }
-            self.searchViewModel.textDidChange(with: searchText)
-        } )
+        self.searchViewModel.textDidChange(with: searchText)
     }
 }
 

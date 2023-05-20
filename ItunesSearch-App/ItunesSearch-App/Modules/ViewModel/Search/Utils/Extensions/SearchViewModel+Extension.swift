@@ -13,8 +13,8 @@ extension SearchViewModel{
         guard var urlComponents = URLComponents(string: urlString) else {
             return nil
         }
-        if urlComponents.path.hasSuffix("/100x100bb.jpg") { // TODO: HardCoded?
-            urlComponents.path = urlComponents.path.replacingOccurrences(of: "/100x100bb.jpg", with: "/\(dimensionValue)x\(dimensionValue)bb.jpg")
+        if urlComponents.path.hasSuffix(HardCoded.dimensionHundred.get()) {
+            urlComponents.path = urlComponents.path.replacingOccurrences(of: HardCoded.dimensionHundred.get(), with: "/\(dimensionValue)x\(dimensionValue)bb.jpg")
             return urlComponents.string
         } else {
             return urlComponents.string
