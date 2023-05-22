@@ -6,7 +6,6 @@
 import UIKit
 import Kingfisher
 
-
 final class SearchView: UIViewController{
     
     @IBOutlet private weak var spinnerCollectionView: UIActivityIndicatorView!
@@ -130,9 +129,8 @@ extension SearchView: SearchViewContract {
     }
     
     func initiateDetailCreation(with foundation: CompactDetail){
-        let skeleton = storyboard?.instantiateViewController(withIdentifier: foundation.media.getView()) as! DetailView
-        detailViewModel.view = skeleton
-        detailViewModel.assembleView(by: foundation, with: skeleton)
+        detailViewModel.view = storyboard?.instantiateViewController(withIdentifier: foundation.media.getView()) as! DetailView
+        detailViewModel.assembleView(by: foundation, with: detailViewModel.view as! DetailView)
     }
     func pushPageToNavigation(push thisPage: UIViewController) {
         self.navigationController?.pushViewController(thisPage, animated: true)

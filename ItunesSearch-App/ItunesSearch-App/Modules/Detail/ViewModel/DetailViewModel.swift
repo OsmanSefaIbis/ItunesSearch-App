@@ -64,9 +64,11 @@ extension DetailViewModel: DetailModelDelegate{
 extension DetailViewModel: DetailViewModelContract {
     
     func assembleView(by foundation: CompactDetail, with skeloton: DetailView){
-        view?.configureView(with: foundation.data, foundation.imageAndColor, with: skeloton)
-        guard let detailPage = self.view else { return }
-        self.delegate?.passPage(detailPage as! DetailView)
+        // FIXME: Passed self directly
+        view?.configureView(with: foundation.data, foundation.imageAndColor, with: self) {
+            guard let detailPage = self.view else { return }
+            self.delegate?.passPage(detailPage as! DetailView)
+        }
     }
     
     func configureItem(with item: Detail, _ pair: ImageColorPair) {

@@ -46,7 +46,7 @@ final class DetailView: UIViewController{
     
     let spinnerOfWeb = UIActivityIndicatorView(style: .large)
     
-    private lazy var viewModel = DetailViewModel()
+    private var viewModel: DetailViewModel?
         
     private var item: Detail?
 
@@ -59,7 +59,7 @@ final class DetailView: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.view = self
+        viewModel?.view = self
     }
         
     @IBAction func viewButtonClicked(_ sender: Any) {
@@ -93,7 +93,7 @@ final class DetailView: UIViewController{
     @IBAction func musicPreviewButtonClicked(_ sender: Any) {
         hapticFeedbackMedium()
         guard let previewUrl = previewUrl else { return }
-        viewModel.musicPreviewButtonClicked( previewUrl)
+        viewModel?.musicPreviewButtonClicked( previewUrl)
     }
 }
 
@@ -112,10 +112,11 @@ extension DetailView: DetailViewContract {
 
      Finally, you can try simplifying your code by removing any unnecessary logic and reducing the complexity of your view controller to isolate the issue. This can help you identify any potential race conditions or threading issues that could be causing the crash.
      */
-    
-    func configureView( with item: Detail, _ pair: ImageColorPair, with skeloton: DetailView){
-        viewModel.view = skeloton
-        viewModel.configureItem(with: item, pair)
+        
+    func configureView(with item: Detail, _ pair: ImageColorPair, with viewmodel: DetailViewModel, completion: (() -> Void)?) {
+        self.viewModel = viewmodel
+        viewModel?.configureItem(with: item, pair)
+        completion?()
     }
     
     func configureMutualFields(_ item: Detail, _ pair: ImageColorPair) {
@@ -127,8 +128,8 @@ extension DetailView: DetailViewContract {
             self.viewUrl = URL(string: item.viewUrl)
             self.label_Name.text = item.name
             self.label_Creator.text = item.creator
-            self.label_ReleaseDate.text = self.viewModel.convertDate(item.releaseDate)
-            self.label_Price.text = self.viewModel.handlePrice(item.price)
+            self.label_ReleaseDate.text = self.viewModel?.convertDate(item.releaseDate)
+            self.label_Price.text = self.viewModel?.handlePrice(item.price)
         }
     }
     
@@ -138,9 +139,9 @@ extension DetailView: DetailViewContract {
             guard let self else { return }
             self.previewUrl = URL(string: item.previewUrl)
             self.label_PrimaryGenre.text = item.genre
-            self.textView_Description.text = self.viewModel.handleDescription(item.longDescription)
-            self.label_Length.text = self.viewModel.handleTime(millis: item.length)
-            self.label_CollectionName.text = self.viewModel.handleCollectionName(item.collectionName)
+            self.textView_Description.text = self.viewModel?.handleDescription(item.longDescription)
+            self.label_Length.text = self.viewModel?.handleTime(millis: item.length)
+            self.label_CollectionName.text = self.viewModel?.handleCollectionName(item.collectionName)
         }
     }
     func configureMusic(_ item: Detail) {
@@ -148,20 +149,20 @@ extension DetailView: DetailViewContract {
             guard let self else { return }
             self.previewUrl = URL(string: item.previewUrl)
             self.label_PrimaryGenre.text = item.genre
-            self.label_CollectionName.text = self.viewModel.handleCollectionName(item.collectionName)
-            self.label_Length.text = self.viewModel.handleTime(millis: item.length)
-            self.label_TrackInfo.text = self.viewModel.constructTrackInfo(item.trackNumber, item.albumNumber)
+            self.label_CollectionName.text = self.viewModel?.handleCollectionName(item.collectionName)
+            self.label_Length.text = self.viewModel?.handleTime(millis: item.length)
+            self.label_TrackInfo.text = self.viewModel?.constructTrackInfo(item.trackNumber, item.albumNumber)
         }
  
     }
     func configureEbook(_ item: Detail) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            self.label_Size.text = self.viewModel.handleByteRepresentation(item.size)
-            self.textView_Description.text = self.viewModel.handleDescription(item.description.withoutHtmlEntities)
-            self.label_Genres.text = self.viewModel.handleJoin(item.genreList)
-            self.label_RatingCount.text = self.viewModel.handleRating(item.ratingCount)
-            self.label_Rating.text = self.viewModel.handleRating(item.rating)
+            self.label_Size.text = self.viewModel?.handleByteRepresentation(item.size)
+            self.textView_Description.text = self.viewModel?.handleDescription(item.description.withoutHtmlEntities)
+            self.label_Genres.text = self.viewModel?.handleJoin(item.genreList)
+            self.label_RatingCount.text = self.viewModel?.handleRating(item.ratingCount)
+            self.label_Rating.text = self.viewModel?.handleRating(item.rating)
         }
     }
     func configurePodcast(_ item: Detail) {
@@ -169,10 +170,10 @@ extension DetailView: DetailViewContract {
             guard let self else { return }
             self.label_Content.text = item.advisory
             self.label_PrimaryGenre.text = item.genre
-            self.label_CollectionName.text = self.viewModel.handleCollectionName(item.collectionName)
-            self.label_Length.text = self.viewModel.handleTime(seconds: item.length)
-            self.label_Genres.text = self.viewModel.handleJoin(item.genreList)
-            self.label_Episodes.text = self.viewModel.constructEpisodeInfo(item.episodeCount)
+            self.label_CollectionName.text = self.viewModel?.handleCollectionName(item.collectionName)
+            self.label_Length.text = self.viewModel?.handleTime(seconds: item.length)
+            self.label_Genres.text = self.viewModel?.handleJoin(item.genreList)
+            self.label_Episodes.text = self.viewModel?.constructEpisodeInfo(item.episodeCount)
         }
     }
     
@@ -254,7 +255,7 @@ extension DetailView: DetailViewContract {
     
     @objc func playerDidFinishPlaying(_ notification: Notification) {
         removeAudioRelated()
-        viewModel.toggleAudio()
+        viewModel?.toggleAudio()
     }
     
 }

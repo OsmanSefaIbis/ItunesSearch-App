@@ -153,9 +153,9 @@ extension SearchViewModel: SearchViewModelContract {
         guard let detailData = cacheDetails[id] else { return }
         guard let pair = cacheDetailImagesAndColors[id] else { return }
         
-        let detailFoundation: CompactDetail = .init(media: media, data: detailData, imageAndColor: pair)
+        let foundation: CompactDetail = .init(media: media, data: detailData, imageAndColor: pair)
     
-        view?.initiateDetailCreation(with: detailFoundation)
+        view?.initiateDetailCreation(with: foundation)
     }
     
     func willDisplay(at indexPath: IndexPath, with searchText: String) {

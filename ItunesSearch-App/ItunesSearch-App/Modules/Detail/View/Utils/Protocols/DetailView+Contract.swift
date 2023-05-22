@@ -11,7 +11,7 @@ import UIKit
 protocol DetailViewContract: AnyObject {
     
     ///configure
-    func configureView( with item: Detail, _ pair: ImageColorPair, with skeloton: DetailView)
+    func configureView(with item: Detail, _ pair: ImageColorPair, with viewmodel: DetailViewModel, completion: (() -> Void)?)
     func configureMutualFields(_ item: Detail, _ pair: ImageColorPair)
     ///configure specific
     func configureMovie(_ item: Detail)
