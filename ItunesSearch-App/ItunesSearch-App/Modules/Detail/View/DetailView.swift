@@ -46,7 +46,7 @@ final class DetailView: UIViewController{
     
     let spinnerOfWeb = UIActivityIndicatorView(style: .large)
     
-    private var viewModel: DetailViewModel?
+    var viewModel: DetailViewModel?
         
     private var item: Detail?
 
@@ -59,7 +59,6 @@ final class DetailView: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel?.view = self
     }
         
     @IBAction func viewButtonClicked(_ sender: Any) {
@@ -113,10 +112,10 @@ extension DetailView: DetailViewContract {
      Finally, you can try simplifying your code by removing any unnecessary logic and reducing the complexity of your view controller to isolate the issue. This can help you identify any potential race conditions or threading issues that could be causing the crash.
      */
         
-    func configureView(with item: Detail, _ pair: ImageColorPair, with viewmodel: DetailViewModel, completion: (() -> Void)?) {
-        self.viewModel = viewmodel
-        viewModel?.configureItem(with: item, pair)
-        completion?()
+    func configureView(with item: Detail, _ pair: ImageColorPair, completion: (() -> Void)?) {
+        viewModel?.configureItem(with: item, pair){
+            completion?()
+        }
     }
     
     func configureMutualFields(_ item: Detail, _ pair: ImageColorPair) {

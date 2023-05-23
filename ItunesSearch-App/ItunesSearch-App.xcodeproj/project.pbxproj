@@ -42,8 +42,6 @@
 		96E8226E29F44B11009B56F0 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E8226D29F44B11009B56F0 /* UIImage+Extension.swift */; };
 		96E83D1B29E65BA7001B517E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 96E83D1A29E65BA7001B517E /* Alamofire */; };
 		96E83D1E29E65BBD001B517E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 96E83D1D29E65BBD001B517E /* Kingfisher */; };
-		96E83D2129E6BBA3001B517E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 96E83D2029E6BBA3001B517E /* Lottie */; };
-		96E83D2429E6BC33001B517E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 96E83D2329E6BC33001B517E /* SnapKit */; };
 		96E83D2B29E71816001B517E /* SearchDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E83D2A29E71816001B517E /* SearchDataModel.swift */; };
 		96E83D3329E71C02001B517E /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E83D3229E71C02001B517E /* SearchModel.swift */; };
 		96EDF4842A084D0200634BDF /* SearchViewModel+Pseudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4832A084D0200634BDF /* SearchViewModel+Pseudo.swift */; };
@@ -137,9 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96E83D1E29E65BBD001B517E /* Kingfisher in Frameworks */,
-				96E83D2429E6BC33001B517E /* SnapKit in Frameworks */,
 				96E83D1B29E65BA7001B517E /* Alamofire in Frameworks */,
-				96E83D2129E6BBA3001B517E /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,8 +618,6 @@
 			packageProductDependencies = (
 				96E83D1A29E65BA7001B517E /* Alamofire */,
 				96E83D1D29E65BBD001B517E /* Kingfisher */,
-				96E83D2029E6BBA3001B517E /* Lottie */,
-				96E83D2329E6BC33001B517E /* SnapKit */,
 			);
 			productName = "ItunesSearch-App";
 			productReference = 9694A90E29E31C93000B010E /* ItunesSearch-App.app */;
@@ -1008,16 +1002,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 96E83D1C29E65BBD001B517E /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		96E83D2029E6BBA3001B517E /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 96E83D1F29E6BBA3001B517E /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
-		};
-		96E83D2329E6BC33001B517E /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 96E83D2229E6BC33001B517E /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

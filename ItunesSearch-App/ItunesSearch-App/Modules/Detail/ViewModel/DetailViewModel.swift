@@ -64,14 +64,13 @@ extension DetailViewModel: DetailModelDelegate{
 extension DetailViewModel: DetailViewModelContract {
     
     func assembleView(by foundation: CompactDetail, with skeloton: DetailView){
-        // FIXME: Passed self directly
-        view?.configureView(with: foundation.data, foundation.imageAndColor, with: self) {
+        view?.configureView(with: foundation.data, foundation.imageAndColor) { 
             guard let detailPage = self.view else { return }
             self.delegate?.passPage(detailPage as! DetailView)
         }
     }
-    
-    func configureItem(with item: Detail, _ pair: ImageColorPair) {
+     
+    func configureItem(with item: Detail, _ pair: ImageColorPair, completion: (() -> Void)?) {
 
         guard let isColorDark = view?.isColorDark(pair.color) else { return }
         
@@ -91,6 +90,7 @@ extension DetailViewModel: DetailViewModelContract {
         default:
             assert(false, HardCoded.errorPromptKind.get())
         }
+        completion?()
     }
     
     func convertDate(_ date: String) -> String {

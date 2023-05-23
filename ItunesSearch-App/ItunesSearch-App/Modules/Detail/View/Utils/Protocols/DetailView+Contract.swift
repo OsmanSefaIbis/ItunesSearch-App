@@ -10,8 +10,9 @@ import UIKit
 // laterTODO: Analyze this interface properly to make it as neat as possible
 protocol DetailViewContract: AnyObject {
     
+    var viewModel: DetailViewModel? { get set }
     ///configure
-    func configureView(with item: Detail, _ pair: ImageColorPair, with viewmodel: DetailViewModel, completion: (() -> Void)?)
+    func configureView(with item: Detail, _ pair: ImageColorPair, completion: (() -> Void)?)
     func configureMutualFields(_ item: Detail, _ pair: ImageColorPair)
     ///configure specific
     func configureMovie(_ item: Detail)
