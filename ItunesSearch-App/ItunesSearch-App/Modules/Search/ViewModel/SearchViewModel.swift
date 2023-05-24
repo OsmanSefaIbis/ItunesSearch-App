@@ -19,8 +19,8 @@ final class SearchViewModel {
     private var timeControl: Timer?
     private var items: [ColumnItem] = []
     private var idsOfAllFetchedRecords = Set<Int>()
-    private var cacheDetails: [Int : Detail] = [:] // searchTODO: Is this a good approach?
-    private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:] // searchTODO: Is this a good approach?
+    private var cacheDetails: [Int : Detail] = [:]
+    private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:]
 
     private var paginationOffSet = 0
     private var mediaType_State: MediaType? = .movie
@@ -49,7 +49,7 @@ final class SearchViewModel {
 extension SearchViewModel: SearchModelDelegate {
     
     func didFetchSearchData() {
-        let retrievedData: [SearchCellModel] = model.searchResults.map {  //searchTODO: Is there a better approach?
+        let retrievedData: [SearchCellModel] = model.searchResults.map {  
             .init(
                 id: $0.trackID ?? 0,
                 artworkUrl: $0.artworkUrl100 ?? "",
@@ -236,7 +236,7 @@ extension SearchViewModel: SearchViewModelContract {
                 self.items.append(contentsOf: items)
             }
         }
-        isLoadingNextPage_Flag = false // laterTODO: check if it arises a bug
+        isLoadingNextPage_Flag = false 
         completion?()
     }
     

@@ -6,8 +6,7 @@
 //
 
 import Foundation
-// laterTODO: Add a extension file
-// laterTODO: migrate independant methods to extension file for this class
+
 final class DetailViewModel{
     
     private let model = DetailModel()
@@ -29,7 +28,7 @@ final class DetailViewModel{
 extension DetailViewModel: DetailModelDelegate{
 
     func didFetchDetailData(){
-        let retrievedData: [Detail] = model.detailResults.map{    //searchTODO: Is there a better approach?
+        let retrievedData: [Detail] = model.detailResults.map{    
             .init(
                 id: $0.trackID ?? 0,
                 kind: $0.kind ?? "",
@@ -97,11 +96,7 @@ extension DetailViewModel: DetailViewModelContract {
     func convertDate(_ date: String) -> String {
         view?.convertDate(for: date) ?? ""
     }
-    
-    func handlePrice(_ price: Double) -> String {
-        price <= 0 ? HardCoded.free.get() : (HardCoded.dolar.get()).appending(String(price))
-    }
-    
+
     func handleDescription(_ description: String) -> String {
         view?.capitalizeUppercaseWords(input: description) ?? ""
     }
@@ -113,32 +108,8 @@ extension DetailViewModel: DetailViewModelContract {
         view?.readableFormatTimeFromSeconds(seconds: seconds) ?? ""
     }
     
-    func handleCollectionName(_ name: String) -> String{
-        name.isEmpty ? HardCoded.notAvailable.get() : name
-    }
-    
     func handleByteRepresentation(_ byte: Int) -> String {
         view?.convertBytesToGBorMB(byte) ?? ""
-    }
-    
-    func handleJoin(_ list: [String]) -> String {
-        list.joined(separator: HardCoded.seperator.get())
-    }
-    
-    func handleRating(_ count: Int) -> String {
-        count == 0 ? HardCoded.noRating.get() : (HardCoded.numberSign.get()).appending(String(count))
-    }
-    
-    func handleRating(_ rate: Double) -> String {
-        rate == 0.0 ? HardCoded.noRating.get() : String(rate).appending(HardCoded.ratingScale.get())
-    }
-    
-    func constructTrackInfo(_ track: Int, _ album: Int) -> String {
-        String(track).appending(HardCoded.trackSeperator.get()).appending(String(album))
-    }
-    
-    func constructEpisodeInfo(_ count: Int) -> String {
-        (HardCoded.numberSign.get()).appending(String(count))
     }
     
     func musicPreviewButtonClicked(_ url: URL) {

@@ -18,7 +18,7 @@ final class DetailView: UIViewController{
     @IBOutlet private weak var view_FullContainer: UIView!
     @IBOutlet private weak var view_FullView: UIView!
     @IBOutlet private weak var view_ImageContainer: UIView!
-    @IBOutlet private weak var view_Fields: UIView! // todaysearchTODO: Too much, change configureBackgroundColors() --> to eliminate these, add a recursive solution
+    @IBOutlet private weak var view_Fields: UIView!
     @IBOutlet private weak var view_Description: UIView!
     @IBOutlet private weak var view_Buttons: UIView!
     /// above is added for colorization
@@ -34,7 +34,7 @@ final class DetailView: UIViewController{
     @IBOutlet private weak var label_CollectionName: UILabel!
     @IBOutlet private weak var label_ReleaseDate: UILabel!
     @IBOutlet private weak var label_PrimaryGenre: UILabel!
-    @IBOutlet private weak var label_Price: UILabel!                //searchTODO: Too much, what should i do, or is this normal idk?
+    @IBOutlet private weak var label_Price: UILabel!
     @IBOutlet private weak var label_Length: UILabel!
     @IBOutlet private weak var label_Size: UILabel!
     @IBOutlet private weak var label_RatingCount: UILabel!
@@ -57,7 +57,7 @@ final class DetailView: UIViewController{
     private var viewUrl: URL?
     private var previewUrl: URL?
     
-    override func viewDidLoad() { // ??? Consider this part later
+    override func viewDidLoad() { 
         super.viewDidLoad()
     }
     override func loadViewIfNeeded() {

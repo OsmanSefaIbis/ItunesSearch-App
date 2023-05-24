@@ -8,9 +8,7 @@
 import UIKit
 import Kingfisher
 
-// laterTODO: add interface for this class
-
-class SearchCell: UICollectionViewCell {
+class SearchCell: UICollectionViewCell, SearchCellContract {
 
     @IBOutlet weak var container: UIView!
     @IBOutlet weak var artworkImage: UIImageView!
@@ -24,13 +22,16 @@ class SearchCell: UICollectionViewCell {
         super.awakeFromNib()
         configureCellLooks()
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         prepareReusability()
     }
-    func prepareReusability() { // searchTODO: cell coloring is causing flickering effect because of cell reuse handle it for UX
+    
+    func prepareReusability() {
         artworkImage.image = nil ; releaseDateLabel.text = nil ; nameLabel.text = nil ; trackPriceLabel.text = nil; container.backgroundColor = .lightGray
     }
+    
     func configureCellLooks() {
         contentView.layer.cornerRadius = 10.0 ; contentView.clipsToBounds = true
         artworkImage.layer.cornerRadius = 10.0 ; artworkImage.layer.masksToBounds = true
@@ -43,6 +44,7 @@ class SearchCell: UICollectionViewCell {
         imageHeightConstraint?.isActive = true ; imageWidthConstraint?.isActive = true
         
     }
+    
     func configureCell(with model: SearchCellModel, size constraint: CGFloat) {
         
         self.setImageHeigth( 2 * constraint )
@@ -67,9 +69,11 @@ class SearchCell: UICollectionViewCell {
             }
         }
     }
+    
     func setImageHeigth( _ height: CGFloat) {
         imageHeightConstraint?.constant = height
     }
+    
     func setImageWidth( _ width: CGFloat) {
         imageWidthConstraint?.constant = width
     }

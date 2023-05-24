@@ -335,7 +335,7 @@ extension SearchView: UICollectionViewDelegateFlowLayout{
 }
 
 /* SearchBar - Delegate */
-extension SearchView: UISearchBarDelegate { //laterTODO: Handle more use cases
+extension SearchView: UISearchBarDelegate { 
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         hapticFeedbackSoft()

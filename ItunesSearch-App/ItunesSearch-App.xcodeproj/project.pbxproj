@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		961A66E42A18C61800445B99 /* ConstantsCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A66E32A18C61800445B99 /* ConstantsCV.swift */; };
+		961A66F22A1E3AAE00445B99 /* SearchCellContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A66F12A1E3AAE00445B99 /* SearchCellContract.swift */; };
+		961A66F52A1E3CF000445B99 /* DetailViewModel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A66F42A1E3CF000445B99 /* DetailViewModel+Extension.swift */; };
 		961BFE6F29F16DC8009838AA /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BFE6E29F16DC8009838AA /* String+Extension.swift */; };
 		9651B18D2A02852600D94A6F /* SearchView+Pseudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9651B18C2A02852600D94A6F /* SearchView+Pseudo.swift */; };
 		9651B18F2A03BCA500D94A6F /* TopDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9651B18E2A03BCA500D94A6F /* TopDataModel.swift */; };
@@ -69,6 +71,8 @@
 
 /* Begin PBXFileReference section */
 		961A66E32A18C61800445B99 /* ConstantsCV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsCV.swift; sourceTree = "<group>"; };
+		961A66F12A1E3AAE00445B99 /* SearchCellContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellContract.swift; sourceTree = "<group>"; };
+		961A66F42A1E3CF000445B99 /* DetailViewModel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailViewModel+Extension.swift"; sourceTree = "<group>"; };
 		961BFE6E29F16DC8009838AA /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		9651B18C2A02852600D94A6F /* SearchView+Pseudo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchView+Pseudo.swift"; sourceTree = "<group>"; };
 		9651B18E2A03BCA500D94A6F /* TopDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopDataModel.swift; sourceTree = "<group>"; };
@@ -246,6 +250,30 @@
 			path = "HardCoded's";
 			sourceTree = "<group>";
 		};
+		961A66EF2A1E3A7F00445B99 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				961A66F02A1E3A8500445B99 /* Protocols */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		961A66F02A1E3A8500445B99 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				961A66F12A1E3AAE00445B99 /* SearchCellContract.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		961A66F32A1E3CDA00445B99 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				961A66F42A1E3CF000445B99 /* DetailViewModel+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		961BFE6D29F16DB0009838AA /* Extensions+SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,6 +389,7 @@
 		96E83D3629E90E41001B517E /* SearchCell */ = {
 			isa = PBXGroup;
 			children = (
+				961A66EF2A1E3A7F00445B99 /* Utils */,
 				9689A94D29F7EB6100C2BA82 /* SearchCell.swift */,
 				9689A94E29F7EB6100C2BA82 /* SearchCell.xib */,
 			);
@@ -493,6 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				96EDF4942A0A3BF100634BDF /* Protocols */,
+				961A66F32A1E3CDA00445B99 /* Extensions */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -700,12 +730,14 @@
 				9694A91629E31C93000B010E /* SearchView.swift in Sources */,
 				9689A94F29F7EB6100C2BA82 /* SearchCell.swift in Sources */,
 				96E8225E29F3062E009B56F0 /* SearchView+Extension.swift in Sources */,
+				961A66F52A1E3CF000445B99 /* DetailViewModel+Extension.swift in Sources */,
 				96EDF4BE2A0E51F500634BDF /* SearchQuery.swift in Sources */,
 				96B5868B29EDD2FE004F5B27 /* DetailDataModel.swift in Sources */,
 				9651B1952A04294800D94A6F /* TopPicksReusableHeader.swift in Sources */,
 				96EDF4CF2A0FF2F000634BDF /* DetailModelDelegate.swift in Sources */,
 				96E83D3329E71C02001B517E /* SearchModel.swift in Sources */,
 				96EDF4B22A0DA14E00634BDF /* ItunesSearchAPI.swift in Sources */,
+				961A66F22A1E3AAE00445B99 /* SearchCellContract.swift in Sources */,
 				96B5868E29EFE097004F5B27 /* Detail+Model.swift in Sources */,
 				9651B1982A057AF100D94A6F /* UIView+Extension.swift in Sources */,
 				9651B18F2A03BCA500D94A6F /* TopDataModel.swift in Sources */,

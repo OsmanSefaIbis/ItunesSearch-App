@@ -26,7 +26,7 @@ protocol DetailViewModelContract {
     func handleRating(_ rate: Double) -> String
     func constructTrackInfo(_ track: Int, _ album: Int) -> String
     func constructEpisodeInfo(_ count: Int) -> String
-    ///operations
+    /// operations
     func musicPreviewButtonClicked(_ url: URL)
     func toggleAudio()
 }
