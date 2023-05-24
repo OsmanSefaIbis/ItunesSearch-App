@@ -61,11 +61,10 @@ extension SearchView: SearchViewContract {
     
     func setItems( _ items: [SearchCellModel]) {
         
-        searchViewModel.setItems(items)
-        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(400)) { //todayTODO: whyStatic
+        searchViewModel.setItems(items, completion: {
             self.stopSpinner()
             self.reloadCollectionView()
-        }
+        })
     }
     
     func invokeTopIds( _ topIds: [Top]) {
@@ -228,11 +227,8 @@ extension SearchView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ConstantsCV.cell_ID, for: indexPath) as! SearchCell
+        cell.configureCell(with: searchViewModel.cellForItem(at: indexPath), size: sizingValue )
         
-        cell.setImageHeigth( 2 * sizingValue ) //laterTODO: Handle these inside the cell
-        cell.setImageWidth( 2 * sizingValue )
-        
-        cell.configureCell(with: searchViewModel.cellForItem(at: indexPath))
         return cell
     }
 }

@@ -113,7 +113,7 @@ extension SearchViewModel: SearchViewModelContract {
         }
     }
     
-    func setItems(_ items: [ColumnItem]) {
+    func setItems(_ items: [ColumnItem], completion: (() -> Void)?) {
     // INFO: SearchViewModel+Pseudo.swift
         if items.count != ConstantsApp.requestLimit { lessThanPage_Flag = true }
         
@@ -140,6 +140,7 @@ extension SearchViewModel: SearchViewModelContract {
             }
         }
         isLoadingNextPage_Flag = false // laterTODO: check if it arises a bug
+        completion?()
     }
     
     func cellForItem(at indexPath: IndexPath) -> ColumnItem {

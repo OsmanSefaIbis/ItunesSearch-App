@@ -26,7 +26,7 @@ protocol SearchViewModelContract {
     func searchBarSearchButtonClicked(with searchText: String)
     func textDidChange(with searchText: String)
     
-    func setItems(_ items: [ColumnItem])
+    func setItems(_ items: [ColumnItem], completion: (() -> Void)?)
     func reset()
     func resetAndSearch(with query: SearchQuery)
     func resetAndInvokeTop()

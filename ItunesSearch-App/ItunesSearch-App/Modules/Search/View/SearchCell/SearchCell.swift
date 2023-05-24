@@ -29,7 +29,7 @@ class SearchCell: UICollectionViewCell {
         prepareReusability()
     }
     func prepareReusability() { // searchTODO: cell coloring is causing flickering effect because of cell reuse handle it for UX
-        artworkImage.image = nil ; releaseDateLabel.text = nil ; nameLabel.text = nil ; trackPriceLabel.text = nil
+        artworkImage.image = nil ; releaseDateLabel.text = nil ; nameLabel.text = nil ; trackPriceLabel.text = nil; container.backgroundColor = .lightGray
     }
     func configureCellLooks() {
         contentView.layer.cornerRadius = 10.0 ; contentView.clipsToBounds = true
@@ -43,7 +43,10 @@ class SearchCell: UICollectionViewCell {
         imageHeightConstraint?.isActive = true ; imageWidthConstraint?.isActive = true
         
     }
-    func configureCell(with model: SearchCellModel) {
+    func configureCell(with model: SearchCellModel, size constraint: CGFloat) {
+        
+        self.setImageHeigth( 2 * constraint )
+        self.setImageWidth( 2 * constraint )
 
         guard let modifiedArtworkUrl = changeImageURL(model.artworkUrl, withDimension: ConstantsCV.dimensionPreference) else { return }
 
@@ -64,7 +67,7 @@ class SearchCell: UICollectionViewCell {
             }
         }
     }
-    func setImageHeigth( _ height: CGFloat) { // Setter for Constraints
+    func setImageHeigth( _ height: CGFloat) {
         imageHeightConstraint?.constant = height
     }
     func setImageWidth( _ width: CGFloat) {
