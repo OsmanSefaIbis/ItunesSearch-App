@@ -8,8 +8,8 @@
 import UIKit
 import Kingfisher
 
-class SearchCell: UICollectionViewCell, SearchCellContract {
-
+class SearchCell: UICollectionViewCell {
+    
     @IBOutlet weak var container: UIView!
     @IBOutlet weak var artworkImage: UIImageView!
     @IBOutlet weak var releaseDateLabel: UILabel!
@@ -17,7 +17,7 @@ class SearchCell: UICollectionViewCell, SearchCellContract {
     @IBOutlet weak var trackPriceLabel: UILabel!
     
     private var imageHeightConstraint, imageWidthConstraint : NSLayoutConstraint?
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         configureCellLooks()
@@ -27,6 +27,9 @@ class SearchCell: UICollectionViewCell, SearchCellContract {
         super.prepareForReuse()
         prepareReusability()
     }
+}
+
+extension SearchCell: SearchCellContract {
     
     func prepareReusability() {
         artworkImage.image = nil ; releaseDateLabel.text = nil ; nameLabel.text = nil ; trackPriceLabel.text = nil; container.backgroundColor = .lightGray
@@ -40,18 +43,17 @@ class SearchCell: UICollectionViewCell, SearchCellContract {
         
         imageHeightConstraint = artworkImage.heightAnchor.constraint(equalToConstant: 0)
         imageWidthConstraint = artworkImage.widthAnchor.constraint(equalToConstant: 0)
-
+        
         imageHeightConstraint?.isActive = true ; imageWidthConstraint?.isActive = true
         
     }
     
     func configureCell(with model: SearchCellModel, size constraint: CGFloat) {
         
-        self.setImageHeigth( 2 * constraint )
-        self.setImageWidth( 2 * constraint )
-
+        self.setImageHeigth( 2 * constraint ) ; self.setImageWidth( 2 * constraint )
+        
         guard let modifiedArtworkUrl = changeImageURL(model.artworkUrl, withDimension: ConstantsCV.cellImageDimension) else { return }
-
+        
         releaseDateLabel.text = convertDate(for: model.releaseDate)
         nameLabel.text = model.name
         trackPriceLabel.text = (model.trackPrice <= 0) ? HardCoded.free.get() : HardCoded.dolar.get().appending(String(model.trackPrice))
@@ -78,5 +80,6 @@ class SearchCell: UICollectionViewCell, SearchCellContract {
         imageWidthConstraint?.constant = width
     }
 }
+
 
 

@@ -6,7 +6,7 @@
 //
 
 /*----------------------------------------------------------------------------------------------------------------------------------------------------|
-|                                              • extension SearchViewModel: SearchViewModelInterface                                                  |
+|                                              • extension SearchViewModel: SearchViewModelContract                                                   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------|
 |                                                                                                                                                     |
 | func setItems( _ items: [ColumnItems]) {                                                   /// self.items <- existing data  incoming data -> items  |

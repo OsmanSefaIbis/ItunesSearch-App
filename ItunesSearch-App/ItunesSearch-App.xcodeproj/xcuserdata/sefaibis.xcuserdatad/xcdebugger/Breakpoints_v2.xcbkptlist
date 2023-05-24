@@ -49,6 +49,21 @@
                   endingLineNumber = "172"
                   offsetFromSymbolStart = "116">
                </Location>
+               <Location
+                  uuid = "09EA9908-C399-4A81-8EAB-1C3720843D97 - 9b74446e79722bf8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in ItunesSearch_App.DetailView.configureBackgroundColors(__C.UIColor) -&gt; ()"
+                  moduleName = "ItunesSearch-App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Modules/Detail/View/DetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "171"
+                  endingLineNumber = "171"
+                  offsetFromSymbolStart = "116">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

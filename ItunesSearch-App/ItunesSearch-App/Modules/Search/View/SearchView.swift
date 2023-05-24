@@ -27,7 +27,7 @@ final class SearchView: UIViewController{
         searchViewModel.viewDidLoad()
     }
 }
-/* Search View - Interface */
+/* Search View - Contract */
 extension SearchView: SearchViewContract {
     
     func assignDelegates() {

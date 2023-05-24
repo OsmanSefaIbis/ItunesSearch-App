@@ -33,6 +33,7 @@ final class NetworkAdapter {
             
         executeRequest(request: request, dto: dtoSearch, onCompletion: onCompletion)
     }
+    
     func fetchById (with idList: [Int], onCompletion: @escaping (Result <DetailResultData, NetworkError> ) -> Void) {
         
         let requestQuery: RequestQuery = .init(search: nil, idList: idList, media: nil)
@@ -40,6 +41,7 @@ final class NetworkAdapter {
             
         executeRequest(request: request, dto: dtoDetail, onCompletion: onCompletion)
     }
+    
     func fetchTopPicks (by media: MediaType, onCompletion: @escaping (Result <TopResultData,NetworkError> ) -> Void) {
         
         let requestQuery: RequestQuery = .init(search: nil, idList: nil, media: media)
@@ -53,36 +55,40 @@ final class NetworkAdapter {
         dto: T.Type,
         decoder: JSONDecoder = JSONDecoder(),
         onCompletion: @escaping (Result<T, NetworkError>) -> Void) {
+        
+        let task = session.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else { return }
 
-        let task = session.dataTask(with: request) { [weak self] data, _, error in         // FIXME: Proper Error Handling
-            guard let self else { return }
-            do {
-                guard let data = data, error == nil else{
-                    throw error! // FIXME: Force Unwrap
-                }
-                guard let jsonString = String(data: data, encoding: .utf8) else { return } // ?
-                if self.isValidJSON(jsonString) {
-                    guard let result =  try? decoder.decode(dto, from: data) else {
-                        onCompletion(.failure(.decode(error!))) // FIXME: Force Unwrap
-                        return
+            if let error = error as Error? {
+                onCompletion(.failure(.url(error)))
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse else {
+                onCompletion(.failure(.unresolved(error)))
+                return
+            }
+            guard let data = data else {
+                onCompletion(.failure(.unresolved(error)))
+                return
+            }
+            let statusCode = httpResponse.statusCode
+            if statusCode >= 200 && statusCode < 300 {
+                do {
+                    let jsonString = String(data: data, encoding: .utf8)
+                    if let jsonString = jsonString, self.isValidJSON(jsonString) {
+                        let result = try decoder.decode(dto, from: data)
+                        onCompletion(.success(result))
+                    } else {
+                        onCompletion(.failure(.json(error)))
                     }
-                    onCompletion(.success(result))
-                } else {
-                    onCompletion(.failure(.json(error!))) // FIXME: Force Unwrap
-                    return
+                } catch {
+                    onCompletion(.failure(.decode(error)))
                 }
-            } catch let error {
-                switch error {
-                case is URLError:
-                    onCompletion(.failure(.url(error))) ; return
-                default:
-                    onCompletion(.failure(.unresolved(error))) ; return
-                }
+            } else {
+                onCompletion(.failure(.http(statusCode)))
             }
         }
         task.resume()
     }
-
-    
 }
 
