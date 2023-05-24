@@ -19,9 +19,9 @@ final class SearchViewModel {
     private var timeControl: Timer?
     private var items: [ColumnItem] = []
     private var idsOfAllFetchedRecords = Set<Int>()
-    private var cacheDetails: [Int : Detail] = [:]                               // searchTODO: Is this a good approach?
-    private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:]       // searchTODO: Is this a good approach?
-    
+    private var cacheDetails: [Int : Detail] = [:] // searchTODO: Is this a good approach?
+    private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:] // searchTODO: Is this a good approach?
+
     private var paginationOffSet = 0
     private var mediaType_State: MediaType? = .movie
     private var lessThanPage_Flag = false
@@ -113,40 +113,10 @@ extension SearchViewModel: SearchViewModelContract {
         }
     }
     
-    func setItems(_ items: [ColumnItem], completion: (() -> Void)?) {
-    // INFO: SearchViewModel+Pseudo.swift
-        if items.count != ConstantsApp.requestLimit { lessThanPage_Flag = true }
-        
-        if lessThanPage_Flag {
-            if self.items.count >= ConstantsApp.requestLimit  {
-                var lastRecords: [ColumnItem] = []
-                
-                for each in items {
-                    if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue }
-                    else { lastRecords.append(each) }
-                }
-                self.items.append(contentsOf: lastRecords)
-                idsOfAllFetchedRecords.removeAll()
-            } else {
-                self.items = items
-            }
-        } else {
-            if paginationOffSet == 0 {
-                for each in items { idsOfAllFetchedRecords.insert(each.id) }
-                self.items = items
-            }else {
-                for each in items { idsOfAllFetchedRecords.insert(each.id) }
-                self.items.append(contentsOf: items)
-            }
-        }
-        isLoadingNextPage_Flag = false // laterTODO: check if it arises a bug
-        completion?()
-    }
-    
     func cellForItem(at indexPath: IndexPath) -> ColumnItem {
         items[indexPath.item]
     }
-    
+
     func didSelectItem(at indexPath: IndexPath) {
         
         let id = items[indexPath.item].id
@@ -240,21 +210,34 @@ extension SearchViewModel: SearchViewModelContract {
         
     }
     
-    func providesIds(_ items: [ColumnItem]) -> [Int] {
-        items.map{ $0.id }
-    }
-    
-    func setCacheDetails(key id: Int, value detail: Detail) {
-        cacheDetails[id] = detail
-    }
-    
-    func setCacheDetailImagesAndColor( key id: Int, value pair: ImageColorPair) {
-        cacheDetailImagesAndColors[id] = pair
-    }
-    
-    func modifyUrl(_ imageUrl: String, _ imageDimension: Int) -> String {
-        guard let modifiedUrl = changeImageURL(imageUrl, dimension: imageDimension) else { return String()}
-        return modifiedUrl
+    func setItems(_ items: [ColumnItem], completion: (() -> Void)?) {
+        // INFO: SearchViewModel+Pseudo.swift
+        if items.count != ConstantsApp.requestLimit { lessThanPage_Flag = true }
+        
+        if lessThanPage_Flag {
+            if self.items.count >= ConstantsApp.requestLimit  {
+                var lastRecords: [ColumnItem] = []
+                
+                for each in items {
+                    if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue }
+                    else { lastRecords.append(each) }
+                }
+                self.items.append(contentsOf: lastRecords)
+                idsOfAllFetchedRecords.removeAll()
+            } else {
+                self.items = items
+            }
+        } else {
+            if paginationOffSet == 0 {
+                for each in items { idsOfAllFetchedRecords.insert(each.id) }
+                self.items = items
+            }else {
+                for each in items { idsOfAllFetchedRecords.insert(each.id) }
+                self.items.append(contentsOf: items)
+            }
+        }
+        isLoadingNextPage_Flag = false // laterTODO: check if it arises a bug
+        completion?()
     }
     
     func reset() {
@@ -287,7 +270,24 @@ extension SearchViewModel: SearchViewModelContract {
         topInvoked()
     }
     
-    /// Interface Helper
+    func modifyUrl(_ imageUrl: String, _ imageDimension: Int) -> String {
+        guard let modifiedUrl = changeImageURL(imageUrl, dimension: imageDimension) else { return String()}
+        return modifiedUrl
+    }
+    
+    func providesIds(_ items: [ColumnItem]) -> [Int] {
+        items.map{ $0.id }
+    }
+    
+    func setCacheDetails(key id: Int, value detail: Detail) {
+        cacheDetails[id] = detail
+    }
+    
+    func setCacheDetailImagesAndColor( key id: Int, value pair: ImageColorPair) {
+        cacheDetailImagesAndColors[id] = pair
+    }
+    
+    /// Contract Helper
     func resetCollections() {
         ///dealloc
         idsOfAllFetchedRecords.removeAll()

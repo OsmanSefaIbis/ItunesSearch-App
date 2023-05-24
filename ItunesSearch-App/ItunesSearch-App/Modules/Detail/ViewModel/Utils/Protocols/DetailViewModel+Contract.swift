@@ -6,13 +6,14 @@
 //
 
 import Foundation
-// laterTODO: order properly, order class
-// laterTODO: Analyze this interface properly to make it as neat as possible
+
 protocol DetailViewModelContract {
-    
+    /// prop
     var view: DetailViewContract? { get set }
+    /// configure for view
     func assembleView(by foundation: CompactDetail)
     func configureItem(with item: Detail, _ pair: ImageColorPair, completion: (() -> Void)?)
+    /// data formatting
     func convertDate(_ date: String) -> String
     func handlePrice(_ price: Double) -> String
     func handleDescription(_ description: String) -> String
@@ -25,6 +26,7 @@ protocol DetailViewModelContract {
     func handleRating(_ rate: Double) -> String
     func constructTrackInfo(_ track: Int, _ album: Int) -> String
     func constructEpisodeInfo(_ count: Int) -> String
+    ///operations
     func musicPreviewButtonClicked(_ url: URL)
     func toggleAudio()
 }

@@ -100,17 +100,15 @@ final class DetailView: UIViewController{
 
 extension DetailView: DetailViewContract {
     
-        
     func configureView(with item: Detail, _ pair: ImageColorPair, completion: (() -> Void)?) {
-
         viewModel?.configureItem(with: item, pair){
             completion?()
         }
     }
     
     func configureMutualFields(_ item: Detail, _ pair: ImageColorPair) {
-        
         configureBackgroundColors(pair.color)
+        
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.imageView_Image.image = pair.image
@@ -123,7 +121,6 @@ extension DetailView: DetailViewContract {
     }
     
     func configureMovie(_ item: Detail) {
-        
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.previewUrl = URL(string: item.previewUrl)
@@ -133,6 +130,7 @@ extension DetailView: DetailViewContract {
             self.label_CollectionName.text = self.viewModel?.handleCollectionName(item.collectionName)
         }
     }
+    
     func configureMusic(_ item: Detail) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
@@ -144,6 +142,7 @@ extension DetailView: DetailViewContract {
         }
  
     }
+    
     func configureEbook(_ item: Detail) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
@@ -154,6 +153,7 @@ extension DetailView: DetailViewContract {
             self.label_Rating.text = self.viewModel?.handleRating(item.rating)
         }
     }
+    
     func configurePodcast(_ item: Detail) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
@@ -166,7 +166,6 @@ extension DetailView: DetailViewContract {
         }
     }
     
-    // todayTODO: Change this, go by subviews and set
     func configureBackgroundColors(_ averageColor: UIColor){
        DispatchQueue.main.async { [weak self] in
            guard let self else { return }
@@ -184,14 +183,25 @@ extension DetailView: DetailViewContract {
        }
     }
     
-    func setNavigationBarWith( tintColor colorName: String) {
-        navigationController?.navigationBar.tintColor = UIColor(named: colorName)
+    func adaptComponentsForDark(_ tintColor: UIColor){
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            if let view = self.button_WebView { view.tintColor = tintColor }
+            if let movie = self.button_MoviePreview { movie.tintColor = tintColor }
+            if let music = self.button_MusicPreview { music.tintColor = tintColor }
+            if let navBar = self.navigationController?.navigationBar { navBar.tintColor = .lightGray }
+        }
     }
+    
     func setTextColorOfView(_ color: UIColor) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.view_FullView.setAllTextColors(color)
         }
+    }
+
+    func setNavigationBarWith( tintColor colorName: String) {
+        navigationController?.navigationBar.tintColor = UIColor(named: colorName)
     }
     
     func toggleAudioOff() {
@@ -220,6 +230,7 @@ extension DetailView: DetailViewContract {
         ])
         playIndicator.startAnimating()
     }
+    
     func removeAudioRelated(){
         button_MusicPreview.setTitle(HardCoded.previewText.get(), for: .normal)
         button_MusicPreview.subviews.forEach { subview in
@@ -230,21 +241,9 @@ extension DetailView: DetailViewContract {
         }
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: audioPlayerItem)
     }
-    
-    /// Interface Helpers
-    func adaptComponentsForDark(_ tintColor: UIColor){
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            if let view = self.button_WebView { view.tintColor = tintColor }
-            if let movie = self.button_MoviePreview { movie.tintColor = tintColor }
-            if let music = self.button_MusicPreview { music.tintColor = tintColor }
-            if let navBar = self.navigationController?.navigationBar { navBar.tintColor = .lightGray }
-        }
-    }
-    
+    /// Contract Helpers
     @objc func playerDidFinishPlaying(_ notification: Notification) {
         removeAudioRelated()
         viewModel?.toggleAudio()
     }
-    
 }

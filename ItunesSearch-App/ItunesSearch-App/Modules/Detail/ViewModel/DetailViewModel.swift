@@ -20,6 +20,7 @@ final class DetailViewModel{
     init(){
         model.delegate = self
     }
+    
     func searchInvoked(withIds idValues: [Int]){
         model.fetchIdResults(for: idValues)
     }
@@ -153,6 +154,4 @@ extension DetailViewModel: DetailViewModelContract {
     func toggleAudio() {
         isAudioPlaying.toggle()
     }
-    
-    
 }

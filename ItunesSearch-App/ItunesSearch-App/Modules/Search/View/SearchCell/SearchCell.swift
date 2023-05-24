@@ -48,7 +48,7 @@ class SearchCell: UICollectionViewCell {
         self.setImageHeigth( 2 * constraint )
         self.setImageWidth( 2 * constraint )
 
-        guard let modifiedArtworkUrl = changeImageURL(model.artworkUrl, withDimension: ConstantsCV.dimensionPreference) else { return }
+        guard let modifiedArtworkUrl = changeImageURL(model.artworkUrl, withDimension: ConstantsCV.cellImageDimension) else { return }
 
         releaseDateLabel.text = convertDate(for: model.releaseDate)
         nameLabel.text = model.name

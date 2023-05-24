@@ -59,20 +59,8 @@ extension SearchView: SearchViewContract {
         detailViewModel.searchInvoked(withIds: ids)
     }
     
-    func setItems( _ items: [SearchCellModel]) {
-        
-        searchViewModel.setItems(items, completion: {
-            self.stopSpinner()
-            self.reloadCollectionView()
-        })
-    }
-    
     func invokeTopIds( _ topIds: [Top]) {
         searchViewModel.topWithIdsInvoked(topIds)
-    }
-    
-    func reset() {
-        searchViewModel.reset()
     }
     
     func resetAndSearch(with query: SearchQuery) {
@@ -83,8 +71,15 @@ extension SearchView: SearchViewContract {
         searchViewModel.resetAndInvokeTop()
     }
     
-    func dismissKeyBoard() {
-        searchBar.resignFirstResponder()
+    func setItems( _ items: [SearchCellModel]) {
+        searchViewModel.setItems(items, completion: {
+            self.stopSpinner()
+            self.reloadCollectionView()
+        })
+    }
+    
+    func reset() {
+        searchViewModel.reset()
     }
     
     func setReusableViewTitle(with title: String) {
@@ -99,7 +94,6 @@ extension SearchView: SearchViewContract {
     }
     
     func startReusableViewSpinner() {
-        
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.pagingSpinner?.spinner.startAnimating()
@@ -133,10 +127,16 @@ extension SearchView: SearchViewContract {
         detailViewModel.view?.viewModel = detailViewModel
         detailViewModel.assembleView(by: foundation)
     }
+    
     func pushPageToNavigation(push thisPage: UIViewController) {
         self.navigationController?.pushViewController(thisPage, animated: true)
     }
-    /// Interface Helpers
+    
+    func dismissKeyBoard() {
+        searchBar.resignFirstResponder()
+    }
+    
+    /// Contract Helpers
     func assignPropsOfCollectionView() {
         collectionView?.delegate = self
         collectionView?.dataSource = self
@@ -163,7 +163,7 @@ extension SearchView: SearchViewContract {
     
     func provideImageColorPair(_ imageUrl: String, completion: @escaping (ImageColorPair?) -> Void) {
 
-        guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, ConstantsCV.imageDimension)) else { completion(nil) ; return }
+        guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, ConstantsCV.detailImageDimension)) else { completion(nil) ; return }
         
         KingfisherManager.shared.retrieveImage(with: artworkUrl) { result in
             switch result {

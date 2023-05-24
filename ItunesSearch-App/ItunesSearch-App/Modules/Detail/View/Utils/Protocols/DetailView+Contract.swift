@@ -6,33 +6,33 @@
 //
 
 import UIKit
-// laterTODO: order properly, order class
-// laterTODO: Analyze this interface properly to make it as neat as possible
+
 protocol DetailViewContract: AnyObject {
-    
+    /// props
     var viewModel: DetailViewModel? { get set }
+    /// view life-cycle
     func loadViewIfNeeded()
-    ///configure
+    /// assemble detail page
     func configureView(with item: Detail, _ pair: ImageColorPair, completion: (() -> Void)?)
     func configureMutualFields(_ item: Detail, _ pair: ImageColorPair)
-    ///configure specific
+    /// configure accordinly by media
     func configureMovie(_ item: Detail)
     func configureMusic(_ item: Detail)
     func configureEbook(_ item: Detail)
     func configurePodcast(_ item: Detail)
-    ///configure UI
+    /// configure UI specific
     func configureBackgroundColors(_ averageColor: UIColor)
-    func isColorDark(_ color: UIColor) -> Bool /// handles UX case
+    func isColorDark(_ color: UIColor) -> Bool
     func adaptComponentsForDark(_ tintColor: UIColor)
     func setTextColorOfView(_ color: UIColor)
     func setNavigationBarWith( tintColor color: String)
-    ///data manipulation
+    /// data formatting
     func convertDate(for dateValue: String) -> String
     func capitalizeUppercaseWords(input: String) -> String
     func readableFormatTimeFromMillis(millis: Int) -> String
     func readableFormatTimeFromSeconds(seconds: Int) -> String
     func convertBytesToGBorMB(_ bytes: Int) -> String
-    ///operations
+    /// operations
     func toggleAudioOff()
     func toggleAudioOn(_ url: URL)
     func addPlayIndicator()
