@@ -57,10 +57,12 @@ final class DetailView: UIViewController{
     private var viewUrl: URL?
     private var previewUrl: URL?
     
-    override func viewDidLoad() {
+    override func viewDidLoad() { // ??? Consider this part later
         super.viewDidLoad()
     }
-        
+    override func loadViewIfNeeded() {
+        super.loadViewIfNeeded()
+    }
     @IBAction func viewButtonClicked(_ sender: Any) {
         hapticFeedbackMedium()
         guard let viewUrl = viewUrl else { return }
@@ -98,21 +100,9 @@ final class DetailView: UIViewController{
 
 extension DetailView: DetailViewContract {
     
-    // todayTODO: Apply below to resolve the issue with code trying to access the outlets before they are fully initialized.
-    // todayFIXME: Device and simulator are behaving inconsistent, simulator arises timing related nil of IBOutlet
-    
-    // todayTODO: Learn differences of the device and simulator capabilities. What might go wrong, what should you know beforehand?
-    /*
-     One way to debug this issue is to add print statements throughout your code to track the lifecycle of the outlets. For example, you could add print statements to the viewDidLoad() and viewDidAppear() methods to check if the outlets are being initialized properly. You can also add print statements in the completion handlers of any asynchronous operations that affect the outlets, such as network requests or image loading.
-
-     Another approach is to use breakpoints in Xcode to pause the execution of your code at specific points and inspect the state of your variables. You can add a breakpoint to the line of code that is causing the crash, and then step through the code line by line to see where the nil value is coming from. This can help you pinpoint the exact moment when the outlet is being accessed before it's fully initialized.
-
-     In addition, you can use Xcode's debug navigator to monitor the memory usage of your app and track any memory-related issues that could be affecting the initialization of your outlets.
-
-     Finally, you can try simplifying your code by removing any unnecessary logic and reducing the complexity of your view controller to isolate the issue. This can help you identify any potential race conditions or threading issues that could be causing the crash.
-     */
         
     func configureView(with item: Detail, _ pair: ImageColorPair, completion: (() -> Void)?) {
+
         viewModel?.configureItem(with: item, pair){
             completion?()
         }

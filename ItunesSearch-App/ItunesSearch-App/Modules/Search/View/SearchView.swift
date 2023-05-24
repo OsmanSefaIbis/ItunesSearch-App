@@ -130,8 +130,9 @@ extension SearchView: SearchViewContract {
     
     func initiateDetailCreation(with foundation: CompactDetail){
         detailViewModel.view = storyboard?.instantiateViewController(withIdentifier: foundation.media.getView()) as! DetailView
+        detailViewModel.view?.loadViewIfNeeded()
         detailViewModel.view?.viewModel = detailViewModel
-        detailViewModel.assembleView(by: foundation, with: detailViewModel.view as! DetailView)
+        detailViewModel.assembleView(by: foundation)
     }
     func pushPageToNavigation(push thisPage: UIViewController) {
         self.navigationController?.pushViewController(thisPage, animated: true)

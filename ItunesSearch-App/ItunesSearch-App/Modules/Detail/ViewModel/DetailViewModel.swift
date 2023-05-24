@@ -63,7 +63,7 @@ extension DetailViewModel: DetailModelDelegate{
 
 extension DetailViewModel: DetailViewModelContract {
     
-    func assembleView(by foundation: CompactDetail, with skeloton: DetailView){
+    func assembleView(by foundation: CompactDetail){
         view?.configureView(with: foundation.data, foundation.imageAndColor) { 
             guard let detailPage = self.view else { return }
             self.delegate?.passPage(detailPage as! DetailView)
@@ -71,7 +71,7 @@ extension DetailViewModel: DetailViewModelContract {
     }
      
     func configureItem(with item: Detail, _ pair: ImageColorPair, completion: (() -> Void)?) {
-
+        
         guard let isColorDark = view?.isColorDark(pair.color) else { return }
         
         if isColorDark{

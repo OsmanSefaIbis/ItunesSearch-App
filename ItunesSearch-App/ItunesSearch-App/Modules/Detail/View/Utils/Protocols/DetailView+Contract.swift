@@ -11,6 +11,7 @@ import UIKit
 protocol DetailViewContract: AnyObject {
     
     var viewModel: DetailViewModel? { get set }
+    func loadViewIfNeeded()
     ///configure
     func configureView(with item: Detail, _ pair: ImageColorPair, completion: (() -> Void)?)
     func configureMutualFields(_ item: Detail, _ pair: ImageColorPair)

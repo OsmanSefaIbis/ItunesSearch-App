@@ -11,7 +11,7 @@ import Foundation
 protocol DetailViewModelContract {
     
     var view: DetailViewContract? { get set }
-    func assembleView(by foundation: CompactDetail, with skeleton: DetailView )
+    func assembleView(by foundation: CompactDetail)
     func configureItem(with item: Detail, _ pair: ImageColorPair, completion: (() -> Void)?)
     func convertDate(_ date: String) -> String
     func handlePrice(_ price: Double) -> String
