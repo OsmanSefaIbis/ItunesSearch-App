@@ -206,6 +206,7 @@ extension SearchView: DetailViewModelDelegate{
             
             provideImageColorPair(each.artworkUrl) { [weak self] pair in
                 guard let self else { return }
+                guard let pair else { return }
                 self.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: pair)
             }
         }

@@ -20,7 +20,7 @@ final class SearchViewModel {
     private var items: [ColumnItem] = []
     private var idsOfAllFetchedRecords = Set<Int>()
     private var cacheDetails: [Int : Detail] = [:]
-    private var cacheDetailImagesAndColors: [Int : ImageColorPair?] = [:]
+    private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:]
 
     private var paginationOffSet = 0
     private var mediaType_State: MediaType? = .movie
@@ -122,6 +122,11 @@ extension SearchViewModel: SearchViewModelContract {
         let id = items[indexPath.item].id
         guard let media = mediaType_State else { return }
         guard let detailData = cacheDetails[id] else { return }
+        /* FIXME: READ BELOW
+            --> Kingfisher failure causes cache miss, so when the user selects,the detail page cannot be constructed
+            --> cacheDetailImagesAndColors should hold an optional of ImageAndColor type
+            --> Below code is an attempt, but the execution continues so its garbage, resolve this !!!
+         
         let cacheMiss = cacheDetailImagesAndColors[id] == nil
         if cacheMiss {
             let imageUrl = items[indexPath.item].artworkUrl
@@ -130,8 +135,8 @@ extension SearchViewModel: SearchViewModelContract {
                 self.cacheDetailImagesAndColors[id] = pair
             })
         }
+        */
         guard let pair = cacheDetailImagesAndColors[id] else { return }
-        guard let pair else { return }
         let foundation: CompactDetail = .init(media: media, data: detailData, imageAndColor: pair)
     
         view?.initiateDetailCreation(with: foundation)
@@ -291,7 +296,7 @@ extension SearchViewModel: SearchViewModelContract {
         cacheDetails[id] = detail
     }
     
-    func setCacheDetailImagesAndColor( key id: Int, value pair: ImageColorPair?) {
+    func setCacheDetailImagesAndColor( key id: Int, value pair: ImageColorPair) {
         cacheDetailImagesAndColors[id] = pair
     }
     
