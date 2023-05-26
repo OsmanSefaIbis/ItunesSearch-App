@@ -28,5 +28,6 @@ protocol DetailViewModelContract {
     func constructEpisodeInfo(_ count: Int) -> String
     /// operations
     func musicPreviewButtonClicked(_ url: URL)
+    func isAudioActive() -> Bool
     func toggleAudio()
 }

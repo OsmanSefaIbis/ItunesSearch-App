@@ -122,6 +122,10 @@ extension DetailViewModel: DetailViewModelContract {
         isAudioPlaying.toggle()
     }
     
+    func isAudioActive() -> Bool{
+        isAudioPlaying
+    }
+    
     func toggleAudio() {
         isAudioPlaying.toggle()
     }

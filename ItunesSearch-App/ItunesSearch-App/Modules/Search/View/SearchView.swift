@@ -156,11 +156,10 @@ extension SearchView: SearchViewContract {
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         hapticFeedbackSoft()
-        guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        guard let searchText = searchBar.text?.replacingOccurrences(of: "\\s+", with: "+", options: .regularExpression) else { return }
         let indexValue = sender.selectedSegmentIndex
         searchViewModel.segmentedControlValueChanged(to: indexValue, with: searchText)
     }
-    
     func provideImageColorPair(_ imageUrl: String, completion: @escaping (ImageColorPair?) -> Void) {
         
         guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, ConstantsCV.detailImageDimension)) else { completion(nil) ; return }
@@ -240,7 +239,7 @@ extension SearchView: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let searchText = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        guard let searchText = searchBar.text?.replacingOccurrences(of: "\\s+", with: "+", options: .regularExpression) else { return }
         searchViewModel.willDisplay(at: indexPath, with: searchText)
     }
     

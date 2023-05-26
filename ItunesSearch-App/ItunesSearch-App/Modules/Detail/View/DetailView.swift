@@ -64,6 +64,7 @@ final class DetailView: UIViewController{
         super.loadViewIfNeeded()
     }
     @IBAction func viewButtonClicked(_ sender: Any) {
+        if let status = viewModel?.isAudioActive(), status { toggleAudioOff() ; viewModel?.toggleAudio() }
         hapticFeedbackMedium()
         guard let viewUrl = viewUrl else { return }
         webView.load(URLRequest(url: viewUrl))
