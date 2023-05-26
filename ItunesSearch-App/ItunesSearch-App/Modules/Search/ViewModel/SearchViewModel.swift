@@ -124,9 +124,12 @@ extension SearchViewModel: SearchViewModelContract {
         guard let detailData = cacheDetails[id] else { return }
         /* FIXME: READ BELOW
             --> Kingfisher failure causes cache miss, so when the user selects,the detail page cannot be constructed
-            --> cacheDetailImagesAndColors should hold an optional of ImageAndColor type
-            --> Below code is an attempt, but the execution continues so its garbage, resolve this !!!
+            --> * Partial fix, eventually routes to the detail page, not stable though,
+            --> Time Profiler, also learn kingfisher details --> these might help
          
+            --> Best case: Find the root cause why kingfisher is failing, another candidate is provideImageColorPair()
+            --> Worst case: Use shimmer effect and when the data is fired reload
+        */
         let cacheMiss = cacheDetailImagesAndColors[id] == nil
         if cacheMiss {
             let imageUrl = items[indexPath.item].artworkUrl
@@ -135,7 +138,7 @@ extension SearchViewModel: SearchViewModelContract {
                 self.cacheDetailImagesAndColors[id] = pair
             })
         }
-        */
+        
         guard let pair = cacheDetailImagesAndColors[id] else { return }
         let foundation: CompactDetail = .init(media: media, data: detailData, imageAndColor: pair)
     
