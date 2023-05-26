@@ -20,6 +20,7 @@ protocol SearchViewContract: AnyObject {
     func invokeTopIds( _ topIds: [Top])
     func resetAndSearch(with query: SearchQuery)
     func resetAndInvokeTop()
+    func provideImageColorPair(_ imageUrl: String, completion: @escaping (ImageColorPair?) -> Void)
     /// data specific
     func setItems( _ items: [ColumnItem])
     func reset()

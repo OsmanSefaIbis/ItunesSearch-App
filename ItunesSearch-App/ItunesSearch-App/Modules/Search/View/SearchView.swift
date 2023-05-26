@@ -162,17 +162,15 @@ extension SearchView: SearchViewContract {
     }
     
     func provideImageColorPair(_ imageUrl: String, completion: @escaping (ImageColorPair?) -> Void) {
-
+        
         guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, ConstantsCV.detailImageDimension)) else { completion(nil) ; return }
         
         KingfisherManager.shared.retrieveImage(with: artworkUrl) { result in
             switch result {
             case .success(let value):
-                guard let averagedColor = value.image.averageColor else {
-                    completion(nil)
-                    return
+                if let averagedColor = value.image.averageColor {
+                    completion(.init(image: value.image, color: averagedColor))
                 }
-                completion(.init(image: value.image, color: averagedColor))
             case .failure(_):
                 completion(nil)
             }
@@ -208,7 +206,6 @@ extension SearchView: DetailViewModelDelegate{
             
             provideImageColorPair(each.artworkUrl) { [weak self] pair in
                 guard let self else { return }
-                guard let pair else { return }
                 self.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: pair)
             }
         }

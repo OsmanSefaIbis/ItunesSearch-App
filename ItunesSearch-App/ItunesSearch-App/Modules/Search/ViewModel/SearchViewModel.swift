@@ -20,7 +20,7 @@ final class SearchViewModel {
     private var items: [ColumnItem] = []
     private var idsOfAllFetchedRecords = Set<Int>()
     private var cacheDetails: [Int : Detail] = [:]
-    private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:]
+    private var cacheDetailImagesAndColors: [Int : ImageColorPair?] = [:]
 
     private var paginationOffSet = 0
     private var mediaType_State: MediaType? = .movie
@@ -122,8 +122,16 @@ extension SearchViewModel: SearchViewModelContract {
         let id = items[indexPath.item].id
         guard let media = mediaType_State else { return }
         guard let detailData = cacheDetails[id] else { return }
+        let cacheMiss = cacheDetailImagesAndColors[id] == nil
+        if cacheMiss {
+            let imageUrl = items[indexPath.item].artworkUrl
+            view?.provideImageColorPair(imageUrl, completion: { [weak self] pair in
+                guard let self else { return }
+                self.cacheDetailImagesAndColors[id] = pair
+            })
+        }
         guard let pair = cacheDetailImagesAndColors[id] else { return }
-        
+        guard let pair else { return }
         let foundation: CompactDetail = .init(media: media, data: detailData, imageAndColor: pair)
     
         view?.initiateDetailCreation(with: foundation)
@@ -151,7 +159,7 @@ extension SearchViewModel: SearchViewModelContract {
     }
     
     func referenceSizeForFooterInSection(_ width: CGFloat) -> CGSize {
-        if self.isLoadingNextPage_Flag {
+        if isLoadingNextPage_Flag {
             return CGSize.zero
         } else {
             return CGSize(width: width, height: ConstantsCV.footerHeight)
@@ -283,7 +291,7 @@ extension SearchViewModel: SearchViewModelContract {
         cacheDetails[id] = detail
     }
     
-    func setCacheDetailImagesAndColor( key id: Int, value pair: ImageColorPair) {
+    func setCacheDetailImagesAndColor( key id: Int, value pair: ImageColorPair?) {
         cacheDetailImagesAndColors[id] = pair
     }
     

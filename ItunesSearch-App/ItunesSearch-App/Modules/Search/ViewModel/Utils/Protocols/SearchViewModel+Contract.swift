@@ -38,5 +38,5 @@ protocol SearchViewModelContract {
     func providesIds(_ items: [ColumnItem]) -> [Int]
     /// data specific
     func setCacheDetails(key id: Int, value detail: Detail)
-    func setCacheDetailImagesAndColor( key id: Int, value detail: ImageColorPair)
+    func setCacheDetailImagesAndColor( key id: Int, value detail: ImageColorPair?)
 }
