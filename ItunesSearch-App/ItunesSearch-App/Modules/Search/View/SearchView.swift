@@ -337,7 +337,7 @@ extension SearchView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         hapticFeedbackSoft()
         searchBar.resignFirstResponder()
-        guard let searchText = searchBar.text else { return }
+        guard let searchText = searchBar.text?.replacingOccurrences(of: "\\s+", with: "+", options: .regularExpression) else { return }
         searchViewModel.searchBarSearchButtonClicked(with: searchText)
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

@@ -209,17 +209,18 @@ extension SearchViewModel: SearchViewModelContract {
     
     func textDidChange(with searchText: String) {
         guard let mediaType = mediaType_State else { return }
+        let search = searchText.replacingOccurrences(of: "\\s+", with: "+", options: .regularExpression)
         
         timeControl?.invalidate()
-        timeControl = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false, block: { [weak self] (timer) in
+        timeControl = Timer.scheduledTimer(withTimeInterval: 0.9, repeats: false, block: { [weak self] (timer) in
             guard let self else { return }
-            if (0...2).contains(searchText.count) {
+            if (0...2).contains(search.count) {
                 isSearchActive_Flag = false
                 view?.stopSpinner()
             }
-            if searchText.count > 2 {
+            if search.count > 2 {
                 isSearchActive_Flag = true
-                let query: SearchQuery = .init(input: searchText, media: mediaType, offset: paginationOffSet)
+                let query: SearchQuery = .init(input: search, media: mediaType, offset: paginationOffSet)
                 resetAndSearch(with: query)
             }
         } )
@@ -242,14 +243,21 @@ extension SearchViewModel: SearchViewModelContract {
                 idsOfAllFetchedRecords.removeAll()
             } else {
                 self.items = items
+                // TODO: With limit 20 the API can return less than 20 records, but there are records, will you handle this API behavior ???
+                // Make a request with limit 50, if the result count is >= 20 then make another request
             }
         } else {
             if paginationOffSet == 0 {
                 for each in items { idsOfAllFetchedRecords.insert(each.id) }
                 self.items = items
             }else {
-                for each in items { idsOfAllFetchedRecords.insert(each.id) }
-                self.items.append(contentsOf: items)
+                for each in items {
+                    if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue }
+                    else {
+                        idsOfAllFetchedRecords.insert(each.id)
+                        self.items.append(each)
+                    }
+                }
             }
         }
         isLoadingNextPage_Flag = false 

@@ -30,17 +30,26 @@
 |         if paginationOffSet == 0 {                                                         /// first full page                                      |
 |             for each in items { idsOfAllFetchedRecords.insert(each.id) }                                                                            |
 |             self.items = items                                                                                                                      |
-|         }else {                                                                            /// next page                                            |
-|             for each in items { idsOfAllFetchedRecords.insert(each.id) }                                                                            |
-|             self.items.append(contentsOf: items)                                                                                                    |
+|         } else {                                                                            /// next page                                           |
+|             for each in items {                                                                                                                     |
+|                if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue }   /// pass the duplicates                                  |
+|                else {                                                                                                                               |
+|                    idsOfAllFetchedRecords.insert(each.id)                                                                                           |
+|                    self.items.append(each)                                                                                                          |
+|                }                                                                                                                                    |
+|             }                                                                                                                                       |
 |         }                                                                                                                                           |
 |     }                                                                                                                                               |
 | }                                                                                                                                                   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------|
 |                                                                                                                                                     |
-|        • NOTE: API does not support pagination via json, offset and limit used                                                                      |
+|        • NOTE: API does not support pagination via json, so offset and limit are used                                                               |
 |                                                                                                                                                     |
 |        • NOTE: API sends as the requestLimit, records can overlap at the end, so extract only the required                                          |
+|                                                                                                                                                     |
+|        • NOTE: API sends ambigous next pages that can overlap with the already existing data, so extract only required                              |
+|                                                                                                                                                     |
+|        • NOTE: API behavior is unpredictable, with limit 20 it might send less than 20 even though it has more than 20 records                      |
 |                                                                                                                                                     |
 |----------------------------------------------------------------------------------------------------------------------------------------------------*/
 
