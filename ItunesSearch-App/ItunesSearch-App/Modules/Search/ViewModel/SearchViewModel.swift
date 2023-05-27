@@ -122,14 +122,14 @@ extension SearchViewModel: SearchViewModelContract {
         let id = items[indexPath.item].id
         guard let media = mediaType_State else { return }
         guard let detailData = cacheDetails[id] else { return }
-        /* FIXME: READ BELOW
-            --> Kingfisher failure causes cache miss, so when the user selects,the detail page cannot be constructed
-            --> * Partial fix, eventually routes to the detail page, not stable though,
-            --> Time Profiler, also learn kingfisher details --> these might help
-         
-            --> Best case: Find the root cause why kingfisher is failing, another candidate is provideImageColorPair()
-            --> Worst case: Use shimmer effect and when the data is fired reload
-        */
+/*
+optional-FIXME: Happens when network is slow
+    Kingfisher failure causes cache miss, so when the user selects,the detail page cannot be constructed
+    * Partial fix applied, eventually routes to the detail page, not stable though with slow network
+    Debugging_With: Time Profiler + KingFisher details might help
+    Best_Case: Find the root cause why kingfisher is failing, another candidate is provideImageColorPair()
+    Worst_Case: Use shimmer effect and when the data is fired reload
+*/
         let cacheMiss = cacheDetailImagesAndColors[id] == nil
         if cacheMiss {
             let imageUrl = items[indexPath.item].artworkUrl
@@ -242,9 +242,13 @@ extension SearchViewModel: SearchViewModelContract {
                 self.items.append(contentsOf: lastRecords)
                 idsOfAllFetchedRecords.removeAll()
             } else {
+/*
+optional-FIXME: First page might have more records, but API sends less, bad API design :/
+    API behaves this way, it can be handled with custom implementation
+    Use_Case: select music scope, then type 'starz', currently it gives 11 records
+    Check_With: when you send a request with limit 50 for starz on Postman it yields more than 20 record
+*/
                 self.items = items
-                // TODO: With limit 20 the API can return less than 20 records, but there are records, will you handle this API behavior ???
-                // Make a request with limit 50, if the result count is >= 20 then make another request
             }
         } else {
             if paginationOffSet == 0 {
