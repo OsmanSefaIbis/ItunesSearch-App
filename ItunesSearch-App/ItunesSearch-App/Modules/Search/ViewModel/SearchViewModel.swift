@@ -277,20 +277,26 @@ optional-FIXME: Happens when network is slow
                 idsOfAllFetchedRecords.removeAll()
             } else {
                 guard let query = latestSearchedQuery else { return }
-                model.fetchLackingSearchResults(with: query)
-                if self.isApiLackingData {
-                    self.items = self.lackingItems
-                    self.lackingItems.removeAll()
-                    lessThanPage_Flag = false
-                } else {
-                    self.items = items
+                model.fetchLackingSearchResults(with: query) { [weak self] in
+                    guard let self else { return }
+                    if self.isApiLackingData {
+                        self.items.append(contentsOf: self.lackingItems)
+                        self.lessThanPage_Flag = false
+                        for each in self.lackingItems { idsOfAllFetchedRecords.insert(each.id) }
+                        self.lackingItems.removeAll()
+                    } else {
+                        self.items = items
+                    }
+                    self.isLoadingNextPage_Flag = false
+                    completion?()
                 }
+                return
             }
         } else {
             if paginationOffSet == 0 {
                 for each in items { idsOfAllFetchedRecords.insert(each.id) }
                 self.items = items
-            }else {
+            } else {
                 for each in items {
                     if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue }
                     else {
@@ -300,10 +306,10 @@ optional-FIXME: Happens when network is slow
                 }
             }
         }
-        isLoadingNextPage_Flag = false 
+        isLoadingNextPage_Flag = false
         completion?()
     }
-    
+
     func reset() {
         resetCollections()
         view?.stopSpinner()

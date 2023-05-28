@@ -35,7 +35,7 @@ final class SearchModel {
         }
     }
     
-    func fetchLackingSearchResults(with query: SearchQuery) {
+    func fetchLackingSearchResults(with query: SearchQuery, completion: (() -> Void)?) {
         if internet.isOnline() {
             ConstantsApp.changeLimit(with: 100)
             network.fetchBySearch(by: query) { [weak self] response in
@@ -53,9 +53,11 @@ final class SearchModel {
                     case .failure(_):
                         self.delegate?.failedDataFetch()
                 }
+                completion?()
             }
         } else {
             delegate?.failedDataFetch()
+            completion?()
         }
     }
     
