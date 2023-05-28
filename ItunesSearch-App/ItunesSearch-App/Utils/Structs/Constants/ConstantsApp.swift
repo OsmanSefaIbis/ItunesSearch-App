@@ -10,6 +10,11 @@ import UIKit
 struct ConstantsApp {
     
     static let spinnerColor: UIColor = .systemPink
-    static let requestLimit: Int = 20
+    static var requestLimit: Int = 20
     static let accentColorName: String = HardCoded.accentColor.get()
+    
+    /// Added to handle API related limitation
+    static func changeLimit(with value: Int){
+        requestLimit = value
+    }
 }

@@ -82,8 +82,12 @@ extension SearchView: SearchViewContract {
         searchViewModel.reset()
     }
     
+    func setReusableViewTitle() {
+        self.topPicksBar?.setTitleForNoResults()
+    }
+    
     func setReusableViewTitle(with title: String) {
-        self.topPicksBar?.setTitle(with: title)
+        self.topPicksBar?.setTitleForTop(with: title)
     }
     
     func stopReusableViewSpinner() {

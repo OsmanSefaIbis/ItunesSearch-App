@@ -10,4 +10,5 @@ protocol SearchModelDelegate: AnyObject{
     func didFetchSearchData()
     func didFetchTopData()
     func failedDataFetch()
+    func didCheckApiSendingLess(found verdict: Bool)
 }

@@ -9,9 +9,9 @@ import Foundation
 
 enum HardCoded: String {
     
-    case searchCell,accentColor, collectionViewHeaderPhrase, previewText, free,
-         dolar, notAvailable, trackSeperator, seperator, noRating, numberSign, ratingScale,
-         fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
+    case searchCell,accentColor, collectionViewHeaderPhrase, collectionViewHeaderNoResultsPhrase,
+         previewText, free, dolar, notAvailable, trackSeperator, seperator, noRating, numberSign,
+         ratingScale, fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
          convertedDateFormatShort, locale_US, colonSeperator, errorPromptDate, audioEmoji,
          segmentedControlError, invalidJSON, offlinePrompt, loadingReusableName,
          headerReusableName, loadingReusableIdentifier, headerReusableIdentifier,
@@ -24,6 +24,7 @@ enum HardCoded: String {
             case .searchCell: return "SearchCell"
             case .accentColor: return "AccentColor"
             case .collectionViewHeaderPhrase: return " Top Picks"
+            case .collectionViewHeaderNoResultsPhrase: return " No Results Found "
             case .previewText: return "Preview"
             case .audioEmoji: return "🔊"
             case .free: return "Free"

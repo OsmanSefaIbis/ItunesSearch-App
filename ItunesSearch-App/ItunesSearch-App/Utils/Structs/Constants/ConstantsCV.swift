@@ -21,4 +21,4 @@ struct ConstantsCV {
     static let footerHeight: CGFloat = 40
 }
 
-// featureTODO: make 'columnCount' into a feature, changeGrid(), constraint --> column of 2,3,4 only
+// optional- featureTODO: make 'columnCount' into a feature, changeGrid(), constraint --> column of 2,3,4 only

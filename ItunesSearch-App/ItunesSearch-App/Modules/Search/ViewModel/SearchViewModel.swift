@@ -21,12 +21,16 @@ final class SearchViewModel {
     private var idsOfAllFetchedRecords = Set<Int>()
     private var cacheDetails: [Int : Detail] = [:]
     private var cacheDetailImagesAndColors: [Int : ImageColorPair] = [:]
+    private var lackingItems: [ColumnItem] = []
 
     private var paginationOffSet = 0
     private var mediaType_State: MediaType? = .movie
     private var lessThanPage_Flag = false
     private var isLoadingNextPage_Flag = false
     private var isSearchActive_Flag = false
+    private var isNoResults_Flag = false
+    private var latestSearchedQuery: SearchQuery?
+    private var isApiLackingData = false
     
     var itemCount: Int { get { items.count } }
     
@@ -42,6 +46,7 @@ final class SearchViewModel {
         model.fetchIdResults(for: holdsTopIds)
     }
     func searchInvoked(with query: SearchQuery) {
+        latestSearchedQuery = query
         model.fetchSearchResults(with: query)
     }
 }
@@ -59,6 +64,7 @@ extension SearchViewModel: SearchModelDelegate {
                 trackPrice: $0.trackPrice ?? 0
             )
         }
+        isNoResults_Flag = retrievedData.isEmpty ? true : false
         self.delegate?.renderItems(retrievedData)
     }
     
@@ -69,6 +75,24 @@ extension SearchViewModel: SearchModelDelegate {
     
     func failedDataFetch() {
         delegate?.internetUnreachable(HardCoded.offlinePrompt.get())
+    }
+    
+    func didCheckApiSendingLess(found verdict: Bool) {
+        if verdict {
+            lackingItems = model.lackingSearchResults.map {
+                .init(
+                    id: $0.trackID ?? 0,
+                    artworkUrl: $0.artworkUrl100 ?? "",
+                    releaseDate: $0.releaseDate ?? "",
+                    name: $0.trackName ?? "",
+                    collectionName: $0.collectionName ?? "",
+                    trackPrice: $0.trackPrice ?? 0
+                )
+            }
+        } else {
+            lackingItems.removeAll()
+        }
+        isApiLackingData = verdict
     }
 }
 
@@ -159,7 +183,7 @@ optional-FIXME: Happens when network is slow
     }
     
     func referenceSizeForHeaderInSection(_ width: CGFloat) -> CGSize {
-        if self.isSearchActive_Flag {
+        if isSearchActive_Flag && !isNoResults_Flag {
             return CGSize.zero
         } else {
             return CGSize(width: width, height: ConstantsCV.headerHeight)
@@ -182,6 +206,9 @@ optional-FIXME: Happens when network is slow
         if !isSearchActive_Flag {
             guard let mediaType = mediaType_State else { return }
             view?.setReusableViewTitle(with: mediaType.get().capitalized)
+        }
+        if isNoResults_Flag {
+            view?.setReusableViewTitle()
         }
     }
     
@@ -226,10 +253,17 @@ optional-FIXME: Happens when network is slow
         } )
         
     }
+    /*
+    optional-FIXME: First page might have more records, but API sends less, bad API design :/
+        API behaves this way, it can be handled with custom implementation
+        Use_Case: select music scope, then type 'starz', currently it gives 11 records
+        Check_With: when you send a request with limit 50 for starz on Postman it yields more than 20 record
+    */
+    
     
     func setItems(_ items: [ColumnItem], completion: (() -> Void)?) {
         // INFO: SearchViewModel+Pseudo.swift
-        if items.count != ConstantsApp.requestLimit { lessThanPage_Flag = true }
+        if items.count < ConstantsApp.requestLimit { lessThanPage_Flag = true }
         
         if lessThanPage_Flag {
             if self.items.count >= ConstantsApp.requestLimit  {
@@ -242,13 +276,15 @@ optional-FIXME: Happens when network is slow
                 self.items.append(contentsOf: lastRecords)
                 idsOfAllFetchedRecords.removeAll()
             } else {
-/*
-optional-FIXME: First page might have more records, but API sends less, bad API design :/
-    API behaves this way, it can be handled with custom implementation
-    Use_Case: select music scope, then type 'starz', currently it gives 11 records
-    Check_With: when you send a request with limit 50 for starz on Postman it yields more than 20 record
-*/
-                self.items = items
+                guard let query = latestSearchedQuery else { return }
+                model.fetchLackingSearchResults(with: query)
+                if self.isApiLackingData {
+                    self.items = self.lackingItems
+                    self.lackingItems.removeAll()
+                    lessThanPage_Flag = false
+                } else {
+                    self.items = items
+                }
             }
         } else {
             if paginationOffSet == 0 {

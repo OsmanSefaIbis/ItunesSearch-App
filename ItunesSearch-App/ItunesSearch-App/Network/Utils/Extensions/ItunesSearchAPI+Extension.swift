@@ -21,7 +21,7 @@ extension ItunesSearchAPI: Endpointable {
                 var params = Parameters()
                 params["term"] = term
                 params["media"] = media.get()
-                params["limit"] = 20
+                params["limit"] = ConstantsApp.requestLimit
                 params["offset"] = offset
                 
                 return params

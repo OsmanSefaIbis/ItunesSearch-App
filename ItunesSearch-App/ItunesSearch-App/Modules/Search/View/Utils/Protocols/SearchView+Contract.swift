@@ -25,6 +25,7 @@ protocol SearchViewContract: AnyObject {
     func setItems( _ items: [ColumnItem])
     func reset()
     /// UI specific
+    func setReusableViewTitle()
     func setReusableViewTitle(with title: String)
     func stopReusableViewSpinner()
     func startReusableViewSpinner()

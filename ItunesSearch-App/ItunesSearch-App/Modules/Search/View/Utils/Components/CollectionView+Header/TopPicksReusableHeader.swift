@@ -18,7 +18,10 @@ class TopPicksReusableHeader: UICollectionReusableView {
         headerView.layer.masksToBounds = true
     }
     
-    func setTitle(with media: String){
+    func setTitleForTop(with media: String){
         headerTitle.text = media.appending(HardCoded.collectionViewHeaderPhrase.get())
+    }
+    func setTitleForNoResults(){
+        headerTitle.text = HardCoded.collectionViewHeaderNoResultsPhrase.get()
     }
 }
