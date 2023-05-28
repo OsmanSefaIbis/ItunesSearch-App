@@ -13,7 +13,6 @@ struct ConstantsCV {
     static let columnCount: CGFloat = 2
     static let cellSpacing: CGFloat = 10.0
     static let sectionInset: UIEdgeInsets = .init(top: 5, left: 5, bottom: 0, right: 5)
-    static let sizingValue: CGFloat = 80.0
     static let cellSize: CGSize = .init(width: 160, height: 80)
     static let detailImageDimension: Int = 600
     static let cellImageDimension = 200

@@ -19,7 +19,7 @@ public enum MediaType: String {
             case .podcast: return rawValue
         }
     }
-    func getView() -> String {
+    func getStoryBoardId() -> String {
         switch self {
             case .movie: return "MovieDetailView"
             case .music: return "MusicDetailView"
