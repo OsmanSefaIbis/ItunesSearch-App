@@ -7,9 +7,7 @@
 
 import UIKit
 import WebKit
-import AVFoundation
 import AVKit
-import Kingfisher
 
 final class DetailVC: UIViewController{
     

@@ -26,6 +26,8 @@ extension SearchVC: SearchViewModelDelegate {
             self.searchViewModel.reset()
         }
         alertController.addAction(okAction)
-        self.present(alertController, animated: true)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true)
+        }
     }
 }

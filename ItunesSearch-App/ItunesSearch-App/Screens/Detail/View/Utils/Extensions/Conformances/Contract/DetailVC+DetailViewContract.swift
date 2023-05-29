@@ -223,16 +223,19 @@ extension DetailVC: DetailViewContract {
     }
     
     func toggleAudioOff() {
-        player?.pause()
-        removeAudioRelated()
+        DispatchQueue.main.async { [weak self] in
+            self?.player?.pause()
+            self?.removeAudioRelated()
+        }
     }
     
     func toggleAudioOn(_ url: URL ) {
         audioPlayerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: audioPlayerItem)
-        player?.play()
-        
-        addPlayIndicator()
+        DispatchQueue.main.async { [weak self] in
+            self?.player?.play()
+            self?.addPlayIndicator()
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(_:)), name: .AVPlayerItemDidPlayToEndTime, object: audioPlayerItem)
     }
     
