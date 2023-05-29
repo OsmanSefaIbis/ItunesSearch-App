@@ -63,21 +63,21 @@
 		96EDF4842A084D0200634BDF /* SearchViewModel+Pseudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4832A084D0200634BDF /* SearchViewModel+Pseudo.swift */; };
 		96EDF4872A095DB200634BDF /* ImageAndColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4862A095DB200634BDF /* ImageAndColor.swift */; };
 		96EDF4892A09998000634BDF /* SearchVM+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4882A09998000634BDF /* SearchVM+Extension.swift */; };
-		96EDF48B2A099C0600634BDF /* SearchView+Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF48A2A099C0600634BDF /* SearchView+Contract.swift */; };
+		96EDF48B2A099C0600634BDF /* SearchVC+Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF48A2A099C0600634BDF /* SearchVC+Contract.swift */; };
 		96EDF48E2A099C7300634BDF /* SearchVM+Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF48D2A099C7300634BDF /* SearchVM+Contract.swift */; };
 		96EDF4912A099D7D00634BDF /* SearchVM+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4902A099D7D00634BDF /* SearchVM+Delegate.swift */; };
 		96EDF4962A0A3C0D00634BDF /* DetailVM+Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4952A0A3C0D00634BDF /* DetailVM+Contract.swift */; };
 		96EDF4982A0A3C2200634BDF /* DetailVM+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4972A0A3C2200634BDF /* DetailVM+Delegate.swift */; };
 		96EDF4AD2A0BA04F00634BDF /* DetailView+Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4AC2A0BA04F00634BDF /* DetailView+Contract.swift */; };
 		96EDF4B22A0DA14E00634BDF /* ItunesSearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4B12A0DA14E00634BDF /* ItunesSearchAPI.swift */; };
-		96EDF4B42A0DA4C200634BDF /* Endpointable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4B32A0DA4C200634BDF /* Endpointable.swift */; };
+		96EDF4B42A0DA4C200634BDF /* Endpointable+Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4B32A0DA4C200634BDF /* Endpointable+Contract.swift */; };
 		96EDF4B62A0DA4D500634BDF /* RequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4B52A0DA4D500634BDF /* RequestType.swift */; };
 		96EDF4B82A0DA6DC00634BDF /* NetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4B72A0DA6DC00634BDF /* NetworkAdapter.swift */; };
 		96EDF4BA2A0DAB7100634BDF /* Network+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4B92A0DAB7100634BDF /* Network+Error.swift */; };
 		96EDF4BE2A0E51F500634BDF /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4BD2A0E51F500634BDF /* SearchQuery.swift */; };
 		96EDF4C02A0E7ACB00634BDF /* RequestQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4BF2A0E7ACB00634BDF /* RequestQuery.swift */; };
 		96EDF4C22A0E812C00634BDF /* NetworkAdapter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4C12A0E812C00634BDF /* NetworkAdapter+Extension.swift */; };
-		96EDF4C82A0E827700634BDF /* ItunesSearchAPI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4C72A0E827700634BDF /* ItunesSearchAPI+Extension.swift */; };
+		96EDF4C82A0E827700634BDF /* ItunesSearchAPI+Endpointable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4C72A0E827700634BDF /* ItunesSearchAPI+Endpointable.swift */; };
 		96EDF4CB2A0FC22600634BDF /* SearchModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4CA2A0FC22600634BDF /* SearchModelDelegate.swift */; };
 		96EDF4CF2A0FF2F000634BDF /* DetailModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4CE2A0FF2F000634BDF /* DetailModelDelegate.swift */; };
 		96EDF4D12A100D2C00634BDF /* CompactDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF4D02A100D2C00634BDF /* CompactDetail.swift */; };
@@ -142,21 +142,21 @@
 		96EDF4832A084D0200634BDF /* SearchViewModel+Pseudo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewModel+Pseudo.swift"; sourceTree = "<group>"; };
 		96EDF4862A095DB200634BDF /* ImageAndColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAndColor.swift; sourceTree = "<group>"; };
 		96EDF4882A09998000634BDF /* SearchVM+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchVM+Extension.swift"; sourceTree = "<group>"; };
-		96EDF48A2A099C0600634BDF /* SearchView+Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchView+Contract.swift"; sourceTree = "<group>"; };
+		96EDF48A2A099C0600634BDF /* SearchVC+Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchVC+Contract.swift"; sourceTree = "<group>"; };
 		96EDF48D2A099C7300634BDF /* SearchVM+Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchVM+Contract.swift"; sourceTree = "<group>"; };
 		96EDF4902A099D7D00634BDF /* SearchVM+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchVM+Delegate.swift"; sourceTree = "<group>"; };
 		96EDF4952A0A3C0D00634BDF /* DetailVM+Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailVM+Contract.swift"; sourceTree = "<group>"; };
 		96EDF4972A0A3C2200634BDF /* DetailVM+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailVM+Delegate.swift"; sourceTree = "<group>"; };
 		96EDF4AC2A0BA04F00634BDF /* DetailView+Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailView+Contract.swift"; sourceTree = "<group>"; };
 		96EDF4B12A0DA14E00634BDF /* ItunesSearchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesSearchAPI.swift; sourceTree = "<group>"; };
-		96EDF4B32A0DA4C200634BDF /* Endpointable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpointable.swift; sourceTree = "<group>"; };
+		96EDF4B32A0DA4C200634BDF /* Endpointable+Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Endpointable+Contract.swift"; sourceTree = "<group>"; };
 		96EDF4B52A0DA4D500634BDF /* RequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestType.swift; sourceTree = "<group>"; };
 		96EDF4B72A0DA6DC00634BDF /* NetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAdapter.swift; sourceTree = "<group>"; };
 		96EDF4B92A0DAB7100634BDF /* Network+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network+Error.swift"; sourceTree = "<group>"; };
 		96EDF4BD2A0E51F500634BDF /* SearchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
 		96EDF4BF2A0E7ACB00634BDF /* RequestQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQuery.swift; sourceTree = "<group>"; };
 		96EDF4C12A0E812C00634BDF /* NetworkAdapter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkAdapter+Extension.swift"; sourceTree = "<group>"; };
-		96EDF4C72A0E827700634BDF /* ItunesSearchAPI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItunesSearchAPI+Extension.swift"; sourceTree = "<group>"; };
+		96EDF4C72A0E827700634BDF /* ItunesSearchAPI+Endpointable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItunesSearchAPI+Endpointable.swift"; sourceTree = "<group>"; };
 		96EDF4CA2A0FC22600634BDF /* SearchModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModelDelegate.swift; sourceTree = "<group>"; };
 		96EDF4CE2A0FF2F000634BDF /* DetailModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModelDelegate.swift; sourceTree = "<group>"; };
 		96EDF4D02A100D2C00634BDF /* CompactDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactDetail.swift; sourceTree = "<group>"; };
@@ -447,13 +447,13 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		964E53842A23FC9A008EC9E4 /* Class Helpers */ = {
+		964E53842A23FC9A008EC9E4 /* Class */ = {
 			isa = PBXGroup;
 			children = (
 				96E8225D29F3062E009B56F0 /* SearchVC+Extension.swift */,
 				96E8225F29F30EC9009B56F0 /* SearchCell+Extension.swift */,
 			);
-			path = "Class Helpers";
+			path = Class;
 			sourceTree = "<group>";
 		};
 		9651B18B2A02848500D94A6F /* Pseudocodes */ = {
@@ -681,6 +681,38 @@
 			path = Communication;
 			sourceTree = "<group>";
 		};
+		96A4232D2A24E7E3006B0BDF /* Class  */ = {
+			isa = PBXGroup;
+			children = (
+				96EDF4C12A0E812C00634BDF /* NetworkAdapter+Extension.swift */,
+			);
+			path = "Class ";
+			sourceTree = "<group>";
+		};
+		96A4232E2A24E7FA006B0BDF /* Conformances */ = {
+			isa = PBXGroup;
+			children = (
+				96A4232F2A24EA46006B0BDF /* Contract */,
+			);
+			path = Conformances;
+			sourceTree = "<group>";
+		};
+		96A4232F2A24EA46006B0BDF /* Contract */ = {
+			isa = PBXGroup;
+			children = (
+				96EDF4C72A0E827700634BDF /* ItunesSearchAPI+Endpointable.swift */,
+			);
+			path = Contract;
+			sourceTree = "<group>";
+		};
+		96A423302A24EC5F006B0BDF /* Structs */ = {
+			isa = PBXGroup;
+			children = (
+				96EDF4BF2A0E7ACB00634BDF /* RequestQuery.swift */,
+			);
+			path = Structs;
+			sourceTree = "<group>";
+		};
 		96E83D0729E5D7BC001B517E /* Figma */ = {
 			isa = PBXGroup;
 			children = (
@@ -740,7 +772,7 @@
 		96EDF4922A099DB300634BDF /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				96EDF48A2A099C0600634BDF /* SearchView+Contract.swift */,
+				96EDF48A2A099C0600634BDF /* SearchVC+Contract.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -766,7 +798,7 @@
 		96EDF49B2A0A594C00634BDF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				964E53842A23FC9A008EC9E4 /* Class Helpers */,
+				964E53842A23FC9A008EC9E4 /* Class */,
 				964E536A2A23F171008EC9E4 /* Conformances */,
 			);
 			path = Extensions;
@@ -876,7 +908,6 @@
 			children = (
 				96EDF4862A095DB200634BDF /* ImageAndColor.swift */,
 				96EDF4BD2A0E51F500634BDF /* SearchQuery.swift */,
-				96EDF4BF2A0E7ACB00634BDF /* RequestQuery.swift */,
 				96EDF4D02A100D2C00634BDF /* CompactDetail.swift */,
 			);
 			path = Types;
@@ -898,6 +929,7 @@
 				96EDF4C62A0E821100634BDF /* Protocols */,
 				96EDF4C52A0E81D200634BDF /* Extensions */,
 				96EDF4C32A0E817C00634BDF /* Enums */,
+				96A423302A24EC5F006B0BDF /* Structs */,
 				96EDF4CC2A0FC70A00634BDF /* Managers */,
 			);
 			path = Utils;
@@ -906,8 +938,8 @@
 		96EDF4C52A0E81D200634BDF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				96EDF4C12A0E812C00634BDF /* NetworkAdapter+Extension.swift */,
-				96EDF4C72A0E827700634BDF /* ItunesSearchAPI+Extension.swift */,
+				96A4232D2A24E7E3006B0BDF /* Class  */,
+				96A4232E2A24E7FA006B0BDF /* Conformances */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -915,7 +947,7 @@
 		96EDF4C62A0E821100634BDF /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				96EDF4B32A0DA4C200634BDF /* Endpointable.swift */,
+				96EDF4B32A0DA4C200634BDF /* Endpointable+Contract.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1028,7 +1060,7 @@
 				96EDF4B82A0DA6DC00634BDF /* NetworkAdapter.swift in Sources */,
 				96EDF4B62A0DA4D500634BDF /* RequestType.swift in Sources */,
 				96EDF4D12A100D2C00634BDF /* CompactDetail.swift in Sources */,
-				96EDF48B2A099C0600634BDF /* SearchView+Contract.swift in Sources */,
+				96EDF48B2A099C0600634BDF /* SearchVC+Contract.swift in Sources */,
 				96A423122A24100B006B0BDF /* SearchVM+SearchModelDelegate.swift in Sources */,
 				964E53702A23F34E008EC9E4 /* SearchVC+UICollectionViewDelegate.swift in Sources */,
 				964E53722A23F39D008EC9E4 /* SearchVC+UICollectionViewDataSource.swift in Sources */,
@@ -1057,7 +1089,7 @@
 				96B5868E29EFE097004F5B27 /* Detail+Model.swift in Sources */,
 				9651B1982A057AF100D94A6F /* UIView+Extension.swift in Sources */,
 				9651B18F2A03BCA500D94A6F /* TopDto.swift in Sources */,
-				96EDF4C82A0E827700634BDF /* ItunesSearchAPI+Extension.swift in Sources */,
+				96EDF4C82A0E827700634BDF /* ItunesSearchAPI+Endpointable.swift in Sources */,
 				96EDF4912A099D7D00634BDF /* SearchVM+Delegate.swift in Sources */,
 				96EDF4CB2A0FC22600634BDF /* SearchModelDelegate.swift in Sources */,
 				96B5868929EDD20E004F5B27 /* DetailVC.swift in Sources */,
@@ -1065,7 +1097,7 @@
 				96EDF4C02A0E7ACB00634BDF /* RequestQuery.swift in Sources */,
 				96EDF4842A084D0200634BDF /* SearchViewModel+Pseudo.swift in Sources */,
 				96B5868729EDD1FE004F5B27 /* DetailVM.swift in Sources */,
-				96EDF4B42A0DA4C200634BDF /* Endpointable.swift in Sources */,
+				96EDF4B42A0DA4C200634BDF /* Endpointable+Contract.swift in Sources */,
 				9651B1912A03C7E600D94A6F /* Top+Model.swift in Sources */,
 				964E536E2A23F2E6008EC9E4 /* SearchVC+UICollectionViewDelegateFlowLayout.swift in Sources */,
 				96A4230F2A240850006B0BDF /* SearchVM+SearchVMContract.swift in Sources */,

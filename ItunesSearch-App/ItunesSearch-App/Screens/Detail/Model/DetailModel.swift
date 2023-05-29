@@ -9,18 +9,18 @@ import Foundation
 
 final class DetailModel{
     
+    typealias dtoDetail = DetailResultData
+    
     weak var delegate: DetailModelDelegate?
 
     private(set) var detailResults: [DetailData] = []
-    
     private var network: NetworkAdapter { NetworkAdapter.shared }
     private var internet: InternetManager { InternetManager.shared }
-    
     
     func fetchIdResults(for idList: [Int]) {
         
         if internet.isOnline() {
-            network.fetchById(with: idList) { [weak self] response in
+            network.fetchById(with: idList, dtoType: dtoDetail.self) { [weak self] response in
                 guard let self else { return }
                 switch response {
                 case .success(let data):

@@ -8,6 +8,7 @@ import Foundation
 final class SearchModel {
     
     weak var delegate: SearchModelDelegate?
+    typealias dtoSearch = SearchResultData
     
     private(set) var searchResults: [SearchData] = []
     private(set) var lackingSearchResults: [SearchData] = []
@@ -38,7 +39,7 @@ final class SearchModel {
     func fetchIdResults(for idList: [Int]) {
         
         if internet.isOnline() {
-            network.fetchById(with: idList) { [weak self] response in
+            network.fetchById(with: idList, dtoType: dtoSearch.self) { [weak self] response in
                 guard let self else { return }
                 switch response {
                     case .success(let data):

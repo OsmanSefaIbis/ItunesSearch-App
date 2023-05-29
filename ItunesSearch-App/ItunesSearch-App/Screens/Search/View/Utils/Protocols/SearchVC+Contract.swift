@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol SearchViewContract: AnyObject {
+protocol SearchVCContract: AnyObject {
     
     /// assignings
     func assignDelegates()

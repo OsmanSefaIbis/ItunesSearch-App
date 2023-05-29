@@ -9,7 +9,6 @@ import Foundation
 
 public typealias Parameters = [String : Any]
 
-/// contract
 public protocol Endpointable {
     
     var baseUrl: String { get }

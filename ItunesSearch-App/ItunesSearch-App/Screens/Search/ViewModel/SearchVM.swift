@@ -13,7 +13,7 @@ final class SearchVM {
     
     lazy var  model = SearchModel()
 
-    weak var view: SearchViewContract?
+    weak var view: SearchVCContract?
     weak var delegate: SearchViewModelDelegate?
     
     var timeControl: Timer?

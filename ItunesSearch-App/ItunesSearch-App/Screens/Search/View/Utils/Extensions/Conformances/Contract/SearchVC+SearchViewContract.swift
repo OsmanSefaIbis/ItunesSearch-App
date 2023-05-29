@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-extension SearchVC: SearchViewContract {
+extension SearchVC: SearchVCContract {
     
     func assignDelegates() {
         searchViewModel.delegate = self

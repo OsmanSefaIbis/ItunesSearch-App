@@ -7,39 +7,27 @@
 
 import Foundation
 
-///class extension
 extension NetworkAdapter {
     
-    func composeRequest(endpoint: ItunesSearchAPI, request: RequestQuery) -> URLRequest? {
-        
-        func isNil(param: Any?) -> Bool{
-            param == nil ? true : false
-        }
+    func composeRequest(endpoint: ItunesSearchAPI, queryType: RequestQuery) -> URLRequest? {
         
         guard var components = URLComponents(string: endpoint.baseUrl) else { return nil }
-        
-        if !isNil(param: request.search){
+        if let _ = queryType.search {
             components.path = endpoint.searchPath
-            components.queryItems = endpoint.params.map {
-                URLQueryItem(name: $0.key , value: "\($0.value)")
-            }
+            components.queryItems = endpoint.params.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
         }
-        if !isNil(param: request.idList){
+        else if let _ = queryType.idList {
             components.path = endpoint.lookupPath
-            components.queryItems = endpoint.params.map {
-                URLQueryItem(name: $0.key , value: "\($0.value)")
-            }
+            components.queryItems = endpoint.params.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
         }
-        if !isNil(param: request.media){
-            guard let media = request.media else { return nil }
+        else if let media = queryType.media {
             components.path = endpoint.topMediaPath
-            let remainder = media.getTop().appending(Api.limitParam.get())
-            components.path = components.path.appending(remainder)
+            let queryItems = media.getTop().appending(Api.limitParam.get())
+            components.path.append(queryItems)
         }
-        guard var url = components.url else {
-            return nil
-        }
-        if !isNil(param: request.media){
+        
+        guard var url = components.url else { return nil }
+        if let _ = queryType.media {
             var urlString = url.absoluteString
             urlString.append(Api.jsonParam.get())
             guard let urlChange = URL(string: urlString) else { return nil }
@@ -50,6 +38,7 @@ extension NetworkAdapter {
     }
     
     func isValidJSON(_ jsonString: String) -> Bool {
+        
         if let data = jsonString.data(using: .utf8) {
             do {
                 _ = try JSONSerialization.jsonObject(with: data, options: [])
