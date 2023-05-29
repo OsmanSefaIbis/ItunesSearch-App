@@ -106,7 +106,8 @@ extension SearchVC: SearchVCContract {
     }
     
     func initiateDetailCreation(with foundation: CompactDetail) {
-        detailViewModel.view = storyboard?.instantiateViewController(withIdentifier: foundation.media.getStoryBoardId()) as! DetailVC
+        let storyboard = UIStoryboard(name: "Detail", bundle: nil)
+        detailViewModel.view = storyboard.instantiateViewController(withIdentifier: foundation.media.getStoryBoardId()) as! DetailVC
         detailViewModel.view?.loadViewIfNeeded()
         detailViewModel.view?.viewModel = detailViewModel
         detailViewModel.assembleView(by: foundation)

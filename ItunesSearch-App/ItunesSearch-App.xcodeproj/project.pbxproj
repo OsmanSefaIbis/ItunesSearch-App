@@ -35,7 +35,6 @@
 		9689A95829F998B400C2BA82 /* ConstantsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9689A95729F998B400C2BA82 /* ConstantsApp.swift */; };
 		9694A91229E31C93000B010E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9694A91129E31C93000B010E /* AppDelegate.swift */; };
 		9694A91629E31C93000B010E /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9694A91529E31C93000B010E /* SearchVC.swift */; };
-		9694A91929E31C93000B010E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9694A91729E31C93000B010E /* Main.storyboard */; };
 		9694A91B29E31C94000B010E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9694A91A29E31C94000B010E /* Assets.xcassets */; };
 		9694A91E29E31C94000B010E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9694A91C29E31C94000B010E /* LaunchScreen.storyboard */; };
 		96A4230F2A240850006B0BDF /* SearchVM+SearchVMContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A4230E2A240850006B0BDF /* SearchVM+SearchVMContract.swift */; };
@@ -46,6 +45,8 @@
 		96A423232A24B8F7006B0BDF /* DetailVC+WKNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A423222A24B8F7006B0BDF /* DetailVC+WKNavigationDelegate.swift */; };
 		96A423292A24BDA5006B0BDF /* DetailVM+DetailVMContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A423282A24BDA5006B0BDF /* DetailVM+DetailVMContract.swift */; };
 		96A4232C2A24BE88006B0BDF /* DetailVM+DetailModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A4232B2A24BE88006B0BDF /* DetailVM+DetailModelDelegate.swift */; };
+		96A423322A24EDA2006B0BDF /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96A423312A24EDA2006B0BDF /* Detail.storyboard */; };
+		96A423342A24EE0F006B0BDF /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96A423332A24EE0F006B0BDF /* Search.storyboard */; };
 		96B5868529EDD06D004F5B27 /* DetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B5868429EDD06D004F5B27 /* DetailModel.swift */; };
 		96B5868729EDD1FE004F5B27 /* DetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B5868629EDD1FE004F5B27 /* DetailVM.swift */; };
 		96B5868929EDD20E004F5B27 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B5868829EDD20E004F5B27 /* DetailVC.swift */; };
@@ -113,7 +114,6 @@
 		9694A90E29E31C93000B010E /* ItunesSearch-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ItunesSearch-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9694A91129E31C93000B010E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9694A91529E31C93000B010E /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
-		9694A91829E31C93000B010E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9694A91A29E31C94000B010E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9694A91D29E31C94000B010E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9694A91F29E31C94000B010E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -125,6 +125,8 @@
 		96A423222A24B8F7006B0BDF /* DetailVC+WKNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailVC+WKNavigationDelegate.swift"; sourceTree = "<group>"; };
 		96A423282A24BDA5006B0BDF /* DetailVM+DetailVMContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailVM+DetailVMContract.swift"; sourceTree = "<group>"; };
 		96A4232B2A24BE88006B0BDF /* DetailVM+DetailModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailVM+DetailModelDelegate.swift"; sourceTree = "<group>"; };
+		96A423312A24EDA2006B0BDF /* Detail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Detail.storyboard; sourceTree = "<group>"; };
+		96A423332A24EE0F006B0BDF /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		96B5868429EDD06D004F5B27 /* DetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModel.swift; sourceTree = "<group>"; };
 		96B5868629EDD1FE004F5B27 /* DetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVM.swift; sourceTree = "<group>"; };
 		96B5868829EDD20E004F5B27 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				96EDF4A22A0A5C1300634BDF /* Utils */,
+				96A423332A24EE0F006B0BDF /* Search.storyboard */,
 				9694A91529E31C93000B010E /* SearchVC.swift */,
 			);
 			path = View;
@@ -244,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				96EDF4A52A0A5CE400634BDF /* Utils */,
+				96A423312A24EDA2006B0BDF /* Detail.storyboard */,
 				96B5868829EDD20E004F5B27 /* DetailVC.swift */,
 			);
 			path = View;
@@ -744,7 +748,6 @@
 		96E83D3D29E93C5B001B517E /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				9694A91729E31C93000B010E /* Main.storyboard */,
 				961A66E52A18E91300445B99 /* Search */,
 				961A66E62A18E91F00445B99 /* Detail */,
 			);
@@ -1044,8 +1047,9 @@
 				9689A95429F966E700C2BA82 /* PagingSpinnerReusableFooter.xib in Resources */,
 				9694A91E29E31C94000B010E /* LaunchScreen.storyboard in Resources */,
 				9689A95029F7EB6100C2BA82 /* SearchCell.xib in Resources */,
+				96A423322A24EDA2006B0BDF /* Detail.storyboard in Resources */,
 				9694A91B29E31C94000B010E /* Assets.xcassets in Resources */,
-				9694A91929E31C93000B010E /* Main.storyboard in Resources */,
+				96A423342A24EE0F006B0BDF /* Search.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1129,14 +1133,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9694A91729E31C93000B010E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9694A91829E31C93000B010E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		9694A91C29E31C94000B010E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1274,7 +1270,7 @@
 				INFOPLIST_FILE = "ItunesSearch-App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = Search;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1305,7 +1301,7 @@
 				INFOPLIST_FILE = "ItunesSearch-App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = Search;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
