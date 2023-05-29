@@ -9,7 +9,7 @@ import UIKit
 
 protocol DetailViewContract: AnyObject {
     /// props
-    var viewModel: DetailViewModel? { get set }
+    var viewModel: DetailVM? { get set }
     /// view life-cycle
     func loadViewIfNeeded()
     /// assemble detail page

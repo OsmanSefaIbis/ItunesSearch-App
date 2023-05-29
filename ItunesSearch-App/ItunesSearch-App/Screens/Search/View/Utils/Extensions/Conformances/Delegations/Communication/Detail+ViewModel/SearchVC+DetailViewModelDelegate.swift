@@ -22,7 +22,7 @@ extension SearchVC: DetailViewModelDelegate {
         }
     }
     
-    func passPage(_ page: DetailViewController) {
+    func passPage(_ page: DetailVC) {
         pushPageToNavigation(push: page)
     }
 }

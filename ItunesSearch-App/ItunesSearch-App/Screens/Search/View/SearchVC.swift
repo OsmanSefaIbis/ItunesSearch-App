@@ -13,7 +13,7 @@ final class SearchVC: UIViewController{
     @IBOutlet weak var collectionView: UICollectionView!
         
     lazy var searchViewModel = SearchVM()
-    lazy var detailViewModel = DetailViewModel()
+    lazy var detailViewModel = DetailVM()
     
     var pagingSpinner: PagingSpinnerReusableFooter?
     var topPicksBar: TopPicksReusableHeader?
