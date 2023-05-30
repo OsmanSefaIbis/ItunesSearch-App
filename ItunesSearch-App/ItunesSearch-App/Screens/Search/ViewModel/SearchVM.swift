@@ -25,12 +25,13 @@ final class SearchVM {
 
     var paginationOffSet = 0
     var mediaType_State: MediaType? = .movie
+    var latestSearchedQuery: SearchQuery?
     var lessThanPage_Flag = false
     var isLoadingNextPage_Flag = false
     var isSearchActive_Flag = false
+    var isTopPicksActive_Flag = false
     var isNoResults_Flag = false
-    var latestSearchedQuery: SearchQuery?
-    var isApiLackingData = false
+    var isApiLackingData_Flag = false
     
     var itemCount: Int { get { items.count } }
     

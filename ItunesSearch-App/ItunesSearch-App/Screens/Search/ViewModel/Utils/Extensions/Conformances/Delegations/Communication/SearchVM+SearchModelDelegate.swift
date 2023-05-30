@@ -50,6 +50,6 @@ extension SearchVM: SearchModelDelegate {
         } else {
             lackingItems.removeAll()
         }
-        isApiLackingData = verdict
+        isApiLackingData_Flag = verdict
     }
 }

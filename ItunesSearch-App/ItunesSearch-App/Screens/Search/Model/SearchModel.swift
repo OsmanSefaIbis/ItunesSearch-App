@@ -85,7 +85,7 @@ final class SearchModel {
                         ConstantsApp.changeLimit(with: 20)
                         guard let results = data.results else { return }
                         if results.count >= 20 {
-                            self.lackingSearchResults = Array( results.prefix(20))
+                            self.lackingSearchResults = Array( results.prefix(20)) /// ???????????
                             self.delegate?.didCheckApiSendingLess(found: true)
                         } else {
                             self.delegate?.didCheckApiSendingLess(found: false)

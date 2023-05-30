@@ -23,6 +23,7 @@ extension SearchVM: SearchVMContract {
     }
     
     func topWithIdsInvoked(_ topIds: [Top]) {
+        isTopPicksActive_Flag = true
         let holdsTopIds = topIds.compactMap { Int($0.id) }
         model.fetchIdResults(for: holdsTopIds)
     }
@@ -98,7 +99,7 @@ optional-FIXME: Happens when network is slow
     
     func willDisplay(at indexPath: IndexPath, with searchText: String) {
         
-        if lessThanPage_Flag { return }
+        if lessThanPage_Flag || isTopPicksActive_Flag { return }
         let latestItemNumeric = items.count - 1
         if indexPath.item == latestItemNumeric {
             guard let mediaType = mediaType_State else { return }
@@ -211,7 +212,7 @@ optional-FIXME: Happens when network is slow
                 guard let query = latestSearchedQuery else { return }
                 model.fetchLackingSearchResults(with: query) { [weak self] in
                     guard let self else { return }
-                    if self.isApiLackingData {
+                    if self.isApiLackingData_Flag {
                         self.items.append(contentsOf: self.lackingItems)
                         self.lessThanPage_Flag = false
                         for each in self.lackingItems { idsOfAllFetchedRecords.insert(each.id) }
@@ -254,6 +255,7 @@ optional-FIXME: Happens when network is slow
         resetCollections()
         paginationOffSet = 0
         lessThanPage_Flag = false
+        isTopPicksActive_Flag = false
         
         if items.count > 0 {
             reset()
