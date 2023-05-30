@@ -19,11 +19,15 @@ extension SearchVC {
     func registersOfCollectionView() {
 
         let loadingReusableNib = UINib(nibName: HardCoded.loadingReusableName.get(), bundle: nil)
+        let footerReusableNib = UINib(nibName: HardCoded.footerReusableName.get(), bundle: nil)
         let headerReusableNib = UINib(nibName: HardCoded.headerReusableName.get(), bundle: nil)
         collectionView?.register(.init(nibName: ConstantsCV.cell_ID, bundle: nil), forCellWithReuseIdentifier: ConstantsCV.cell_ID)
         collectionView?.register(loadingReusableNib,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                 withReuseIdentifier: HardCoded.loadingReusableIdentifier.get())
+        collectionView?.register(footerReusableNib,
+                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                 withReuseIdentifier: HardCoded.footerReusableIdentifier.get())
         collectionView?.register(headerReusableNib,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: HardCoded.headerReusableIdentifier.get())

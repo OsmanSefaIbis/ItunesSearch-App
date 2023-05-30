@@ -21,7 +21,7 @@ extension SearchVM: SearchModelDelegate {
                 trackPrice: $0.trackPrice ?? 0
             )
         }
-        isNoResults_Flag = retrievedData.isEmpty ? true : false
+        isNoResults_Flag = retrievedData.isEmpty
         self.delegate?.renderItems(retrievedData)
     }
     

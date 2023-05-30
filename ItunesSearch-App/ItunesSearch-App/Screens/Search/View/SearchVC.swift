@@ -16,7 +16,8 @@ final class SearchVC: UIViewController{
     lazy var detailViewModel = DetailVM()
     
     var pagingSpinner: PagingSpinnerReusableFooter?
-    var topPicksBar: TopPicksReusableHeader?
+    var headerBar: ReusableHeaderBar?
+    var footerBar: ReusableFooterBar?
     var sizingValue: CGFloat = 0
     
     override func viewDidLoad() {

@@ -9,12 +9,12 @@ import Foundation
 
 enum HardCoded: String {
     
-    case searchCell,accentColor, collectionViewHeaderPhrase, collectionViewHeaderNoResultsPhrase,
+    case searchCell,accentColor, collectionViewHeaderTopPicksPhrase, collectionViewHeaderNoResultsPhrase, collectionViewFooterPhrase,
          previewText, free, dolar, notAvailable, trackSeperator, seperator, noRating, numberSign,
          ratingScale, fetchSingularDataError, fetchDataWithError, apiDateFormat, convertedDateFormat,
          convertedDateFormatShort, locale_US, colonSeperator, errorPromptDate, audioEmoji,
          segmentedControlError, invalidJSON, offlinePrompt, loadingReusableName,
-         headerReusableName, loadingReusableIdentifier, headerReusableIdentifier,
+         headerReusableName, footerReusableName, footerReusableIdentifier, loadingReusableIdentifier, headerReusableIdentifier,
          offLineAlertTitlePrompt, offLineActionTitlePrompt, errorPromptElementKind,
          errorPromptKind, dimensionHundred
     
@@ -23,8 +23,9 @@ enum HardCoded: String {
         switch self {
             case .searchCell: return "SearchCell"
             case .accentColor: return "AccentColor"
-            case .collectionViewHeaderPhrase: return " Top Picks"
+            case .collectionViewHeaderTopPicksPhrase: return " Top Picks"
             case .collectionViewHeaderNoResultsPhrase: return " No Results Found "
+            case .collectionViewFooterPhrase: return " Results Found "
             case .previewText: return "Preview"
             case .audioEmoji: return "🔊"
             case .free: return "Free"
@@ -49,8 +50,10 @@ enum HardCoded: String {
             case .offLineActionTitlePrompt: return "Ok"
             case .loadingReusableName: return "PagingSpinnerReusableFooter"
             case .loadingReusableIdentifier: return "pagingspinnerreusablefooterid"
-            case .headerReusableName: return "TopPicksReusableHeader"
-            case .headerReusableIdentifier: return "toppicksreusableheaderid"
+            case .headerReusableName: return "ReusableHeaderBar"
+            case .headerReusableIdentifier: return "ReusableHeaderBarId"
+            case .footerReusableName: return "ReusableFooterBar"
+            case .footerReusableIdentifier: return "ReusableFooterBarId"
             case .fetchDataWithError: return "Error occured with fetchDataWith() - Cause: Decoding Error --> "
             case .fetchSingularDataError: return "Error occured with fetchSingularData() - Cause: Decoding Error --> "
             case .segmentedControlError : return "Error occured with segmentedControlValueChanged()"

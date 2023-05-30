@@ -99,7 +99,7 @@ optional-FIXME: Happens when network is slow
     
     func willDisplay(at indexPath: IndexPath, with searchText: String) {
         
-        if lessThanPage_Flag || isTopPicksActive_Flag { return }
+        if isLessThanPage_Flag || isTopPicksActive_Flag { return }
         let latestItemNumeric = items.count - 1
         if indexPath.item == latestItemNumeric {
             guard let mediaType = mediaType_State else { return }
@@ -111,7 +111,7 @@ optional-FIXME: Happens when network is slow
     }
     
     func referenceSizeForHeaderInSection(_ width: CGFloat) -> CGSize {
-        if isSearchActive_Flag && !isNoResults_Flag {
+        if isSearchActive_Flag && !isNoResults_Flag{
             return CGSize.zero
         } else {
             return CGSize(width: width, height: ConstantsCV.headerHeight)
@@ -119,7 +119,10 @@ optional-FIXME: Happens when network is slow
     }
     
     func referenceSizeForFooterInSection(_ width: CGFloat) -> CGSize {
-        if isLoadingNextPage_Flag {
+        if items.isEmpty{
+            return CGSize.zero
+        }
+        else if isLoadingNextPage_Flag && !isLessThanPage_Flag {
             return CGSize.zero
         } else {
             return CGSize(width: width, height: ConstantsCV.footerHeight)
@@ -128,15 +131,16 @@ optional-FIXME: Happens when network is slow
     
     func willDisplaySupplementaryFooterView() {
         if isLoadingNextPage_Flag { view?.startReusableViewSpinner() }
+        if isLessThanPage_Flag || isTopPicksActive_Flag { view?.setReusableFooterViewTitle(with: itemCount)}
     }
     
     func willDisplaySupplementaryHeaderView() {
         if !isSearchActive_Flag {
             guard let mediaType = mediaType_State else { return }
-            view?.setReusableViewTitle(with: mediaType.get().capitalized)
+            view?.setReusableHeaderViewTitle(with: mediaType.get().capitalized)
         }
         if isNoResults_Flag {
-            view?.setReusableViewTitle()
+            view?.setReusableHeaderViewTitle()
         }
     }
     
@@ -194,12 +198,13 @@ optional-FIXME: Happens when network is slow
     func setItems(_ items: [ColumnItem], completion: (() -> Void)?) {
         
         // INFO: SearchViewModel+Pseudo.swift
-        if items.count < ConstantsApp.requestLimit { lessThanPage_Flag = true }
+        isLessThanPage_Flag = items.count < ConstantsApp.requestLimit
         
-        if lessThanPage_Flag {
-            if self.items.count >= ConstantsApp.requestLimit  {
+        if isLessThanPage_Flag {
+            let islastPage = self.items.count >= ConstantsApp.requestLimit
+            if islastPage {
                 var lastRecords: [ColumnItem] = []
-                
+            
                 for each in items {
                     if idsOfAllFetchedRecords.contains(where: { $0 == each.id }) { continue }
                     else { lastRecords.append(each) }
@@ -209,12 +214,12 @@ optional-FIXME: Happens when network is slow
                 self.isLoadingNextPage_Flag = false
                 completion?()
             } else {
+                isLessThanPage_Flag = false
                 guard let query = latestSearchedQuery else { return }
                 model.fetchLackingSearchResults(with: query) { [weak self] in
                     guard let self else { return }
                     if self.isApiLackingData_Flag {
                         self.items.append(contentsOf: self.lackingItems)
-                        self.lessThanPage_Flag = false
                         for each in self.lackingItems { idsOfAllFetchedRecords.insert(each.id) }
                         self.lackingItems.removeAll()
                     } else {
@@ -254,7 +259,7 @@ optional-FIXME: Happens when network is slow
         
         resetCollections()
         paginationOffSet = 0
-        lessThanPage_Flag = false
+        isLessThanPage_Flag = false
         isTopPicksActive_Flag = false
         
         if items.count > 0 {

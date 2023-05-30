@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TopPicksReusableHeader: UICollectionReusableView {
+class ReusableHeaderBar: UICollectionReusableView {
 
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerTitle: UILabel!
@@ -19,9 +19,13 @@ class TopPicksReusableHeader: UICollectionReusableView {
     }
     
     func setTitleForTop(with media: String){
-        headerTitle.text = media.appending(HardCoded.collectionViewHeaderPhrase.get())
+        DispatchQueue.main.async { [weak self] in
+            self?.headerTitle.text = media.appending(HardCoded.collectionViewHeaderTopPicksPhrase.get())
+        }
     }
     func setTitleForNoResults(){
-        headerTitle.text = HardCoded.collectionViewHeaderNoResultsPhrase.get()
+        DispatchQueue.main.async { [weak self] in
+            self?.headerTitle.text = HardCoded.collectionViewHeaderNoResultsPhrase.get()
+        }
     }
 }

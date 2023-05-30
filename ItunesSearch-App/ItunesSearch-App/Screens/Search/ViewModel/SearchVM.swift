@@ -26,7 +26,7 @@ final class SearchVM {
     var paginationOffSet = 0
     var mediaType_State: MediaType? = .movie
     var latestSearchedQuery: SearchQuery?
-    var lessThanPage_Flag = false
+    var isLessThanPage_Flag = false
     var isLoadingNextPage_Flag = false
     var isSearchActive_Flag = false
     var isTopPicksActive_Flag = false

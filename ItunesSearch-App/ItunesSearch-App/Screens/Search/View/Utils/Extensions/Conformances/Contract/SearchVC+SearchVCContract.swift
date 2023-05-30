@@ -62,12 +62,16 @@ extension SearchVC: SearchVCContract {
         searchViewModel.reset()
     }
     
-    func setReusableViewTitle() {
-        self.topPicksBar?.setTitleForNoResults()
+    func setReusableHeaderViewTitle() {
+        self.headerBar?.setTitleForNoResults()
     }
     
-    func setReusableViewTitle(with title: String) {
-        self.topPicksBar?.setTitleForTop(with: title)
+    func setReusableHeaderViewTitle(with title: String) {
+        self.headerBar?.setTitleForTop(with: title)
+    }
+    
+    func setReusableFooterViewTitle(with totalCount: Int){
+        self.footerBar?.setTitle(for: totalCount)
     }
     
     func stopReusableViewSpinner() {
@@ -118,6 +122,8 @@ extension SearchVC: SearchVCContract {
     }
     
     func dismissKeyBoard() {
-        searchBar.resignFirstResponder()
+        DispatchQueue.main.async { [weak self] in
+            self?.searchBar.resignFirstResponder()
+        }
     }
 }

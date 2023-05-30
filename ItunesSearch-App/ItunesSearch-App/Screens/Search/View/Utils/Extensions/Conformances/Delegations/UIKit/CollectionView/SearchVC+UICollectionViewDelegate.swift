@@ -54,14 +54,20 @@ extension SearchVC: UICollectionViewDelegate {
         
         switch kind {
             case UICollectionView.elementKindSectionFooter:
-            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HardCoded.loadingReusableIdentifier.get(), for: indexPath) as! PagingSpinnerReusableFooter
-                pagingSpinner = aFooterView
-                pagingSpinner?.backgroundColor = UIColor.clear
-                return aFooterView
+                let pagingFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HardCoded.loadingReusableIdentifier.get(), for: indexPath) as! PagingSpinnerReusableFooter
+                    pagingSpinner = pagingFooter
+                    pagingSpinner?.backgroundColor = UIColor.clear
+                let  barFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HardCoded.footerReusableIdentifier.get(), for: indexPath) as! ReusableFooterBar
+                    footerBar = barFooterView
+            if searchViewModel.isLoadingNextPage_Flag && !searchViewModel.isLessThanPage_Flag {
+                return pagingFooter
+            } else {
+                return barFooterView
+            }
             case UICollectionView.elementKindSectionHeader:
-            let aHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HardCoded.headerReusableIdentifier.get(), for: indexPath) as! TopPicksReusableHeader
-                topPicksBar = aHeaderView
-                return aHeaderView
+                let barHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HardCoded.headerReusableIdentifier.get(), for: indexPath) as! ReusableHeaderBar
+                    headerBar = barHeaderView
+                    return barHeaderView
         default:
             assert(false, HardCoded.errorPromptElementKind.get())
         }
