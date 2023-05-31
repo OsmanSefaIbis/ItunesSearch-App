@@ -122,10 +122,10 @@ optional-FIXME: Happens when network is slow
         if items.isEmpty{
             return CGSize.zero
         }
-        else if isLoadingNextPage_Flag && !isLessThanPage_Flag {
-            return CGSize.zero
-        } else {
+        if !isLoadingNextPage_Flag || isLessThanPage_Flag || isTopPicksActive_Flag {
             return CGSize(width: width, height: ConstantsCV.footerHeight)
+        } else {
+            return CGSize.zero
         }
     }
     
@@ -214,11 +214,11 @@ optional-FIXME: Happens when network is slow
                 self.isLoadingNextPage_Flag = false
                 completion?()
             } else {
-                isLessThanPage_Flag = false
                 guard let query = latestSearchedQuery else { return }
                 model.fetchLackingSearchResults(with: query) { [weak self] in
                     guard let self else { return }
                     if self.isApiLackingData_Flag {
+                        self.isLessThanPage_Flag = false
                         self.items.append(contentsOf: self.lackingItems)
                         for each in self.lackingItems { idsOfAllFetchedRecords.insert(each.id) }
                         self.lackingItems.removeAll()
