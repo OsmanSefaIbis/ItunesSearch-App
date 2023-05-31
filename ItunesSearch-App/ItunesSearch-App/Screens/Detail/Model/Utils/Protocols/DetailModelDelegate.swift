@@ -10,5 +10,6 @@ import Foundation
 protocol DetailModelDelegate: AnyObject{
     
     func didFetchDetailData()
+    func didFetchCacheMissData(with id: [Int])
     func failedDataFetch()
 }

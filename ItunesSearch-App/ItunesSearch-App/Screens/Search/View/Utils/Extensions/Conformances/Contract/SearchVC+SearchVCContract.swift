@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 extension SearchVC: SearchVCContract {
-    
+
     func assignDelegates() {
         searchViewModel.delegate = self
         detailViewModel.delegate = self
@@ -36,7 +36,7 @@ extension SearchVC: SearchVCContract {
     }
     
     func startPrefetchingDetails(for ids: [Int]) {
-        detailViewModel.searchInvoked(withIds: ids)
+        detailViewModel.searchInvoked(withIds: ids, isCacheMiss: false)
     }
     
     func invokeTopIds( _ topIds: [Top]) {
@@ -49,6 +49,25 @@ extension SearchVC: SearchVCContract {
     
     func resetAndInvokeTop() {
         searchViewModel.resetAndInvokeTop()
+    }
+    
+    func handleCacheMiss(for id: Int) {
+        detailViewModel.searchInvoked(withIds: [id], isCacheMiss: true)
+    }
+    
+    func provideImageColorPair(_ imageUrl: String, completion: @escaping (ImageColorPair?) -> Void) {
+        
+        guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, ConstantsCV.detailImageDimension)) else { completion(nil) ; return }
+        KingfisherManager.shared.retrieveImage(with: artworkUrl) { result in
+            switch result {
+            case .success(let value):
+                if let averagedColor = value.image.averageColor {
+                    completion(.init(image: value.image, color: averagedColor))
+                }
+            case .failure(_):
+                completion(nil)
+            }
+        }
     }
     
     func setItems( _ items: [SearchCellModel]) {

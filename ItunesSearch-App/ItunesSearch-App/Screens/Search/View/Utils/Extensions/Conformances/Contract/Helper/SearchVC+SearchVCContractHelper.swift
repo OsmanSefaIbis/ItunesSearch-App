@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 /// Helps -> SearchVC+SearchViewContract
 extension SearchVC {
@@ -39,21 +38,6 @@ extension SearchVC {
         guard let searchText = searchBar.text?.replacingOccurrences(of: "\\s+", with: "+", options: .regularExpression) else { return }
         let indexValue = sender.selectedSegmentIndex
         searchViewModel.segmentedControlValueChanged(to: indexValue, with: searchText)
-    }
-    
-    func provideImageColorPair(_ imageUrl: String, completion: @escaping (ImageColorPair?) -> Void) {
-        
-        guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, ConstantsCV.detailImageDimension)) else { completion(nil) ; return }
-        KingfisherManager.shared.retrieveImage(with: artworkUrl) { result in
-            switch result {
-            case .success(let value):
-                if let averagedColor = value.image.averageColor {
-                    completion(.init(image: value.image, color: averagedColor))
-                }
-            case .failure(_):
-                completion(nil)
-            }
-        }
     }
 }
 

@@ -8,7 +8,7 @@
 import Foundation
 
 extension SearchVC: DetailViewModelDelegate {
-    
+
     func storeItem(_ retrieved: [Detail]) {
         
         for each in retrieved{
@@ -20,6 +20,11 @@ extension SearchVC: DetailViewModelDelegate {
                 self.searchViewModel.setCacheDetailImagesAndColor(key: each.id, value: pair)
             }
         }
+    }
+    
+    func cacheWrite(for id: [Int], _ retrieved: [Detail]) {
+        guard let id = id.first, let data = retrieved.first else { return }
+        searchViewModel.setCacheDetails(key: id, value: data)
     }
     
     func passPage(_ page: DetailVC) {

@@ -17,7 +17,7 @@ final class DetailModel{
     private var network: NetworkAdapter { NetworkAdapter.shared }
     private var internet: InternetManager { InternetManager.shared }
     
-    func fetchIdResults(for idList: [Int]) {
+    func fetchIdResults(for idList: [Int], flag isCacheMiss: Bool) {
         
         if internet.isOnline() {
             network.fetchById(with: idList, dtoType: dtoDetail.self) { [weak self] response in
@@ -26,7 +26,7 @@ final class DetailModel{
                 case .success(let data):
                     guard let results = data.results else { return }
                     self.detailResults = results
-                    self.delegate?.didFetchDetailData()
+                    isCacheMiss ? self.delegate?.didFetchCacheMissData(with: idList) : self.delegate?.didFetchDetailData()
                 case .failure(_):
                     self.delegate?.failedDataFetch()
                 }

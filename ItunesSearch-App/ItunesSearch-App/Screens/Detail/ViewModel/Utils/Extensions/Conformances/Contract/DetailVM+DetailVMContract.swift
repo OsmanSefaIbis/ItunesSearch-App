@@ -9,8 +9,8 @@ import Foundation
 
 extension DetailVM: DetailVMContract {
     
-    func searchInvoked(withIds idValues: [Int]){
-        model.fetchIdResults(for: idValues)
+    func searchInvoked(withIds idValues: [Int], isCacheMiss flag: Bool){
+        model.fetchIdResults(for: idValues, flag: flag)
     }
     
     func assembleView(by foundation: CompactDetail){

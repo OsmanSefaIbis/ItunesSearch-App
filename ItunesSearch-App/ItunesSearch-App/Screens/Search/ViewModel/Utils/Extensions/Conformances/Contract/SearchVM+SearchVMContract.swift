@@ -73,6 +73,10 @@ extension SearchVM: SearchVMContract {
         let id = items[indexPath.item].id
         guard let media = mediaType_State else { return }
         // TODO: Cache miss also for below
+        var cacheMiss = cacheDetails[id] == nil
+        if cacheMiss {
+            view?.handleCacheMiss(for: id)
+        }
         guard let detailData = cacheDetails[id] else { return }
 /*
 optional-FIXME: Happens when network is slow
@@ -82,7 +86,7 @@ optional-FIXME: Happens when network is slow
     Best_Case: Find the root cause why kingfisher is failing, another candidate is provideImageColorPair()
     Worst_Case: Use shimmer effect and when the data is fired reload
 */
-        let cacheMiss = cacheDetailImagesAndColors[id] == nil
+        cacheMiss = cacheDetailImagesAndColors[id] == nil
         if cacheMiss {
             let imageUrl = items[indexPath.item].artworkUrl
             view?.provideImageColorPair(imageUrl, completion: { [weak self] pair in
