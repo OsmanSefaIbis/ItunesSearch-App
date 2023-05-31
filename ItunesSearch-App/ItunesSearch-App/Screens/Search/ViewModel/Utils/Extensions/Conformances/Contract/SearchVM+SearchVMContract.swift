@@ -75,23 +75,24 @@ extension SearchVM: SearchVMContract {
         // TODO: Cache miss also for below
         var cacheMiss = cacheDetails[id] == nil
         if cacheMiss {
-            view?.handleCacheMiss(for: id)
+            view?.startCellSpinner(at: indexPath)
+            let query: CachingQuery = .init(id: id, isCacheMiss: true, cellIndexPath: indexPath)
+            view?.handleCacheMiss(with: query)
         }
         guard let detailData = cacheDetails[id] else { return }
 /*
 optional-FIXME: Happens when network is slow
     Kingfisher failure causes cache miss, so when the user selects,the detail page cannot be constructed
     * Partial fix applied, eventually routes to the detail page, not stable though with slow network
-    Debugging_With: Time Profiler + KingFisher details might help
-    Best_Case: Find the root cause why kingfisher is failing, another candidate is provideImageColorPair()
-    Worst_Case: Use shimmer effect and when the data is fired reload
 */
         cacheMiss = cacheDetailImagesAndColors[id] == nil
         if cacheMiss {
+            view?.startCellSpinner(at: indexPath)
             let imageUrl = items[indexPath.item].artworkUrl
             view?.provideImageColorPair(imageUrl, completion: { [weak self] pair in
                 guard let self else { return }
                 self.cacheDetailImagesAndColors[id] = pair
+                view?.stopCellSpinner(at: indexPath)
             })
         }
         

@@ -22,9 +22,11 @@ extension SearchVC: DetailViewModelDelegate {
         }
     }
     
-    func cacheWrite(for id: [Int], _ retrieved: [Detail]) {
+    func cacheWrite(for id: [Int], _ retrieved: [Detail], for cell: IndexPath) {
+        
         guard let id = id.first, let data = retrieved.first else { return }
         searchViewModel.setCacheDetails(key: id, value: data)
+        self.stopCellSpinner(at: cell)
     }
     
     func passPage(_ page: DetailVC) {

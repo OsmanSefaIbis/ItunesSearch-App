@@ -14,6 +14,9 @@ protocol SearchCellContract {
     /// configure cell specific
     func configureCellLooks()
     func configureCell(with model: SearchCellModel, size constraint: CGFloat)
+    /// cache miss specific
+    func startSpinner()
+    func stopSpinner()
     /// constraint setters
     func setImageHeigth( _ height: CGFloat)
     func setImageWidth( _ width: CGFloat)

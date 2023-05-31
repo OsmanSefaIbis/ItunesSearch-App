@@ -9,9 +9,6 @@ import Foundation
 
 extension DetailVM: DetailModelDelegate{
     
-    
-    
-
     func didFetchDetailData(){
         
         let retrievedData: [Detail] = model.detailResults.map {
@@ -44,7 +41,7 @@ extension DetailVM: DetailModelDelegate{
         self.delegate?.storeItem(retrievedData)
     }
 
-    func didFetchCacheMissData(with id: [Int]) {
+    func didFetchCacheMissData(with id: [Int], for cell: IndexPath) {
         
         let retrievedData: [Detail] = model.detailResults.map {
             
@@ -73,7 +70,7 @@ extension DetailVM: DetailModelDelegate{
                 viewUrl: $0.trackViewURL ?? ""
             )
         }
-        self.delegate?.cacheWrite(for: id, retrievedData)
+        self.delegate?.cacheWrite(for: id, retrievedData, for: cell)
     }
     
     func failedDataFetch() {

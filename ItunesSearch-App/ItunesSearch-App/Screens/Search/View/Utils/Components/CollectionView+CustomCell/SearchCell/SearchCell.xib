@@ -21,6 +21,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m5X-ZV-Fek" userLabel="Container">
                         <rect key="frame" x="0.0" y="0.0" width="167" height="80"/>
                         <subviews>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="k0d-Mq-dAm">
+                                <rect key="frame" x="73.666666666666671" y="30" width="20" height="20"/>
+                                <color key="color" systemColor="systemPinkColor"/>
+                            </activityIndicatorView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgw-dD-ET5" userLabel="HStack">
                                 <rect key="frame" x="0.0" y="0.0" width="167" height="80"/>
                                 <subviews>
@@ -69,7 +73,9 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="k0d-Mq-dAm" firstAttribute="centerY" secondItem="m5X-ZV-Fek" secondAttribute="centerY" id="JzE-oY-l4h"/>
                             <constraint firstAttribute="trailing" secondItem="Hgw-dD-ET5" secondAttribute="trailing" id="Roc-3y-OCr"/>
+                            <constraint firstItem="k0d-Mq-dAm" firstAttribute="centerX" secondItem="m5X-ZV-Fek" secondAttribute="centerX" id="e7H-e1-mJ3"/>
                             <constraint firstItem="Hgw-dD-ET5" firstAttribute="top" secondItem="m5X-ZV-Fek" secondAttribute="top" id="kNv-Rg-lMw"/>
                             <constraint firstAttribute="bottom" secondItem="Hgw-dD-ET5" secondAttribute="bottom" id="pQX-Gg-vzj"/>
                             <constraint firstItem="Hgw-dD-ET5" firstAttribute="leading" secondItem="m5X-ZV-Fek" secondAttribute="leading" id="vop-Gn-eet"/>
@@ -87,6 +93,7 @@
             <size key="customSize" width="161" height="78"/>
             <connections>
                 <outlet property="artworkImage" destination="Z5T-EM-uhV" id="NGl-mc-V9s"/>
+                <outlet property="cacheMissSpinner" destination="k0d-Mq-dAm" id="i0e-Sb-ZBC"/>
                 <outlet property="container" destination="m5X-ZV-Fek" id="pTl-v6-lgy"/>
                 <outlet property="nameLabel" destination="iDg-CG-gwv" id="BMQ-Az-xbe"/>
                 <outlet property="releaseDateLabel" destination="GPX-1R-LZ7" id="VSm-ON-D8F"/>
@@ -99,6 +106,9 @@
         <image name="photo" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

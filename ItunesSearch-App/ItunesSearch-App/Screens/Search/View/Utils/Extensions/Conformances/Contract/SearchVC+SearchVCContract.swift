@@ -36,7 +36,8 @@ extension SearchVC: SearchVCContract {
     }
     
     func startPrefetchingDetails(for ids: [Int]) {
-        detailViewModel.searchInvoked(withIds: ids, isCacheMiss: false)
+        let query: CachingQuery = .init(id: 0, isCacheMiss: false, cellIndexPath: IndexPath())
+        detailViewModel.searchInvoked(withIds: ids, for: query)
     }
     
     func invokeTopIds( _ topIds: [Top]) {
@@ -51,8 +52,26 @@ extension SearchVC: SearchVCContract {
         searchViewModel.resetAndInvokeTop()
     }
     
-    func handleCacheMiss(for id: Int) {
-        detailViewModel.searchInvoked(withIds: [id], isCacheMiss: true)
+    func startCellSpinner(at indexPath: IndexPath) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            if let cell = self.collectionView.cellForItem(at: indexPath) as? SearchCell {
+                cell.startSpinner()
+            }
+        }
+    }
+    
+    func stopCellSpinner(at indexPath: IndexPath) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            if let cell = self.collectionView.cellForItem(at: indexPath) as? SearchCell {
+                cell.stopSpinner()
+            }
+        }
+    }
+    
+    func handleCacheMiss(with query: CachingQuery) {
+        detailViewModel.searchInvoked(withIds: [query.id], for: query)
     }
     
     func provideImageColorPair(_ imageUrl: String, completion: @escaping (ImageColorPair?) -> Void) {
