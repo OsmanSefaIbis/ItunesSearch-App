@@ -6,7 +6,7 @@
 //
 
 /*------------------------------------------------------------------------------------------------|
-|                    • extension SearchView: UICollectionViewDelegateFlowLayout                   |
+|                    • extension SearchVC: UICollectionViewDelegateFlowLayout                     |
 |-------------------------------------------------------------------------------------------------|
 |    /*-- MODELS ----- MAX IOS --- WIDTH POINT -- HEIGHT POINT ---                                |
 |    |    6s             15           375            667         |                                |

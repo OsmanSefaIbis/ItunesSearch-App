@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension SearchVC: UICollectionViewDelegateFlowLayout{
+extension SearchVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -15,7 +15,7 @@ extension SearchVC: UICollectionViewDelegateFlowLayout{
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         
-        // INFO: SearchView+Pseudo.swift
+        // PSEUDO: SearchVC+UICollectionViewDelegateFlowLayout+Pseudo.swift
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return ConstantsCV.cellSize }
         let totalWidth = collectionView.bounds.width
         let sectionInsets = flowLayout.sectionInset

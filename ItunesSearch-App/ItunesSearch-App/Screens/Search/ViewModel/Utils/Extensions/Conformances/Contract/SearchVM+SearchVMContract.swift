@@ -69,10 +69,11 @@ extension SearchVM: SearchVMContract {
     }
 
     func didSelectItem(at indexPath: IndexPath) {
+        // PSEUDO: SearchVM+SearchVMContract+Pseudo2
         
         let id = items[indexPath.item].id
         guard let media = mediaType_State else { return }
-        // TODO: Cache miss also for below
+        
         var cacheMiss = cacheDetails[id] == nil
         if cacheMiss {
             view?.startCellSpinner(at: indexPath)
@@ -80,11 +81,7 @@ extension SearchVM: SearchVMContract {
             view?.handleCacheMiss(with: query)
         }
         guard let detailData = cacheDetails[id] else { return }
-/*
-optional-FIXME: Happens when network is slow
-    Kingfisher failure causes cache miss, so when the user selects,the detail page cannot be constructed
-    * Partial fix applied, eventually routes to the detail page, not stable though with slow network
-*/
+
         cacheMiss = cacheDetailImagesAndColors[id] == nil
         if cacheMiss {
             view?.startCellSpinner(at: indexPath)
@@ -95,10 +92,9 @@ optional-FIXME: Happens when network is slow
                 view?.stopCellSpinner(at: indexPath)
             })
         }
-        
         guard let pair = cacheDetailImagesAndColors[id] else { return }
+        
         let foundation: CompactDetail = .init(media: media, data: detailData, imageAndColor: pair)
-    
         view?.initiateDetailCreation(with: foundation)
     }
     
@@ -192,17 +188,10 @@ optional-FIXME: Happens when network is slow
         } )
         
     }
-    /*
-    optional-FIXME: First page might have more records, but API sends less, bad API design :/
-        API behaves this way, it can be handled with custom implementation
-        Use_Case: select music scope, then type 'starz', currently it gives 11 records
-        Check_With: when you send a request with limit 50 for starz on Postman it yields more than 20 record
-    */
-    
     
     func setItems(_ items: [ColumnItem], completion: (() -> Void)?) {
+        // PSEUDO: SearchVM+SearchVMContract+Pseudo.swift
         
-        // INFO: SearchViewModel+Pseudo.swift
         isLessThanPage_Flag = items.count < ConstantsApp.requestLimit
         
         if isLessThanPage_Flag {
