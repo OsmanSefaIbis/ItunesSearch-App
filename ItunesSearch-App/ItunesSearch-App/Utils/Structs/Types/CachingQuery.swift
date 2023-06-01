@@ -10,6 +10,5 @@ import Foundation
 struct CachingQuery {
     
     let id: Int
-    let isCacheMiss: Bool
     let cellIndexPath: IndexPath
 }

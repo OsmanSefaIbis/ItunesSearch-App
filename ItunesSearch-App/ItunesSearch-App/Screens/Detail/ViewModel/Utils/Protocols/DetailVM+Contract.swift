@@ -12,7 +12,8 @@ protocol DetailVMContract {
     /// prop
     var view: DetailViewContract? { get set }
     /// fetch invocation
-    func searchInvoked(withIds idValues: [Int], for query: CachingQuery)
+    func searchInvoked(withIds idValues: [Int])
+    func cacheMissInvoked(for query: CachingQuery)
     /// configure for view
     func assembleView(by foundation: CompactDetail)
     func configureItem(with item: Detail, _ pair: ImageColorPair, completion: (() -> Void)?)

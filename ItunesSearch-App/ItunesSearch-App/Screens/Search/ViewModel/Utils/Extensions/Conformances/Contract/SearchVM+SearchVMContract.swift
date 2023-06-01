@@ -76,7 +76,7 @@ extension SearchVM: SearchVMContract {
         var cacheMiss = cacheDetails[id] == nil
         if cacheMiss {
             view?.startCellSpinner(at: indexPath)
-            let query: CachingQuery = .init(id: id, isCacheMiss: true, cellIndexPath: indexPath)
+            let query: CachingQuery = .init(id: id, cellIndexPath: indexPath)
             view?.handleCacheMiss(with: query)
         }
         guard let detailData = cacheDetails[id] else { return }
