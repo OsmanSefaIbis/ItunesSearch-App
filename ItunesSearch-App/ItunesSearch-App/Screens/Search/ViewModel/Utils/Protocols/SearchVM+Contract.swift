@@ -32,6 +32,7 @@ protocol SearchVMContract {
     func didEndDisplayingSupplementaryView()
     /// searchBar specific
     func searchBarSearchButtonClicked(with searchText: String)
+    func searchBarCancelButtonClicked()
     func textDidChange(with searchText: String)
     /// operations
     func setItems(_ items: [ColumnItem], completion: (() -> Void)?)

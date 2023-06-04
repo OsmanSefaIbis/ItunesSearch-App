@@ -168,6 +168,11 @@ extension SearchVM: SearchVMContract {
         }
     }
     
+    func searchBarCancelButtonClicked() {
+        isSearchActive_Flag = false
+        resetAndInvokeTop()
+    }
+    
     func textDidChange(with searchText: String) {
         
         guard let mediaType = mediaType_State else { return }

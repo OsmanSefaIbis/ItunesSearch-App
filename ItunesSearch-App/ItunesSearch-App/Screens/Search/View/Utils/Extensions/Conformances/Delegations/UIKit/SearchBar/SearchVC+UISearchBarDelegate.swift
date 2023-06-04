@@ -17,8 +17,9 @@ extension SearchVC: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        hapticFeedbackSoft()
         searchBar.text = nil
-        searchViewModel.reset()
+        searchViewModel.searchBarCancelButtonClicked()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
