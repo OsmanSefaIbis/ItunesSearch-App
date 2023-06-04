@@ -169,8 +169,10 @@ extension SearchVM: SearchVMContract {
     }
     
     func searchBarCancelButtonClicked() {
-        isSearchActive_Flag = false
-        resetAndInvokeTop()
+        if !isTopPicksActive_Flag {
+            isSearchActive_Flag = false
+            resetAndInvokeTop()
+        }
     }
     
     func textDidChange(with searchText: String) {
@@ -181,11 +183,15 @@ extension SearchVM: SearchVMContract {
         timeControl?.invalidate()
         timeControl = Timer.scheduledTimer(withTimeInterval: 0.9, repeats: false, block: { [weak self] (timer) in
             guard let self else { return }
-            if (0...2).contains(search.count) {
-                isSearchActive_Flag = false
-                view?.stopSpinner()
-            }
-            if search.count > 2 {
+            switch search.count {
+                case 0:
+                    isSearchActive_Flag = false
+                    view?.stopSpinner()
+                    view?.resetAndInvokeTop()
+                case 1...2:
+                    isSearchActive_Flag = false
+                    view?.stopSpinner()
+            default:
                 isSearchActive_Flag = true
                 let query: SearchQuery = .init(input: search, media: mediaType, offset: paginationOffSet)
                 resetAndSearch(with: query)
