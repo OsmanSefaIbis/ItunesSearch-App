@@ -1,8 +1,8 @@
 //
-//  SearchViewModel+Extension.swift
+//  fkaojsdlkf.swift
 //  ItunesSearch-App
 //
-//  Created by Sefa İbiş on 21.04.2023.
+//  Created by Sefa İbiş on 5.06.2023.
 //
 
 import UIKit
@@ -10,14 +10,18 @@ import UIKit
 let hapticHeavy = UIImpactFeedbackGenerator(style: .heavy)
 let hapticSoft = UIImpactFeedbackGenerator(style: .soft)
 
-extension SearchVC{
+extension SearchVC {
     
     func hapticFeedbackHeavy() {
-        hapticHeavy.prepare()
-        hapticHeavy.impactOccurred(intensity: 1.0)
+        DispatchQueue.main.async {
+            hapticHeavy.prepare()
+            hapticHeavy.impactOccurred(intensity: 1.0)
+        }
     }
     func hapticFeedbackSoft() {
-        hapticSoft.prepare()
-        hapticSoft.impactOccurred(intensity: 1.0)
+        DispatchQueue.main.async {
+            hapticSoft.prepare()
+            hapticSoft.impactOccurred(intensity: 1.0)
+        }
     }
 }

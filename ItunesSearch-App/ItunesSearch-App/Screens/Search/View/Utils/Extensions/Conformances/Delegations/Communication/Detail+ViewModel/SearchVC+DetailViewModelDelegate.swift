@@ -28,6 +28,8 @@ extension SearchVC: DetailViewModelDelegate {
     }
     
     func passPage(_ page: DetailVC) {
-        pushPageToNavigation(push: page)
+        DispatchQueue.main.async { [weak self] in
+            self?.pushPageToNavigation(push: page)
+        }
     }
 }

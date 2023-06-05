@@ -7,80 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8DC4CA12-CE44-4A32-9D7B-5F04DBBCA73A"
-            shouldBeEnabled = "Yes"
+            uuid = "C94C61CF-A318-4D43-BE38-EFA02522C11C"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Screens/Search/ViewModel/Utils/Extensions/Conformances/Contract/SearchVM+SearchVMContract.swift"
+            filePath = "ItunesSearch-App/Screens/Search/View/Utils/Extensions/Conformances/Delegations/Communication/Search/Search+ImageDownloadDelegate/SearchVC+ImageDownloadDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "285"
-            endingLineNumber = "285"
-            landmarkName = "resetAndInvokeTop()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "8DC4CA12-CE44-4A32-9D7B-5F04DBBCA73A - 73e4725d938b59da"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ItunesSearch_App.SearchVM.resetAndInvokeTop() -&gt; ()"
-                  moduleName = "ItunesSearch-App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Screens/Search/ViewModel/Utils/Extensions/Conformances/Contract/SearchVM+SearchVMContract.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "279"
-                  endingLineNumber = "279"
-                  offsetFromSymbolStart = "196">
-               </Location>
-               <Location
-                  uuid = "8DC4CA12-CE44-4A32-9D7B-5F04DBBCA73A - 73e4725d938b59da"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ItunesSearch_App.SearchVM.resetAndInvokeTop() -&gt; ()"
-                  moduleName = "ItunesSearch-App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Screens/Search/ViewModel/Utils/Extensions/Conformances/Contract/SearchVM+SearchVMContract.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "279"
-                  endingLineNumber = "279"
-                  offsetFromSymbolStart = "192">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "26383C99-86CD-415B-95F1-E22D17A54766"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Screens/Search/ViewModel/Utils/Extensions/Conformances/Contract/SearchVM+SearchVMContract.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
-            landmarkName = "referenceSizeForHeaderInSection(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "FB653DB9-C260-4796-8550-8C6CB44A11DA"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ItunesSearch-App/Screens/Search/ViewModel/Utils/Extensions/Conformances/Contract/SearchVM+SearchVMContract.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "referenceSizeForHeaderInSection(_:)"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "imageDownloadCompleted(for:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

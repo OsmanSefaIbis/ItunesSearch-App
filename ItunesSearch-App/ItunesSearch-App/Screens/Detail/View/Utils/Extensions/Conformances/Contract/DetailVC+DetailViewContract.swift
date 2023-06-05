@@ -124,7 +124,9 @@ extension DetailVC: DetailViewContract {
     }
     
     func setNavigationBarWith( tintColor colorName: String) {
-        navigationController?.navigationBar.tintColor = UIColor(named: colorName)
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.navigationBar.tintColor = UIColor(named: colorName)
+        }
     }
     
     func convertDate(for dateValue: String) -> String {
