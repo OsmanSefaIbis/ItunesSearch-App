@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 extension SearchCell: SearchCellContract {
     
@@ -27,28 +28,59 @@ extension SearchCell: SearchCellContract {
     }
     
     func configureCell(with model: SearchCellModel, size constraint: CGFloat) {
-        
+
         self.setImageHeigth( 2 * constraint ) ; self.setImageWidth( 2 * constraint )
-        
+
         guard let modifiedArtworkUrl = changeImageURL(model.artworkUrl, withDimension: ConstantsCV.cellImageDimension) else { return }
-        
+
         releaseDateLabel.text = convertDate(for: model.releaseDate)
         nameLabel.text = model.name
         trackPriceLabel.text = (model.trackPrice <= 0) ? HardCoded.free.get() : HardCoded.dolar.get().appending(String(model.trackPrice))
-        artworkImage.kf.setImage(with: URL(string: modifiedArtworkUrl)){ result in
+        
+        artworkImage.kf.setImage(
+            with: URL(string: modifiedArtworkUrl),
+            placeholder: nil,
+            options: [.cacheMemoryOnly], // TODO: after the detail part compare this with the below commented part
+            progressBlock: nil) { [weak self] result in
+                
             switch result {
-            case .success(let value):
-                let averageColor = value.image.averageColor
-                let opaqueAverageColor = averageColor?.withAlphaComponent(0.7)
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
-                    self.container.backgroundColor = opaqueAverageColor
-                }
-            case .failure(let error):
-                print("Error: \(error)")
+                case .success(let value):
+                self?.artworkImage.image = UIImage.resizeImage(image: value.image, size: 2 * constraint)
+                    let averageColor = value.image.averageColor
+                    let opaqueAverageColor = averageColor?.withAlphaComponent(0.7)
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        self.container.backgroundColor = opaqueAverageColor
+                    }
+                case .failure(let error):
+                    print("Error: \(error)")
             }
         }
     }
+    
+//    func configureCell(with model: SearchCellModel, size constraint: CGFloat) {
+//
+//            self.setImageHeigth( 2 * constraint ) ; self.setImageWidth( 2 * constraint )
+//
+//            guard let modifiedArtworkUrl = changeImageURL(model.artworkUrl, withDimension: ConstantsCV.cellImageDimension) else { return }
+//
+//            releaseDateLabel.text = convertDate(for: model.releaseDate)
+//            nameLabel.text = model.name
+//            trackPriceLabel.text = (model.trackPrice <= 0) ? HardCoded.free.get() : HardCoded.dolar.get().appending(String(model.trackPrice))
+//            artworkImage.kf.setImage(with: URL(string: modifiedArtworkUrl)){ result in
+//                switch result {
+//                case .success(let value):
+//                    let averageColor = value.image.averageColor
+//                    let opaqueAverageColor = averageColor?.withAlphaComponent(0.7)
+//                    DispatchQueue.main.async { [weak self] in
+//                        guard let self else { return }
+//                        self.container.backgroundColor = opaqueAverageColor
+//                    }
+//                case .failure(let error):
+//                    print("Error: \(error)")
+//                }
+//        }
+//    }
     
     func startSpinner() {
         DispatchQueue.main.async { [weak self] in

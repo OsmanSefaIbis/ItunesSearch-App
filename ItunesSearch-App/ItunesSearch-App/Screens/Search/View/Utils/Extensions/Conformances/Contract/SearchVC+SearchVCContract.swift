@@ -76,17 +76,39 @@ extension SearchVC: SearchVCContract {
     func provideImageColorPair(_ imageUrl: String, completion: @escaping (ImageColorPair?) -> Void) {
         
         guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, ConstantsCV.detailImageDimension)) else { completion(nil) ; return }
-        KingfisherManager.shared.retrieveImage(with: artworkUrl) { result in
+        
+        KingfisherManager.shared.retrieveImage(with: artworkUrl, options: [.cacheMemoryOnly]) { result in
             switch result {
             case .success(let value):
+                let resizedImage = UIImage.resizeImage(image: value.image, size: 250)
                 if let averagedColor = value.image.averageColor {
-                    completion(.init(image: value.image, color: averagedColor))
+                    completion(.init(image: resizedImage, color: averagedColor))
                 }
             case .failure(_):
                 completion(nil)
+                
             }
         }
     }
+    // TODO: The detail page needs a standardized image size for the available space the device max has, just like you did with sizingValue
+    
+    // TODO: Compare with prior code, what is the gained performance, also compare and contrast the memory footprint
+    
+//    func provideImageColorPair(_ imageUrl: String, completion: @escaping (ImageColorPair?) -> Void) {
+//
+//        guard let artworkUrl = URL(string: searchViewModel.modifyUrl(imageUrl, ConstantsCV.detailImageDimension)) else { completion(nil) ; return }
+//        KingfisherManager.shared.retrieveImage(with: artworkUrl) { result in
+//            switch result {
+//            case .success(let value):
+//                if let averagedColor = value.image.averageColor {
+//                    completion(.init(image: value.image, color: averagedColor))
+//                }
+//            case .failure(_):
+//                completion(nil)
+//            }
+//        }
+//    }
+
     
     func setItems( _ items: [SearchCellModel]) {
         searchViewModel.setItems(items, completion: {

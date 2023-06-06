@@ -21,4 +21,13 @@ extension UIImage {
         
         return UIColor(red: CGFloat(bitmap[0]) / 255, green: CGFloat(bitmap[1]) / 255, blue: CGFloat(bitmap[2]) / 255, alpha: 1)
     }
+    
+    static func resizeImage(image: UIImage, size: CGFloat) -> UIImage {
+        
+        UIGraphicsBeginImageContext(CGSize(width: size, height: size))
+        image.draw(in: CGRect(x: 0, y: 0, width: size, height: size))
+        guard let resizedImage = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage()}
+        UIGraphicsEndImageContext()
+        return resizedImage
+    }
 }
