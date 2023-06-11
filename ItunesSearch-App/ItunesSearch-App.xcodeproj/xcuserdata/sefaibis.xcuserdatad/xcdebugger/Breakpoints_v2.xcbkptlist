@@ -65,6 +65,21 @@
                   endingLineNumber = "78"
                   offsetFromSymbolStart = "628">
                </Location>
+               <Location
+                  uuid = "2DF095C8-8883-448A-B321-83E1552FAE09 - a9bbe3203dcc3833"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ItunesSearch_App.SearchVC.provideImageColorPair(_: Swift.String, completion: (Swift.Optional&lt;ItunesSearch_App.ImageColorPair&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "ItunesSearch-App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sefaibis/Developer/Dev%20Workspace/My%20Projects%20Folder/My%20Remote%20Repos/ItunesSearch-App/ItunesSearch-App/ItunesSearch-App/Screens/Search/View/Utils/Extensions/Conformances/Contract/SearchVC+SearchVCContract.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "712">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

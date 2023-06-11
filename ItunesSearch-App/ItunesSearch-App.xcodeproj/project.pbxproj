@@ -58,6 +58,8 @@
 		96D321232A27CE06006FFF84 /* CachingQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D321222A27CE06006FFF84 /* CachingQuery.swift */; };
 		96D321252A28F8F1006FFF84 /* SearchVM+SearchVMContract+Pseudo2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D321242A28F8F1006FFF84 /* SearchVM+SearchVMContract+Pseudo2.swift */; };
 		96DA79732A2D37600073A405 /* SearchVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DA79722A2D37600073A405 /* SearchVC+Extension.swift */; };
+		96DA79762A30A6070073A405 /* MemoryOptimization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DA79752A30A6070073A405 /* MemoryOptimization.swift */; };
+		96DA79782A30A91F0073A405 /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DA79772A30A91F0073A405 /* Testing.swift */; };
 		96E8225529F2C473009B56F0 /* HardCoded+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E8225429F2C473009B56F0 /* HardCoded+String.swift */; };
 		96E8225729F2E267009B56F0 /* HardCoded+Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E8225629F2E267009B56F0 /* HardCoded+Api.swift */; };
 		96E8225929F305E8009B56F0 /* DetailVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E8225829F305E8009B56F0 /* DetailVC+Extension.swift */; };
@@ -143,6 +145,8 @@
 		96D321222A27CE06006FFF84 /* CachingQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachingQuery.swift; sourceTree = "<group>"; };
 		96D321242A28F8F1006FFF84 /* SearchVM+SearchVMContract+Pseudo2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchVM+SearchVMContract+Pseudo2.swift"; sourceTree = "<group>"; };
 		96DA79722A2D37600073A405 /* SearchVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchVC+Extension.swift"; sourceTree = "<group>"; };
+		96DA79752A30A6070073A405 /* MemoryOptimization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryOptimization.swift; sourceTree = "<group>"; };
+		96DA79772A30A91F0073A405 /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		96E8225429F2C473009B56F0 /* HardCoded+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HardCoded+String.swift"; sourceTree = "<group>"; };
 		96E8225629F2E267009B56F0 /* HardCoded+Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HardCoded+Api.swift"; sourceTree = "<group>"; };
 		96E8225829F305E8009B56F0 /* DetailVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailVC+Extension.swift"; sourceTree = "<group>"; };
@@ -744,6 +748,15 @@
 			path = Conformances;
 			sourceTree = "<group>";
 		};
+		96DA79742A30A5F00073A405 /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				96DA79752A30A6070073A405 /* MemoryOptimization.swift */,
+				96DA79772A30A91F0073A405 /* Testing.swift */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
 		96E83D0729E5D7BC001B517E /* Figma */ = {
 			isa = PBXGroup;
 			children = (
@@ -811,6 +824,7 @@
 		96EDF4702A07D37100634BDF /* Project Related */ = {
 			isa = PBXGroup;
 			children = (
+				96DA79742A30A5F00073A405 /* Notes */,
 				96E83D0729E5D7BC001B517E /* Figma */,
 				9651B18B2A02848500D94A6F /* Pseudocodes */,
 			);
@@ -1142,6 +1156,7 @@
 				964E537C2A23F591008EC9E4 /* SearchVC+SearchViewModelDelegate.swift in Sources */,
 				964E537A2A23F558008EC9E4 /* SearchVC+DetailViewModelDelegate.swift in Sources */,
 				96EDF4BE2A0E51F500634BDF /* SearchQuery.swift in Sources */,
+				96DA79782A30A91F0073A405 /* Testing.swift in Sources */,
 				96B5868B29EDD2FE004F5B27 /* DetailDto.swift in Sources */,
 				9651B1952A04294800D94A6F /* ReusableHeaderBar.swift in Sources */,
 				96EDF4CF2A0FF2F000634BDF /* DetailModelDelegate.swift in Sources */,
@@ -1151,6 +1166,7 @@
 				96B5868E29EFE097004F5B27 /* Detail+Model.swift in Sources */,
 				9651B1982A057AF100D94A6F /* UIView+Extension.swift in Sources */,
 				9651B18F2A03BCA500D94A6F /* TopDto.swift in Sources */,
+				96DA79762A30A6070073A405 /* MemoryOptimization.swift in Sources */,
 				96EDF4C82A0E827700634BDF /* ItunesSearchAPI+Endpointable.swift in Sources */,
 				96EDF4912A099D7D00634BDF /* SearchVM+Delegate.swift in Sources */,
 				96EDF4CB2A0FC22600634BDF /* SearchModelDelegate.swift in Sources */,

@@ -27,7 +27,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jgm-NS-nlu" userLabel="Image">
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="339"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="popcorn" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="46A-lY-rCe">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="popcorn" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="46A-lY-rCe">
                                                         <rect key="frame" x="0.0" y="-1" width="393" height="341.66666666666669"/>
                                                         <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                                                     </imageView>
@@ -316,7 +316,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yhv-BR-Y3r" userLabel="Image">
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="489"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="P8A-lk-XWg">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="P8A-lk-XWg">
                                                         <rect key="frame" x="0.0" y="1" width="393" height="487.66666666666669"/>
                                                         <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                                                     </imageView>
@@ -581,7 +581,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c02-x6-wpx" userLabel="Image">
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="339"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="1XA-k4-u3g">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="1XA-k4-u3g">
                                                         <rect key="frame" x="0.0" y="1.6666666666666572" width="393" height="336.00000000000011"/>
                                                         <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                                                     </imageView>
@@ -880,7 +880,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N2K-tE-cOm" userLabel="Image">
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="489"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.mic" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="5Ix-Ej-yra">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.mic" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="5Ix-Ej-yra">
                                                         <rect key="frame" x="0.0" y="0.33333333333334281" width="393" height="488"/>
                                                         <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                                                     </imageView>
