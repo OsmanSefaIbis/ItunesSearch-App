@@ -12,7 +12,7 @@ final class SearchVC: UIViewController{
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var collectionView: UICollectionView!
         
-    lazy var searchViewModel = SearchVM()
+    lazy var searchViewModel = SearchVM(view: self)
     lazy var detailViewModel = DetailVM()
     
     var pagingSpinner: PagingSpinnerReusableFooter?
@@ -22,7 +22,6 @@ final class SearchVC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchViewModel.view = self
         searchViewModel.viewDidLoad()
     }
 }

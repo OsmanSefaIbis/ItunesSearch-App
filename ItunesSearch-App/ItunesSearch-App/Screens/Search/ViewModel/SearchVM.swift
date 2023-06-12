@@ -13,7 +13,7 @@ final class SearchVM {
     
     lazy var  model = SearchModel()
 
-    weak var view: SearchVCContract?
+    private weak var view: SearchVCContract?
     weak var delegate: SearchViewModelDelegate?
     
     var timeControl: Timer?
@@ -35,7 +35,8 @@ final class SearchVM {
     
     var itemCount: Int { get { items.count } }
     
-    init() {
+    init(view: SearchVCContract) {
         model.delegate = self
+        self.view = view
     }
 }
