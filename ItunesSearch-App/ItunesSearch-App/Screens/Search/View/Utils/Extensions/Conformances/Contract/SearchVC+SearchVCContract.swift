@@ -82,7 +82,7 @@ extension SearchVC: SearchVCContract {
             case .success(let value):
                 let resizedImage = UIImage.resizeImage(image: value.image, size: 250)
                 if let averagedColor = value.image.averageColor {
-                    completion(.init(image: resizedImage, color: averagedColor))
+                    completion(.init(image     : resizedImage, color: averagedColor))
                 }
             case .failure(_):
                 completion(nil)

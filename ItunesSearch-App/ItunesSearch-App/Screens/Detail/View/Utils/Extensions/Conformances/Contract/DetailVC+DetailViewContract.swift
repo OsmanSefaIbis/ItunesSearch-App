@@ -9,7 +9,7 @@ import UIKit
 import AVKit
 
 
-extension DetailVC: DetailViewContract {
+extension DetailVC: DetailVCContract {
     
     override func loadViewIfNeeded() {
         super.loadViewIfNeeded()

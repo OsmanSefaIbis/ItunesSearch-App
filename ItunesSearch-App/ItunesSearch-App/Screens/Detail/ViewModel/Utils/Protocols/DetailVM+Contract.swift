@@ -10,7 +10,7 @@ import Foundation
 protocol DetailVMContract {
     
     /// prop
-    var view: DetailViewContract? { get set }
+    var view: DetailVCContract? { get set }
     /// fetch invocation
     func searchInvoked(withIds idValues: [Int])
     func cacheMissInvoked(for query: CachingQuery)

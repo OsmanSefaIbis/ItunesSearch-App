@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol DetailViewContract: AnyObject {
+protocol DetailVCContract: AnyObject {
     /// props
     var viewModel: DetailVM? { get set }
     /// view life-cycle

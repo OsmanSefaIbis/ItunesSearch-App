@@ -11,7 +11,7 @@ final class DetailVM{
     
     let model = DetailModel()
     
-    weak var view: DetailViewContract?
+    weak var view: DetailVCContract?
     weak var delegate: DetailViewModelDelegate?
     
     var isAudioPlaying = false
