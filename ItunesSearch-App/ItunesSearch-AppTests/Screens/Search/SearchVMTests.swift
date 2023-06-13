@@ -21,6 +21,8 @@ final class SearchVMTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
+        view = nil
+        viewModel = nil
     }
     
 /* Contract Related */
@@ -28,6 +30,17 @@ final class SearchVMTests: XCTestCase {
     /// viewDidLoad()
     func test_viewDidLoad_invokesRequiredSequences(){
         
+        XCTAssertFalse(view.flag_assignDelegates)
+        XCTAssertFalse(view.flag_configureCollectionView)
+        XCTAssertFalse(view.flag_configureSegmentedControl)
+        XCTAssertFalse(view.flag_configureSpinner)
+        XCTAssertFalse(view.flag_initiateTopResults) /// given
+        viewModel.viewDidLoad() /// when
+        XCTAssertEqual(view.counter_assignDelegates, 1) /// then
+        XCTAssertEqual(view.counter_configureCollectionView, 1)
+        XCTAssertEqual(view.counter_configureSegmentedControl, 1)
+        XCTAssertEqual(view.counter_configureSpinner, 1)
+        XCTAssertEqual(view.counter_initiateTopResults, 1)
     }
     
     /// topInvoked()

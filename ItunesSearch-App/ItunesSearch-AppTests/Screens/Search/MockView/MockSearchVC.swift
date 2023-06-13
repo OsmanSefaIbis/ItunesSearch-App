@@ -10,24 +10,45 @@ import UIKit
 
 final class MockSearchVC: SearchVCContract {
     
+    /// invokation flags of the contract methods for viewDidLoad()
+    var flag_assignDelegates = false
+    var flag_configureCollectionView = false
+    var flag_configureSegmentedControl = false
+    var flag_configureSpinner = false
+    var flag_initiateTopResults = false
+    
+    /// invokation counters to track the contract method viewDidLoad()
+    var counter_assignDelegates = 0
+    var counter_configureCollectionView = 0
+    var counter_configureSegmentedControl = 0
+    var counter_configureSpinner = 0
+    var counter_initiateTopResults = 0
+    
+    
+    
     func assignDelegates() {
-        
+        flag_assignDelegates = true
+        counter_assignDelegates += 1
     }
     
     func configureCollectionView() {
-        
+        flag_configureCollectionView = true
+        counter_configureCollectionView += 1
     }
     
     func configureSegmentedControl() {
-        
+        flag_configureSegmentedControl = true
+        counter_configureSegmentedControl += 1
     }
     
     func configureSpinner() {
-        
+        flag_configureSpinner = true
+        counter_configureSpinner += 1
     }
     
     func initiateTopResults() {
-        
+        flag_initiateTopResults = true
+        counter_initiateTopResults += 1
     }
     
     func startPrefetchingDetails(for ids: [Int]) {

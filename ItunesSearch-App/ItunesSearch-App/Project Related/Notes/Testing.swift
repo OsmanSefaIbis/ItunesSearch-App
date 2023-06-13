@@ -34,7 +34,8 @@ Here are the steps to get started with unit testing in your MVVM app:
 /*
  
  --> Write test to the contracted methods of the view model.
- 
+*--> https://github.com/seanhenry/SwiftMockGeneratorForXcode does the boilerplate of Mocking
+*--> given-when-then --> is the fashion used for testing
  
  
 */

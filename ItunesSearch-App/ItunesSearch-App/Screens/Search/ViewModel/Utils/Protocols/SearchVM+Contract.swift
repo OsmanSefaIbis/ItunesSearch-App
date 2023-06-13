@@ -9,8 +9,6 @@ import Foundation
 
 protocol SearchVMContract {
     
-    /// props
-    var view: SearchVCContract? { get set }
     var itemCount: Int { get }
     /// assign & configure
     func viewDidLoad()
